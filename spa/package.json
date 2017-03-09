@@ -1,0 +1,32 @@
+{
+  "name": "kroo",
+  "version": "1.0.0",
+  "description": "kroo frontend",
+  "main": "index.html",
+  "dependencies": {
+    "angular-aria": "~1.5.11",
+    "angular-animate": "~1.5.11",
+    "angular": "~1.5.11",
+    "angular-material": "~1.1.3"
+  },
+  "devDependencies": {
+    "gulp": "~3.9.1",
+    "gulp-concat": "~2.6.0",
+    "gulp-connect": "~5.0.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-less": "^3.1.0",
+    "gulp-minify-css": "~1.2.4",
+    "gulp-uglify": "~2.0.0",
+    "gulp-watch": "^4.3.6",
+    "gulp-webserver": "^0.9.1"
+  },
+  "author": "Manuel Tenorio",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.ironbit.net/webapp/webapp-pymobile.git"
+  },
+  "license": "ISC"
+}

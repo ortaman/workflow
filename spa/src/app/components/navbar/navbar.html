@@ -1,0 +1,21 @@
+
+<nav class="navbar navbar-static-top navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="https://github.com/Swiip/generator-gulp-angular">
+        <span class="glyphicon glyphicon-home"></span> My Application
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+      <ul class="nav navbar-nav">
+        <li><a ui-sref="home"  ng-class="{ 'nav-active-custom': isActive('/home') }"> HOME   </a></li>
+        <li><a ui-sref="login" ng-class="{ 'nav-active-custom': isActive('/login')}"> LOGIN  </a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right my-navbar-text">
+        <li> Application was created {{ vm.relativeDate }}. </li>
+      </ul>
+    </div>
+  </div>
+</nav>
