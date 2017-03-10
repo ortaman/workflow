@@ -1,5 +1,5 @@
 from .base import *
-from _workflow.keys import development
+from _api.keys import development
 
 
 # Quick-start development settings - unsuitable for production

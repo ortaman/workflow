@@ -4,10 +4,10 @@ import os
 import sys
 
 if __name__ == "__main__":
-    if os.path.exists('_workflow/keys/production.py'):
-        DJANGO_SETTINGS_MODULE = '_workflow.settings.production'
+    if os.path.exists('_api/keys/production.py'):
+        DJANGO_SETTINGS_MODULE = '_api.settings.production'
     else:
-        DJANGO_SETTINGS_MODULE = '_workflow.settings.development'
+        DJANGO_SETTINGS_MODULE = '_api.settings.development'
 
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', DJANGO_SETTINGS_MODULE)
 

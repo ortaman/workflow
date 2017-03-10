@@ -1,6 +1,8 @@
 .vagrant
 
 *.pyc
+__pycache__
+
 api/kroo/keys/production.py
 
 spa/bower_components
