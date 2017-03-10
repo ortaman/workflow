@@ -85,10 +85,10 @@ gulp.task('watch-js', function() {
 gulp.task('js-vendor', function () {
   return gulp.src([
     // jQuery (necessary for Bootstrap's JavaScript plugins) 
-    "bower_components/jquery/dist/jquery.min.js",
+    // "bower_components/jquery/dist/jquery.min.js",
     
     // Include all compiled plugins (below), or include individual files as needed
-    "bower_components/bootstrap/dist/js/bootstrap.min.js",
+    // "bower_components/bootstrap/dist/js/bootstrap.min.js",
     "bower_components/angular/angular.min.js",
     "bower_components/angular-ui-router/release/angular-ui-router.min.js",
     "bower_components/ng-dialog/js/ngDialog.js",
