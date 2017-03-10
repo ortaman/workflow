@@ -29,18 +29,18 @@ class Project(models.Model):
     toDo = models.TextField(max_length=512, verbose_name='¿Qué y como se realizará?')
     satisfactions = models.TextField(max_length=512, verbose_name='Condiciones de satisfacción')
 
-    preparation_at = models.DateTimeField(auto_now=False, verbose_name='Fecha de preparación')
-    negotiation_at = models.DateTimeField(auto_now=False, verbose_name='Fecha de negociación')
-    execution_at = models.DateTimeField(auto_now=False, verbose_name='Fecha de ejecución')
-    evaluation_at = models.DateTimeField(auto_now=False, verbose_name='Fecha de evaluación')
+    preparation_at = models.DateField(auto_now=False, verbose_name='Fecha de preparación')
+    negotiation_at = models.DateField(auto_now=False, verbose_name='Fecha de negociación')
+    execution_at = models.DateField(auto_now=False, verbose_name='Fecha de ejecución')
+    evaluation_at = models.DateField(auto_now=False, verbose_name='Fecha de evaluación')
 
-    begin_at = models.DateTimeField(auto_now=False, verbose_name='Fecha de inicio')
-    accomplish_at = models.DateTimeField(auto_now=False, verbose_name='Fecha de cumplimiento')
-    renegotiation_at = models.DateTimeField(auto_now=False, verbose_name='Fecha de regenociación')
-    report_at = models.DateTimeField(auto_now=False, verbose_name='Fecha de reporte de Avance')
+    begin_at = models.DateField(auto_now=False, verbose_name='Fecha de inicio')
+    accomplish_at = models.DateField(auto_now=False, verbose_name='Fecha de cumplimiento')
+    renegotiation_at = models.DateField(auto_now=False, verbose_name='Fecha de regenociación')
+    report_at = models.DateField(auto_now=False, verbose_name='Fecha de reporte de Avance')
 
-    created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación') 
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
+    created_at = models.DateField(auto_now=True, verbose_name='Fecha de creación') 
+    updated_at = models.DateField(auto_now=True, verbose_name='Fecha de actualización')
 
     class Meta:
         verbose_name = ("Proyecto")
