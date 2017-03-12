@@ -64,7 +64,7 @@ class Action(models.Model):
         ('evaluacion', 'Evaluación'),
     )
 
-    project = models.ForeignKey(User, related_name='project', verbose_name='Proyecto relacionado')
+    project = models.ForeignKey(Project, related_name='project', verbose_name='Proyecto relacionado')
 
     phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de la acción')      
 
@@ -95,7 +95,6 @@ class Action(models.Model):
     parent_action = models.ManyToManyField(
         'self', 
         blank=True,
-        null=True,
         related_name='parent_action', 
         verbose_name='Acción hija')
 
