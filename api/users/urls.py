@@ -14,5 +14,8 @@ router.register(r'users', views.UserViewSet)
 
 urlpatterns = [
     url(r'^token-auth/', obtain_auth_token),
+    
     url(r'^', include(router.urls)),
+    
+    url(r'^myuser/$', views.MyUser.as_view()),
 ]
