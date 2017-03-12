@@ -23,6 +23,12 @@ class UserViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         """
         """
-        content = {'error': 'usuario no autorizado'}
+        content = {'error': 'Acceso no autorizado'}
+        return Response(content, status=status.HTTP_401_UNAUTHORIZED)
 
+
+    def list(self, request, *args, **kwargs):
+        """
+        """
+        content = {'error': 'Acceso no autorizado'}
         return Response(content, status=status.HTTP_401_UNAUTHORIZED)
