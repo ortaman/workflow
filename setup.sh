@@ -36,10 +36,6 @@ sudo -u postgres psql -c "ALTER ROLE vagrant SET timezone TO 'UTC'"
 echo 'Giving our database user access rights'
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE vagrantDB TO vagrant;"
 
-
-echo 'Installing pip python package manager'
-sudo apt-get install -y python-pip
-
 echo 'Installing Pillow (images processing library) dependencies'
 sudo apt-get install -y libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
 

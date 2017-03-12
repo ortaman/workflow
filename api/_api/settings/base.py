@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     # 'django_celery_beat',
     # 'django_celery_results',
 
@@ -118,11 +119,17 @@ STATIC_ROOT = os.path.join(BASE_DIR, '../staticollect')
 # User uploaded files
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, '../media')
+MEDIA_ROOT = os.path.join(BASE_DIR, '../_media')
 
 
 # To Extend admin user access model
 AUTH_USER_MODEL = 'users.BaseUser'
 
 
-# AUTHENTICATION_BACKENDS = ('users.authentication.MyCustomBackend',)
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'PAGE_SIZE': 10
+}
