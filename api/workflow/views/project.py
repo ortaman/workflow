@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Project
-from workflow.serializers import ProjectSerializer
+from workflow.serializers import ProjectSerializer, ProjectSerializerExtended
 from common.mixins import CommonMixin
 
 
@@ -24,7 +24,7 @@ class ProjectDetail(APIView, CommonMixin):
 
     def get(self, request, pk, format=None):
         project = self.get_object(pk)
-        serializer = self.serializer_class(project)
+        serializer = ProjectSerializerExtended(project)
 
         return Response(serializer.data)
 

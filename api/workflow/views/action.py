@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Action
-from workflow.serializers import ActionSerializer
+from workflow.serializers import ActionSerializer, ActionSerializerExtended
 from common.mixins import CommonMixin
 
 
@@ -23,7 +23,7 @@ class ActionDetail(APIView, CommonMixin):
 
     def get(self, request, pk, format=None):
         action = self.get_object(pk)
-        serializer = self.serializer_class(action)
+        serializer = ActionSerializerExtended(action)
 
         return Response(serializer.data)
 
@@ -61,7 +61,6 @@ class ActionList(APIView, CommonMixin):
         actions = self.model.objects.all()
 
         data = self.get_pagination(actions, page)
-
         return Response(data)
 
     def post(self, request, format=None):
