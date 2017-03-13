@@ -8,29 +8,28 @@ from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Action
 from workflow.serializers import ActionSerializer
+from common.mixins import CommonMixin
 
 
-class ActionDetail(APIView):
+class ActionDetail(APIView, CommonMixin):
     """
     Retrieve, update or delete a action instance.
     """
     permission_classes = (IsAuthenticated,)
 
-    def get_object(self, pk):
-        try:
-            return Action.objects.get(pk=pk)
-        except Action.DoesNotExist:
-            raise Http404
+    # Initial mixin variables
+    model = Action
+    serializer_class = ActionSerializer
 
     def get(self, request, pk, format=None):
         action = self.get_object(pk)
-        serializer = ActionSerializer(action)
+        serializer = self.serializer_class(action)
 
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         action = self.get_object(pk)
-        serializer = ActionSerializer(action, data=request.data)
+        serializer = self.serializer_class(action, data=request.data)
         
         if serializer.is_valid(): 
             serializer.save()
@@ -46,20 +45,27 @@ class ActionDetail(APIView):
 
 
 
-class ActionList(APIView):
+class ActionList(APIView, CommonMixin):
     """
-    List all actions, or create a new project.
+    List all actions, or create a new action.
     """
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, format=None):
-        actions = Action.objects.all()
-        serializer = ActionSerializer(actions, many=True)
+    # Initial mixin variables
+    model = Action
+    serializer_class = ActionSerializer
+    paginate_by = 10
 
-        return Response(serializer.data)
+    def get(self, request, format=None):
+        page = request.GET.get('page')
+        actions = self.model.objects.all()
+
+        data = self.get_pagination(actions, page)
+
+        return Response(data)
 
     def post(self, request, format=None):
-        serializer = ActionSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         
         if serializer.is_valid():	
             serializer.save()

@@ -1,4 +1,5 @@
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404
 
 from rest_framework import status
@@ -8,29 +9,28 @@ from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Project
 from workflow.serializers import ProjectSerializer
+from common.mixins import CommonMixin
 
 
-class ProjectDetail(APIView):
+class ProjectDetail(APIView, CommonMixin):
     """
     Retrieve, update or delete a projects instance.
     """
     permission_classes = (IsAuthenticated,)
 
-    def get_object(self, pk):
-        try:
-            return Project.objects.get(pk=pk)
-        except Project.DoesNotExist:
-            raise Http404
+    # Mixing initial variables
+    model = Project
+    serializer_class = ProjectSerializer
 
     def get(self, request, pk, format=None):
         project = self.get_object(pk)
-        serializer = ProjectSerializer(project)
+        serializer = self.serializer_class(project)
 
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         project = self.get_object(pk)
-        serializer = ProjectSerializer(project, data=request.data)
+        serializer = self.serializer_class(project, data=request.data)
         
         if serializer.is_valid(): 
             serializer.save()
@@ -46,20 +46,27 @@ class ProjectDetail(APIView):
 
 
 
-class ProjectList(APIView):
+class ProjectList(APIView, CommonMixin):
     """
     List all proyects, or create a new project.
     """
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, format=None):
-        proyects = Project.objects.all()
-        serializer = ProjectSerializer(proyects, many=True)
+    # Mixing initial variables
+    model = Project
+    serializer_class = ProjectSerializer
+    paginate_by = 10
 
-        return Response(serializer.data)
+    def get(self, request, format=None):
+        page = request.GET.get('page')
+        proyects = self.model.objects.all()
+
+        data = self.get_pagination(proyects, page)
+        return Response(data)
+
 
     def post(self, request, format=None):
-        serializer = ProjectSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         
         if serializer.is_valid():	
             serializer.save()
