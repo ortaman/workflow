@@ -26,13 +26,13 @@
                 <!-- DOC: Apply "sidebar-search-bordered" class the below search form to have bordered search box -->
                 <!-- DOC: Apply "sidebar-search-bordered sidebar-search-solid" class the below search form to have bordered & solid search box -->
                 <form class="sidebar-search  sidebar-search-bordered" action="page_general_search_3.html" method="POST">
-                    <a href="javascript:;" class="remove">
+                    <a ui-sref="javascript:;" class="remove">
                         <i class="icon-close"></i>
                     </a>
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search...">
                         <span class="input-group-btn">
-                        <a href="javascript:;" class="btn submit">
+                        <a ui-sref="javascript:;" class="btn submit">
                             <i class="icon-magnifier"></i>
                         </a>
                     </span>
@@ -41,26 +41,26 @@
                 <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
             <li class="nav-item ">
-                <a href="index.html">
+                <a ui-sref="coordinations">
                     <i class="icon-users"></i>
                     <span class="title">Coordinaciones</span>
                 </a>
             </li>
             <li class="nav-item " ng-click="is_active1 = !is_active1">
-                <a href="#" class="nav-link nav-toggle">
+                <a href="javascript:;">
                     <i class="icon-map"></i>
                     <span class="title">Tablero de Control</span>
                     <span class="arrow"></span>
                 </a>
                 <ul ng-show="is_active1" class="sub-menu" style="display: block;">
-                    <li class="nav-item star">
-                        <a href="tcproyectos.html" class="nav-link ">
+                    <li class="nav-item">
+                        <a ui-sref="projectList">
                             <i class="icon-bar-chart"></i>
                             <span class="title">Tablero Proyectos</span>
                         </a>
                     </li>
-                    <li class="nav-item start ">
-                        <a href="taacciones.html" class="nav-link ">
+                    <li class="nav-item">
+                        <a ui-sref="actionList">
                             <i class="icon-flag"></i>
                             <span class="title">Tablero Acciones</span>
                         </a>
@@ -68,62 +68,62 @@
                 </ul>
             </li>
             <li class="nav-item ">
-                <a href="index.html">
+                <a ui-sref="projectCreate">
                     <i class="icon-note"></i>
                     <span class="title">Crear Proyectos</span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a href="acciones.html" class="nav-link ">
+                <a ui-sref="actionCreate" class="nav-link ">
                     <i class="icon-pin"></i>
-                    <span class="title">Crear Acciones</span>
+                    <span class="title">Crear Acción</span>
                 </a>
             </li>
             <li class="nav-item  ">
-                <a href="#" class="nav-link ">
+                <a ui-sref="coordinations" class="nav-link ">
                     <i class="icon-calendar"></i>
                     <span class="title">Calendario</span>
                 </a>
             </li>
             <li class="nav-item  ">
-                <a href="#" class="nav-link ">
+                <a ui-sref="coordinations" class="nav-link ">
                     <i class="icon-envelope-open"></i>
                     <span class="title">Mensajes</span>
                 </a>
             </li>
             <li class="nav-item  ">
-                <a href="#" class="nav-link ">
+                <a ui-sref="coordinations" class="nav-link ">
                     <i class="icon-fire"></i>
                     <span class="title">Alertas y Notificaciones</span>
                 </a>
             </li>
             <li class="nav-item  ">
-                <a href="#" class="nav-link ">
+                <a ui-sref="coordinations" class="nav-link ">
                     <i class="icon-bubbles"></i>
-                    <span class="title">Conversaciones de DIseño</span>
+                    <span class="title">Conversaciones de Diseño</span>
                 </a>
             </li>
            <li class="nav-item " ng-click="is_active2 = !is_active2">
-                <a href="javascript:;" class="nav-link nav-toggle">
+                <a ui-sref="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-user"></i>
                     <span class="title">Usuario</span>
                     <span class="arrow"></span>
                 </a>
                 <ul ng-show="is_active2" class="sub-menu" style="display: block;">
                     <li class="nav-item  ">
-                        <a href="perfil.html" class="nav-link ">
+                        <a ui-sref="coordinations" class="nav-link ">
                             <i class="icon-user"></i>
                             <span class="title">Perfil</span>
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="#" class="nav-link ">
+                        <a ui-sref="coordinations" class="nav-link ">
                             <i class="icon-docs"></i>
                             <span class="title">Mis Proyectos </span>
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="#" class="nav-link ">
+                        <a ui-sref="coordinations" class="nav-link ">
                             <i class="icon-users"></i>
                             <span class="title">Mis Equipos</span>
                         </a>
