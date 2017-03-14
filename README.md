@@ -30,7 +30,7 @@ $ vagrant ssh
 $ cd workflow/
 $ vagrant ssh
 $ cd workflow/api
-$ python manage.py runserver 0.0.0.0:8000 
+$ python3 manage.py runserver 0.0.0.0:8000 
 ```
 
 * Go to the link:

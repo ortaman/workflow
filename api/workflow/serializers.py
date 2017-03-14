@@ -39,11 +39,8 @@ class ActionSerializerExtended(serializers.ModelSerializer):
     agent = UserSerializer()
     create_by = UserSerializer()
 
+    parent_action = ActionSerializer(many=True)
+
     class Meta:
         model = Action
         fields = '__all__'
-
-    def get_fields(self):
-        fields = super(ActionSerializerExtended, self).get_fields()
-        fields['parent_action'] = ActionSerializer(many=True)
-        return fields

@@ -32,28 +32,28 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search...">
                         <span class="input-group-btn">
-                                            <a href="javascript:;" class="btn submit">
-                                                <i class="icon-magnifier"></i>
-                                            </a>
-                                        </span>
+                        <a href="javascript:;" class="btn submit">
+                            <i class="icon-magnifier"></i>
+                        </a>
+                    </span>
                     </div>
                 </form>
                 <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
-            <li class="start active">
+            <li class="nav-item ">
                 <a href="index.html">
                     <i class="icon-users"></i>
                     <span class="title">Coordinaciones</span>
                 </a>
             </li>
-            <li class="nav-item start ">
-                <a href="javascript:;" class="nav-link nav-toggle">
+            <li class="nav-item " ng-click="is_active1 = !is_active1">
+                <a href="#" class="nav-link nav-toggle">
                     <i class="icon-map"></i>
                     <span class="title">Tablero de Control</span>
                     <span class="arrow"></span>
                 </a>
-                <ul class="sub-menu">
-                    <li class="nav-item start ">
+                <ul ng-show="is_active1" class="sub-menu" style="display: block;">
+                    <li class="nav-item star">
                         <a href="tcproyectos.html" class="nav-link ">
                             <i class="icon-bar-chart"></i>
                             <span class="title">Tablero Proyectos</span>
@@ -66,129 +66,69 @@
                         </a>
                     </li>
                 </ul>
-                <li class="nav-item  ">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="icon-docs"></i>
-                        <span class="title">Proyectos</span>
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li class="nav-item  ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-bulb"></i>
-                                <span class="title">Preparación</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-check"></i>
-                                <span class="title">Negociación</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-layers"></i>
-                                <span class="title">Ejecución</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-question"></i>
-                                <span class="title">Evaluación</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-close"></i>
-                                <span class="title">Cerrados</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item  ">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="icon-note"></i>
-                        <span class="title">Crear Proyectos</span>
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li class="nav-item  ">
-                            <a href="estandar.html" class="nav-link ">
-                                <i class="icon-list"></i>
-                                <span class="title">Proyecto Estándar</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="piloto.html" class="nav-link ">
-                                <i class="icon-eye"></i>
-                                <span class="title">Proyecto Piloto</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="jardin.html" class="nav-link ">
-                                <i class="icon-question"></i>
-                                <span class="title">Proyecto Jardín</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item  ">
-                    <a href="acciones.html" class="nav-link ">
-                        <i class="icon-pin"></i>
-                        <span class="title">Crear Acciones</span>
-                    </a>
-                </li>
-                <li class="nav-item  ">
-                    <a href="#" class="nav-link ">
-                        <i class="icon-calendar"></i>
-                        <span class="title">Calendario</span>
-                    </a>
-                </li>
-                <li class="nav-item  ">
-                    <a href="#" class="nav-link ">
-                        <i class="icon-envelope-open"></i>
-                        <span class="title">Mensajes</span>
-                    </a>
-                </li>
-                <li class="nav-item  ">
-                    <a href="#" class="nav-link ">
-                        <i class="icon-fire"></i>
-                        <span class="title">Alertas y Notificaciones</span>
-                    </a>
-                </li>
-                <li class="nav-item  ">
-                    <a href="#" class="nav-link ">
-                        <i class="icon-bubbles"></i>
-                        <span class="title">Conversaciones de DIseño</span>
-                    </a>
-                </li>
-                <li class="nav-item  ">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="icon-user"></i>
-                        <span class="title">Usuario</span>
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li class="nav-item  ">
-                            <a href="perfil.html" class="nav-link ">
-                                <i class="icon-user"></i>
-                                <span class="title">Perfil</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-docs"></i>
-                                <span class="title">Mis Proyectos </span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-users"></i>
-                                <span class="title">Mis Equipos</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+            </li>
+            <li class="nav-item ">
+                <a href="index.html">
+                    <i class="icon-note"></i>
+                    <span class="title">Crear Proyectos</span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a href="acciones.html" class="nav-link ">
+                    <i class="icon-pin"></i>
+                    <span class="title">Crear Acciones</span>
+                </a>
+            </li>
+            <li class="nav-item  ">
+                <a href="#" class="nav-link ">
+                    <i class="icon-calendar"></i>
+                    <span class="title">Calendario</span>
+                </a>
+            </li>
+            <li class="nav-item  ">
+                <a href="#" class="nav-link ">
+                    <i class="icon-envelope-open"></i>
+                    <span class="title">Mensajes</span>
+                </a>
+            </li>
+            <li class="nav-item  ">
+                <a href="#" class="nav-link ">
+                    <i class="icon-fire"></i>
+                    <span class="title">Alertas y Notificaciones</span>
+                </a>
+            </li>
+            <li class="nav-item  ">
+                <a href="#" class="nav-link ">
+                    <i class="icon-bubbles"></i>
+                    <span class="title">Conversaciones de DIseño</span>
+                </a>
+            </li>
+           <li class="nav-item " ng-click="is_active2 = !is_active2">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-user"></i>
+                    <span class="title">Usuario</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul ng-show="is_active2" class="sub-menu" style="display: block;">
+                    <li class="nav-item  ">
+                        <a href="perfil.html" class="nav-link ">
+                            <i class="icon-user"></i>
+                            <span class="title">Perfil</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="#" class="nav-link ">
+                            <i class="icon-docs"></i>
+                            <span class="title">Mis Proyectos </span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="#" class="nav-link ">
+                            <i class="icon-users"></i>
+                            <span class="title">Mis Equipos</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
         <!-- END SIDEBAR MENU -->

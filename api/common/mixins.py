@@ -37,7 +37,8 @@ class CommonMixin(object):
             objects_list = paginator.page(page)
         except EmptyPage:
             # If page is out of range, deliver last page of results.
-            objects_list = paginator.page(paginator.num_pages)
+            page = paginator.num_pages
+            objects_list = paginator.page(page)
 
         serializer = self.serializer_class(objects_list, many=True)
 
