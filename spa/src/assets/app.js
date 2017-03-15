@@ -43,47 +43,47 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates) {
       templateUrl: URLTemplates + "app/login/login.html",
       controller: "LoginController" 
     })
+    .state('profile', {
+      url: "/profile",
+      templateUrl: URLTemplates + "app/profile/profile.html",
+      controller: "ProfileController" 
+    })
     .state('coordinations', {
       url: "/coordinations",
       templateUrl: URLTemplates + "app/coordinations/coordinations.html",
       controller: "CoordinationsController"
+    })
+
+    .state('projectCreate', {
+      url: "/projectCreate",
+      templateUrl: URLTemplates + "app/project_create/project_create.html",
+      controller: "ProjectCreateController" 
+    })
+    .state('projectDetail', {
+      url: "/projectDetail",
+      templateUrl: URLTemplates + "app/project_detail/project_detail.html",
+      controller: "ProjectDetailController" 
     })
     .state('projectList', {
       url: "/projectList",
       templateUrl: URLTemplates + "app/project_list/project_list.html",
       controller: "ProjectListController" 
     })
-    .state('actionList', {
-      url: "/actionList",
-      templateUrl: URLTemplates + "app/action_list/action_list.html",
-      controller: "ActionListController" 
-    })
-    .state('projectCreate', {
-      url: "/projectCreate",
-      templateUrl: URLTemplates + "app/project_create/project_create.html",
-      controller: "ProjectCreateController" 
-    })
+    
     .state('actionCreate', {
       url: "/actionCreate",
       templateUrl: URLTemplates + "app/action_create/action_create.html",
       controller: "ActionCreateController" 
     })
-
+    .state('actionList', {
+      url: "/actionList",
+      templateUrl: URLTemplates + "app/action_list/action_list.html",
+      controller: "ActionListController" 
+    })
   // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise("/coordinations");
 
 });
-
-app.controller('ActionCreateController', ['$scope', function($scope) {
-  
-  console.log('ActionCreateController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
 
 app.controller('ActionListController', ['$scope', function($scope) {
   
@@ -107,20 +107,9 @@ app.controller('CoordinationsController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('HomeController', ['$scope', function($scope) {
+app.controller('ActionCreateController', ['$scope', function($scope) {
   
-  console.log('HomeController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
-app.controller('ProjectListController', ['$scope', function($scope) {
-  
-  console.log('ProjectListController');
+  console.log('ActionCreateController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -140,6 +129,28 @@ app.controller('LoginController', ['$scope', function($scope) {
 }]);
 
 
+app.controller('HomeController', ['$scope', function($scope) {
+  
+  console.log('HomeController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
+app.controller('ProfileController', ['$scope', function($scope) {
+  
+  console.log('ProfileController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
 app.controller('ProjectCreateController', ['$scope', function($scope) {
   
   console.log('ProjectCreateController');
@@ -151,34 +162,27 @@ app.controller('ProjectCreateController', ['$scope', function($scope) {
 }]);
 
 
-
-app.directive('myHeader', ['URLTemplates',
-
-  /** @ngInject */
-  function myHeader(URLTemplates) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/header/header.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: HeaderController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    /** @ngInject */
-    function HeaderController(APIConfig) {
-      var vm = this;
-
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
-    }
+app.controller('ProjectDetailController', ['$scope', function($scope) {
+  
+  console.log('ProjectDetailController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
   }
 
-]);
+}]);
+
+
+app.controller('ProjectListController', ['$scope', function($scope) {
+  
+  console.log('ProjectListController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
 
 
 app.directive('myNavbar', ['URLTemplates',
@@ -200,6 +204,35 @@ app.directive('myNavbar', ['URLTemplates',
 
     /** @ngInject */
     function NavbarController(APIConfig) {
+      var vm = this;
+
+      // "vm.creationDate" is available by directive option "bindToController: true"
+      vm.relativeDate = moment(vm.creationDate).fromNow();
+    }
+  }
+
+]);
+
+
+app.directive('myHeader', ['URLTemplates',
+
+  /** @ngInject */
+  function myHeader(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/components/header/header.html',
+      scope: {
+          creationDate: '='
+      },
+      controller: HeaderController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    /** @ngInject */
+    function HeaderController(APIConfig) {
       var vm = this;
 
       // "vm.creationDate" is available by directive option "bindToController: true"

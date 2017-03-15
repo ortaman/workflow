@@ -9,32 +9,43 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates) {
       templateUrl: URLTemplates + "app/login/login.html",
       controller: "LoginController" 
     })
+    .state('profile', {
+      url: "/profile",
+      templateUrl: URLTemplates + "app/profile/profile.html",
+      controller: "ProfileController" 
+    })
     .state('coordinations', {
       url: "/coordinations",
       templateUrl: URLTemplates + "app/coordinations/coordinations.html",
       controller: "CoordinationsController"
+    })
+
+    .state('projectCreate', {
+      url: "/projectCreate",
+      templateUrl: URLTemplates + "app/project_create/project_create.html",
+      controller: "ProjectCreateController" 
+    })
+    .state('projectDetail', {
+      url: "/projectDetail",
+      templateUrl: URLTemplates + "app/project_detail/project_detail.html",
+      controller: "ProjectDetailController" 
     })
     .state('projectList', {
       url: "/projectList",
       templateUrl: URLTemplates + "app/project_list/project_list.html",
       controller: "ProjectListController" 
     })
-    .state('actionList', {
-      url: "/actionList",
-      templateUrl: URLTemplates + "app/action_list/action_list.html",
-      controller: "ActionListController" 
-    })
-    .state('projectCreate', {
-      url: "/projectCreate",
-      templateUrl: URLTemplates + "app/project_create/project_create.html",
-      controller: "ProjectCreateController" 
-    })
+    
     .state('actionCreate', {
       url: "/actionCreate",
       templateUrl: URLTemplates + "app/action_create/action_create.html",
       controller: "ActionCreateController" 
     })
-
+    .state('actionList', {
+      url: "/actionList",
+      templateUrl: URLTemplates + "app/action_list/action_list.html",
+      controller: "ActionListController" 
+    })
   // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise("/coordinations");
 
