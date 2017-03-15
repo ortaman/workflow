@@ -45,7 +45,7 @@ MIDDLEWARE += [
 # This IP addresses ensure debug toolbar shows development environment
 INTERNAL_IPS = ('127.0.0.1', '10.0.2.2')
 
-ALLOWED_HOSTS = ['localhost', '192.168.130.163']
+ALLOWED_HOSTS = ['localhost', '192.168.130.163', '127.0.0.1']
 
 
 # ***** DEBUG-CORS-HEADERS SETTINGS ***** #

@@ -85,6 +85,17 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates) {
 
 });
 
+app.controller('ActionCreateController', ['$scope', function($scope) {
+  
+  console.log('ActionCreateController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
 app.controller('ActionListController', ['$scope', function($scope) {
   
    console.log('ActionListController');
@@ -107,28 +118,6 @@ app.controller('CoordinationsController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('ActionCreateController', ['$scope', function($scope) {
-  
-  console.log('ActionCreateController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
-app.controller('LoginController', ['$scope', function($scope) {
-   
-  console.log('LoginController');
-
-  $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
 app.controller('HomeController', ['$scope', function($scope) {
   
   console.log('HomeController');
@@ -138,6 +127,56 @@ app.controller('HomeController', ['$scope', function($scope) {
   }
 
 }]);
+
+
+app.controller('LoginController', ['$scope','$state', '$http', 'AuthService', function($scope, $state, $http, AuthService) {
+
+  $scope.showAlert = false;
+
+
+  $scope.loginSubmit = function(data){
+    AuthService.login(data);
+    $state.go('coordinations')
+  }
+}]);
+
+
+
+
+app.directive('loader', [
+
+  function buttonLoader() {
+    var directive = {
+      restrict: 'A',
+      scope: {
+          loader: '='
+      },
+      link: linkFn,
+    };
+
+    return directive;
+
+    function linkFn(scope, element, attrs) {
+    }
+  }
+
+]);
+
+
+app.service('AuthService', function($http, APIConfig) {
+  URL = APIConfig.url + 'token-auth/'
+  this.login = function(data) {
+    console.log(data);
+    $http.post(URL, data) .then(
+      function(results){
+        console.log("results", results);
+      },
+      function(error){
+        console.log(error);
+      }
+    );
+  }
+});
 
 
 app.controller('ProfileController', ['$scope', function($scope) {
@@ -185,35 +224,6 @@ app.controller('ProjectListController', ['$scope', function($scope) {
 
 
 
-app.directive('myNavbar', ['URLTemplates',
-
-  /** @ngInject */
-  function myNavbar(URLTemplates) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/navbar/navbar.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: NavbarController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    /** @ngInject */
-    function NavbarController(APIConfig) {
-      var vm = this;
-
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
-    }
-  }
-
-]);
-
-
 app.directive('myHeader', ['URLTemplates',
 
   /** @ngInject */
@@ -233,6 +243,35 @@ app.directive('myHeader', ['URLTemplates',
 
     /** @ngInject */
     function HeaderController(APIConfig) {
+      var vm = this;
+
+      // "vm.creationDate" is available by directive option "bindToController: true"
+      vm.relativeDate = moment(vm.creationDate).fromNow();
+    }
+  }
+
+]);
+
+
+app.directive('myNavbar', ['URLTemplates',
+
+  /** @ngInject */
+  function myNavbar(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/components/navbar/navbar.html',
+      scope: {
+          creationDate: '='
+      },
+      controller: NavbarController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    /** @ngInject */
+    function NavbarController(APIConfig) {
       var vm = this;
 
       // "vm.creationDate" is available by directive option "bindToController: true"
