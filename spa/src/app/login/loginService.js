@@ -5,7 +5,7 @@ app.service('AuthService', function($http, APIConfig,$q) {
     var posts = undefined;
     this.login = function(data) {
 
-      if (!posts) {
+
         var deferred = $q.defer();
 
         $http.post(URL,data)
@@ -18,7 +18,7 @@ app.service('AuthService', function($http, APIConfig,$q) {
           });
 
         posts = deferred.promise;
-      }
+      
       return $q.when(posts);
     };
 

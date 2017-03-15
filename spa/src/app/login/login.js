@@ -10,7 +10,7 @@ app.controller('LoginController', ['$scope','$state', '$http', 'AuthService', fu
       .then(function(data) {
         console.log(data);
         //guardar token
-        //$state.go('coordinatiosns')
+        $state.go('coordinatiosns')
       },function(error){
         $scope.errors = error.data;
         $scope.showAlert = true;
