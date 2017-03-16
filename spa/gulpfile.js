@@ -60,7 +60,11 @@ gulp.task('watch-less', function() {
 
 /* Task to compile javascript */
 gulp.task('compile-js', function() {
-  var compile = gulp.src(['src/app/**/*.js'])
+  var compile = gulp.src([
+    'src/app/app._.js',
+    'src/app/*.js',
+    'src/app/**/*.js'
+    ])
     .pipe(concat('app.js'))
     //.pipe(uglify())
     .pipe(gulp.dest('src/assets'))
@@ -78,8 +82,6 @@ gulp.task('watch-js', function() {
     ],
     ['compile-js']);
 });
-
-
 
 
 gulp.task('js-vendor', function () {

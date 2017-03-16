@@ -22,30 +22,31 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates) {
 
     .state('projectCreate', {
       url: "/projectCreate",
-      templateUrl: URLTemplates + "app/project_create/project_create.html",
+      templateUrl: URLTemplates + "app/project-create/project-create.html",
       controller: "ProjectCreateController" 
     })
     .state('projectDetail', {
       url: "/projectDetail",
-      templateUrl: URLTemplates + "app/project_detail/project_detail.html",
+      templateUrl: URLTemplates + "app/project-detail/project-detail.html",
       controller: "ProjectDetailController" 
     })
     .state('projectList', {
       url: "/projectList",
-      templateUrl: URLTemplates + "app/project_list/project_list.html",
+      templateUrl: URLTemplates + "app/project-list/project-list.html",
       controller: "ProjectListController" 
     })
     
     .state('actionCreate', {
       url: "/actionCreate",
-      templateUrl: URLTemplates + "app/action_create/action_create.html",
+      templateUrl: URLTemplates + "app/action-create/action-create.html",
       controller: "ActionCreateController" 
     })
     .state('actionList', {
       url: "/actionList",
-      templateUrl: URLTemplates + "app/action_list/action_list.html",
-      controller: "ActionListController" 
+      templateUrl: "app/action-list/action-list.html",
+      controller: "ActionListController",
     })
+
   // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise("/coordinations");
 

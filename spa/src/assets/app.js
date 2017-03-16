@@ -3,12 +3,18 @@ var app = angular.module('myApp',
   [
 		'ui.router',
 		'ngDialog',
-		'ngMaterial'
+		'ngMaterial',
+
+    // 'myApp.actionList',
   ]
 );
 
-app.run(function($rootScope, $location, $window) {
-  
+app.run(function($http, $rootScope, $location, $window) {
+
+  $http.defaults.headers.common['Accept'] = 'application/json';
+  $http.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
+  $http.defaults.headers.common.Authorization = 'Token 369643b407efd4c058b89af95cc97464444c8876';
+
   // initialise google analytics
   // $window.ga('create', 'UA-81230345-1', 'auto');
 
@@ -19,8 +25,11 @@ app.run(function($rootScope, $location, $window) {
   
 });
 
+if(window.location.hash === '#_=_') window.location.hash = '#!';
+
+
 app.constant('APIConfig', {
-  url: 'http://127.0.0.1:9000/api/',
+  url: 'http://localhost:9000/',
 });
 
 
@@ -56,30 +65,31 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates) {
 
     .state('projectCreate', {
       url: "/projectCreate",
-      templateUrl: URLTemplates + "app/project_create/project_create.html",
+      templateUrl: URLTemplates + "app/project-create/project-create.html",
       controller: "ProjectCreateController" 
     })
     .state('projectDetail', {
       url: "/projectDetail",
-      templateUrl: URLTemplates + "app/project_detail/project_detail.html",
+      templateUrl: URLTemplates + "app/project-detail/project-detail.html",
       controller: "ProjectDetailController" 
     })
     .state('projectList', {
       url: "/projectList",
-      templateUrl: URLTemplates + "app/project_list/project_list.html",
+      templateUrl: URLTemplates + "app/project-list/project-list.html",
       controller: "ProjectListController" 
     })
     
     .state('actionCreate', {
       url: "/actionCreate",
-      templateUrl: URLTemplates + "app/action_create/action_create.html",
+      templateUrl: URLTemplates + "app/action-create/action-create.html",
       controller: "ActionCreateController" 
     })
     .state('actionList', {
       url: "/actionList",
-      templateUrl: URLTemplates + "app/action_list/action_list.html",
-      controller: "ActionListController" 
+      templateUrl: "app/action-list/action-list.html",
+      controller: "ActionListController",
     })
+
   // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise("/coordinations");
 
@@ -96,16 +106,110 @@ app.controller('ActionCreateController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('ActionListController', ['$scope', function($scope) {
+app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
   
-   console.log('ActionListController');
+  console.log('ActionListController');
+
+	ActionService.getList().then(
+		function(response) {
+			console.log('reponse', response);
+		},
+		function(errorResponse) {
+			  error = errorResponse || 'Request failed';
+    		console.log('error', error);
+  		}
+	);
  
-   $scope.isActive = function(path) {
+  $scope.isActive = function(path) {
     return ($location.path()==path)
   }
 
 }]);
 
+
+/*
+angular.module('myApp.actionList', ['ui.router']);
+
+angular.module('myApp.actionList').config('$http', 'APIConfig', function($http, APIConfig) {
+
+  // Now set up the states
+  $stateProvider
+    .state('actionList', {
+      url: "/actionList",
+      templateUrl: "app/action-list/action-list.html",
+      controller: "ActionListController",
+    })
+});
+
+app.module('myApp.actionList').service("ActionService", ['$http', function($http) {
+	this.getList = function() {
+	  var promise = $http.get(APIConfig.url + "api/actions/").then(function(response) {
+	  return response.data;
+	});
+	  return promise;
+	};
+}]);
+
+app.module('myApp.actionList').controller('ActionListController', ['URLTemplates','$scope', 'ActionService', function(URLTemplates,$scope, ActionService) {
+  
+  console.log('ActionListController');
+
+	ActionService.getList().then(
+		function(response) {
+			console.log('reponse', response);
+		},
+		function(errorResponse) {
+			  error = errorResponse || 'Request failed';
+    		console.log('error', error);
+  		}
+	);
+ 
+  $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+*/
+
+app.service("ActionService", ['$http', 'APIConfig', function($http, APIConfig) {
+	this.getList = function() {
+	  var promise = $http.get(APIConfig.url + "api/actions/").then(function(response) {
+	  return response.data;
+	});
+	  return promise;
+	};
+}]);
+
+/*
+app.service("ActionService", function($http, APIConfig) {
+	this.save = function(action) {
+	  $http.post(APIConfig.url + "api/actions/", action).then(
+	    function(response) {
+	      return response.data;
+	    },
+ 	    function(errorResponse) {
+        return response.data || 'Request failed';
+      }
+    );
+	};
+	this.getList = function() {
+	    var promise = $http.get(APIConfig.url + "api/actions/").then(function(response) {
+	    return response.data;
+	  });
+	    return promise;
+	};
+	this.getById = function() {
+	    var promise = $http.get(APIConfig.url + "/api/action/").then(function(response) {
+	    return response.data;
+	  });
+	};
+	this.update = function(action, id) {
+	    var promise = $http.put(APIConfig.url + "/api/action/" + id + "/", action).then(function(response) {
+	    return response.data;
+	  });
+	};
+});
+*/
 
 app.controller('CoordinationsController', ['$scope', function($scope) {
   

@@ -1,6 +1,6 @@
 
 app.constant('APIConfig', {
-  url: 'http://127.0.0.1:9000/api/',
+  url: 'http://localhost:9000/',
 });
 
 
