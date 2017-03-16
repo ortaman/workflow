@@ -69,142 +69,162 @@
                             <span class="caption-subject font-green-sharp bold uppercase">Preparación</span>
                         </div>
                     </div>
-                    <form action="#" class="horizontal-form">
+
+                    <form name="projectForm" ng-submit="submit(project)" class="horizontal-form" novalidate>
                         <h4 class="form-section">Los Roles en la Acción</h4>
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Cliente">
-                                </div>
+                              <md-input-container class="md-block">
+                                <label>Cliente</label>
+                                <input ng-model="project.client"  type="text" ng-model="color" required md-maxlength="10">
+                              </md-input-container>
+                              <!-- <md-autocomplete
+                                ng-disabled="ctrl.isDisabled"
+                                md-no-cache="ctrl.noCache"
+                                md-selected-item="ctrl.selectedItem"
+                                md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                md-search-text="ctrl.searchText"
+                                md-selected-item-change="ctrl.selectedItemChange(item)"
+                                md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                md-item-text="item.display"
+                                md-min-length="0"
+                                placeholder="Ingrese el primer apellido">
+                                <md-item-template>
+                                  <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                                </md-item-template>
+                                <md-not-found>
+                                  No states matching "{{ctrl.searchText}}" were found.
+                                  <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+                                </md-not-found>
+                              </md-autocomplete> -->
                             </div>
+
                             <!--/span-->
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Realizador">
-                                </div>
+                                <md-input-container class="md-block">
+                                  <label>Realizador</label>
+                                  <input ng-model="project.producer"  type="text" ng-model="color" required md-maxlength="10">
+                                </md-input-container>
                             </div>
                             <!--/span-->
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Observador">
-                                </div>
+                                <md-input-container class="md-block">
+                                  <label>Observador</label>
+                                  <input ng-model="project.agent"  type="text" ng-model="color" required md-maxlength="10">
+                                </md-input-container>
                             </div>
                         </div>
                         <!--/row-->
                         <h4 class="form-section">El Foco del Proyecto</h4>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Nombre del Proyecto...">
-                                </div>
+                                <md-input-container>
+                                  <label>Nombre del Proyecto...</label>
+                                  <input ng-model="project.name" name="projectName" type="text" ng-model="color" required md-maxlength="20">
+                                  <div ng-messages="projectForm.projectName.$error">
+                                    <div ng-message="required">Este campo es requerido</div>
+                                    <div ng-message="md-maxlength">Ha excedido el máximo número de caracteres</div>
+                                  </div>
+                                </md-input-container>
                             </div>
                         </div>
                         <h4 class="form-section">¿Qué haremos? - ¿Cómo lo haremos?</h4>
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <textarea class="form-control todo-taskbody-taskdesc" rows="8" placeholder="Describe la Acción..."></textarea>
-                                </div>
+                                <md-input-container class="md-block">
+                                  <label>Describe la Acción...</label>
+                                  <textarea required ng-model="project.toDo" md-maxlength="150" rows="5" ></textarea>
+                                </md-input-container>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <textarea class="form-control todo-taskbody-taskdesc" rows="8" placeholder="Describe las Condiciones de Satisfacción..."></textarea>
-                                </div>
+                              <md-input-container class="md-block">
+                                <label>Describe las condiciones de satisfaccion...</label>
+                                <textarea required ng-model="project.satisfactions" md-maxlength="150" rows="5" ></textarea>
+                              </md-input-container>
                             </div>
                         </div>
                         <h4 class="form-section">Fechas Clave Action Workflow del Proyecto</h4>
                         <div class="row">
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control todo-taskbody-due" placeholder="Fase de Preparación..."> </div>
+                                <div flex-gt-xs>
+                                  <h4>Fase de Preparación...</h4>
+                                  <md-datepicker required ng-model="project.preparation_at" md-placeholder="ingrese fecha"></md-datepicker>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control todo-taskbody-due" placeholder="Fase de Negociación..."> </div>
+                                <div flex-gt-xs>
+                                  <h4>Fase de Negociación...</h4>
+                                  <md-datepicker required ng-model="project.negotiation_at" md-placeholder="ingrese fecha"></md-datepicker>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control todo-taskbody-due" placeholder="Fase de Ejecución..."> </div>
+                                <div flex-gt-xs>
+                                  <h4>Fase de Ejecución...</h4>
+                                  <md-datepicker required ng-model="project.execution_at" md-placeholder="ingrese fecha"></md-datepicker>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control todo-taskbody-due" placeholder="Fase de Evaluación..."> </div>
+                                <div flex-gt-xs>
+                                  <h4>Fase de Evaluación...</h4>
+                                  <md-datepicker required ng-model="project.evaluation_at" md-placeholder="ingrese fecha"></md-datepicker>
                                 </div>
                             </div>
                         </div>
                         <h4 class="form-section">Fechas Compromisos</h4>
                         <div class="row">
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control todo-taskbody-due" placeholder="Fecha de Inicio..."> </div>
+                                <div flex-gt-xs>
+                                  <h4>"Fecha de Inicio..."</h4>
+                                  <md-datepicker required ng-model="project.begin_at" md-placeholder="ingrese fecha"></md-datepicker>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control todo-taskbody-due" placeholder="Fecha de Cumplimiento..."> </div>
+                                <div flex-gt-xs>
+                                  <h4>Fecha de Cumplimiento...</h4>
+                                  <md-datepicker required ng-model="project.accomplish_at" md-placeholder="ingrese fecha"></md-datepicker>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control todo-taskbody-due" placeholder="Fecha de Renegociación..."> </div>
+                                <div flex-gt-xs>
+                                  <h4>Fecha de Renegociación...</h4>
+                                  <md-datepicker required ng-model="project.renegotiation_at" md-placeholder="ingrese fecha"></md-datepicker>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control todo-taskbody-due" placeholder="Fecha de Reporte de Avance..."> </div>
+                                <div flex-gt-xs>
+                                  <h4>Fecha de Reporte de Avance...</h4>
+                                  <md-datepicker required ng-model="project.report_at" md-placeholder="ingrese fecha"></md-datepicker>
                                 </div>
                             </div>
                         </div>
                         <h4 class="form-section">Indicadores</h4>
                         <div class="row">
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-dollar"></i>
-                                        <input type="text" class="form-control todo-taskbody" placeholder="Financieros..."> </div>
-                                </div>
+                                <md-input-container class="md-block">
+                                  <label>Financieros...</label>
+                                  <input ng-model="project.financial"  type="text" ng-model="color" required md-maxlength="10">
+                                </md-input-container>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-calculator"></i>
-                                        <input type="text" class="form-control todo-taskbody" placeholder="Operacionaales..."> </div>
-                                </div>
+
+                                <md-input-container class="md-block">
+                                  <label>Operacionales...</label>
+                                  <input ng-model="project.operational"  type="text" ng-model="color" required md-maxlength="10">
+                                </md-input-container>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-pie-chart"></i>
-                                        <input type="text" class="form-control todo-taskbody" placeholder="Otros..."> </div>
-                                </div>
+                                <md-input-container class="md-block">
+                                  <label>Otros...</label>
+                                  <input ng-model="project.other1"  type="text" ng-model="color" required md-maxlength="10">
+                                </md-input-container>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-line-chart"></i>
-                                        <input type="text" class="form-control todo-taskbody" placeholder="Otros..."> </div>
-                                </div>
+                              <md-input-container class="md-block">
+                                <label>Otros...</label>
+                                <input ng-model="project.other2"  type="text" ng-model="color" required md-maxlength="10">
+                              </md-input-container>
                             </div>
                         </div>
                         <div class="todo-tasklist-devider"> </div>
@@ -213,8 +233,9 @@
                                 <!-- TASK HEAD -->
                                 <!-- END TASK HEAD -->
                                 <!-- TASK TITLE -->
-                                <button type="button" class="pull-right btn btn-sm btn-circle red-thunderbird"> &nbsp; Enviar &nbsp; </button>
+                                <button type="submit" class="pull-right btn btn-sm btn-circle red-thunderbird"> &nbsp; Enviar &nbsp; </button>
                         </div>
+                    </form>
                 </div>
             </div>
             <!-- END TASK COMMENT FORM -->
