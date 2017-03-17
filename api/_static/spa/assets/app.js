@@ -1,4 +1,6 @@
 
+"use strict";
+
 var app = angular.module('myApp', 
   [
 		'ui.router',
@@ -29,7 +31,7 @@ if(window.location.hash === '#_=_') window.location.hash = '#!';
 
 
 app.constant('APIConfig', {
-  url: 'http://localhost:9000/',
+  url: 'http://localhost:9000/api/',
 });
 
 
@@ -106,6 +108,7 @@ app.controller('ActionCreateController', ['$scope', function($scope) {
 }]);
 
 
+
 app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
   
   console.log('ActionListController');
@@ -173,7 +176,7 @@ app.module('myApp.actionList').controller('ActionListController', ['URLTemplates
 
 app.service("ActionService", ['$http', 'APIConfig', function($http, APIConfig) {
 	this.getList = function() {
-	  var promise = $http.get(APIConfig.url + "api/actions/").then(function(response) {
+	  var promise = $http.get(APIConfig.url + "actions/").then(function(response) {
 	  return response.data;
 	});
 	  return promise;
@@ -222,63 +225,49 @@ app.controller('CoordinationsController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('HomeController', ['$scope', function($scope) {
+app.service('AuthService', function($http, $q,  APIConfig) {
   
-  console.log('HomeController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
+  var url = APIConfig.url + 'token-auth/'
 
-}]);
+  this.login = function(data) {
 
+      var deferred = $q.defer();
 
-app.controller('LoginController', ['$scope','$state', '$http', 'AuthService', '$window', function($scope, $state, $http, AuthService, $window) {
+      $http.post(url, data).then(function(response) {
+          deferred.resolve(response);
+        }, function(errorResponse) {
+          deferred.reject(errorResponse);
+        });
 
-  $scope.showAlert = false;
-  $scope.errors
-
-  $scope.loginSubmit = function(data){
-    $scope.getPosts = function() {
-    AuthService.login(data)
-      .then(function(data) {
-        $window.localStorage.setItem("token",data.token);
-        $state.go('coordinations')
-      },function(error){
-        $scope.errors = error.data;
-        $scope.showAlert = true;
-      });
-    };
-    $scope.getPosts();
-
-  }
-}]);
-
-
-app.service('AuthService', function($http, APIConfig,$q) {
-  URL = APIConfig.url + 'token-auth/'
-
-    var posts = undefined;
-    this.login = function(data) {
-
-
-        var deferred = $q.defer();
-
-        $http.post(URL,data)
-          .then(function(result) {
-            posts = result.data;
-            deferred.resolve(posts);
-          }, function(error) {
-            posts = error;
-            deferred.reject(error);
-          });
-
-        posts = deferred.promise;
-      
-      return $q.when(posts);
-    };
+      var promise = deferred.promise;
+    
+    return promise
+  };
 
 });
+
+
+app.controller('LoginController', [
+  '$scope','$state', '$http', '$window', 'AuthService',  
+  function($scope, $state, $http, $window, AuthService) {
+
+    $scope.showAlert = false;
+
+    $scope.loginSubmit = function(data) {
+
+      AuthService.login(data)
+        .then(function(response) {
+          $window.localStorage.setItem("token", response.token);
+          $state.go('coordinations');
+
+        },function(errorResponse) {
+          $scope.showAlert = true;
+          $scope.errors = errorResponse.data.non_field_errors ||
+                          errorResponse.statusText || 'Request failed';
+        });
+    };
+
+}]);
 
 
 app.controller('ProfileController', ['$scope', function($scope) {
