@@ -16,7 +16,7 @@ app.controller('LoginController', [
           $scope.showAlert = true;
 
           if (errorResponse.data.non_field_errors) {
-            $scope.errors = errorResponse.data.non_field_errors[0];
+            $scope.errors = "Nombre de usuario y/o contraseña inválidos";
           }
           else {
             $scope.errors = errorResponse.statusText || 'Request failed';

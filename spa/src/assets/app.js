@@ -225,6 +225,28 @@ app.controller('CoordinationsController', ['$scope', function($scope) {
 }]);
 
 
+app.controller('ProfileController', ['$scope', function($scope) {
+  
+  console.log('ProfileController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
+app.controller('ProjectDetailController', ['$scope', function($scope) {
+  
+  console.log('ProjectDetailController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
 app.service('AuthService', function($http, $q,  APIConfig) {
   
   var url = APIConfig.url + 'token-auth/'
@@ -264,7 +286,7 @@ app.controller('LoginController', [
           $scope.showAlert = true;
 
           if (errorResponse.data.non_field_errors) {
-            $scope.errors = errorResponse.data.non_field_errors[0];
+            $scope.errors = "Nombre de usuario y/o contraseña inválidos";
           }
           else {
             $scope.errors = errorResponse.statusText || 'Request failed';
@@ -276,31 +298,9 @@ app.controller('LoginController', [
 }]);
 
 
-app.controller('ProfileController', ['$scope', function($scope) {
-  
-  console.log('ProfileController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
 app.controller('ProjectCreateController', ['$scope', function($scope) {
   
   console.log('ProjectCreateController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
-app.controller('ProjectDetailController', ['$scope', function($scope) {
-  
-  console.log('ProjectDetailController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -319,35 +319,6 @@ app.controller('ProjectListController', ['$scope', function($scope) {
 
 }]);
 
-
-
-app.directive('myNavbar', ['URLTemplates',
-
-  /** @ngInject */
-  function myNavbar(URLTemplates) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/navbar/navbar.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: NavbarController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    /** @ngInject */
-    function NavbarController(APIConfig) {
-      var vm = this;
-
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
-    }
-  }
-
-]);
 
 
 app.directive('myHeader', ['URLTemplates',
@@ -369,6 +340,35 @@ app.directive('myHeader', ['URLTemplates',
 
     /** @ngInject */
     function HeaderController(APIConfig) {
+      var vm = this;
+
+      // "vm.creationDate" is available by directive option "bindToController: true"
+      vm.relativeDate = moment(vm.creationDate).fromNow();
+    }
+  }
+
+]);
+
+
+app.directive('myNavbar', ['URLTemplates',
+
+  /** @ngInject */
+  function myNavbar(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/components/navbar/navbar.html',
+      scope: {
+          creationDate: '='
+      },
+      controller: NavbarController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    /** @ngInject */
+    function NavbarController(APIConfig) {
       var vm = this;
 
       // "vm.creationDate" is available by directive option "bindToController: true"
