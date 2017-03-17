@@ -18,12 +18,18 @@ app.directive('myHeader', ['URLTemplates',
     return directive;
 
     /** @ngInject */
-    function HeaderController(APIConfig) {
+    function HeaderController(APIConfig, $state, StorageService) {
       var vm = this;
 
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
+      if (!StorageService.get('token')) {
+        $state.go('login');
+      }
+
+      vm.logout = function() {
+        StorageService.remove('token');
+        $state.go('login');
+      }
+
     }
   }
-
 ]);

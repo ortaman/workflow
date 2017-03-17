@@ -11,11 +11,14 @@ var app = angular.module('myApp',
   ]
 );
 
-app.run(function($http, $rootScope, $location, $window) {
+app.run(function($http, $rootScope, $location, StorageService) {
 
   $http.defaults.headers.common['Accept'] = 'application/json';
   $http.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
-  $http.defaults.headers.common.Authorization = 'Token 369643b407efd4c058b89af95cc97464444c8876';
+
+  if (StorageService.get('token')) {
+    $http.defaults.headers.common.Authorization = 'Token ' + StorageService.get('token');
+  }
 
   // initialise google analytics
   // $window.ga('create', 'UA-81230345-1', 'auto');

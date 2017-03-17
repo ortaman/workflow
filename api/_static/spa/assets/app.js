@@ -11,11 +11,14 @@ var app = angular.module('myApp',
   ]
 );
 
-app.run(function($http, $rootScope, $location, $window) {
+app.run(function($http, $rootScope, $location, StorageService) {
 
   $http.defaults.headers.common['Accept'] = 'application/json';
   $http.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
-  $http.defaults.headers.common.Authorization = 'Token 369643b407efd4c058b89af95cc97464444c8876';
+
+  if (StorageService.get('token')) {
+    $http.defaults.headers.common.Authorization = 'Token ' + StorageService.get('token');
+  }
 
   // initialise google analytics
   // $window.ga('create', 'UA-81230345-1', 'auto');
@@ -96,17 +99,6 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates) {
   $urlRouterProvider.otherwise("/coordinations");
 
 });
-
-app.controller('ActionCreateController', ['$scope', function($scope) {
-  
-  console.log('ActionCreateController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
 
 
 app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
@@ -214,9 +206,9 @@ app.service("ActionService", function($http, APIConfig) {
 });
 */
 
-app.controller('CoordinationsController', ['$scope', function($scope) {
+app.controller('ActionCreateController', ['$scope', function($scope) {
   
-  console.log('CoordinationsController');
+  console.log('ActionCreateController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -225,20 +217,36 @@ app.controller('CoordinationsController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('ProfileController', ['$scope', function($scope) {
-  
-  console.log('ProfileController');
+app.service('StorageService', function($window) {
+
+    this.set = function(key, token) {
+
+      if ($window.localStorage) {
+        $window.localStorage.setItem(key, token);  
+      }
+      else {
+        alert('LocalStorage no soportado por el navegador!');
+      }
+
+    };
+
+    this.get = function(key) {
+      return $window.localStorage.getItem(key) || false;
+    };
+
+    this.remove = function(key) {
+      $window.localStorage.removeItem(key);
+    }
+
+    this.clear = function(){
+      $window.localStorage.clear();
+    }
  
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
+});
 
-}]);
-
-
-app.controller('ProjectDetailController', ['$scope', function($scope) {
+app.controller('ProjectCreateController', ['$scope', function($scope) {
   
-  console.log('ProjectDetailController');
+  console.log('ProjectCreateController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -270,8 +278,8 @@ app.service('AuthService', function($http, $q,  APIConfig) {
 
 
 app.controller('LoginController', [
-  '$scope','$state', '$http', '$window', 'AuthService',  
-  function($scope, $state, $http, $window, AuthService) {
+  '$scope','$state', '$http', '$window', 'AuthService', 'StorageService', 
+  function($scope, $state, $http, $window, AuthService, StorageService) {
 
     $scope.showAlert = false;
 
@@ -279,17 +287,18 @@ app.controller('LoginController', [
 
       AuthService.login(data)
         .then(function(response) {
-          $window.localStorage.setItem("token", response.token);
+          
+          StorageService.set('token',response.data.token);
           $state.go('coordinations');
 
         },function(errorResponse) {
           $scope.showAlert = true;
 
           if (errorResponse.data.non_field_errors) {
-            $scope.errors = "Nombre de usuario y/o contraseña inválidos";
+            $scope.error = "Nombre de usuario y/o contraseña inválidos.";
           }
           else {
-            $scope.errors = errorResponse.statusText || 'Request failed';
+            $scope.error = errorResponse.statusText || 'Request failed.';
           }
 
         });
@@ -298,9 +307,20 @@ app.controller('LoginController', [
 }]);
 
 
-app.controller('ProjectCreateController', ['$scope', function($scope) {
+app.controller('CoordinationsController', ['$scope', function($scope) {
   
-  console.log('ProjectCreateController');
+  console.log('CoordinationsController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
+app.controller('ProfileController', ['$scope', function($scope) {
+  
+  console.log('ProfileController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -312,6 +332,17 @@ app.controller('ProjectCreateController', ['$scope', function($scope) {
 app.controller('ProjectListController', ['$scope', function($scope) {
   
   console.log('ProjectListController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
+app.controller('ProjectDetailController', ['$scope', function($scope) {
+  
+  console.log('ProjectDetailController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -339,14 +370,20 @@ app.directive('myHeader', ['URLTemplates',
     return directive;
 
     /** @ngInject */
-    function HeaderController(APIConfig) {
+    function HeaderController(APIConfig, $state, StorageService) {
       var vm = this;
 
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
+      if (!StorageService.get('token')) {
+        $state.go('login');
+      }
+
+      vm.logout = function() {
+        StorageService.remove('token');
+        $state.go('login');
+      }
+
     }
   }
-
 ]);
 
 
