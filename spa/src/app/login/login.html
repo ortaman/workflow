@@ -3,26 +3,47 @@
 	<div class="content">
 		<form class="login-form" ng-submit="loginSubmit(data)" name="loginForm" novalidate>
 
-		<h3 class="form-title font-green"> Acceso de usuario </h3>
-		
-		<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9"> Username </label>
-				<input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off"       placeholder="Username" ng-model="data.username" required/>
+			<h3 class="form-title font-green"> Acceso de usuario </h3>
+			
+			<div class="form-group">
+					<label class="control-label visible-ie8 visible-ie9"> Username </label>
+					<input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off"       placeholder="Username"
+					       name="username"
+								 maxlength="32"
+					       ng-model="data.username"
+					       required/>
+
+          <div ng-show = "loginForm.username.$touched || submitted">
+            <div class="error" ng-show="loginForm.username.$error.required"> Campo requerido. </div>
+          </div>
+
 			</div>
+
 			<div class="form-group">
 				<label class="control-label visible-ie8 visible-ie9"> Password </label>
-				<input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off"       placeholder="Password" ng-model="data.password" required/>
+				<input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off"       placeholder="Password" 
+				       name="password"
+				       maxlength="32"
+				       ng-model="data.password" 
+				       required=""/>
+
+        <div ng-show = "loginForm.password.$touched || submitted">
+          <div class="error" ng-show="loginForm.password.$error.required"> Campo requerido. </div>
+        </div>
+
 			</div>
-			
+
 			<div class="alert alert-danger" ng-show="showAlert">
 				<button type="button" class="close" ng-click="showAlert=false"></button>
-				<span ng-repeat="e in errors"> {{ e }} </span>
+				<span> {{ errors }} </span>
 			</div>
 
 			<div class="form-actions">
 				<button type="submit" loader="8" class="btn green uppercase"
 								ng-disabled="loginForm.$invalid"> Ingresar </button>
-				<a href="javascript:;" id="forget-password" class="forget-password"> ¿Olvidaste tu contraseña? </a>
+				<!--a href="javascript:;" id="forget-password" class="forget-password"> 
+					¿Olvidaste tu contraseña? 
+				</a-->
 			</div>
 
 		</form>

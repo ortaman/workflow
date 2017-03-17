@@ -14,8 +14,14 @@ app.controller('LoginController', [
 
         },function(errorResponse) {
           $scope.showAlert = true;
-          $scope.errors = errorResponse.data.non_field_errors ||
-                          errorResponse.statusText || 'Request failed';
+
+          if (errorResponse.data.non_field_errors) {
+            $scope.errors = errorResponse.data.non_field_errors[0];
+          }
+          else {
+            $scope.errors = errorResponse.statusText || 'Request failed';
+          }
+
         });
     };
 

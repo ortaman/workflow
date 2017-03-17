@@ -262,8 +262,14 @@ app.controller('LoginController', [
 
         },function(errorResponse) {
           $scope.showAlert = true;
-          $scope.errors = errorResponse.data.non_field_errors ||
-                          errorResponse.statusText || 'Request failed';
+
+          if (errorResponse.data.non_field_errors) {
+            $scope.errors = errorResponse.data.non_field_errors[0];
+          }
+          else {
+            $scope.errors = errorResponse.statusText || 'Request failed';
+          }
+
         });
     };
 
@@ -315,35 +321,6 @@ app.controller('ProjectListController', ['$scope', function($scope) {
 
 
 
-app.directive('myHeader', ['URLTemplates',
-
-  /** @ngInject */
-  function myHeader(URLTemplates) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/header/header.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: HeaderController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    /** @ngInject */
-    function HeaderController(APIConfig) {
-      var vm = this;
-
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
-    }
-  }
-
-]);
-
-
 app.directive('myNavbar', ['URLTemplates',
 
   /** @ngInject */
@@ -363,6 +340,35 @@ app.directive('myNavbar', ['URLTemplates',
 
     /** @ngInject */
     function NavbarController(APIConfig) {
+      var vm = this;
+
+      // "vm.creationDate" is available by directive option "bindToController: true"
+      vm.relativeDate = moment(vm.creationDate).fromNow();
+    }
+  }
+
+]);
+
+
+app.directive('myHeader', ['URLTemplates',
+
+  /** @ngInject */
+  function myHeader(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/components/header/header.html',
+      scope: {
+          creationDate: '='
+      },
+      controller: HeaderController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    /** @ngInject */
+    function HeaderController(APIConfig) {
       var vm = this;
 
       // "vm.creationDate" is available by directive option "bindToController: true"
