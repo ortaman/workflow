@@ -1,0 +1,16 @@
+<md-autocomplete
+  md-selected-item="selectedItem"
+  md-search-text="searchText"
+  md-selected-item-change="selectedItemChange(user)"
+  md-items="user in query(searchText)"
+  md-item-text="user.name"
+  md-min-length="3"
+  placeholder="Ingrese el primer apellido">
+
+  <md-item-template>
+    <span md-highlight-text="searchText" md-highlight-flags="^i">{{user.name}}</span>
+  </md-item-template>
+  <md-not-found>
+    No hay personas relacionadas con este nombre
+  </md-not-found>
+</md-autocomplete>

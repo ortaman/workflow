@@ -292,16 +292,70 @@ app.controller('ProfileController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('ProjectCreateController', ['$scope', function($scope) {
+app.service('UserService', function($http, APIConfig,$q) {
+  URL = APIConfig.url + 'api/projects/';
+
+    var posts = undefined;
+    this.search = function(data) {
+        var deferred = $q.defer();
+
+        $http.post(URL,data)
+          .then(function(result) {
+            posts = result.data;
+            deferred.resolve(posts);
+          }, function(error) {
+            posts = error;
+            deferred.reject(error);
+          });
+
+        posts = deferred.promise;
+      return $q.when(posts);
+    };
+
+});
+
+
+app.controller('ProjectCreateController', ['$scope', 'ProjectService', function($scope, ProjectService) {
 
   var submited = false;
 
   $scope.submit = function(data) {
-    console.log(data);
+    console.log("datos enviar",data);
     submited = true;
+    ProjectService.create(data).then(
+      function(result){
+        console.log(result);
+      },
+      function(result){
+        console.log(result);
+      }
+    )
   }
 
 }]);
+
+
+app.service('ProjectService', function($http, APIConfig,$q) {
+  URL = APIConfig.url + 'api/projects/';
+
+    var posts = undefined;
+    this.create = function(data) {
+        var deferred = $q.defer();
+
+        $http.post(URL,data)
+          .then(function(result) {
+            posts = result.data;
+            deferred.resolve(posts);
+          }, function(error) {
+            posts = error;
+            deferred.reject(error);
+          });
+
+        posts = deferred.promise;
+      return $q.when(posts);
+    };
+
+});
 
 
 app.controller('ProjectDetailController', ['$scope', function($scope) {
@@ -379,6 +433,44 @@ app.directive('myNavbar', ['URLTemplates',
 
       // "vm.creationDate" is available by directive option "bindToController: true"
       vm.relativeDate = moment(vm.creationDate).fromNow();
+    }
+  }
+
+]);
+
+
+app.directive('peopleSearch', ['URLTemplates',
+
+  function peopleSearch(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/components/people-search/search.html',
+      scope: {
+          userId: '=userId',
+      },
+      link: SearchController,
+    };
+
+    return directive;
+
+    function SearchController(scope, element, attrs) {
+
+      scope.selectedItemChange = function(user) {
+        scope.userId = user.id;
+      }
+
+      scope.query = function (query) {
+        return [
+            {
+              "id": 6,
+              "username": "user3",
+              "email": "user3@user.com",
+              "name": "nombre",
+              "first_surname": "apellido I",
+              "second_surname": "apellido II"
+          },
+        ]
+      }
     }
   }
 
