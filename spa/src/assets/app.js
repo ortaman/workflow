@@ -127,6 +127,17 @@ app.service('StorageService', function($window) {
  
 });
 
+app.controller('ActionCreateController', ['$scope', function($scope) {
+  
+  console.log('ActionCreateController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
 
 app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
   
@@ -233,31 +244,9 @@ app.service("ActionService", function($http, APIConfig) {
 });
 */
 
-app.controller('ActionCreateController', ['$scope', function($scope) {
-  
-  console.log('ActionCreateController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
 app.controller('CoordinationsController', ['$scope', function($scope) {
   
   console.log('CoordinationsController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
-app.controller('ProfileController', ['$scope', function($scope) {
-  
-  console.log('ProfileController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -318,17 +307,6 @@ app.controller('LoginController', [
 }]);
 
 
-app.controller('ProjectDetailController', ['$scope', function($scope) {
-  
-  console.log('ProjectDetailController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
 app.controller('ProjectCreateController', ['$scope', function($scope) {
   
   console.log('ProjectCreateController');
@@ -340,9 +318,31 @@ app.controller('ProjectCreateController', ['$scope', function($scope) {
 }]);
 
 
+app.controller('ProfileController', ['$scope', function($scope) {
+  
+  console.log('ProfileController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
 app.controller('ProjectListController', ['$scope', function($scope) {
   
   console.log('ProjectListController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
+app.controller('ProjectDetailController', ['$scope', function($scope) {
+  
+  console.log('ProjectDetailController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
