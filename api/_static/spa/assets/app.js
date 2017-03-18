@@ -1,7 +1,7 @@
 
 "use strict";
 
-var app = angular.module('myApp', 
+var app = angular.module('myApp',
   [
 		'ui.router',
 		'ngDialog',
@@ -27,7 +27,7 @@ app.run(function($http, $rootScope, $location, StorageService) {
   // $rootScope.$on('$stateChangeSuccess', function (event) {
     // $window.ga('send', 'pageview', $location.path());
   // });
-  
+
 });
 
 if(window.location.hash === '#_=_') window.location.hash = '#!';
@@ -126,6 +126,17 @@ app.service('StorageService', function($window) {
     }
  
 });
+
+app.controller('ActionCreateController', ['$scope', function($scope) {
+  
+  console.log('ActionCreateController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
 
 
 app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
@@ -233,31 +244,9 @@ app.service("ActionService", function($http, APIConfig) {
 });
 */
 
-app.controller('ActionCreateController', ['$scope', function($scope) {
-  
-  console.log('ActionCreateController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
 app.controller('CoordinationsController', ['$scope', function($scope) {
   
   console.log('CoordinationsController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
-app.controller('ProfileController', ['$scope', function($scope) {
-  
-  console.log('ProfileController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -318,9 +307,9 @@ app.controller('LoginController', [
 }]);
 
 
-app.controller('ProjectDetailController', ['$scope', function($scope) {
+app.controller('ProfileController', ['$scope', function($scope) {
   
-  console.log('ProjectDetailController');
+  console.log('ProfileController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -329,9 +318,75 @@ app.controller('ProjectDetailController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('ProjectCreateController', ['$scope', function($scope) {
+app.service('UserService', function($http, APIConfig,$q) {
+
+    this.search = function(name) {
+        var results = undefined;
+        var deferred = $q.defer();
+        URL = APIConfig.url + 'users/';
+
+        $http.get(URL+'?first_surname='+name)
+          .then(function(result) {
+            results = result.data;
+            deferred.resolve(results);
+          }, function(error) {
+            results = error;
+            deferred.reject(error);
+          });
+
+        results = deferred.promise;
+      return $q.when(results);
+    };
+
+});
+
+
+app.controller('ProjectCreateController', ['$scope', 'ProjectService','UserService' ,function($scope, ProjectService,UserService) {
+
+  var submited = false;
+
+  $scope.submit = function(data) {
+    console.log("datos enviar",data);
+    submited = true;
+    ProjectService.create(data).then(
+      function(result){
+        console.log(result);
+      },
+      function(result){
+        console.log(result);
+      }
+    )
+  }
+
+}]);
+
+
+app.service('ProjectService', function($http, APIConfig,$q) {
+  URL = APIConfig.url + 'api/projects/';
+
+    var posts = undefined;
+    this.create = function(data) {
+        var deferred = $q.defer();
+
+        $http.post(URL,data)
+          .then(function(result) {
+            posts = result.data;
+            deferred.resolve(posts);
+          }, function(error) {
+            posts = error;
+            deferred.reject(error);
+          });
+
+        posts = deferred.promise;
+      return $q.when(posts);
+    };
+
+});
+
+
+app.controller('ProjectDetailController', ['$scope', function($scope) {
   
-  console.log('ProjectCreateController');
+  console.log('ProjectDetailController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -410,6 +465,41 @@ app.directive('myNavbar', ['URLTemplates',
 
       // "vm.creationDate" is available by directive option "bindToController: true"
       vm.relativeDate = moment(vm.creationDate).fromNow();
+    }
+  }
+
+]);
+
+
+app.directive('peopleSearch', ['URLTemplates','UserService',
+
+  function peopleSearch(URLTemplates, UserService) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/components/people-search/search.html',
+      scope: {
+          userId: '=userId',
+      },
+      link: SearchController,
+    };
+
+    return directive;
+
+    function SearchController(scope, element, attrs) {
+      var list = [];
+
+      scope.selectedItemChange = function(user) {
+        scope.userId = user.id;
+      }
+
+      scope.query = function (query) {
+        UserService.search(query).then(function (data) {
+          list = data.results;
+          return list;
+        },function (dd) {
+          console.log(dd);
+        })
+      }
     }
   }
 

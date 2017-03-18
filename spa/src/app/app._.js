@@ -1,7 +1,7 @@
 
 "use strict";
 
-var app = angular.module('myApp', 
+var app = angular.module('myApp',
   [
 		'ui.router',
 		'ngDialog',
@@ -27,7 +27,7 @@ app.run(function($http, $rootScope, $location, StorageService) {
   // $rootScope.$on('$stateChangeSuccess', function (event) {
     // $window.ga('send', 'pageview', $location.path());
   // });
-  
+
 });
 
 if(window.location.hash === '#_=_') window.location.hash = '#!';
