@@ -66,8 +66,8 @@ class ActionList(APIView, CommonMixin):
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
         
-        if serializer.is_valid():	
-            serializer.save()
+        if serializer.is_valid():
+            serializer.save(create_by=request.user)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
