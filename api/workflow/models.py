@@ -22,7 +22,7 @@ class Project(models.Model):
     # action roles
     client = models.ForeignKey(User, related_name='client_project', verbose_name='Cliente')
     producer = models.ForeignKey(User, related_name='producer_project', verbose_name='Realizador')
-    agent = models.ForeignKey(User, related_name='agent_project', verbose_name='Observador')
+    observer = models.ForeignKey(User, related_name='agent_project', verbose_name='Observador')
     
     # focus project
     name = models.CharField(max_length=64, verbose_name='Nombre')  
@@ -78,7 +78,7 @@ class Action(models.Model):
     # action roles
     client = models.ForeignKey(User, related_name='client_action', verbose_name='Cliente')
     producer = models.ForeignKey(User, related_name='producer_action', verbose_name='Realizador')
-    agent = models.ForeignKey(User, related_name='agent_action', verbose_name='Observador')
+    observer = models.ForeignKey(User, related_name='agent_action', verbose_name='Observador')
 
     # focus project
     name = models.CharField(max_length=64, verbose_name='Nombre')

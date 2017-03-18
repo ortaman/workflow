@@ -50,7 +50,6 @@ class ProjectList(APIView, CommonMixin):
     """
     List all proyects, or create a new project.
     """
-    permission_classes = (IsAuthenticated,)
 
     # Mixing initial variables
     model = Project
@@ -69,7 +68,7 @@ class ProjectList(APIView, CommonMixin):
         serializer = self.serializer_class(data=request.data)
         
         if serializer.is_valid():	
-            serializer.save()
+            serializer.save(create_by=request.user)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         

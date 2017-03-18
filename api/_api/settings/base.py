@@ -124,7 +124,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '../_media')
 
 
 # To Extend admin user access model
-AUTH_USER_MODEL = 'users.BaseUser'
+AUTH_USER_MODEL = 'users.User'
 
 
 REST_FRAMEWORK = {

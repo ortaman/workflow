@@ -127,17 +127,6 @@ app.service('StorageService', function($window) {
  
 });
 
-app.controller('ActionCreateController', ['$scope', function($scope) {
-  
-  console.log('ActionCreateController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
 
 app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
   
@@ -243,6 +232,17 @@ app.service("ActionService", function($http, APIConfig) {
 	};
 });
 */
+
+app.controller('ActionCreateController', ['$scope', function($scope) {
+  
+  console.log('ActionCreateController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
 
 app.controller('CoordinationsController', ['$scope', function($scope) {
   
