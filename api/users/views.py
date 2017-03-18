@@ -26,11 +26,20 @@ class UserViewSet(viewsets.ModelViewSet):
         content = {'error': 'Acceso no autorizado'}
         return Response(content, status=status.HTTP_401_UNAUTHORIZED)
 
+
     def list(self, request, *args, **kwargs):
-        """
-        """
-        content = {'error': 'Acceso no autorizado'}
-        return Response(content, status=status.HTTP_401_UNAUTHORIZED)
+        return super(UserViewSet, self).list(request, *args, **kwargs)
+
+
+    def get_queryset(self):
+
+        query = self.request.query_params
+
+        if 'first_surname' in query.keys():
+            surname = query.get('first_surname')
+            self.queryset = self.queryset.filter(first_surname__startswith=surname) 
+
+        return self.queryset
 
 
 class MyUser(APIView):

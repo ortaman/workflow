@@ -1,3 +1,6 @@
+### Dgandp spa statics. ###
+api/_static
+
 ### Keys in prodution. ###
 api/kroo/keys/production.py
 

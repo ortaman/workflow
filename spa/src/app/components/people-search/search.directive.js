@@ -1,8 +1,8 @@
 
 
-app.directive('peopleSearch', ['URLTemplates',
+app.directive('peopleSearch', ['URLTemplates','UserService',
 
-  function peopleSearch(URLTemplates) {
+  function peopleSearch(URLTemplates, UserService) {
     var directive = {
       restrict: 'E',
       templateUrl: URLTemplates + 'app/components/people-search/search.html',
@@ -15,22 +15,19 @@ app.directive('peopleSearch', ['URLTemplates',
     return directive;
 
     function SearchController(scope, element, attrs) {
+      var list = [];
 
       scope.selectedItemChange = function(user) {
         scope.userId = user.id;
       }
 
       scope.query = function (query) {
-        return [
-            {
-              "id": 6,
-              "username": "user3",
-              "email": "user3@user.com",
-              "name": "nombre",
-              "first_surname": "apellido I",
-              "second_surname": "apellido II"
-          },
-        ]
+        UserService.search(query).then(function (data) {
+          list = data.results;
+          return list;
+        },function (dd) {
+          console.log(dd);
+        })
       }
     }
   }

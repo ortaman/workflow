@@ -1,22 +1,22 @@
 
 app.service('UserService', function($http, APIConfig,$q) {
-  URL = APIConfig.url + 'api/users/';
 
-    var posts = undefined;
-    this.search = function(data) {
+    this.search = function(name) {
+        var results = undefined;
         var deferred = $q.defer();
+        URL = APIConfig.url + 'users/';
 
-        $http.post(URL,data)
+        $http.get(URL+'?first_surname='+name)
           .then(function(result) {
-            posts = result.data;
-            deferred.resolve(posts);
+            results = result.data;
+            deferred.resolve(results);
           }, function(error) {
-            posts = error;
+            results = error;
             deferred.reject(error);
           });
 
-        posts = deferred.promise;
-      return $q.when(posts);
+        results = deferred.promise;
+      return $q.when(results);
     };
 
 });

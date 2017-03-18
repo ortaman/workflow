@@ -22,9 +22,6 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
 
-
-    objects = UserManager()
-
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
@@ -53,6 +50,8 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
 
 
 class User(BaseUser):
+    objects = UserManager()
+
     class Meta:
         verbose_name = ("Usuario")
         verbose_name_plural = ("Usuarios")

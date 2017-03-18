@@ -140,7 +140,12 @@
                             <div class="col-md-3">
                                 <div flex-gt-xs>
                                   <h4>Fase de Preparación...</h4>
-                                  <md-datepicker required ng-model="project.preparation_at" md-placeholder="ingrese fecha"></md-datepicker>
+                                  <md-datepicker name="preparation_at" required ng-model="project.preparation_at" md-placeholder="ingrese fecha"></md-datepicker>
+                                  <div ng-show="projectForm.preparation_at.$touched || submitted">
+                                    <div class="error" ng-show="projectForm.preparation_at.$error.required">
+                                      Campo requerido.
+                                    </div>
+                                  </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -194,27 +199,79 @@
                             <div class="col-md-3">
                                 <md-input-container class="md-block">
                                   <label>Financieros...</label>
-                                  <input ng-model="project.financial"  type="text" ng-model="color" required md-maxlength="10">
-                                </md-input-container>
+                                  <input
+                                    name="financial"
+                                    maxlength="64"
+                                    ng-model="project.financial"
+                                    ng-pattern="/^d+$/"
+                                    required></input>
+                                  <div ng-show="projectForm.financial.$touched || submitted">
+                                    <div class="error" ng-show="projectForm.financial.$error.required">
+                                      Campo requerido.
+                                    </div>
+                                    <div class="error" ng-show="projectForm.financial.$error.pattern">
+                                      Debe contener números.
+                                    </div>
+                                  </div>
+                                 </md-input-container>
                             </div>
                             <div class="col-md-3">
 
                                 <md-input-container class="md-block">
                                   <label>Operacionales...</label>
-                                  <input ng-model="project.operational"  type="text" ng-model="color" required md-maxlength="10">
-                                </md-input-container>
+                                  <input
+                                    name="operational"
+                                    maxlength="64"
+                                    ng-model="project.operational"
+                                    ng-pattern="/^d+$/"
+                                    required></input>
+                                  <div ng-show="projectForm.operational.$touched || submitted">
+                                    <div class="error" ng-show="projectForm.operational.$error.required">
+                                      Campo requerido.
+                                    </div>
+                                    <div class="error" ng-show="projectForm.operational.$error.pattern">
+                                      Debe contener números.
+                                    </div>
+                                  </div>
+                                 </md-input-container>
                             </div>
                             <div class="col-md-3">
                                 <md-input-container class="md-block">
                                   <label>Otros...</label>
-                                  <input ng-model="project.other1"  type="text" ng-model="color" required md-maxlength="10">
-                                </md-input-container>
+                                  <input
+                                    name="other1"
+                                    maxlength="64"
+                                    ng-model="project.other1"
+                                    ng-pattern="/^d+$/"
+                                    required></input>
+                                  <div ng-show="projectForm.other1.$touched || submitted">
+                                    <div class="error" ng-show="projectForm.other1.$error.required">
+                                      Campo requerido.
+                                    </div>
+                                    <div class="error" ng-show="projectForm.other1.$error.pattern">
+                                      Debe contener números.
+                                    </div>
+                                  </div>
+                                 </md-input-container>
                             </div>
                             <div class="col-md-3">
                               <md-input-container class="md-block">
                                 <label>Otros...</label>
-                                <input ng-model="project.other2"  type="text" ng-model="color" required md-maxlength="10">
-                              </md-input-container>
+                                <input
+                                  name="other2"
+                                  maxlength="64"
+                                  ng-model="project.other2"
+                                  ng-pattern="/^d+$/"
+                                  required></input>
+                                <div ng-show="projectForm.other2.$touched || submitted">
+                                  <div class="error" ng-show="projectForm.other2.$error.required">
+                                    Campo requerido.
+                                  </div>
+                                  <div class="error" ng-show="projectForm.other2.$error.pattern">
+                                    Debe contener números.
+                                  </div>
+                                </div>
+                               </md-input-container>
                             </div>
                         </div>
                         <div class="todo-tasklist-devider"> </div>

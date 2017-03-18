@@ -78,6 +78,8 @@ gulp.task('compile-js', function() {
 /* Task to watch javascript changes */
 gulp.task('watch-js', function() {  
   gulp.watch([
+    'src/app/app._.js',
+    'src/app/*.js',
     'src/app/**/*.js'
     ],
     ['compile-js']);

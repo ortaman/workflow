@@ -1,5 +1,7 @@
 
-var app = angular.module('myApp', 
+"use strict";
+
+var app = angular.module('myApp',
   [
 		'ui.router',
 		'ngDialog',
@@ -9,11 +11,14 @@ var app = angular.module('myApp',
   ]
 );
 
-app.run(function($http, $rootScope, $location, $window) {
+app.run(function($http, $rootScope, $location, StorageService) {
 
   $http.defaults.headers.common['Accept'] = 'application/json';
   $http.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
-  $http.defaults.headers.common.Authorization = 'Token 369643b407efd4c058b89af95cc97464444c8876';
+
+  if (StorageService.get('token')) {
+    $http.defaults.headers.common.Authorization = 'Token ' + StorageService.get('token');
+  }
 
   // initialise google analytics
   // $window.ga('create', 'UA-81230345-1', 'auto');
@@ -22,14 +27,14 @@ app.run(function($http, $rootScope, $location, $window) {
   // $rootScope.$on('$stateChangeSuccess', function (event) {
     // $window.ga('send', 'pageview', $location.path());
   // });
-  
+
 });
 
 if(window.location.hash === '#_=_') window.location.hash = '#!';
 
 
 app.constant('APIConfig', {
-  url: 'http://localhost:9000/',
+  url: 'http://localhost:9000/api/',
 });
 
 
@@ -95,6 +100,33 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates) {
 
 });
 
+app.service('StorageService', function($window) {
+
+    this.set = function(key, token) {
+
+      if ($window.localStorage) {
+        $window.localStorage.setItem(key, token);  
+      }
+      else {
+        alert('LocalStorage no soportado por el navegador!');
+      }
+
+    };
+
+    this.get = function(key) {
+      return $window.localStorage.getItem(key) || false;
+    };
+
+    this.remove = function(key) {
+      $window.localStorage.removeItem(key);
+    }
+
+    this.clear = function(){
+      $window.localStorage.clear();
+    }
+ 
+});
+
 app.controller('ActionCreateController', ['$scope', function($scope) {
   
   console.log('ActionCreateController');
@@ -104,6 +136,7 @@ app.controller('ActionCreateController', ['$scope', function($scope) {
   }
 
 }]);
+
 
 
 app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
@@ -173,7 +206,7 @@ app.module('myApp.actionList').controller('ActionListController', ['URLTemplates
 
 app.service("ActionService", ['$http', 'APIConfig', function($http, APIConfig) {
 	this.getList = function() {
-	  var promise = $http.get(APIConfig.url + "api/actions/").then(function(response) {
+	  var promise = $http.get(APIConfig.url + "actions/").then(function(response) {
 	  return response.data;
 	});
 	  return promise;
@@ -222,63 +255,56 @@ app.controller('CoordinationsController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('HomeController', ['$scope', function($scope) {
+app.service('AuthService', function($http, $q,  APIConfig) {
   
-  console.log('HomeController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
+  var url = APIConfig.url + 'token-auth/'
 
-}]);
+  this.login = function(data) {
 
+      var deferred = $q.defer();
 
-app.controller('LoginController', ['$scope','$state', '$http', 'AuthService', '$window', function($scope, $state, $http, AuthService, $window) {
+      $http.post(url, data).then(function(response) {
+          deferred.resolve(response);
+        }, function(errorResponse) {
+          deferred.reject(errorResponse);
+        });
 
-  $scope.showAlert = false;
-  $scope.errors
-
-  $scope.loginSubmit = function(data){
-    $scope.getPosts = function() {
-    AuthService.login(data)
-      .then(function(data) {
-        $window.localStorage.setItem("token",data.token);
-        $state.go('coordinations')
-      },function(error){
-        $scope.errors = error.data;
-        $scope.showAlert = true;
-      });
-    };
-    $scope.getPosts();
-
-  }
-}]);
-
-
-app.service('AuthService', function($http, APIConfig,$q) {
-  URL = APIConfig.url + 'token-auth/'
-
-    var posts = undefined;
-    this.login = function(data) {
-
-
-        var deferred = $q.defer();
-
-        $http.post(URL,data)
-          .then(function(result) {
-            posts = result.data;
-            deferred.resolve(posts);
-          }, function(error) {
-            posts = error;
-            deferred.reject(error);
-          });
-
-        posts = deferred.promise;
-      
-      return $q.when(posts);
-    };
+      var promise = deferred.promise;
+    
+    return promise
+  };
 
 });
+
+
+app.controller('LoginController', [
+  '$scope','$state', '$http', '$window', 'AuthService', 'StorageService', 
+  function($scope, $state, $http, $window, AuthService, StorageService) {
+
+    $scope.showAlert = false;
+
+    $scope.loginSubmit = function(data) {
+
+      AuthService.login(data)
+        .then(function(response) {
+          
+          StorageService.set('token',response.data.token);
+          $state.go('coordinations');
+
+        },function(errorResponse) {
+          $scope.showAlert = true;
+
+          if (errorResponse.data.non_field_errors) {
+            $scope.error = "Nombre de usuario y/o contraseña inválidos.";
+          }
+          else {
+            $scope.error = errorResponse.statusText || 'Request failed.';
+          }
+
+        });
+    };
+
+}]);
 
 
 app.controller('ProfileController', ['$scope', function($scope) {
@@ -293,29 +319,29 @@ app.controller('ProfileController', ['$scope', function($scope) {
 
 
 app.service('UserService', function($http, APIConfig,$q) {
-  URL = APIConfig.url + 'api/users/';
 
-    var posts = undefined;
-    this.search = function(data) {
+    this.search = function(name) {
+        var results = undefined;
         var deferred = $q.defer();
+        URL = APIConfig.url + 'users/';
 
-        $http.post(URL,data)
+        $http.get(URL+'?first_surname='+name)
           .then(function(result) {
-            posts = result.data;
-            deferred.resolve(posts);
+            results = result.data;
+            deferred.resolve(results);
           }, function(error) {
-            posts = error;
+            results = error;
             deferred.reject(error);
           });
 
-        posts = deferred.promise;
-      return $q.when(posts);
+        results = deferred.promise;
+      return $q.when(results);
     };
 
 });
 
 
-app.controller('ProjectCreateController', ['$scope', 'ProjectService', function($scope, ProjectService) {
+app.controller('ProjectCreateController', ['$scope', 'ProjectService','UserService' ,function($scope, ProjectService,UserService) {
 
   var submited = false;
 
@@ -399,14 +425,20 @@ app.directive('myHeader', ['URLTemplates',
     return directive;
 
     /** @ngInject */
-    function HeaderController(APIConfig) {
+    function HeaderController(APIConfig, $state, StorageService) {
       var vm = this;
 
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
+      if (!StorageService.get('token')) {
+        $state.go('login');
+      }
+
+      vm.logout = function() {
+        StorageService.remove('token');
+        $state.go('login');
+      }
+
     }
   }
-
 ]);
 
 
@@ -439,9 +471,9 @@ app.directive('myNavbar', ['URLTemplates',
 ]);
 
 
-app.directive('peopleSearch', ['URLTemplates',
+app.directive('peopleSearch', ['URLTemplates','UserService',
 
-  function peopleSearch(URLTemplates) {
+  function peopleSearch(URLTemplates, UserService) {
     var directive = {
       restrict: 'E',
       templateUrl: URLTemplates + 'app/components/people-search/search.html',
@@ -454,22 +486,19 @@ app.directive('peopleSearch', ['URLTemplates',
     return directive;
 
     function SearchController(scope, element, attrs) {
+      var list = [];
 
       scope.selectedItemChange = function(user) {
         scope.userId = user.id;
       }
 
       scope.query = function (query) {
-        return [
-            {
-              "id": 6,
-              "username": "user3",
-              "email": "user3@user.com",
-              "name": "nombre",
-              "first_surname": "apellido I",
-              "second_surname": "apellido II"
-          },
-        ]
+        UserService.search(query).then(function (data) {
+          list = data.results;
+          return list;
+        },function (dd) {
+          console.log(dd);
+        })
       }
     }
   }

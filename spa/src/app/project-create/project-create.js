@@ -1,5 +1,5 @@
 
-app.controller('ProjectCreateController', ['$scope', 'ProjectService', function($scope, ProjectService) {
+app.controller('ProjectCreateController', ['$scope', 'ProjectService','UserService' ,function($scope, ProjectService,UserService) {
 
   var submited = false;
 
