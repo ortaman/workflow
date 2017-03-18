@@ -293,7 +293,7 @@ app.controller('ProfileController', ['$scope', function($scope) {
 
 
 app.service('UserService', function($http, APIConfig,$q) {
-  URL = APIConfig.url + 'api/projects/';
+  URL = APIConfig.url + 'api/users/';
 
     var posts = undefined;
     this.search = function(data) {
