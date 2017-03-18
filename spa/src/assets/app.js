@@ -100,6 +100,44 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates) {
 
 });
 
+app.service('StorageService', function($window) {
+
+    this.set = function(key, token) {
+
+      if ($window.localStorage) {
+        $window.localStorage.setItem(key, token);  
+      }
+      else {
+        alert('LocalStorage no soportado por el navegador!');
+      }
+
+    };
+
+    this.get = function(key) {
+      return $window.localStorage.getItem(key) || false;
+    };
+
+    this.remove = function(key) {
+      $window.localStorage.removeItem(key);
+    }
+
+    this.clear = function(){
+      $window.localStorage.clear();
+    }
+ 
+});
+
+app.controller('ActionCreateController', ['$scope', function($scope) {
+  
+  console.log('ActionCreateController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
 
 app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
   
@@ -206,9 +244,9 @@ app.service("ActionService", function($http, APIConfig) {
 });
 */
 
-app.controller('ActionCreateController', ['$scope', function($scope) {
+app.controller('CoordinationsController', ['$scope', function($scope) {
   
-  console.log('ActionCreateController');
+  console.log('CoordinationsController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -217,36 +255,9 @@ app.controller('ActionCreateController', ['$scope', function($scope) {
 }]);
 
 
-app.service('StorageService', function($window) {
-
-    this.set = function(key, token) {
-
-      if ($window.localStorage) {
-        $window.localStorage.setItem(key, token);  
-      }
-      else {
-        alert('LocalStorage no soportado por el navegador!');
-      }
-
-    };
-
-    this.get = function(key) {
-      return $window.localStorage.getItem(key) || false;
-    };
-
-    this.remove = function(key) {
-      $window.localStorage.removeItem(key);
-    }
-
-    this.clear = function(){
-      $window.localStorage.clear();
-    }
- 
-});
-
-app.controller('ProjectCreateController', ['$scope', function($scope) {
+app.controller('ProfileController', ['$scope', function($scope) {
   
-  console.log('ProjectCreateController');
+  console.log('ProfileController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -307,9 +318,9 @@ app.controller('LoginController', [
 }]);
 
 
-app.controller('CoordinationsController', ['$scope', function($scope) {
+app.controller('ProjectDetailController', ['$scope', function($scope) {
   
-  console.log('CoordinationsController');
+  console.log('ProjectDetailController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -318,9 +329,9 @@ app.controller('CoordinationsController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('ProfileController', ['$scope', function($scope) {
+app.controller('ProjectCreateController', ['$scope', function($scope) {
   
-  console.log('ProfileController');
+  console.log('ProjectCreateController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -332,17 +343,6 @@ app.controller('ProfileController', ['$scope', function($scope) {
 app.controller('ProjectListController', ['$scope', function($scope) {
   
   console.log('ProjectListController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
-app.controller('ProjectDetailController', ['$scope', function($scope) {
-  
-  console.log('ProjectDetailController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)

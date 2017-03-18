@@ -13,7 +13,11 @@ class Project(models.Model):
         ('evaluacion', 'Evaluación'),
     )
 
-    phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de proyecto')    
+    TYPES = (
+        ('estandar', 'Estándar'),
+        ('piloto', 'Piloto'),
+        ('jardin', 'Jardín'),
+    )
 
     # action roles
     client = models.ForeignKey(User, related_name='client_project', verbose_name='Cliente')
@@ -21,7 +25,10 @@ class Project(models.Model):
     agent = models.ForeignKey(User, related_name='agent_project', verbose_name='Observador')
     
     # focus project
-    name = models.CharField(max_length=64, verbose_name='Nombre')
+    name = models.CharField(max_length=64, verbose_name='Nombre')  
+    clasification = models.CharField(choices=TYPES, max_length=8, default='estandar', verbose_name='Tipos de proyecto')
+    phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de proyecto')  
+    
     toDo = models.TextField(max_length=512, verbose_name='¿Qué y como se realizará?')
     satisfactions = models.TextField(max_length=512, verbose_name='Condiciones de satisfacción')
 
