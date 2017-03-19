@@ -199,9 +199,9 @@
                                 <div flex-gt-xs>
                                   <h5>Fase de Preparación</h5>
                                   <md-datepicker 
-                                    name="preparation_at"  
+                                    name="preparation_at1"  
                                     md-placeholder="ingrese fecha"
-                                    ng-model="project.preparation_at"
+                                    ng-model="project.preparation_at1"
                                     required></md-datepicker>
                                   
                                   <div ng-show="projectForm.preparation_at.$touched || submitted">
@@ -216,9 +216,9 @@
                                 <div flex-gt-xs>
                                   <h5>Fase de negociación</h5>
                                   <md-datepicker 
-                                    name="negotiation_at"
+                                    name="negotiation_at1"
                                     md-placeholder="ingrese fecha" 
-                                    ng-model="project.negotiation_at"
+                                    ng-model="project.negotiation_at1"
                                     required ></md-datepicker>
 
                                   <div ng-show="projectForm.negotiation_at.$touched || submitted">
@@ -233,9 +233,9 @@
                                 <div flex-gt-xs>
                                   <h5>Fase de ejecución</h5>
                                   <md-datepicker 
-                                    name="execution_at"
+                                    name="execution_at1"
                                     md-placeholder="ingrese fecha"
-                                    ng-model="project.execution_at"
+                                    ng-model="project.execution_at1"
                                     required ></md-datepicker>
 
                                   <div ng-show="projectForm.execution_at.$touched || submitted">
@@ -250,9 +250,9 @@
                                 <div flex-gt-xs>
                                   <h5>Fase de evaluación</h5>
                                   <md-datepicker
-                                    name="evaluation_at" 
+                                    name="evaluation_at1" 
                                     md-placeholder="ingrese fecha"
-                                    ng-model="project.evaluation_at"
+                                    ng-model="project.evaluation_at1"
                                     required></md-datepicker>
                                 </div>
 
@@ -275,8 +275,8 @@
                                 <div flex-gt-xs>
                                   <h5>"Fecha de Inicio"</h5>
                                   <md-datepicker 
-                                    name="begin_at"
-                                    ng-model="project.begin_at" 
+                                    name="begin_at1"
+                                    ng-model="project.begin_at1" 
                                     md-placeholder="ingrese fecha"
                                     required ></md-datepicker>
 
@@ -292,8 +292,8 @@
                                 <div flex-gt-xs>
                                   <h5>Fecha de Cumplimiento...</h5>
                                   <md-datepicker 
-                                    name="accomplish_at"
-                                    ng-model="project.accomplish_at" 
+                                    name="accomplish_at1"
+                                    ng-model="project.accomplish_at1" 
                                     md-placeholder="ingrese fecha" 
                                     required></md-datepicker>
 
@@ -309,9 +309,9 @@
                                 <div flex-gt-xs>
                                   <h5>Fecha de Renegociación...</h5>
                                   <md-datepicker 
-                                    name="renegotiation_at"
+                                    name="renegotiation_at1"
                                     md-placeholder="ingrese fecha" 
-                                    ng-model="project.renegotiation_at" 
+                                    ng-model="project.renegotiation_at1" 
                                     required></md-datepicker>
 
                                     <div ng-show="projectForm.renegotiation_at.$touched || submitted">
@@ -326,9 +326,9 @@
                                 <div flex-gt-xs>
                                   <h5>Fecha de Reporte de Avance...</h5>
                                   <md-datepicker 
-                                  name="report_at"
+                                  name="report_at1"
                                   md-placeholder="ingrese fecha"
-                                  ng-model="project.report_at" 
+                                  ng-model="project.report_at1"
                                   required ></md-datepicker>
 
                                   <div ng-show="projectForm.report_at.$touched || submitted">
@@ -336,7 +336,7 @@
                                       Campo requerido.
                                     </div>
                                   </div>
-                                    
+
                                 </div>
                             </div>
 
@@ -353,14 +353,14 @@
                                     name="financial"
                                     maxlength="64"
                                     ng-model="project.financial"
-                                    ng-pattern="/^d+$/"
+                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
                                     required></input>
                                   <div ng-show="projectForm.financial.$touched || submitted">
                                     <div class="error" ng-show="projectForm.financial.$error.required">
                                       Campo requerido.
                                     </div>
                                     <div class="error" ng-show="projectForm.financial.$error.pattern">
-                                      Debe contener números.
+                                      Debe contener espacios y caracteres alfabéticos.
                                     </div>
                                   </div>
                                  </md-input-container>
@@ -373,14 +373,14 @@
                                     name="operational"
                                     maxlength="64"
                                     ng-model="project.operational"
-                                    ng-pattern="/^d+$/"
+                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
                                     required></input>
                                   <div ng-show="projectForm.operational.$touched || submitted">
                                     <div class="error" ng-show="projectForm.operational.$error.required">
                                       Campo requerido.
                                     </div>
                                     <div class="error" ng-show="projectForm.operational.$error.pattern">
-                                      Debe contener números.
+                                       Debe contener espacios y caracteres alfabéticos.
                                     </div>
                                   </div>
                                  </md-input-container>
@@ -392,14 +392,14 @@
                                     name="other1"
                                     maxlength="64"
                                     ng-model="project.other1"
-                                    ng-pattern="/^d+$/"
+                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
                                     required></input>
                                   <div ng-show="projectForm.other1.$touched || submitted">
                                     <div class="error" ng-show="projectForm.other1.$error.required">
                                       Campo requerido.
                                     </div>
                                     <div class="error" ng-show="projectForm.other1.$error.pattern">
-                                      Debe contener números.
+                                       Debe contener espacios y caracteres alfabéticos.
                                     </div>
                                   </div>
                                  </md-input-container>
@@ -411,14 +411,14 @@
                                   name="other2"
                                   maxlength="64"
                                   ng-model="project.other2"
-                                  ng-pattern="/^d+$/"
+                                  ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
                                   required></input>
                                 <div ng-show="projectForm.other2.$touched || submitted">
                                   <div class="error" ng-show="projectForm.other2.$error.required">
                                     Campo requerido.
                                   </div>
                                   <div class="error" ng-show="projectForm.other2.$error.pattern">
-                                    Debe contener números.
+                                     Debe contener espacios y caracteres alfabéticos.
                                   </div>
                                 </div>
                                </md-input-container>

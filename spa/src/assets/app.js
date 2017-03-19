@@ -113,6 +113,44 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
 
 });
 
+app.service('StorageService', function($window) {
+
+    this.set = function(key, token) {
+
+      if ($window.localStorage) {
+        $window.localStorage.setItem(key, token);  
+      }
+      else {
+        alert('LocalStorage no soportado por el navegador!');
+      }
+
+    };
+
+    this.get = function(key) {
+      return $window.localStorage.getItem(key) || false;
+    };
+
+    this.remove = function(key) {
+      $window.localStorage.removeItem(key);
+    }
+
+    this.clear = function(){
+      $window.localStorage.clear();
+    }
+ 
+});
+
+app.controller('ActionCreateController', ['$scope', function($scope) {
+  
+  console.log('ActionCreateController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
 
 app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
   
@@ -231,125 +269,6 @@ app.controller('CoordinationsController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('ProjectCreateController', [
-  '$scope', 'ProjectCreateService',
-  function($scope, ProjectCreateService) {
-    $scope.submitted = false;
-    $scope.project = {};
-
-    $scope.submitForm = function (){
-      $scope.submitted = true;
-    }
-
-}]);
-
-
-app.service("ProjectCreateService", ['$http', 'APIConfig', function($http, APIConfig) {
-  this.create = function(object) {
-    var promise = $http.post(APIConfig.url + "projects/", object).then(function(response) {
-      return response.data;
-    });
-
-    return promise;
-  };
-}]);
-
-app.service("UserListService", ['$http', 'APIConfig', function($http, APIConfig) {
-  this.getList = function(object) {
-    var params = $.param(object);
-    
-    var promise = $http.get(APIConfig.url + "users/?" + params).then(function(response) {
-      return response.data;
-    });
-
-    return promise;
-  };
-}]);
-
-
-app.controller('ProfileController', ['$scope', function($scope) {
-  
-  console.log('ProfileController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
-app.service('UserService', function($http, APIConfig,$q) {
-
-    this.search = function(name) {
-        var results = undefined;
-        var deferred = $q.defer();
-        URL = APIConfig.url + 'users/';
-
-        $http.get(URL+'?first_surname='+name)
-          .then(function(result) {
-            results = result.data;
-            deferred.resolve(results);
-          }, function(error) {
-            results = error;
-            deferred.reject(error);
-          });
-
-        results = deferred.promise;
-      return $q.when(results);
-    };
-
-});
-
-
-app.controller('ActionCreateController', ['$scope', function($scope) {
-  
-  console.log('ActionCreateController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
-app.service('StorageService', function($window) {
-
-    this.set = function(key, token) {
-
-      if ($window.localStorage) {
-        $window.localStorage.setItem(key, token);  
-      }
-      else {
-        alert('LocalStorage no soportado por el navegador!');
-      }
-
-    };
-
-    this.get = function(key) {
-      return $window.localStorage.getItem(key) || false;
-    };
-
-    this.remove = function(key) {
-      $window.localStorage.removeItem(key);
-    }
-
-    this.clear = function(){
-      $window.localStorage.clear();
-    }
- 
-});
-
-app.controller('ProjectListController', ['$scope', function($scope) {
-  
-  console.log('ProjectListController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
 app.service('AuthService', function($http, $q,  APIConfig) {
   
   var url = APIConfig.url + 'token-auth/'
@@ -399,6 +318,108 @@ app.controller('LoginController', [
         });
     };
 
+}]);
+
+
+app.controller('ProfileController', ['$scope', function($scope) {
+  
+  console.log('ProfileController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
+app.service('UserService', function($http, APIConfig,$q) {
+
+    this.search = function(name) {
+        var results = undefined;
+        var deferred = $q.defer();
+        URL = APIConfig.url + 'users/';
+
+        $http.get(URL+'?first_surname='+name)
+          .then(function(result) {
+            results = result.data;
+            deferred.resolve(results);
+          }, function(error) {
+            results = error;
+            deferred.reject(error);
+          });
+
+        results = deferred.promise;
+      return $q.when(results);
+    };
+
+});
+
+
+app.controller('ProjectListController', ['$scope', function($scope) {
+  
+  console.log('ProjectListController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
+app.controller('ProjectCreateController', [
+  '$scope', '$state', 'ProjectCreateService',
+  function($scope, $state, ProjectCreateService) {
+    $scope.submitted = false;
+    $scope.project = {};
+
+    $scope.submitForm = function (){
+      $scope.submitted = true;
+
+        $scope.project.preparation_at = moment($scope.project.preparation_at1).format("DD-MM-YYYY");
+      	$scope.project.negotiation_at = moment($scope.project.negotiation_at1).format("DD-MM-YYYY");
+      	$scope.project.execution_at = moment($scope.project.execution_at1).format("DD-MM-YYYY");
+      	$scope.project.evaluation_at = moment($scope.project.evaluation_at1).format("DD-MM-YYYY");
+      	$scope.project.begin_at = moment($scope.project.begin_at1).format("DD-MM-YYYY");
+      	$scope.project.accomplish_at = moment($scope.project.accomplish_at1).format("DD-MM-YYYY");
+      	$scope.project.renegotiation_at = moment($scope.project.renegotiation_at1).format("DD-MM-YYYY");
+      	$scope.project.report_at = moment($scope.project.report_at1).format("DD-MM-YYYY");
+
+		ProjectCreateService.create($scope.project).then(
+			function(response) {
+				console.log('reponse', response);
+				$state.go('projectList');
+			},
+			function(errorResponse) {
+				var error = errorResponse || 'Request failed';
+	    		console.log('error', error);
+	  		}
+		);
+    
+    }
+
+}]);
+
+
+app.service("ProjectCreateService", ['$http', 'APIConfig', function($http, APIConfig) {
+  this.create = function(object) {
+    var promise = $http.post(APIConfig.url + "projects/", object).then(function(response) {
+      return response.data;
+    });
+
+    return promise;
+  };
+}]);
+
+app.service("UserListService", ['$http', 'APIConfig', function($http, APIConfig) {
+  this.getList = function(object) {
+    var params = $.param(object);
+    
+    var promise = $http.get(APIConfig.url + "users/?" + params).then(function(response) {
+      return response.data;
+    });
+
+    return promise;
+  };
 }]);
 
 
@@ -473,6 +494,35 @@ app.directive('userSearch', ['URLTemplates', 'UserListService',
 
 
 
+app.directive('myNavbar', ['URLTemplates',
+
+  /** @ngInject */
+  function myNavbar(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/components/navbar/navbar.html',
+      scope: {
+          creationDate: '='
+      },
+      controller: NavbarController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    /** @ngInject */
+    function NavbarController(APIConfig) {
+      var vm = this;
+
+      // "vm.creationDate" is available by directive option "bindToController: true"
+      vm.relativeDate = moment(vm.creationDate).fromNow();
+    }
+  }
+
+]);
+
+
 app.directive('myHeader', ['URLTemplates',
 
   /** @ngInject */
@@ -505,33 +555,4 @@ app.directive('myHeader', ['URLTemplates',
 
     }
   }
-]);
-
-
-app.directive('myNavbar', ['URLTemplates',
-
-  /** @ngInject */
-  function myNavbar(URLTemplates) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/navbar/navbar.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: NavbarController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    /** @ngInject */
-    function NavbarController(APIConfig) {
-      var vm = this;
-
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
-    }
-  }
-
 ]);

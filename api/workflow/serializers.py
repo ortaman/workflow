@@ -4,8 +4,19 @@ from rest_framework import serializers
 from .models import Project, Action
 from users.serializers import UserSerializer
 
+from django.conf import settings
+
 
 class ProjectSerializer(serializers.ModelSerializer):
+    preparation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    negotiation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    execution_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    evaluation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    begin_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    accomplish_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    renegotiation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    report_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    
     class Meta:
         model = Project
         fields = ('id','client', 'producer', 'observer', 'name', 'clasification', 'phase',
