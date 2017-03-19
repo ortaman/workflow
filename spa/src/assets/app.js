@@ -127,17 +127,6 @@ app.service('StorageService', function($window) {
  
 });
 
-app.controller('ActionCreateController', ['$scope', function($scope) {
-  
-  console.log('ActionCreateController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
 
 app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
   
@@ -207,6 +196,7 @@ app.module('myApp.actionList').controller('ActionListController', ['URLTemplates
 app.service("ActionService", ['$http', 'APIConfig', function($http, APIConfig) {
 	this.getList = function() {
 	  var promise = $http.get(APIConfig.url + "actions/").then(function(response) {
+	  	console.log(APIConfig.url + "actions/");
 	  return response.data;
 	});
 	  return promise;
@@ -243,6 +233,17 @@ app.service("ActionService", function($http, APIConfig) {
 	};
 });
 */
+
+app.controller('ActionCreateController', ['$scope', function($scope) {
+  
+  console.log('ActionCreateController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
 
 app.controller('CoordinationsController', ['$scope', function($scope) {
   
@@ -307,6 +308,32 @@ app.controller('LoginController', [
 }]);
 
 
+app.controller('ProjectCreateController', [
+  '$scope',
+  function($scope) {
+    $scope.project = {};
+
+    $scope.submitForm = function (){
+      alert(JSON.stringify($scope.project));
+    }
+    
+}]);
+
+
+app.service("UserListService", ['$http', 'APIConfig', function($http, APIConfig) {
+  this.getList = function(object) {
+    var params = $.param(object);
+    
+    var promise = $http.get(APIConfig.url + "users/?" + params).then(function(response) {
+      return response.data;
+    });
+
+    return promise;
+  };
+}]);
+
+
+
 app.controller('ProfileController', ['$scope', function($scope) {
   
   console.log('ProfileController');
@@ -341,52 +368,9 @@ app.service('UserService', function($http, APIConfig,$q) {
 });
 
 
-app.controller('ProjectCreateController', ['$scope', 'ProjectService','UserService' ,function($scope, ProjectService,UserService) {
-
-  var submited = false;
-
-  $scope.submit = function(data) {
-    console.log("datos enviar",data);
-    submited = true;
-    ProjectService.create(data).then(
-      function(result){
-        console.log(result);
-      },
-      function(result){
-        console.log(result);
-      }
-    )
-  }
-
-}]);
-
-
-app.service('ProjectService', function($http, APIConfig,$q) {
-  URL = APIConfig.url + 'api/projects/';
-
-    var posts = undefined;
-    this.create = function(data) {
-        var deferred = $q.defer();
-
-        $http.post(URL,data)
-          .then(function(result) {
-            posts = result.data;
-            deferred.resolve(posts);
-          }, function(error) {
-            posts = error;
-            deferred.reject(error);
-          });
-
-        posts = deferred.promise;
-      return $q.when(posts);
-    };
-
-});
-
-
-app.controller('ProjectDetailController', ['$scope', function($scope) {
+app.controller('ProjectListController', ['$scope', function($scope) {
   
-  console.log('ProjectDetailController');
+  console.log('ProjectListController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -395,9 +379,9 @@ app.controller('ProjectDetailController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('ProjectListController', ['$scope', function($scope) {
+app.controller('ProjectDetailController', ['$scope', function($scope) {
   
-  console.log('ProjectListController');
+  console.log('ProjectDetailController');
  
    $scope.isActive = function(path) {
     return ($location.path()==path)
@@ -442,6 +426,65 @@ app.directive('myHeader', ['URLTemplates',
 ]);
 
 
+app.directive('userSearch', ['URLTemplates', 'UserListService',
+
+  /** @ngInject */
+  function userSearch(URLTemplates, UserListService) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/components/user-search/search.html',
+      scope: {
+          fieldName: '@',
+          userId: '=',
+      },
+      controller: SearchUserController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    function SearchUserController() {
+      var vm = this;
+
+      vm.selectedItem  = null;
+      vm.searchText    = null;
+
+      // ******************************
+      // Internal methods
+      // ******************************
+
+      vm.querySearch = function(searchText) {
+
+        var query = {
+          'first_surname':vm.searchText
+        }
+
+        UserListService.getList(query).then(
+          function(response) {
+            console.log('response.results', response.results);
+            vm.results = response.results;
+          },
+          function(errorResponse) {
+            console.log('response', errorResponse);
+            vm.error = errorResponse.statusText || 'Request failed.';
+          }
+        );
+
+      };
+
+      vm.selectedItemChange = function(item) {
+        vm.userId = item.id;
+      };
+
+    }
+
+  }
+  
+]);
+
+
+
 app.directive('myNavbar', ['URLTemplates',
 
   /** @ngInject */
@@ -465,41 +508,6 @@ app.directive('myNavbar', ['URLTemplates',
 
       // "vm.creationDate" is available by directive option "bindToController: true"
       vm.relativeDate = moment(vm.creationDate).fromNow();
-    }
-  }
-
-]);
-
-
-app.directive('peopleSearch', ['URLTemplates','UserService',
-
-  function peopleSearch(URLTemplates, UserService) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/people-search/search.html',
-      scope: {
-          userId: '=userId',
-      },
-      link: SearchController,
-    };
-
-    return directive;
-
-    function SearchController(scope, element, attrs) {
-      var list = [];
-
-      scope.selectedItemChange = function(user) {
-        scope.userId = user.id;
-      }
-
-      scope.query = function (query) {
-        UserService.search(query).then(function (data) {
-          list = data.results;
-          return list;
-        },function (dd) {
-          console.log(dd);
-        })
-      }
     }
   }
 
