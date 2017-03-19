@@ -1,11 +1,12 @@
 
 app.controller('ProjectCreateController', [
-  '$scope',
-  function($scope) {
+  '$scope', 'ProjectCreateService',
+  function($scope, ProjectCreateService) {
+    $scope.submitted = false;
     $scope.project = {};
 
     $scope.submitForm = function (){
-      alert(JSON.stringify($scope.project));
+      $scope.submitted = true;
     }
-    
+
 }]);

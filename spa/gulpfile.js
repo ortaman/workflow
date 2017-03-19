@@ -35,7 +35,10 @@ gulp.task('watch-html', function() {
 
 /* Task to compile less */
 gulp.task('compile-less', function() {
-  var compile = gulp.src(['src/app/index.less', 'src/app/**/*.less'])
+  var compile = gulp.src([
+      'src/index.less', 
+      'src/app/**/*.less'
+    ])
     .pipe(concat('app.less'))
     .pipe(less())
     // .pipe(cssminify())
@@ -49,7 +52,7 @@ gulp.task('compile-less', function() {
 /* Task to watch less changes */
 gulp.task('watch-less', function() {
   gulp.watch([
-    'src/assets/less/global.less',
+    'src/index.less', 
     'src/app/**/*.less',
     'src/app/components/**/*.less'
     ],   

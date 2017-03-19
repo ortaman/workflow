@@ -127,6 +127,17 @@ app.service('StorageService', function($window) {
  
 });
 
+app.controller('ActionCreateController', ['$scope', function($scope) {
+  
+  console.log('ActionCreateController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
 
 app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
   
@@ -234,17 +245,6 @@ app.service("ActionService", function($http, APIConfig) {
 });
 */
 
-app.controller('ActionCreateController', ['$scope', function($scope) {
-  
-  console.log('ActionCreateController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
 app.controller('CoordinationsController', ['$scope', function($scope) {
   
   console.log('CoordinationsController');
@@ -253,6 +253,42 @@ app.controller('CoordinationsController', ['$scope', function($scope) {
     return ($location.path()==path)
   }
 
+}]);
+
+
+app.controller('ProjectCreateController', [
+  '$scope', 'ProjectCreateService',
+  function($scope, ProjectCreateService) {
+    $scope.submitted = false;
+    $scope.project = {};
+
+    $scope.submitForm = function (){
+      $scope.submitted = true;
+    }
+
+}]);
+
+
+app.service("ProjectCreateService", ['$http', 'APIConfig', function($http, APIConfig) {
+  this.create = function(object) {
+    var promise = $http.post(APIConfig.url + "projects/", object).then(function(response) {
+      return response.data;
+    });
+
+    return promise;
+  };
+}]);
+
+app.service("UserListService", ['$http', 'APIConfig', function($http, APIConfig) {
+  this.getList = function(object) {
+    var params = $.param(object);
+    
+    var promise = $http.get(APIConfig.url + "users/?" + params).then(function(response) {
+      return response.data;
+    });
+
+    return promise;
+  };
 }]);
 
 
@@ -308,30 +344,15 @@ app.controller('LoginController', [
 }]);
 
 
-app.controller('ProjectCreateController', [
-  '$scope',
-  function($scope) {
-    $scope.project = {};
+app.controller('ProjectDetailController', ['$scope', function($scope) {
+  
+  console.log('ProjectDetailController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
 
-    $scope.submitForm = function (){
-      alert(JSON.stringify($scope.project));
-    }
-    
 }]);
-
-
-app.service("UserListService", ['$http', 'APIConfig', function($http, APIConfig) {
-  this.getList = function(object) {
-    var params = $.param(object);
-    
-    var promise = $http.get(APIConfig.url + "users/?" + params).then(function(response) {
-      return response.data;
-    });
-
-    return promise;
-  };
-}]);
-
 
 
 app.controller('ProfileController', ['$scope', function($scope) {
@@ -379,17 +400,6 @@ app.controller('ProjectListController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('ProjectDetailController', ['$scope', function($scope) {
-  
-  console.log('ProjectDetailController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
 
 app.directive('myHeader', ['URLTemplates',
 
@@ -423,6 +433,35 @@ app.directive('myHeader', ['URLTemplates',
 
     }
   }
+]);
+
+
+app.directive('myNavbar', ['URLTemplates',
+
+  /** @ngInject */
+  function myNavbar(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/components/navbar/navbar.html',
+      scope: {
+          creationDate: '='
+      },
+      controller: NavbarController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    /** @ngInject */
+    function NavbarController(APIConfig) {
+      var vm = this;
+
+      // "vm.creationDate" is available by directive option "bindToController: true"
+      vm.relativeDate = moment(vm.creationDate).fromNow();
+    }
+  }
+
 ]);
 
 
@@ -481,34 +520,4 @@ app.directive('userSearch', ['URLTemplates', 'UserListService',
 
   }
   
-]);
-
-
-
-app.directive('myNavbar', ['URLTemplates',
-
-  /** @ngInject */
-  function myNavbar(URLTemplates) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/navbar/navbar.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: NavbarController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    /** @ngInject */
-    function NavbarController(APIConfig) {
-      var vm = this;
-
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
-    }
-  }
-
 ]);
