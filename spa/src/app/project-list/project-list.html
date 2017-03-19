@@ -21,7 +21,7 @@
                         <span>Proyectos</span>
                     </li>
                 </ul>
-                <div class="page-toolbar">
+                <!--div class="page-toolbar">
                     <div class="btn-group pull-right">
                         <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Acciones
                             <i class="fa fa-angle-down"></i>
@@ -46,24 +46,33 @@
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div-->
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title"> Tablero de Control Proyectos
-                            <small>Niveles de Cumplimiento</small>
-                        </h1>
+            <div class="row">
+                <div class="col-md-9">
+                    <h1 class="page-title"> Tablero de Proyectos
+                        <small>Niveles de Cumplimiento</small>
+                    </h1>
+                </div>
+                <div class="col-md-3" style="margin-top: 1em;">            
+                    <a ui-sref="projectCreate" class="btn btn-info btn-lg active" role="button" aria-pressed="true">    
+                      Crear proyecto
+                    </a>
+                </div>
+            </div>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <div class="row">
                 <div class="portlet light portlet-fit ">
-                    <div class="portlet-title">
+                    <!--div class="portlet-title">
                         <div class="caption">
                             <i class="icon-microphone font-dark hide"></i>
                             <span class="caption-subject bold font-dark uppercase"> Proyectos Estratégicos</span>
                             <span class="caption-helper">Avance de Acciones</span>
                         </div>
-                    </div>
+                    </div-->
                     <div class="portlet-body">
                         <div class="row">
                             <div class="col-md-4">

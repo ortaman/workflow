@@ -355,17 +355,6 @@ app.service('UserService', function($http, APIConfig,$q) {
 });
 
 
-app.controller('ProjectListController', ['$scope', function($scope) {
-  
-  console.log('ProjectListController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
 app.controller('ProjectCreateController', [
   '$scope', '$state', 'ProjectCreateService',
   function($scope, $state, ProjectCreateService) {
@@ -434,6 +423,81 @@ app.controller('ProjectDetailController', ['$scope', function($scope) {
 }]);
 
 
+app.controller('ProjectListController', ['$scope', function($scope) {
+  
+  console.log('ProjectListController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
+
+app.directive('myHeader', ['URLTemplates',
+
+  /** @ngInject */
+  function myHeader(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/components/header/header.html',
+      scope: {
+          creationDate: '='
+      },
+      controller: HeaderController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    /** @ngInject */
+    function HeaderController(APIConfig, $state, StorageService) {
+      var vm = this;
+
+      if (!StorageService.get('token')) {
+        $state.go('login');
+      }
+
+      vm.logout = function() {
+        StorageService.remove('token');
+        $state.go('login');
+      }
+
+    }
+  }
+]);
+
+
+app.directive('myNavbar', ['URLTemplates',
+
+  /** @ngInject */
+  function myNavbar(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/components/navbar/navbar.html',
+      scope: {
+          creationDate: '='
+      },
+      controller: NavbarController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    /** @ngInject */
+    function NavbarController(APIConfig) {
+      var vm = this;
+
+      // "vm.creationDate" is available by directive option "bindToController: true"
+      vm.relativeDate = moment(vm.creationDate).fromNow();
+    }
+  }
+
+]);
+
 
 app.directive('userSearch', ['URLTemplates', 'UserListService',
 
@@ -490,69 +554,4 @@ app.directive('userSearch', ['URLTemplates', 'UserListService',
 
   }
   
-]);
-
-
-
-app.directive('myNavbar', ['URLTemplates',
-
-  /** @ngInject */
-  function myNavbar(URLTemplates) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/navbar/navbar.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: NavbarController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    /** @ngInject */
-    function NavbarController(APIConfig) {
-      var vm = this;
-
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
-    }
-  }
-
-]);
-
-
-app.directive('myHeader', ['URLTemplates',
-
-  /** @ngInject */
-  function myHeader(URLTemplates) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/header/header.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: HeaderController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    /** @ngInject */
-    function HeaderController(APIConfig, $state, StorageService) {
-      var vm = this;
-
-      if (!StorageService.get('token')) {
-        $state.go('login');
-      }
-
-      vm.logout = function() {
-        StorageService.remove('token');
-        $state.go('login');
-      }
-
-    }
-  }
 ]);
