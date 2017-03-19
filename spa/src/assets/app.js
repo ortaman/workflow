@@ -48,7 +48,8 @@ app.constant('URLTemplates', (function() {
 
 
 
-app.config(function($stateProvider, $urlRouterProvider, URLTemplates) {
+app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
+  $mdThemingProvider, $mdDateLocaleProvider) {
 
   // Now set up the states
   $stateProvider
@@ -98,45 +99,19 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates) {
   // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise("/coordinations");
 
-});
+  $mdThemingProvider.theme('default')
+    .primaryPalette('blue');
 
-app.service('StorageService', function($window) {
-
-    this.set = function(key, token) {
-
-      if ($window.localStorage) {
-        $window.localStorage.setItem(key, token);  
-      }
-      else {
-        alert('LocalStorage no soportado por el navegador!');
-      }
-
-    };
-
-    this.get = function(key) {
-      return $window.localStorage.getItem(key) || false;
-    };
-
-    this.remove = function(key) {
-      $window.localStorage.removeItem(key);
-    }
-
-    this.clear = function(){
-      $window.localStorage.clear();
-    }
- 
-});
-
-app.controller('ActionCreateController', ['$scope', function($scope) {
+  $mdDateLocaleProvider.formatDate = function(date) {
+    return date ? moment(date).format('DD-MM-YYYY') : '';
+  };
   
-  console.log('ActionCreateController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
+  $mdDateLocaleProvider.parseDate = function(dateString) {
+    var m = moment(dateString, 'DD-MM-YYYY', true);
+    return m.isValid() ? m.toDate() : new Date(NaN);
+  };
 
-}]);
-
+});
 
 
 app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
@@ -292,6 +267,89 @@ app.service("UserListService", ['$http', 'APIConfig', function($http, APIConfig)
 }]);
 
 
+app.controller('ProfileController', ['$scope', function($scope) {
+  
+  console.log('ProfileController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
+app.service('UserService', function($http, APIConfig,$q) {
+
+    this.search = function(name) {
+        var results = undefined;
+        var deferred = $q.defer();
+        URL = APIConfig.url + 'users/';
+
+        $http.get(URL+'?first_surname='+name)
+          .then(function(result) {
+            results = result.data;
+            deferred.resolve(results);
+          }, function(error) {
+            results = error;
+            deferred.reject(error);
+          });
+
+        results = deferred.promise;
+      return $q.when(results);
+    };
+
+});
+
+
+app.controller('ActionCreateController', ['$scope', function($scope) {
+  
+  console.log('ActionCreateController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
+app.service('StorageService', function($window) {
+
+    this.set = function(key, token) {
+
+      if ($window.localStorage) {
+        $window.localStorage.setItem(key, token);  
+      }
+      else {
+        alert('LocalStorage no soportado por el navegador!');
+      }
+
+    };
+
+    this.get = function(key) {
+      return $window.localStorage.getItem(key) || false;
+    };
+
+    this.remove = function(key) {
+      $window.localStorage.removeItem(key);
+    }
+
+    this.clear = function(){
+      $window.localStorage.clear();
+    }
+ 
+});
+
+app.controller('ProjectListController', ['$scope', function($scope) {
+  
+  console.log('ProjectListController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
 app.service('AuthService', function($http, $q,  APIConfig) {
   
   var url = APIConfig.url + 'token-auth/'
@@ -355,49 +413,63 @@ app.controller('ProjectDetailController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('ProfileController', ['$scope', function($scope) {
-  
-  console.log('ProfileController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
 
-}]);
+app.directive('userSearch', ['URLTemplates', 'UserListService',
 
-
-app.service('UserService', function($http, APIConfig,$q) {
-
-    this.search = function(name) {
-        var results = undefined;
-        var deferred = $q.defer();
-        URL = APIConfig.url + 'users/';
-
-        $http.get(URL+'?first_surname='+name)
-          .then(function(result) {
-            results = result.data;
-            deferred.resolve(results);
-          }, function(error) {
-            results = error;
-            deferred.reject(error);
-          });
-
-        results = deferred.promise;
-      return $q.when(results);
+  /** @ngInject */
+  function userSearch(URLTemplates, UserListService) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/components/user-search/search.html',
+      scope: {
+          fieldName: '@',
+          userId: '=',
+      },
+      controller: SearchUserController,
+      controllerAs: 'vm',
+      bindToController: true
     };
 
-});
+    return directive;
 
+    function SearchUserController() {
+      var vm = this;
 
-app.controller('ProjectListController', ['$scope', function($scope) {
-  
-  console.log('ProjectListController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
+      vm.selectedItem  = null;
+      vm.searchText    = null;
+
+      // ******************************
+      // Internal methods
+      // ******************************
+
+      vm.querySearch = function(searchText) {
+
+        var query = {
+          'first_surname':vm.searchText
+        }
+
+        UserListService.getList(query).then(
+          function(response) {
+            console.log('response.results', response.results);
+            vm.results = response.results;
+          },
+          function(errorResponse) {
+            console.log('response', errorResponse);
+            vm.error = errorResponse.statusText || 'Request failed.';
+          }
+        );
+
+      };
+
+      vm.selectedItemChange = function(item) {
+        vm.userId = item.id;
+      };
+
+    }
+
   }
-
-}]);
+  
+]);
 
 
 
@@ -462,62 +534,4 @@ app.directive('myNavbar', ['URLTemplates',
     }
   }
 
-]);
-
-
-app.directive('userSearch', ['URLTemplates', 'UserListService',
-
-  /** @ngInject */
-  function userSearch(URLTemplates, UserListService) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/user-search/search.html',
-      scope: {
-          fieldName: '@',
-          userId: '=',
-      },
-      controller: SearchUserController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    function SearchUserController() {
-      var vm = this;
-
-      vm.selectedItem  = null;
-      vm.searchText    = null;
-
-      // ******************************
-      // Internal methods
-      // ******************************
-
-      vm.querySearch = function(searchText) {
-
-        var query = {
-          'first_surname':vm.searchText
-        }
-
-        UserListService.getList(query).then(
-          function(response) {
-            console.log('response.results', response.results);
-            vm.results = response.results;
-          },
-          function(errorResponse) {
-            console.log('response', errorResponse);
-            vm.error = errorResponse.statusText || 'Request failed.';
-          }
-        );
-
-      };
-
-      vm.selectedItemChange = function(item) {
-        vm.userId = item.id;
-      };
-
-    }
-
-  }
-  
 ]);

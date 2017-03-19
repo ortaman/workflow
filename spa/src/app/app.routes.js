@@ -1,6 +1,7 @@
 
 
-app.config(function($stateProvider, $urlRouterProvider, URLTemplates) {
+app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
+  $mdThemingProvider, $mdDateLocaleProvider) {
 
   // Now set up the states
   $stateProvider
@@ -49,5 +50,17 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates) {
 
   // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise("/coordinations");
+
+  $mdThemingProvider.theme('default')
+    .primaryPalette('blue');
+
+  $mdDateLocaleProvider.formatDate = function(date) {
+    return date ? moment(date).format('DD-MM-YYYY') : '';
+  };
+  
+  $mdDateLocaleProvider.parseDate = function(dateString) {
+    var m = moment(dateString, 'DD-MM-YYYY', true);
+    return m.isValid() ? m.toDate() : new Date(NaN);
+  };
 
 });
