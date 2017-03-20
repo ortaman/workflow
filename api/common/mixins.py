@@ -23,11 +23,11 @@ class CommonMixin(object):
             raise Http404
 
 
-    def get_pagination(self, objects, page):
+    def get_pagination(self, objects, page, paginate_by):
         """
         Get paginated data.
         """
-        paginator = Paginator(objects, self.paginate_by)
+        paginator = Paginator(objects, paginate_by)
 
         try:
             objects_list = paginator.page(page)
@@ -44,6 +44,7 @@ class CommonMixin(object):
 
         data = {
             'page': page,
+            'paginate_by':paginate_by,
             'count': paginator.count,  
             'results': serializer.data,
         }

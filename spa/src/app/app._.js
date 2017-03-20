@@ -4,9 +4,10 @@
 var app = angular.module('myApp',
   [
 		'ui.router',
-		'ngDialog',
 		'ngMaterial',
-
+    'ngDialog',
+    'ui.bootstrap',
+    
     // 'myApp.actionList',
   ]
 );

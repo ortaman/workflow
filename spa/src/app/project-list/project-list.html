@@ -76,8 +76,8 @@
                     <div class="portlet-body">
                         <div class="row">
 
-                            <div ng-repeat="project in data"> 
-                                <div class="col-md-4" style="margin-bottom: 5em;">
+                            <div ng-repeat="project in data.results"> 
+                                <div class="col-md-4" style="margin-bottom: 3em;">
                                     <div class="mt-widget-4">
                                         <div class="mt-img-container">
                                             <img src="../../assets/metronics/pages/img/background/5.jpg" /> 
@@ -93,15 +93,21 @@
                                                 Fase: {{ project.phase }} 
                                             </div>
                                             <div class="mt-body-icons">
-                                                <a ui-sref="projectDetail">
-                                                    <i class=" fa fa-lightbulb-o"></i>
+                                                <a ui-sref="projectUpdate">
+                                                    <i class=" fa fa-edit"></i>
                                                 </a>
                                                 <a ui-sref="projectDetail">
+                                                    <i class=" fa fa-file-text-o"></i>
+                                                </a>
+                                                <!--a ui-sref="projectDetail">
+                                                    <i class=" fa fa-lightbulb-o"></i>
+                                                </a>
+                                                <a ui-sref="projectDetail">  file-text-o
                                                     <i class=" fa fa-hourglass-end"></i>
                                                 </a>
                                                 <a ui-sref="projectDetail">
                                                     <i class=" fa fa-warning"></i>
-                                                </a>
+                                                </a-->
                                             </div>
                                             <div class="mt-footer-button">
                                                 <button type="button" class="btn btn-circle btn-danger btn-sm">SYO</button>
@@ -109,9 +115,21 @@
                                         </div>
                                     </div>
                                 </div>
-                             </div>
+                            </div>
 
                         </div>
+                        
+                        <div class="text-center">
+                            <ul uib-pagination boundary-links="true" class="pagination-sm" 
+                                previous-text="&lsaquo;" next-text="&rsaquo;" 
+                                first-text="&laquo;" last-text="&raquo;"
+                                items-per-page="data.paginate_by"
+                                total-items="data.count" 
+                                ng-model="currentPage"
+                                ng-change="pageChanged()">
+                            </ul>
+                        </div>
+
                     </div>
 
                     <div class="portlet light portlet-fit ">

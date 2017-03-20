@@ -54,13 +54,13 @@ class ProjectList(APIView, CommonMixin):
     # Mixing initial variables
     model = Project
     serializer_class = ProjectSerializer
-    paginate_by = 10
+    paginate_by = 6
 
     def get(self, request, format=None):
         page = request.GET.get('page')
         proyects = self.model.objects.all()
 
-        data = self.get_pagination(proyects, page)
+        data = self.get_pagination(proyects, page, self.paginate_by)
         return Response(data)
 
 
