@@ -75,127 +75,45 @@
                     </div-->
                     <div class="portlet-body">
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="mt-widget-4">
-                                    <div class="mt-img-container">
-                                        <img src="../../assets/metronics/pages/img/background/5.jpg" /> </div>
-                                    <div class="mt-container bg-red-opacity">
-                                        <div class="mt-head-title"> Proyecto Business Unit </div>
-                                        <div class="mt-body-icons">
-                                            <a ui-sref="projectDetail">
-                                                <i class=" fa fa-lightbulb-o"></i>
-                                            </a>
-                                            <a ui-sref="projectDetail">
-                                                <i class=" fa fa-hourglass-end"></i>
-                                            </a>
-                                            <a ui-sref="projectDetail">
-                                                <i class=" fa fa-warning"></i>
-                                            </a>
-                                        </div>
-                                        <div class="mt-footer-button">
-                                            <button type="button" class="btn btn-circle btn-danger btn-sm">SYO</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mt-widget-4">
-                                    <div class="mt-img-container">
-                                        <img src="../../assets/metronics/pages/img/background/14.jpg" /> </div>
-                                    <div class="mt-container bg-red-opacity">
-                                        <div class="mt-head-title"> Proyecto Efectividad</div>
-                                        <div class="mt-body-icons">
-                                            <a href="#">
-                                                <i class=" fa fa-lightbulb-o"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class=" fa fa-hourglass-end"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class=" fa fa-warning"></i>
-                                            </a>
-                                        </div>
-                                        <div class="mt-footer-button">
-                                            <button type="button" class="btn btn-circle btn-danger btn-sm">Productividad Comercial</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mt-widget-4">
-                                    <div class="mt-img-container">
-                                        <img src="../../assets/metronics/pages/img/background/15.jpg" /> </div>
-                                    <div class="mt-container bg-red-opacity">
-                                        <div class="mt-head-title"> Conversión de Clientes </div>
-                                        <div class="mt-body-icons">
-                                            <a href="#">
-                                                <i class=" fa fa-lightbulb-o"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class=" fa fa-hourglass-end"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class=" fa fa-warning"></i>
-                                            </a>
-                                        </div>
-                                        <div class="mt-footer-button">
-                                            <button type="button" class="btn btn-circle btn-danger btn-sm">Marketing</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <div class="row">
-                                <div class="col-md-4">
+
+                            <div ng-repeat="project in data"> 
+                                <div class="col-md-4" style="margin-bottom: 5em;">
                                     <div class="mt-widget-4">
                                         <div class="mt-img-container">
-                                            <img src="../../assets/metronics/pages/img/background/58.jpg" /> </div>
-                                        <div class="mt-container bg-yellow-crusta-opacity">
-                                            <div class="mt-head-title"> Proyecto Ludlev </div>
+                                            <img src="../../assets/metronics/pages/img/background/5.jpg" /> 
+                                            <!--img src="../../assets/metronics/pages/img/background/14.jpg" />
+                                             <img src="../../assets/metronics/pages/img/background/58.jpg" />
+                                             <img src="../../assets/metronics/pages/img/background/58.jpg" /> 
+                                            <img src="../../assets/metronics/pages/img/background/15.jpg" /-->
+                                        </div>
+                                        <div class="mt-container bg-red-opacity">
+                                            <div class="mt-head-title"> 
+                                                Nombre: {{ project.name }} <br>
+                                                Tipo: {{ project.clasification }} <br>
+                                                Fase: {{ project.phase }} 
+                                            </div>
                                             <div class="mt-body-icons">
-                                                <a href="#">
-                                                    <i class=" fa fa-check-circle-o"></i>
+                                                <a ui-sref="projectDetail">
+                                                    <i class=" fa fa-lightbulb-o"></i>
                                                 </a>
-                                                <a href="#">
-                                                    <i class=" fa fa-hourglass-half"></i>
+                                                <a ui-sref="projectDetail">
+                                                    <i class=" fa fa-hourglass-end"></i>
                                                 </a>
-                                                <a href="#">
-                                                    <i class=" fa fa-calculator"></i>
+                                                <a ui-sref="projectDetail">
+                                                    <i class=" fa fa-warning"></i>
                                                 </a>
                                             </div>
                                             <div class="mt-footer-button">
-                                                <button type="button" class="btn btn-circle blue-ebonyclay btn-sm">Gastro/Gine</button>
+                                                <button type="button" class="btn btn-circle btn-danger btn-sm">SYO</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="mt-widget-4">
-                                        <div class="mt-img-container">
-                                            <img src="../../assets/metronics/pages/img/background/46.jpg" /> </div>
-                                        <div class="mt-container bg-green-opacity">
-                                            <div class="mt-head-title"> Istofil</div>
-                                            <div class="mt-body-icons">
-                                                <a href="#">
-                                                    <i class=" icon-layers"></i>
-                                                </a>
-                                                <a href="#">
-                                                    <i class=" fa fa-hourglass"></i>
-                                                </a>
-                                                <a href="#">
-                                                    <i class=" fa fa-line-chart"></i>
-                                                </a>
-                                            </div>
-                                            <div class="mt-footer-button">
-                                                <button type="button" class="btn btn-circle btn-success btn-sm">SNC</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                             </div>
+
                         </div>
                     </div>
+
                     <div class="portlet light portlet-fit ">
                         <div class="portlet-title">
                             <div class="caption">

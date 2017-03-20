@@ -140,17 +140,6 @@ app.service('StorageService', function($window) {
  
 });
 
-app.controller('ActionCreateController', ['$scope', function($scope) {
-  
-  console.log('ActionCreateController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
 
 app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
   
@@ -258,6 +247,17 @@ app.service("ActionService", function($http, APIConfig) {
 });
 */
 
+app.controller('ActionCreateController', ['$scope', function($scope) {
+  
+  console.log('ActionCreateController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
 app.controller('CoordinationsController', ['$scope', function($scope) {
   
   console.log('CoordinationsController');
@@ -267,92 +267,6 @@ app.controller('CoordinationsController', ['$scope', function($scope) {
   }
 
 }]);
-
-
-app.service('AuthService', function($http, $q,  APIConfig) {
-  
-  var url = APIConfig.url + 'token-auth/'
-
-  this.login = function(data) {
-
-      var deferred = $q.defer();
-
-      $http.post(url, data).then(function(response) {
-          deferred.resolve(response);
-        }, function(errorResponse) {
-          deferred.reject(errorResponse);
-        });
-
-      var promise = deferred.promise;
-    
-    return promise
-  };
-
-});
-
-
-app.controller('LoginController', [
-  '$scope','$state', '$http', '$window', 'AuthService', 'StorageService', 
-  function($scope, $state, $http, $window, AuthService, StorageService) {
-
-    $scope.showAlert = false;
-
-    $scope.loginSubmit = function(data) {
-
-      AuthService.login(data)
-        .then(function(response) {
-          
-          StorageService.set('token',response.data.token);
-          $state.go('coordinations');
-
-        },function(errorResponse) {
-          $scope.showAlert = true;
-
-          if (errorResponse.data.non_field_errors) {
-            $scope.error = "Nombre de usuario y/o contraseña inválidos.";
-          }
-          else {
-            $scope.error = errorResponse.statusText || 'Request failed.';
-          }
-
-        });
-    };
-
-}]);
-
-
-app.controller('ProfileController', ['$scope', function($scope) {
-  
-  console.log('ProfileController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
-
-}]);
-
-
-app.service('UserService', function($http, APIConfig,$q) {
-
-    this.search = function(name) {
-        var results = undefined;
-        var deferred = $q.defer();
-        URL = APIConfig.url + 'users/';
-
-        $http.get(URL+'?first_surname='+name)
-          .then(function(result) {
-            results = result.data;
-            deferred.resolve(results);
-          }, function(error) {
-            results = error;
-            deferred.reject(error);
-          });
-
-        results = deferred.promise;
-      return $q.when(results);
-    };
-
-});
 
 
 app.controller('ProjectCreateController', [
@@ -412,6 +326,92 @@ app.service("UserListService", ['$http', 'APIConfig', function($http, APIConfig)
 }]);
 
 
+app.controller('ProfileController', ['$scope', function($scope) {
+  
+  console.log('ProfileController');
+ 
+   $scope.isActive = function(path) {
+    return ($location.path()==path)
+  }
+
+}]);
+
+
+app.service('UserService', function($http, APIConfig,$q) {
+
+    this.search = function(name) {
+        var results = undefined;
+        var deferred = $q.defer();
+        URL = APIConfig.url + 'users/';
+
+        $http.get(URL+'?first_surname='+name)
+          .then(function(result) {
+            results = result.data;
+            deferred.resolve(results);
+          }, function(error) {
+            results = error;
+            deferred.reject(error);
+          });
+
+        results = deferred.promise;
+      return $q.when(results);
+    };
+
+});
+
+
+app.service('AuthService', function($http, $q,  APIConfig) {
+  
+  var url = APIConfig.url + 'token-auth/'
+
+  this.login = function(data) {
+
+      var deferred = $q.defer();
+
+      $http.post(url, data).then(function(response) {
+          deferred.resolve(response);
+        }, function(errorResponse) {
+          deferred.reject(errorResponse);
+        });
+
+      var promise = deferred.promise;
+    
+    return promise
+  };
+
+});
+
+
+app.controller('LoginController', [
+  '$scope','$state', '$http', '$window', 'AuthService', 'StorageService', 
+  function($scope, $state, $http, $window, AuthService, StorageService) {
+
+    $scope.showAlert = false;
+
+    $scope.loginSubmit = function(data) {
+
+      AuthService.login(data)
+        .then(function(response) {
+          
+          StorageService.set('token',response.data.token);
+          $state.go('coordinations');
+
+        },function(errorResponse) {
+          $scope.showAlert = true;
+
+          if (errorResponse.data.non_field_errors) {
+            $scope.error = "Nombre de usuario y/o contraseña inválidos.";
+          }
+          else {
+            $scope.error = errorResponse.statusText || 'Request failed.';
+          }
+
+        });
+    };
+
+}]);
+
+
 app.controller('ProjectDetailController', ['$scope', function($scope) {
   
   console.log('ProjectDetailController');
@@ -423,16 +423,67 @@ app.controller('ProjectDetailController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('ProjectListController', ['$scope', function($scope) {
+app.controller('ProjectListController', [
+	'$scope', 'ProjectListService',
+	function($scope, ProjectListService) {
   
-  console.log('ProjectListController');
- 
    $scope.isActive = function(path) {
     return ($location.path()==path)
   }
 
+	ProjectListService.getList().then(
+		function(response) {
+			$scope.data = response.results
+			console.log('$scope.data', $scope.data);
+		},
+		function(errorResponse) {
+			error = errorResponse || 'Request failed';
+			console.log('errorResponse', error);
+		}
+	);
+
 }]);
 
+
+app.service("ProjectListService", ['$http', 'APIConfig', function($http, APIConfig) {
+	this.getList = function() {
+	  var promise = $http.get(APIConfig.url + "projects/").then(function(response) {
+	  	console.log(APIConfig.url + "projects/");
+	  return response.data;
+	});
+	  return promise;
+	};
+}]);
+
+
+
+app.directive('myNavbar', ['URLTemplates',
+
+  /** @ngInject */
+  function myNavbar(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/components/navbar/navbar.html',
+      scope: {
+          creationDate: '='
+      },
+      controller: NavbarController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    /** @ngInject */
+    function NavbarController(APIConfig) {
+      var vm = this;
+
+      // "vm.creationDate" is available by directive option "bindToController: true"
+      vm.relativeDate = moment(vm.creationDate).fromNow();
+    }
+  }
+
+]);
 
 
 app.directive('myHeader', ['URLTemplates',
@@ -467,35 +518,6 @@ app.directive('myHeader', ['URLTemplates',
 
     }
   }
-]);
-
-
-app.directive('myNavbar', ['URLTemplates',
-
-  /** @ngInject */
-  function myNavbar(URLTemplates) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/navbar/navbar.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: NavbarController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    /** @ngInject */
-    function NavbarController(APIConfig) {
-      var vm = this;
-
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
-    }
-  }
-
 ]);
 
 
