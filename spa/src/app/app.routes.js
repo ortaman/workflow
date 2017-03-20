@@ -21,22 +21,34 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
       controller: "CoordinationsController"
     })
 
+
     .state('projectCreate', {
       url: "/projectCreate",
       templateUrl: URLTemplates + "app/project-create/project-create.html",
       controller: "ProjectCreateController" 
-    })
-    .state('projectDetail', {
-      url: "/projectDetail",
-      templateUrl: URLTemplates + "app/project-detail/project-detail.html",
-      controller: "ProjectDetailController" 
     })
     .state('projectList', {
       url: "/projectList",
       templateUrl: URLTemplates + "app/project-list/project-list.html",
       controller: "ProjectListController" 
     })
+    .state('projectDetail', {
+      url: "/projectDetail",
+      templateUrl: URLTemplates + "app/project-detail/project-detail.html",
+      controller: "ProjectDetailController" 
+    })
+    .state('projectUpdate', {
+      url: "/projectUpdate/:id/",
+      templateUrl: URLTemplates + "app/project-update/project-update.html",
+      controller: "ProjectUpdateController"
+      //resolve: {
+        //project: function (ProjectUpdateService) {
+          //return ProjectUpdateService.getById(1);
+        //}
+      //}
+    })
     
+
     .state('actionCreate', {
       url: "/actionCreate",
       templateUrl: URLTemplates + "app/action-create/action-create.html",

@@ -27,6 +27,5 @@ app.controller('ProjectListController', [
   };
 
   $scope.pageChanged()
-  console.log('$scope.currentPage',$scope.currentPage);
-
+  
 }]);

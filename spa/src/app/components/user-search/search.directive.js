@@ -1,15 +1,16 @@
 
 
-app.directive('userSearch', ['URLTemplates', 'UserListService',
+app.directive('userSearch', ['URLTemplates', 'UserListService', '$timeout',
 
   /** @ngInject */
-  function userSearch(URLTemplates, UserListService) {
+  function userSearch(URLTemplates, UserListService, $timeout) {
     var directive = {
       restrict: 'E',
       templateUrl: URLTemplates + 'app/components/user-search/search.html',
       scope: {
           fieldName: '@',
           userId: '=',
+          userInit: '=',
       },
       controller: SearchUserController,
       controllerAs: 'vm',
@@ -21,9 +22,9 @@ app.directive('userSearch', ['URLTemplates', 'UserListService',
     function SearchUserController() {
       var vm = this;
 
-      vm.selectedItem  = null;
-      vm.searchText    = null;
-
+      $timeout( function(){
+        vm.selectedItem = vm.userInit;
+      }, 2000 );
       // ******************************
       // Internal methods
       // ******************************
