@@ -60,7 +60,7 @@ class ActionList(APIView, CommonMixin):
         page = request.GET.get('page')
         actions = self.model.objects.all()
 
-        data = self.get_pagination(actions, page, paginate_by)
+        data = self.get_pagination(actions, page, self.paginate_by)
         return Response(data)
 
     def post(self, request, format=None):
