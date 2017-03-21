@@ -12,6 +12,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     negotiation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
     execution_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
     evaluation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    
     begin_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
     accomplish_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
     renegotiation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
@@ -41,9 +42,21 @@ class ProjectSerializerExtended(serializers.ModelSerializer):
 
 class ActionSerializer(serializers.ModelSerializer):
 
+    expire_at =serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    
+    begin_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    accomplish_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    renegotiation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    report_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    
     class Meta:
-        model = Action
-        fields = '__all__'
+        model = Project
+        fields = ('id', 'project', 'phase', 'client', 'producer', 'observer', 'clasification',
+            'name', 'toDo', 'satisfactions', 'expire_at',
+            'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at',
+            'financial', 'operational', 'other1', 'other2', 'parent_action')
+
+    read_only_fields =  ('created_at', 'updated_at','create_by',)
 
 
 class ActionSerializerExtended(serializers.ModelSerializer):
