@@ -4,7 +4,7 @@ app.controller('ProjectListController', [
 	function($scope, ProjectListService) {
 
 	$scope.currentPage = 1;
-  
+
   $scope.isActive = function(path) {
     return ($location.path()==path)
   }
@@ -27,5 +27,5 @@ app.controller('ProjectListController', [
   };
 
   $scope.pageChanged()
-  
+
 }]);

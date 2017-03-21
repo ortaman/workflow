@@ -56,8 +56,8 @@
                         <small>Niveles de Cumplimiento</small>
                     </h1>
                 </div>
-                <div class="col-md-3" style="padding: 0em 0em 0em 6em;">            
-                    <a ui-sref="projectCreate" class="btn btn-info btn-lg active" role="button" aria-pressed="true">    
+                <div class="col-md-3" style="padding: 0em 0em 0em 6em;">
+                    <a ui-sref="projectCreate" class="btn btn-info btn-lg active" role="button" aria-pressed="true">
                       Crear proyecto
                     </a>
                 </div>
@@ -80,17 +80,17 @@
                                 <div class="col-md-4" style="margin-bottom: 3em;">
                                     <div class="mt-widget-4">
                                         <div class="mt-img-container">
-                                            <img src="../../assets/metronics/pages/img/background/5.jpg" /> 
+                                            <img src="../../assets/metronics/pages/img/background/5.jpg" />
                                             <!--img src="../../assets/metronics/pages/img/background/14.jpg" />
                                              <img src="../../assets/metronics/pages/img/background/58.jpg" />
-                                             <img src="../../assets/metronics/pages/img/background/58.jpg" /> 
+                                             <img src="../../assets/metronics/pages/img/background/58.jpg" />
                                             <img src="../../assets/metronics/pages/img/background/15.jpg" /-->
                                         </div>
                                         <div class="mt-container bg-red-opacity">
-                                            <div class="mt-head-title"> 
+                                            <div class="mt-head-title">
                                                 Nombre: {{ project.name }} <br>
                                                 Tipo: {{ project.clasification }} <br>
-                                                Fase: {{ project.phase }} 
+                                                Fase: {{ project.phase }}
                                             </div>
                                             <div class="mt-body-icons">
                                                 <a ui-sref="projectUpdate({ id: project.id })">
@@ -118,13 +118,13 @@
                             </div>
 
                         </div>
-                        
+
                         <div class="text-center">
-                            <ul uib-pagination boundary-links="true" class="pagination-sm" 
-                                previous-text="&lsaquo;" next-text="&rsaquo;" 
+                            <ul uib-pagination boundary-links="true" class="pagination-sm"
+                                previous-text="&lsaquo;" next-text="&rsaquo;"
                                 first-text="&laquo;" last-text="&raquo;"
                                 items-per-page="data.paginate_by"
-                                total-items="data.count" 
+                                total-items="data.count"
                                 ng-model="currentPage"
                                 ng-change="pageChanged()">
                             </ul>

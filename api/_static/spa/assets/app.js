@@ -4,9 +4,10 @@
 var app = angular.module('myApp',
   [
 		'ui.router',
-		'ngDialog',
 		'ngMaterial',
-
+    'ngDialog',
+    'ui.bootstrap',
+    
     // 'myApp.actionList',
   ]
 );
@@ -69,22 +70,34 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
       controller: "CoordinationsController"
     })
 
+
     .state('projectCreate', {
       url: "/projectCreate",
       templateUrl: URLTemplates + "app/project-create/project-create.html",
       controller: "ProjectCreateController" 
-    })
-    .state('projectDetail', {
-      url: "/projectDetail",
-      templateUrl: URLTemplates + "app/project-detail/project-detail.html",
-      controller: "ProjectDetailController" 
     })
     .state('projectList', {
       url: "/projectList",
       templateUrl: URLTemplates + "app/project-list/project-list.html",
       controller: "ProjectListController" 
     })
+    .state('projectDetail', {
+      url: "/projectDetail",
+      templateUrl: URLTemplates + "app/project-detail/project-detail.html",
+      controller: "ProjectDetailController" 
+    })
+    .state('projectUpdate', {
+      url: "/projectUpdate/:id/",
+      templateUrl: URLTemplates + "app/project-update/project-update.html",
+      controller: "ProjectUpdateController"
+      //resolve: {
+        //project: function (ProjectUpdateService) {
+          //return ProjectUpdateService.getById(1);
+        //}
+      //}
+    })
     
+
     .state('actionCreate', {
       url: "/actionCreate",
       templateUrl: URLTemplates + "app/action-create/action-create.html",
@@ -140,14 +153,52 @@ app.service('StorageService', function($window) {
  
 });
 
-app.controller('ActionCreateController', ['$scope', function($scope) {
-  
-  console.log('ActionCreateController');
- 
-   $scope.isActive = function(path) {
-    return ($location.path()==path)
+app.controller('ActionCreateController',
+  ['$scope', 'ProjectListService', 'ActionCreateService',
+    function($scope, ProjectListService, ActionCreateService) {
+
+  $scope.projectList =[];
+
+  $scope.getProjectList = function(){
+    var query = {"page": "1"};
+    ProjectListService.getList(query).then(
+      function(data) {
+        $scope.projectList = data.results;
+      },
+      function(error) {
+      }
+    );
   }
 
+  $scope.submit = function (action) {
+    action.accomplish_at = moment(action.accomplish_at).format("YYYY-MM-DD");
+    action.expire_at = moment(action.expire_at).format("YYYY-MM-DD");
+    action.renegotiation_at = moment(action.renegotiation_at).format("YYYY-MM-DD");
+    action.report_at = moment(action.report_at).format("YYYY-MM-DD");
+    action.begin_at = moment(action.begin_at).format("YYYY-MM-DD");
+
+
+    ActionCreateService.create(action).then(
+      function (data) {
+        console.log("data", data);
+      },
+      function (data) {
+        console.log("error", data.error);
+      }
+    );
+  }
+
+}]);
+
+
+app.service("ActionCreateService", ['$http', 'APIConfig', function($http, APIConfig) {
+  this.create = function(object) {
+    var promise = $http.post(APIConfig.url + "actions/", object).then(function(response) {
+      return response.data;
+    });
+
+    return promise;
+  };
 }]);
 
 
@@ -423,14 +474,124 @@ app.controller('ProjectDetailController', ['$scope', function($scope) {
 }]);
 
 
-app.controller('ProjectListController', ['$scope', function($scope) {
-  
-  console.log('ProjectListController');
- 
-   $scope.isActive = function(path) {
+app.controller('ProjectListController', [
+	'$scope', 'ProjectListService',
+	function($scope, ProjectListService) {
+
+	$scope.currentPage = 1;
+
+  $scope.isActive = function(path) {
     return ($location.path()==path)
   }
 
+  $scope.pageChanged = function() {
+
+	  var query = {"page": $scope.currentPage};
+
+		ProjectListService.getList(query).then(
+			function(response) {
+				$scope.data = response
+				console.log('$scope.data', $scope.data);
+			},
+			function(errorResponse) {
+				error = errorResponse || 'Request failed';
+				console.log('errorResponse', error);
+			}
+		);
+
+  };
+
+  $scope.pageChanged()
+
+}]);
+
+
+app.service("ProjectListService", ['$http', 'APIConfig', function($http, APIConfig) {
+	this.getList = function(object) {
+	  var params = $.param(object);
+
+	  var promise = $http.get(APIConfig.url + "projects/?" + params).then(function(response) {
+	  	console.log(APIConfig.url + "projects/");
+	  return response.data;
+	});
+	  return promise;
+	};
+}]);
+
+
+app.controller('ProjectUpdateController', [
+  '$scope', '$state', 'ProjectUpdateService',
+  function($scope, $state, ProjectUpdateService) {
+    $scope.submitted = false;
+    $scope.project = {};
+
+    $scope.getProjectByIdInit = function() {
+        ProjectUpdateService.getById($state.params.id).then(
+          function(response) {
+            console.log('getById', response);
+            $scope.project = response;
+
+            $scope.project.preparation_at1 = new Date($scope.project.preparation_at);
+            $scope.project.negotiation_at1 = new Date($scope.project.negotiation_at);
+            $scope.project.execution_at1 = new Date($scope.project.execution_at);
+            $scope.project.evaluation_at1 = new Date($scope.project.evaluation_at);
+            $scope.project.begin_at1 = new Date($scope.project.begin_at);
+            $scope.project.accomplish_at1 = new Date($scope.project.accomplish_at);
+            $scope.project.renegotiation_at1 = new Date($scope.project.renegotiation_at);
+            $scope.project.report_at1 = new Date($scope.project.report_at);
+
+          },
+          function(errorResponse) {
+            var error = errorResponse || 'Request failed';
+              console.log('error', error);
+            }
+        );
+    }
+
+    $scope.submitForm = function (){
+      $scope.submitted = true;
+
+      $scope.project.preparation_at = moment($scope.project.preparation_at1).format("DD-MM-YYYY");
+    	$scope.project.negotiation_at = moment($scope.project.negotiation_at1).format("DD-MM-YYYY");
+    	$scope.project.execution_at = moment($scope.project.execution_at1).format("DD-MM-YYYY");
+    	$scope.project.evaluation_at = moment($scope.project.evaluation_at1).format("DD-MM-YYYY");
+    	$scope.project.begin_at = moment($scope.project.begin_at1).format("DD-MM-YYYY");
+    	$scope.project.accomplish_at = moment($scope.project.accomplish_at1).format("DD-MM-YYYY");
+    	$scope.project.renegotiation_at = moment($scope.project.renegotiation_at1).format("DD-MM-YYYY");
+    	$scope.project.report_at = moment($scope.project.report_at1).format("DD-MM-YYYY");
+
+		ProjectUpdateService.update($state.params.id, $scope.project).then(
+			function(response) {
+				console.log('reponse', response);
+				$state.go('projectList');
+			},
+			function(errorResponse) {
+				var error = errorResponse || 'Request failed';
+	    		console.log('error', error);
+	  		}
+		);
+    
+    }
+
+}]);
+
+
+app.service("ProjectUpdateService", ['$http', 'APIConfig', function($http, APIConfig) {
+  this.getById = function(id) {
+    var promise = $http.get(APIConfig.url + "projects/" + id + "/").then(function(response) {
+      return response.data;
+    });
+
+    return promise;
+  }  
+
+  this.update = function(id, object) {
+    var promise = $http.put(APIConfig.url + "projects/" + id + "/" , object).then(function(response) {
+      return response.data;
+    });
+
+    return promise;
+  };
 }]);
 
 
@@ -499,16 +660,17 @@ app.directive('myNavbar', ['URLTemplates',
 ]);
 
 
-app.directive('userSearch', ['URLTemplates', 'UserListService',
+app.directive('userSearch', ['URLTemplates', 'UserListService', '$timeout',
 
   /** @ngInject */
-  function userSearch(URLTemplates, UserListService) {
+  function userSearch(URLTemplates, UserListService, $timeout) {
     var directive = {
       restrict: 'E',
       templateUrl: URLTemplates + 'app/components/user-search/search.html',
       scope: {
           fieldName: '@',
           userId: '=',
+          userInit: '=',
       },
       controller: SearchUserController,
       controllerAs: 'vm',
@@ -520,9 +682,9 @@ app.directive('userSearch', ['URLTemplates', 'UserListService',
     function SearchUserController() {
       var vm = this;
 
-      vm.selectedItem  = null;
-      vm.searchText    = null;
-
+      $timeout( function(){
+        vm.selectedItem = vm.userInit;
+      }, 2000 );
       // ******************************
       // Internal methods
       // ******************************

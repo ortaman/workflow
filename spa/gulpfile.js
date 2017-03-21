@@ -1,5 +1,5 @@
 
-var gulp       = require('gulp');  
+var gulp       = require('gulp');
 var less       = require('gulp-less');
 var concat     = require('gulp-concat');
 
@@ -36,7 +36,7 @@ gulp.task('watch-html', function() {
 /* Task to compile less */
 gulp.task('compile-less', function() {
   var compile = gulp.src([
-      'src/index.less', 
+      'src/index.less',
       'src/app/**/*.less'
     ])
     .pipe(concat('app.less'))
@@ -52,10 +52,10 @@ gulp.task('compile-less', function() {
 /* Task to watch less changes */
 gulp.task('watch-less', function() {
   gulp.watch([
-    'src/index.less', 
+    'src/index.less',
     'src/app/**/*.less',
     'src/app/components/**/*.less'
-    ],   
+    ],
     ['compile-less']
   );
 });
@@ -79,7 +79,7 @@ gulp.task('compile-js', function() {
 
 
 /* Task to watch javascript changes */
-gulp.task('watch-js', function() {  
+gulp.task('watch-js', function() {
   gulp.watch([
     'src/app/app._.js',
     'src/app/*.js',
@@ -91,9 +91,9 @@ gulp.task('watch-js', function() {
 
 gulp.task('js-vendor', function () {
   return gulp.src([
-    // jQuery (necessary for Bootstrap's JavaScript plugins) 
+    // jQuery (necessary for Bootstrap's JavaScript plugins)
     // "bower_components/jquery/dist/jquery.min.js",
-    
+
     // Include all compiled plugins (below), or include individual files as needed
     // "bower_components/bootstrap/dist/js/bootstrap.min.js",
     "bower_components/angular/angular.min.js",
@@ -137,7 +137,7 @@ gulp.task('html-minify', function() {
 gulp.task('default', [
   'watch-html',
   'compile-less',
-  'compile-js',  
+  'compile-js',
   'watch-less',
   'watch-js',
   'connect',
@@ -145,4 +145,4 @@ gulp.task('default', [
   'js-vendor',
   'css-vendor',
   'html-minify'
-  ]);  
+  ]);
