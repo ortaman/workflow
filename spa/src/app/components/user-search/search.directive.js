@@ -37,19 +37,19 @@ app.directive('userSearch', ['URLTemplates', 'UserListService', '$timeout',
 
         UserListService.getList(query).then(
           function(response) {
-            console.log('response.results', response.results);
             vm.results = response.results;
           },
           function(errorResponse) {
-            console.log('response', errorResponse);
             vm.error = errorResponse.statusText || 'Request failed.';
+            console.log('response', errorResponse);
           }
         );
 
       };
 
       vm.selectedItemChange = function(item) {
-        vm.userId = item.id;
+        if(item)
+          vm.userId = item.id;
       };
 
     }

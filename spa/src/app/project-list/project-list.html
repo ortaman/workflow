@@ -13,12 +13,12 @@
                         <a href="index.html">Inicio</a>
                         <i class="fa fa-circle"></i>
                     </li>
-                    <li>
+                    <!--li>
                         <a href="#">Tablero de Control</a>
                         <i class="fa fa-circle"></i>
-                    </li>
+                    </li-->
                     <li>
-                        <span>Proyectos</span>
+                        <span>Tablero de Proyectos</span>
                     </li>
                 </ul>
                 <!--div class="page-toolbar">
@@ -93,10 +93,13 @@
                                                 Fase: {{ project.phase }}
                                             </div>
                                             <div class="mt-body-icons">
-                                                <a ui-sref="projectUpdate({ id: project.id })">
-                                                    <i class=" fa fa-edit"></i>
+                                                <a ui-sref="projectUpdate({ id: project.id })" 
+                                                   class="md-icon-button test-tooltip" aria-label="Refresh">
+                                                   <md-tooltip md-direction="top"> Editar proyecto </md-tooltip>
+                                                   <i class=" fa fa-edit"></i>
                                                 </a>
                                                 <a ui-sref="projectDetail">
+                                                   <md-tooltip md-direction="top"> Detalle del proyecto </md-tooltip>
                                                     <i class=" fa fa-file-text-o"></i>
                                                 </a>
                                                 <!--a ui-sref="projectDetail">

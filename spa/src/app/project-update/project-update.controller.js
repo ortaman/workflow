@@ -6,30 +6,36 @@ app.controller('ProjectUpdateController', [
     $scope.project = {};
 
     $scope.getProjectByIdInit = function() {
-        ProjectUpdateService.getById($state.params.id).then(
-          function(response) {
-            console.log('getById', response);
-            $scope.project = response;
+      ProjectUpdateService.getById($state.params.id).then(
+        function(response) {
+          console.log('getById', response);
+          $scope.project = response;
 
-            $scope.project.preparation_at1 = new Date($scope.project.preparation_at);
-            $scope.project.negotiation_at1 = new Date($scope.project.negotiation_at);
-            $scope.project.execution_at1 = new Date($scope.project.execution_at);
-            $scope.project.evaluation_at1 = new Date($scope.project.evaluation_at);
-            $scope.project.begin_at1 = new Date($scope.project.begin_at);
-            $scope.project.accomplish_at1 = new Date($scope.project.accomplish_at);
-            $scope.project.renegotiation_at1 = new Date($scope.project.renegotiation_at);
-            $scope.project.report_at1 = new Date($scope.project.report_at);
+          $scope.project.preparation_at1 = new Date($scope.project.preparation_at);
+          $scope.project.negotiation_at1 = new Date($scope.project.negotiation_at);
+          $scope.project.execution_at1 = new Date($scope.project.execution_at);
+          $scope.project.evaluation_at1 = new Date($scope.project.evaluation_at);
+          $scope.project.begin_at1 = new Date($scope.project.begin_at);
+          $scope.project.accomplish_at1 = new Date($scope.project.accomplish_at);
+          $scope.project.renegotiation_at1 = new Date($scope.project.renegotiation_at);
+          $scope.project.report_at1 = new Date($scope.project.report_at);
 
-          },
-          function(errorResponse) {
-            var error = errorResponse || 'Request failed';
-              console.log('error', error);
-            }
-        );
+        },
+        function(errorResponse) {
+          var error = errorResponse || 'Request failed';
+            console.log('error', error);
+          }
+      );
     }
 
-    $scope.submitForm = function (){
+    $scope.submitForm = function() {
       $scope.submitted = true;
+
+      if ($scope.projectForm.$invalid) {
+        $scope.error = 'El formulario no es válido o no ha sido modificado.';
+        console.log($scope.projectForm);
+        return;
+      }
 
       $scope.project.preparation_at = moment($scope.project.preparation_at1).format("DD-MM-YYYY");
     	$scope.project.negotiation_at = moment($scope.project.negotiation_at1).format("DD-MM-YYYY");
@@ -40,16 +46,16 @@ app.controller('ProjectUpdateController', [
     	$scope.project.renegotiation_at = moment($scope.project.renegotiation_at1).format("DD-MM-YYYY");
     	$scope.project.report_at = moment($scope.project.report_at1).format("DD-MM-YYYY");
 
-		ProjectUpdateService.update($state.params.id, $scope.project).then(
-			function(response) {
-				console.log('reponse', response);
-				$state.go('projectList');
-			},
-			function(errorResponse) {
-				var error = errorResponse || 'Request failed';
-	    		console.log('error', error);
-	  		}
-		);
+  		ProjectUpdateService.update($state.params.id, $scope.project).then(
+  			function(response) {
+  				console.log('reponse', response);
+  				$state.go('projectList');
+  			},
+  			function(errorResponse) {
+  				var error = errorResponse || 'Request failed';
+  	    		console.log('error', error);
+  	  		}
+  		);
     
     }
 
