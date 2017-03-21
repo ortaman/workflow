@@ -1,9 +1,9 @@
 
-app.controller('ActionListController', ['$scope', 'ActionService', function($scope, ActionService) {
+app.controller('ActionListController', ['$scope', 'ActionListService', function($scope, ActionListService) {
   
   console.log('ActionListController');
 
-	ActionService.getList().then(
+	ActionListService.getList().then(
 		function(response) {
 			console.log('reponse', response);
 		},
@@ -18,7 +18,6 @@ app.controller('ActionListController', ['$scope', 'ActionService', function($sco
   }
 
 }]);
-
 
 /*
 angular.module('myApp.actionList', ['ui.router']);

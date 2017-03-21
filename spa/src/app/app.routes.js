@@ -33,7 +33,7 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
       controller: "ProjectListController" 
     })
     .state('projectDetail', {
-      url: "/projectDetail",
+      url: "/projectDetail/:id/",
       templateUrl: URLTemplates + "app/project-detail/project-detail.html",
       controller: "ProjectDetailController" 
     })
@@ -48,9 +48,8 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
       //}
     })
     
-
     .state('actionCreate', {
-      url: "/actionCreate",
+      url: "/actionCreate/:projectId/",
       templateUrl: URLTemplates + "app/action-create/action-create.html",
       controller: "ActionCreateController" 
     })

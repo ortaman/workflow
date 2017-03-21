@@ -17,45 +17,45 @@
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <a ui-sref="projectList"> Tablero de Proyectos </a>
+                        <a ui-sref="projectList"> Tablero del Proyectos </a>
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <span> Actualizar Proyecto </span>
+                        <span> Bitácora del Proyecto </span>
                     </li>
                 </ul>
                 <div class="page-toolbar">
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Acciones
+                        <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Agregar al proyecto
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
                             <li>
-                                <a href="#">
-                                    <i class="icon-fire"></i> Nueva Alerta</a>
+                                <a ui-sref="actionCreate({ projectId: project.id })">
+                                    <i class="icon-fire"></i> Nueva Acción </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <i class="icon-pin"></i> Nueva Acción</a>
+                                    <i class="icon-pin"></i> Nueva Alerta</a>
                             </li>
-                            <li>
+                            <!--li>
                                 <a href="#">
-                                    <i class="icon-user"></i> Ubicar a Alguien</a>
+                                    <i class="icon-user"></i> Ubicar a Alguien </a>
                             </li>
                             <li class="divider"> </li>
                             <li>
                                 <a href="#">
                                     <i class="icon-layers"></i> Ver Proyectos</a>
-                            </li>
+                            </li-->
                         </ul>
                     </div>
                 </div>
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title"> Bitácora Proyectos
-                            <small>Action Workflow</small>
-                        </h1>
+            <h1 class="page-title">
+                <small>Action Workflow</small>
+            </h1>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <div class="row">

@@ -1,12 +1,12 @@
 
 app.controller('ProjectUpdateController', [
-  '$scope', '$state', 'ProjectUpdateService',
-  function($scope, $state, ProjectUpdateService) {
+  '$scope', '$state', 'ProjectGetService', 'ProjectUpdateService', 
+  function($scope, $state, ProjectGetService, ProjectUpdateService) {
     $scope.submitted = false;
     $scope.project = {};
 
     $scope.getProjectByIdInit = function() {
-      ProjectUpdateService.getById($state.params.id).then(
+      ProjectGetService.getById($state.params.id).then(
         function(response) {
           console.log('getById', response);
           $scope.project = response;
