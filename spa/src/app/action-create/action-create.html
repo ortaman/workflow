@@ -68,70 +68,122 @@
                             <span class="caption-subject font-green-sharp bold uppercase">Subciclo del Proyecto</span>
                         </div>
                     </div>
-                    <form action="#" class="horizontal-form">
-                        <h4 class="form-section">Fase del Action Workflow del Proyecto</h4>
+                    <form name="actionForm" class="horizontal-form" novalidate ng-submit="submit(action)">
+                        <h4 class="form-section">Proyecto</h4>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <select class="form-control">
-                                        <option value="">Preparación</option>
-                                        <option value="">Negociación</option>
-                                        <option value="">Ejecución</option>
-                                        <option value="">Evaluación</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-4">
+                              <md-input-container class="md-block" >
+                                <label> Proyecto </label>
+                                <md-select name="proyect" ng-model="action.project" required="" ng-init="getProjectList()">
+                                  <md-option ng-repeat="value in projectList  track by $index" value="{{value.id}}">
+                                    {{value.name}}
+                                  </md-option>
+                                </md-select>
+
+                                <div ng-show="actionForm.project.$touched || submitted">
+                                   <div class="error"  ng-show="actionForm.project.$error.required">
+                                     Campo requerido.
+                                   </div>
+                                 </div>
+                                </md-input-container>
                             </div>
+                            <div class="col-md-4">
+                              <md-input-container class="md-block" >
+                                <label> Fase </label>
+                                <md-select name="phase" ng-model="action.phase" required="">
+                                  <md-option value="preparacion"> Preparación </md-option>
+                                  <md-option value="negociacion"> Negociación </md-option>
+                                  <md-option value="ejecucion"> Ejecución </md-option>
+                                  <md-option value="evaluacion"> Evaluación </md-option>
+                                </md-select>
+
+                                <div ng-show="actionForm.phase.$touched || submitted">
+                                   <div class="error"  ng-show="actionForm.phase.$error.required">
+                                     Campo requerido.
+                                   </div>
+                                 </div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-4">
+                                <md-input-container class="md-block">
+                                  <label>Nombre de la acción</label>
+                                  <input
+                                    name="name"
+                                    maxlength="64"
+                                    ng-model="action.name"
+                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
+                                    required></input>
+                                  <div ng-show="actionForm.name.$touched || submitted">
+                                    <div class="error" ng-show="actionForm.name.$error.required">
+                                      Campo requerido.
+                                    </div>
+                                    <div class="error" ng-show="actionForm.name.$error.pattern">
+                                       Debe contener espacios y caracteres alfabéticos.
+                                    </div>
+                                  </div>
+                                 </md-input-container>
+                            </div>
+
+
+
                         </div>
                         <h4 class="form-section">Los Roles en la Acción</h4>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Cliente">
-                                </div>
-                            </div>
-                            <!--/span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Realizador">
-                                </div>
-                            </div>
-                            <!--/span-->
+                          <div class="col-md-4">
+                            <user-search field-name="Cliente" user-id="action.client"> </user-search>
+                          </div>
+
+                          <div class="col-md-4">
+                            <user-search field-name="Realizador" user-id="action.producer"> </user-search>
+                          </div>
+
+                          <div class="col-md-4">
+                            <user-search field-name="Observador" user-id="action.observer"> </user-search>
+                          </div>
                         </div>
+
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Observador">
+                          <div class="col-md-6">
+                              <md-input-container class="md-block">
+                                <label> Acción </label>
+                                <textarea
+                                  name="toDo"
+                                  placeholder="Describe las acciones a realizar."
+                                  rows="5"
+                                  maxlength="512"
+                                  ng-model="action.toDo"
+                                  required></textarea>
+
+                                  <div ng-show="actionForm.toDo.$touched || submitted">
+                                     <div class="error" ng-show="actionForm.toDo.$error.required">
+                                       Campo requerido.
+                                     </div>
+                                   </div>
+
+                              </md-input-container>
+                          </div>
+
+                          <div class="col-md-6">
+                              <md-input-container class="md-block">
+                                <label> Requerimientos </label>
+                                <textarea
+                                  name="satisfaction"
+                                  placeholder="Describe las condiciones de satisfacción"
+                                  rows="5"
+                                  maxlength="512"
+                                  ng-model="action.satisfactions"
+                                  required></textarea>
+
+                                <div ng-show="actionForm.satisfaction.$touched || submitted">
+                                    <div class="error" ng-show="actionForm.satisfaction.$error.required">
+                                      Campo requerido.
+                                    </div>
                                 </div>
-                            </div>
+
+                              </md-input-container>
+                          </div>
                         </div>
-                        <!--/row-->
-                        <h4 class="form-section">Proyecto</h4>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <select class="form-control">
-                                        <option value="">Efectividad Comercial</option>
-                                        <option value="">Istofil</option>
-                                        <option value="">Ludlev</option>
-                                        <option value="">Businees Unit</option>
-                                        <option value="">Conversión de Clientes</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <h4 class="form-section">¿Qué haremos? - ¿Cómo lo haremos?</h4>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <textarea class="form-control todo-taskbody-taskdesc" rows="8" placeholder="Describe la Acción..."></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <textarea class="form-control todo-taskbody-taskdesc" rows="8" placeholder="Describe las Condiciones de Satisfacción..."></textarea>
-                                </div>
-                            </div>
-                        </div>
+
                         <h4 class="form-section">Fecha Límite de la Fase</h4>
                         <div class="row">
                             <div class="col-md-3">
@@ -144,66 +196,183 @@
                         </div>
                         <h4 class="form-section">Fechas Compromisos</h4>
                         <div class="row">
+
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control todo-taskbody-due" placeholder="Fecha de Inicio..."> </div>
+                                <div flex-gt-xs>
+                                  <h5>"Fecha de Inicio"</h5>
+                                  <md-datepicker
+                                    name="begin_at1"
+                                    ng-model="action.begin_at"
+                                    md-placeholder="ingrese fecha"
+                                    required ></md-datepicker>
+
+                                  <div ng-show="actionForm.begin_at.$touched || submitted">
+                                    <div class="error" ng-show="actionForm.begin_at.$error.required">
+                                      Campo requerido.
+                                    </div>
+                                  </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control todo-taskbody-due" placeholder="Fecha de Cumplimiento..."> </div>
+                                <div flex-gt-xs>
+                                  <h5>"Fecha de expiracion"</h5>
+                                  <md-datepicker
+                                    name="expire_at"
+                                    ng-model="action.expire_at"
+                                    md-placeholder="ingrese fecha"
+                                    required ></md-datepicker>
+
+                                  <div ng-show="actionForm.expire_at.$touched || submitted">
+                                    <div class="error" ng-show="actionForm.expire_at.$error.required">
+                                      Campo requerido.
+                                    </div>
+                                  </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control todo-taskbody-due" placeholder="Fecha de Reporte de Avance..."> </div>
+                                <div flex-gt-xs>
+                                  <h5>Fecha de Cumplimiento...</h5>
+                                  <md-datepicker
+                                    name="accomplish_at"
+                                    ng-model="action.accomplish_at"
+                                    md-placeholder="ingrese fecha"
+                                    required></md-datepicker>
+
+                                    <div ng-show="actionForm.accomplish_at.$touched || submitted">
+                                      <div class="error" ng-show="actionForm.accomplish_at.$error.required">
+                                        Campo requerido.
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div flex-gt-xs>
+                                  <h5>Fecha de Reporte de Avance...</h5>
+                                  <md-datepicker
+                                  name="report_at1"
+                                  md-placeholder="ingrese fecha"
+                                  ng-model="action.report_at"
+                                  required ></md-datepicker>
+
+                                  <div ng-show="actionForm.report_at.$touched || submitted">
+                                    <div class="error" ng-show="actionForm.report_at.$error.required">
+                                      Campo requerido.
+                                    </div>
+                                  </div>
+
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                              <div flex-gt-xs>
+                                <h5>Fecha de Renegoaciación...</h5>
+                                <md-datepicker
+                                name="renegotiation_at"
+                                md-placeholder="ingrese fecha"
+                                ng-model="action.renegotiation_at"
+                                required ></md-datepicker>
+
+                                <div ng-show="actionForm.renegotiation_at.$touched || submitted">
+                                  <div class="error" ng-show="actionForm.renegotiation_at.$error.required">
+                                    Campo requerido.
+                                  </div>
+                                </div>
+
+                              </div>
+                          </div>
+                        </div>
+
                         <h4 class="form-section">Indicadores</h4>
                         <div class="row">
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-dollar"></i>
-                                        <input type="text" class="form-control todo-taskbody" placeholder="Financieros..."> </div>
-                                </div>
+                                <md-input-container class="md-block">
+                                  <label>Financieros...</label>
+                                  <input
+                                    name="financial"
+                                    maxlength="64"
+                                    ng-model="action.financial"
+                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
+                                    required></input>
+                                  <div ng-show="actionForm.financial.$touched || submitted">
+                                    <div class="error" ng-show="actionForm.financial.$error.required">
+                                      Campo requerido.
+                                    </div>
+                                    <div class="error" ng-show="actionForm.financial.$error.pattern">
+                                      Debe contener espacios y caracteres alfabéticos.
+                                    </div>
+                                  </div>
+                                 </md-input-container>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-calculator"></i>
-                                        <input type="text" class="form-control todo-taskbody" placeholder="Operacionaales..."> </div>
-                                </div>
+
+                                <md-input-container class="md-block">
+                                  <label>Operacionales...</label>
+                                  <input
+                                    name="operational"
+                                    maxlength="64"
+                                    ng-model="action.operational"
+                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
+                                    required></input>
+                                  <div ng-show="actionForm.operational.$touched || submitted">
+                                    <div class="error" ng-show="actionForm.operational.$error.required">
+                                      Campo requerido.
+                                    </div>
+                                    <div class="error" ng-show="actionForm.operational.$error.pattern">
+                                       Debe contener espacios y caracteres alfabéticos.
+                                    </div>
+                                  </div>
+                                 </md-input-container>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-pie-chart"></i>
-                                        <input type="text" class="form-control todo-taskbody" placeholder="Otros..."> </div>
-                                </div>
+                                <md-input-container class="md-block">
+                                  <label>Otros...</label>
+                                  <input
+                                    name="other1"
+                                    maxlength="64"
+                                    ng-model="action.other1"
+                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
+                                    required></input>
+                                  <div ng-show="actionForm.other1.$touched || submitted">
+                                    <div class="error" ng-show="actionForm.other1.$error.required">
+                                      Campo requerido.
+                                    </div>
+                                    <div class="error" ng-show="actionForm.other1.$error.pattern">
+                                       Debe contener espacios y caracteres alfabéticos.
+                                    </div>
+                                  </div>
+                                 </md-input-container>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-line-chart"></i>
-                                        <input type="text" class="form-control todo-taskbody" placeholder="Otros..."> </div>
+                              <md-input-container class="md-block">
+                                <label>Otros...</label>
+                                <input
+                                  name="other2"
+                                  maxlength="64"
+                                  ng-model="action.other2"
+                                  ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
+                                  required></input>
+                                <div ng-show="actionForm.other2.$touched || submitted">
+                                  <div class="error" ng-show="actionForm.other2.$error.required">
+                                    Campo requerido.
+                                  </div>
+                                  <div class="error" ng-show="actionForm.other2.$error.pattern">
+                                     Debe contener espacios y caracteres alfabéticos.
+                                  </div>
                                 </div>
+                               </md-input-container>
                             </div>
                         </div>
                         <div class="todo-tasklist-devider"> </div>
                         <div class="col-md-7 col-sm-8">
-                            <form action="#" class="form-horizontal">
                                 <!-- TASK HEAD -->
                                 <!-- END TASK HEAD -->
                                 <!-- TASK TITLE -->
-                                <button type="button" class="pull-right btn btn-sm btn-circle red-thunderbird"> &nbsp; Enviar &nbsp; </button>
+                                <button type="submit" class="pull-right btn btn-sm btn-circle red-thunderbird"> &nbsp; Enviar &nbsp; </button>
                         </div>
                 </div>
             </div>
