@@ -3,29 +3,34 @@ app.controller('ProjectDetailController', [
 	'$scope', '$state', 'ProjectGetService', 'ActionListService',
 	function($scope, $state, ProjectGetService, ActionListService) {
 
-  //$scope.getProjectByIdInit = function() {
+	$scope.currentPage = 1;
+
+  $scope.getProjectByIdInit = function() {
     ProjectGetService.getById($state.params.id).then(
       function(response) {
         $scope.project = response;
-        console.log('getProjectById', response);
       },
       function(errorResponse) {
         var error = errorResponse || 'Request failed';
           console.log('error', error);
         }
     );
-  //}
 
+		$scope.pageChanged()
+	}
 
-	ActionListService.getList().then(
-		function(response) {
-        $scope.actions = response;
-        console.log('getListActions', response);
-		},
-		function(errorResponse) {
-			  error = errorResponse || 'Request failed';
-    		console.log('error', error);
-  		}
-	);
+	$scope.pageChanged = function() {
+
+	  var query = {"page": $scope.currentPage};
+		ActionListService.getList(query).then(
+			function(response) {
+				$scope.actions = response
+			},
+			function(errorResponse) {
+				error = errorResponse || 'Request failed';
+			}
+		);
+
+  };
 
 }]);
