@@ -1,11 +1,15 @@
 
-app.controller('ActionCreateController', ['$scope', 'ProjectListService', 'ActionCreateService', '$state',
-    function($scope, ProjectListService, ActionCreateService, $state) {
+app.controller('ActionCreateController', [
+  '$scope', 'ProjectListService', 'ActionCreateService', '$state',
+  function($scope, ProjectListService, ActionCreateService, $state) {
 
   $scope.projectList =[];
   $scope.submitted = false;
+  $scope.projectId = $state.params.projectId.toString();
 
-  $scope.getProjectList = function(){
+  console.log($scope.projectId);
+
+  $scope.getProjectList = function() {
     var query = {"page": "1"};
     ProjectListService.getList(query).then(
       function(data) {
