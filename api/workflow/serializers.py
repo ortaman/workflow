@@ -54,7 +54,7 @@ class ActionSerializer(serializers.ModelSerializer):
         fields = ('id', 'project', 'phase', 'client', 'producer', 'observer', 'clasification',
             'name', 'toDo', 'satisfactions', 'expire_at',
             'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at',
-            'financial', 'operational', 'other1', 'other2')
+            'financial', 'operational', 'other1', 'other2', 'parent_action')
 
     read_only_fields =  ('created_at', 'updated_at','create_by',)
 
