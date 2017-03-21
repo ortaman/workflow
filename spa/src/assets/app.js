@@ -153,11 +153,11 @@ app.service('StorageService', function($window) {
  
 });
 
-app.controller('ActionCreateController',
-  ['$scope', 'ProjectListService', 'ActionCreateService',
-    function($scope, ProjectListService, ActionCreateService) {
+app.controller('ActionCreateController', ['$scope', 'ProjectListService', 'ActionCreateService', '$state',
+    function($scope, ProjectListService, ActionCreateService, $state) {
 
   $scope.projectList =[];
+  $scope.submitted = false;
 
   $scope.getProjectList = function(){
     var query = {"page": "1"};
@@ -170,17 +170,20 @@ app.controller('ActionCreateController',
     );
   }
 
-  $scope.submit = function (action) {
-    action.accomplish_at = moment(action.accomplish_at).format("YYYY-MM-DD");
-    action.expire_at = moment(action.expire_at).format("YYYY-MM-DD");
-    action.renegotiation_at = moment(action.renegotiation_at).format("YYYY-MM-DD");
-    action.report_at = moment(action.report_at).format("YYYY-MM-DD");
-    action.begin_at = moment(action.begin_at).format("YYYY-MM-DD");
-
+  $scope.submit = function (_action) {
+    $scope.submitted = true;
+    var action = angular.copy(_action);
+    action.accomplish_at = moment(action.accomplish_at).format("DD-MM-YYYY");
+    action.expire_at = moment(action.expire_at).format("DD-MM-YYYY");
+    action.renegotiation_at = moment(action.renegotiation_at).format("DD-MM-YYYY");
+    action.report_at = moment(action.report_at).format("DD-MM-YYYY");
+    action.begin_at = moment(action.begin_at).format("DD-MM-YYYY");
 
     ActionCreateService.create(action).then(
       function (data) {
         console.log("data", data);
+        $state.go('actionList')
+
       },
       function (data) {
         console.log("error", data.error);
@@ -194,7 +197,7 @@ app.controller('ActionCreateController',
 app.service("ActionCreateService", ['$http', 'APIConfig', function($http, APIConfig) {
   this.create = function(object) {
     var promise = $http.post(APIConfig.url + "actions/", object).then(function(response) {
-      return response.data;
+      return response;
     });
 
     return promise;

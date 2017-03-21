@@ -50,8 +50,8 @@ class ActionSerializer(serializers.ModelSerializer):
     report_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
     
     class Meta:
-        model = Project
-        fields = ('id', 'project', 'phase', 'client', 'producer', 'observer', 'clasification',
+        model = Action
+        fields = ('id', 'project', 'phase', 'client', 'producer', 'observer',
             'name', 'toDo', 'satisfactions', 'expire_at',
             'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at',
             'financial', 'operational', 'other1', 'other2', 'parent_action')
