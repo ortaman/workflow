@@ -118,7 +118,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, '../staticollect')
 
 
 # User uploaded files
-MEDIA_URL = '/media/'
+MEDIA_URL = 'api/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, '../_media')
 

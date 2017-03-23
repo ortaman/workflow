@@ -37,6 +37,7 @@ app.controller('ProjectUpdateController', [
         return;
       }
 
+      console.log('$scope.project', $scope.project);
       $scope.project.preparation_at = moment($scope.project.preparation_at1).format("DD-MM-YYYY");
     	$scope.project.negotiation_at = moment($scope.project.negotiation_at1).format("DD-MM-YYYY");
     	$scope.project.execution_at = moment($scope.project.execution_at1).format("DD-MM-YYYY");

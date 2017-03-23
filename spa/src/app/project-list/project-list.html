@@ -76,11 +76,11 @@
                     <div class="portlet-body">
                         <div class="row">
 
-                            <div ng-repeat="project in data.results"> 
+                            <div ng-repeat="project in data.results" ng-cloack> 
                                 <div class="col-md-4" style="margin-bottom: 3em;">
                                     <div class="mt-widget-4">
                                         <div class="mt-img-container">
-                                            <img src="../../assets/metronics/pages/img/background/5.jpg" />
+                                            <img src="{{baseUrl}}{{project.image}}"/>
                                             <!--img src="../../assets/metronics/pages/img/background/14.jpg" />
                                              <img src="../../assets/metronics/pages/img/background/58.jpg" />
                                              <img src="../../assets/metronics/pages/img/background/58.jpg" />
