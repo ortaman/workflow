@@ -50,6 +50,8 @@ class Project(models.Model):
     other1 = models.CharField(max_length=64, verbose_name='Otros')
     other2 = models.CharField(max_length=64, verbose_name='Otros')
 
+    image = models.ImageField(upload_to='images/', verbose_name='Imagen')
+
     created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación') 
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
     create_by = models.ForeignKey(User, related_name='project_create_by', verbose_name='Creado por')

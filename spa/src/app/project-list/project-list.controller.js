@@ -1,17 +1,14 @@
 
 app.controller('ProjectListController', [
-	'$scope', 'ProjectListService',
-	function($scope, ProjectListService) {
+	'$scope', 'ProjectListService', 'APIConfig',
+	function($scope, ProjectListService, APIConfig) {
 
 	$scope.currentPage = 1;
+	$scope.baseUrl = APIConfig.baseUrl;
 
-  $scope.isActive = function(path) {
-    return ($location.path()==path)
-  }
+	$scope.pageChanged = function() {
 
-  $scope.pageChanged = function() {
-
-	  var query = {"page": $scope.currentPage};
+		var query = {"page": $scope.currentPage};
 
 		ProjectListService.getList(query).then(
 			function(response) {
@@ -24,8 +21,8 @@ app.controller('ProjectListController', [
 			}
 		);
 
-  };
+	};
 
-  $scope.pageChanged()
+	$scope.pageChanged()
 
 }]);
