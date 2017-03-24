@@ -1,12 +1,12 @@
 
 app.service("ActionListService", ['$http', 'APIConfig', function($http, APIConfig) {
-	
-	this.getList = function() {
-	  var promise = $http.get(APIConfig.url + "actions/").then(function(response) {
-	  	console.log(APIConfig.url + "actions/");
+
+	this.getList = function(object) {
+		var params = $.param(object);
+	  var promise = $http.get(APIConfig.url + "actions/?" + params).then(function(response) {
 	  return response.data;
 	});
 	  return promise;
 	};
-	
+
 }]);

@@ -1,22 +1,22 @@
 
 app.controller('ActionCreateController', [
-  '$scope', 'ProjectListService', 'ActionCreateService', '$state',
-  function($scope, ProjectListService, ActionCreateService, $state) {
+  '$scope', 'ProjectListService', 'ActionCreateService', '$state', 'ProjectGetService',
+  function($scope, ProjectListService, ActionCreateService, $state, ProjectGetService) {
 
-  $scope.projectList =[];
+  $scope.action ={};
   $scope.submitted = false;
   $scope.projectId = $state.params.projectId.toString();
 
-  console.log($scope.projectId);
-
-  $scope.getProjectList = function() {
-    var query = {"page": "1"};
-    ProjectListService.getList(query).then(
-      function(data) {
-        $scope.projectList = data.results;
+  $scope.getProjectByIdInit = function() {
+    ProjectGetService.getById($state.params.projectId).then(
+      function(response) {
+        $scope.project = response;
+        $scope.action.project = $scope.project.id;
       },
-      function(error) {
-      }
+      function(errorResponse) {
+        var error = errorResponse || 'Request failed';
+          console.log('error', error);
+        }
     );
   }
 
@@ -31,9 +31,7 @@ app.controller('ActionCreateController', [
 
     ActionCreateService.create(action).then(
       function (data) {
-        console.log("data", data);
-        $state.go('actionList')
-
+        $state.go('projectDetail', {id:$scope.project.id})
       },
       function (data) {
         console.log("error", data.error);

@@ -5,7 +5,7 @@
     <my-navbar> </my-navbar>
     <!-- END SIDEBAR -->
     <!-- BEGIN CONTENT -->
-    <div class="page-content-wrapper">
+    <div class="page-content-wrapper" ng-init="getProjectByIdInit()">
         <!-- BEGIN CONTENT BODY -->
         <div class="page-content">
             <!-- BEGIN PAGE HEADER-->
@@ -21,7 +21,7 @@
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <span> Bitácora del Proyecto </span>
+                        <span> Bitácora del Proyecto  </span>
                     </li>
                 </ul>
                 <div class="page-toolbar">
@@ -54,7 +54,7 @@
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
             <h1 class="page-title">
-                <small>Action Workflow</small>
+                <small>Action Workflow </small>
             </h1>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
@@ -319,7 +319,7 @@
                                 <div class="tab-pane active " id="tab_1_1 ">
                                     <div class="scroller " style="height: 320px; " data-always-visible="1 " data-rail-visible1="0 " data-handle-color="#D7DCE2 ">
                                         <ul class="feeds ">
-                                            <li>
+                                            <li ng-repeat="action in actions.results">
                                                 <div class="col1 ">
                                                     <div class="cont ">
                                                         <div class="cont-col1 ">
@@ -328,7 +328,11 @@
                                                             </div>
                                                         </div>
                                                         <div class="cont-col2 ">
-                                                            <div class="desc ">Diseño Modelo de Negocios.</div>
+                                                            <div class="desc ">{{ action.name }}
+                                                              <a ui-sref="actionUpdate({id:action.id})" class="label label-sm label-danger ">Toma Acción
+                                                                  <i class="fa fa-share "></i>
+                                                              </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -336,246 +340,16 @@
                                                     <div class="date "> 45 días </div>
                                                 </div>
                                             </li>
-                                            <li>
-                                                <a href="javascript:; ">
-                                                    <div class="col1 ">
-                                                        <div class="cont ">
-                                                            <div class="cont-col1 ">
-                                                                <div class="label label-sm label-danger ">
-                                                                    <i class="icon-layers "></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="cont-col2 ">
-                                                                <div class="desc ">Asignar Presupuestos.<span class="label label-sm label-danger ">Toma Acción
-                                                                                            <i class="fa fa-share "></i>
-                                                                                        </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col2 ">
-                                                        <div class="date "> 35 días </div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <div class="col1 ">
-                                                    <div class="cont ">
-                                                        <div class="cont-col1 ">
-                                                            <div class="label label-sm label-danger ">
-                                                                <i class="icon-layers "></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2 ">
-                                                            <div class="desc "> Entrevistas a perfiles de Prospectos. </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col2 ">
-                                                    <div class="date "> 30 días </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="col1 ">
-                                                    <div class="cont ">
-                                                        <div class="cont-col1 ">
-                                                            <div class="label label-sm label-danger ">
-                                                                <i class="icon-layers "></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2 ">
-                                                            <div class="desc "> Diseño de Alianzas. </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col2 ">
-                                                    <div class="date "> 12/03/2017 </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="col1 ">
-                                                    <div class="cont ">
-                                                        <div class="cont-col1 ">
-                                                            <div class="label label-sm label-warning ">
-                                                                <i class="icon-layers "></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2 ">
-                                                            <div class="desc "> Diseño de Campaña. </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col2 ">
-                                                    <div class="date "> 15/04/2017 </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="col1 ">
-                                                    <div class="cont ">
-                                                        <div class="cont-col1 ">
-                                                            <div class="label label-sm label-warning ">
-                                                                <i class="icon-layers "></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2 ">
-                                                            <div class="desc "> Diseño Campaña en Línea</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col2 ">
-                                                    <div class="date "> 30/04/2017 </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="col1 ">
-                                                    <div class="cont ">
-                                                        <div class="cont-col1 ">
-                                                            <div class="label label-sm label-success ">
-                                                                <i class="icon-layers "></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2 ">
-                                                            <div class="desc "> Diseño Prueba Piloto </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col2 ">
-                                                    <div class="date "> 30704/2017 </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="col1 ">
-                                                    <div class="cont ">
-                                                        <div class="cont-col1 ">
-                                                            <div class="label label-sm label-success ">
-                                                                <i class="icon-layers "></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2 ">
-                                                            <div class="desc "> Diseño de Alianzas. </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col2 ">
-                                                    <div class="date "> 05/05/2017 </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="col1 ">
-                                                    <div class="cont ">
-                                                        <div class="cont-col1 ">
-                                                            <div class="label label-sm label-success ">
-                                                                <i class="icon-layers "></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2 ">
-                                                            <div class="desc "> Diseño de Plan Comercial. </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col2 ">
-                                                    <div class="date "> 05/05/2017 </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="col1 ">
-                                                    <div class="cont ">
-                                                        <div class="cont-col1 ">
-                                                            <div class="label label-sm label-success ">
-                                                                <i class="icon-layers "></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2 ">
-                                                            <div class="desc "> Diseño Encuensta de Satisfacción Piloto. </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col2 ">
-                                                    <div class="date "> 30/05/2017 </div>
-                                                </div>
-                                            </li>
                                         </ul>
                                     </div>
-                                </div>
-                                <div class="tab-pane " id="tab_1_2 ">
-                                    <div class="scroller " style="height: 337px; " data-always-visible="1 " data-rail-visible1="0 " data-handle-color="#D7DCE2 ">
-                                        <ul class="feeds ">
-                                            <li>
-                                                <a href="javascript:; ">
-                                                    <div class="col1 ">
-                                                        <div class="cont ">
-                                                            <div class="cont-col1 ">
-                                                                <div class="label label-sm label-danger ">
-                                                                    <i class="fa fa-lightbulb-o "></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="cont-col2 ">
-                                                                <div class="desc "> Diseño de Contexto del Proyecto </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col2 ">
-                                                        <div class="date "> 21 días</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:; ">
-                                                    <div class="col1 ">
-                                                        <div class="cont ">
-                                                            <div class="cont-col1 ">
-                                                                <div class="label label-sm label-danger ">
-                                                                    <i class="fa fa-lightbulb-o "></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="cont-col2 ">
-                                                                <div class="desc "> Aprobación Pre Proyecto </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col2 ">
-                                                        <div class="date "> 10 días </div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:; ">
-                                                    <div class="col1 ">
-                                                        <div class="cont ">
-                                                            <div class="cont-col1 ">
-                                                                <div class="label label-sm label-success ">
-                                                                    <i class="fa fa-check-circle-o "></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="cont-col2 ">
-                                                                <div class="desc "> Acuerdo de Indicadores de Resultados </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col2 ">
-                                                        <div class="date "> A tiempo </div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:; ">
-                                                    <div class="col1 ">
-                                                        <div class="cont ">
-                                                            <div class="cont-col1 ">
-                                                                <div class="label label-sm label-success ">
-                                                                    <i class="fa fa-check-circle-o "></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="cont-col2 ">
-                                                                <div class="desc "> Acuerdo Proyecto </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col2 ">
-                                                        <div class="date "> A tiempo </div>
-                                                    </div>
-                                                </a>
-                                            </li>
+                                    <div class="text-center">
+                                        <ul uib-pagination boundary-links="true" class="pagination-sm"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            first-text="&laquo;" last-text="&raquo;"
+                                            items-per-page="actions.paginate_by"
+                                            total-items="actions.count"
+                                            ng-model="currentPage"
+                                            ng-change="pageChanged()">
                                         </ul>
                                     </div>
                                 </div>

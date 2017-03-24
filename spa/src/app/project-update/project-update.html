@@ -20,9 +20,9 @@
                         <a href="#"> Actualizar Proyecto </a>
                         <i class="fa fa-circle"></i>
                     </li>
-                    <!--li>
-                        <span>Proyecto {{Estándar}}</span>
-                    </li-->
+                    <li>
+                          <a ui-sref="projectDetail({id:action.project.id})">Proyecto {{ action.project.name }}</span>
+                    </li>
                 </ul>
                 <div class="page-toolbar">
                     <div class="btn-group pull-right">
@@ -74,25 +74,25 @@
                         <div class="row">
                           <div class="col-md-4">
                             <user-search
-                              field-name="Cliente" 
+                              field-name="Cliente"
                               user-id="project.client"
-                              user-init="project.client"> 
+                              user-init="project.client">
                             </user-search>
                           </div>
 
                           <div class="col-md-4">
-                            <user-search 
-                              field-name="Realizador" 
-                              user-id="project.producer" 
-                              user-init="project.producer">  
+                            <user-search
+                              field-name="Realizador"
+                              user-id="project.producer"
+                              user-init="project.producer">
                             </user-search>
                           </div>
-                          
+
                           <div class="col-md-4">
-                            <user-search 
-                              field-name="Observador" 
+                            <user-search
+                              field-name="Observador"
                               user-id="project.observer"
-                              user-init="project.observer"> 
+                              user-init="project.observer">
                             </user-search>
                           </div>
                         </div>
@@ -111,7 +111,7 @@
                                  ng-model="project.name"
                                  ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                                  required></input>
-                               
+
                                <div ng-show="projectForm.projectName.$touched || submitted">
                                  <div class="error" ng-show="projectForm.projectName.$error.required">
                                    Campo requerido.
@@ -132,7 +132,7 @@
                                   <md-option value="ejecución"> Ejecución </md-option>
                                   <md-option value="evaluación"> Evaluación </md-option>
                                 </md-select>
-                               
+
                                 <div ng-show="projectForm.phase.$touched || submitted">
                                    <div class="error" style="margin-top: 0em" ng-show="projectForm.phase.$error.required">
                                      Campo requerido.
@@ -167,7 +167,7 @@
                               <md-input-container class="md-block">
                                 <label> Acción </label>
                                 <textarea
-                                  name="toDo"  
+                                  name="toDo"
                                   placeholder="Describe las acciones a realizar."
                                   rows="5"
                                   maxlength="512"
@@ -210,12 +210,12 @@
                             <div class="col-md-3">
                                 <div flex-gt-xs>
                                   <h5>Fase de Preparación</h5>
-                                  <md-datepicker 
-                                    name="preparation_at1"  
+                                  <md-datepicker
+                                    name="preparation_at1"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.preparation_at1"
                                     required></md-datepicker>
-                                  
+
                                   <div ng-show="projectForm.preparation_at.$touched || submitted">
                                     <div class="error" ng-show="projectForm.preparation_at.$error.required">
                                       Campo requerido.
@@ -227,9 +227,9 @@
                             <div class="col-md-3">
                                 <div flex-gt-xs>
                                   <h5>Fase de negociación</h5>
-                                  <md-datepicker 
+                                  <md-datepicker
                                     name="negotiation_at1"
-                                    md-placeholder="ingrese fecha" 
+                                    md-placeholder="ingrese fecha"
                                     ng-model="project.negotiation_at1"
                                     required ></md-datepicker>
 
@@ -238,13 +238,13 @@
                                       Campo requerido.
                                     </div>
                                   </div>
-                                </div>                   
+                                </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div flex-gt-xs>
                                   <h5>Fase de ejecución</h5>
-                                  <md-datepicker 
+                                  <md-datepicker
                                     name="execution_at1"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.execution_at1"
@@ -262,7 +262,7 @@
                                 <div flex-gt-xs>
                                   <h5>Fase de evaluación</h5>
                                   <md-datepicker
-                                    name="evaluation_at1" 
+                                    name="evaluation_at1"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.evaluation_at1"
                                     required></md-datepicker>
@@ -286,9 +286,9 @@
                             <div class="col-md-3">
                                 <div flex-gt-xs>
                                   <h5>"Fecha de Inicio"</h5>
-                                  <md-datepicker 
+                                  <md-datepicker
                                     name="begin_at1"
-                                    ng-model="project.begin_at1" 
+                                    ng-model="project.begin_at1"
                                     md-placeholder="ingrese fecha"
                                     required ></md-datepicker>
 
@@ -303,10 +303,10 @@
                             <div class="col-md-3">
                                 <div flex-gt-xs>
                                   <h5>Fecha de Cumplimiento...</h5>
-                                  <md-datepicker 
+                                  <md-datepicker
                                     name="accomplish_at1"
-                                    ng-model="project.accomplish_at1" 
-                                    md-placeholder="ingrese fecha" 
+                                    ng-model="project.accomplish_at1"
+                                    md-placeholder="ingrese fecha"
                                     required></md-datepicker>
 
                                     <div ng-show="projectForm.accomplish_at.$touched || submitted">
@@ -320,10 +320,10 @@
                             <div class="col-md-3">
                                 <div flex-gt-xs>
                                   <h5>Fecha de Renegociación...</h5>
-                                  <md-datepicker 
+                                  <md-datepicker
                                     name="renegotiation_at1"
-                                    md-placeholder="ingrese fecha" 
-                                    ng-model="project.renegotiation_at1" 
+                                    md-placeholder="ingrese fecha"
+                                    ng-model="project.renegotiation_at1"
                                     required></md-datepicker>
 
                                     <div ng-show="projectForm.renegotiation_at.$touched || submitted">
@@ -337,7 +337,7 @@
                             <div class="col-md-3">
                                 <div flex-gt-xs>
                                   <h5>Fecha de Reporte de Avance...</h5>
-                                  <md-datepicker 
+                                  <md-datepicker
                                   name="report_at1"
                                   md-placeholder="ingrese fecha"
                                   ng-model="project.report_at1"
@@ -437,6 +437,7 @@
                             </div>
                         </div>
 
+
                         <div class="row">
                           <div class="col-md-12">
                             <input name="file" fileread='project.image' type="file" required/>
@@ -447,12 +448,12 @@
                               </div>
                           </div>
                         </div>
-                        
+
                         <br>
                         <div class="row">
                           <div class="col-md-12 text-center">
                             <button type="submit" class="btn btn-sm btn-circle red-thunderbird">
-                              &nbsp; Enviar &nbsp; 
+                              &nbsp; Enviar &nbsp;
                             </button>
                             <br><br>
                             <div class="error">
