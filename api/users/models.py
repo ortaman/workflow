@@ -19,6 +19,8 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
+    photo = models.ImageField(upload_to='photos/', verbose_name='Foto')
+
     created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
 

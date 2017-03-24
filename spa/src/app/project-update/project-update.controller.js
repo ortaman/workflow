@@ -22,9 +22,10 @@ app.controller('ProjectUpdateController', [
 
         },
         function(errorResponse) {
-          var error = errorResponse || 'Request failed';
-            console.log('error', error);
-          }
+          console.log('errorResponse', errorResponse);
+          var status = errorResponse.statusText || 'Request failed';
+          var errors = errorResponse.data;
+        }
       );
     }
 
@@ -52,10 +53,11 @@ app.controller('ProjectUpdateController', [
   				console.log('reponse', response);
   				$state.go('projectList');
   			},
-  			function(errorResponse) {
-  				var error = errorResponse || 'Request failed';
-  	    		console.log('error', error);
-  	  		}
+        function(errorResponse) {
+          console.log('errorResponse', errorResponse);
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+        }
   		);
     
     }

@@ -72,7 +72,7 @@
                     </div-->
 
                     <form name="projectForm" ng-submit="submitForm()" class="horizontal-form" novalidate>
-                        <!--h4 class="form-section"> Roles </h4-->
+                        <h4 class="form-section"> Roles del Proyecto</h4>
                         <!--row-->
                         <div class="row">
                           <div class="col-md-4">
@@ -89,7 +89,7 @@
                         </div>
 
                         <!--/row-->
-                        <!--h4 class="form-section">Foco</h4-->
+                        <h4 class="form-section"> Datos Generales </h4>
                         <!--row-->
                         <div class="row">
 
@@ -100,7 +100,7 @@
                                  name="projectName"
                                  maxlength="64"
                                  ng-model="project.name"
-                                 ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
+                                 ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                                  required></input>
 
                                <div ng-show="projectForm.projectName.$touched || submitted">
@@ -108,7 +108,7 @@
                                    Campo requerido.
                                  </div>
                                  <div class="error" ng-show="projectForm.projectName.$error.pattern">
-                                   Debe contener espacios y caracteres alfabéticos.
+                                   Debe contener caracteres alfanúmericos.
                                  </div>
                                </div>
                               </md-input-container>
@@ -151,9 +151,10 @@
 
                         </div>
                         <!--row-->
-                        <!--h4 class="form-section">¿Qué haremos? - ¿Cómo lo haremos?</h4-->
+                        <h4 class="form-section"> ¿Qué haremos? - ¿Cómo lo haremos? </h4>
                         <div class="row">
-                          <!--row-->
+                          
+                          <br><!--row-->
                           <div class="col-md-6">
                               <md-input-container class="md-block">
                                 <label> Acción </label>
@@ -356,14 +357,14 @@
                                     name="financial"
                                     maxlength="64"
                                     ng-model="project.financial"
-                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
+                                    ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                                     required></input>
                                   <div ng-show="projectForm.financial.$touched || submitted">
                                     <div class="error" ng-show="projectForm.financial.$error.required">
                                       Campo requerido.
                                     </div>
                                     <div class="error" ng-show="projectForm.financial.$error.pattern">
-                                      Debe contener espacios y caracteres alfabéticos.
+                                      Debe contener caracteres alfanúmericos.
                                     </div>
                                   </div>
                                  </md-input-container>
@@ -376,14 +377,14 @@
                                     name="operational"
                                     maxlength="64"
                                     ng-model="project.operational"
-                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
+                                    ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                                     required></input>
                                   <div ng-show="projectForm.operational.$touched || submitted">
                                     <div class="error" ng-show="projectForm.operational.$error.required">
                                       Campo requerido.
                                     </div>
                                     <div class="error" ng-show="projectForm.operational.$error.pattern">
-                                       Debe contener espacios y caracteres alfabéticos.
+                                      Debe contener caracteres alfanúmericos.
                                     </div>
                                   </div>
                                  </md-input-container>
@@ -395,14 +396,14 @@
                                     name="other1"
                                     maxlength="64"
                                     ng-model="project.other1"
-                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
+                                    ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                                     required></input>
                                   <div ng-show="projectForm.other1.$touched || submitted">
                                     <div class="error" ng-show="projectForm.other1.$error.required">
                                       Campo requerido.
                                     </div>
                                     <div class="error" ng-show="projectForm.other1.$error.pattern">
-                                       Debe contener espacios y caracteres alfabéticos.
+                                      Debe contener caracteres alfanúmericos.
                                     </div>
                                   </div>
                                  </md-input-container>
@@ -414,30 +415,35 @@
                                   name="other2"
                                   maxlength="64"
                                   ng-model="project.other2"
-                                  ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
+                                  ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                                   required></input>
                                 <div ng-show="projectForm.other2.$touched || submitted">
                                   <div class="error" ng-show="projectForm.other2.$error.required">
                                     Campo requerido.
                                   </div>
                                   <div class="error" ng-show="projectForm.other2.$error.pattern">
-                                     Debe contener espacios y caracteres alfabéticos.
+                                    Debe contener caracteres alfanúmericos.
                                   </div>
                                 </div>
                                </md-input-container>
                             </div>
                         </div>
 
-                        <input fileread='project.image' type="file"/>
-
-                        <div class="todo-tasklist-devider"> </div>
-                        <div class="col-md-7 col-sm-8">
-                          <!-- TASK HEAD -->
-                          <!-- END TASK HEAD -->
-                          <!-- TASK TITLE -->
-                          <button type="submit" class="pull-right btn btn-sm btn-circle red-thunderbird">  &nbsp; Enviar &nbsp; 
-                          </button>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <input fileread='project.image' type="file"/>
+                          </div>
                         </div>
+                        
+                        <br>
+                        <div class="row">
+                          <div class="col-md-2 col-md-offset-5 text-center">
+                            <button type="submit" class="btn btn-sm btn-circle red-thunderbird">
+                              &nbsp; Enviar &nbsp; 
+                            </button>
+                          </div>
+                        </div>
+
                     </form>
                 </div>
             </div>

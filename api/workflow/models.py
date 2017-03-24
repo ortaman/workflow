@@ -50,7 +50,7 @@ class Project(models.Model):
     other1 = models.CharField(max_length=64, verbose_name='Otros')
     other2 = models.CharField(max_length=64, verbose_name='Otros')
 
-    image = models.ImageField(null=True, upload_to='images/', verbose_name='Imagen')
+    image = models.ImageField(upload_to='images/', verbose_name='Imagen')
 
     created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación') 
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
