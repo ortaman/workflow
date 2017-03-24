@@ -7,7 +7,7 @@ var app = angular.module('myApp',
 		'ngMaterial',
     'ngDialog',
     'ui.bootstrap',
-    
+
     // 'myApp.actionList',
   ]
 );
