@@ -72,23 +72,7 @@
                     </div-->
 
                     <form name="projectForm" ng-submit="submitForm()" class="horizontal-form" novalidate>
-                        <h4 class="form-section"> Roles del Proyecto</h4>
-                        <!--row-->
-                        <div class="row">
-                          <div class="col-md-4">
-                            <user-search field-name="Cliente" user-id="project.client"> </user-search>
-                          </div>
 
-                          <div class="col-md-4">
-                            <user-search field-name="Realizador" user-id="project.producer"> </user-search>
-                          </div>
-
-                          <div class="col-md-4">
-                            <user-search field-name="Observador" user-id="project.observer"> </user-search>
-                          </div>
-                        </div>
-
-                        <!--/row-->
                         <h4 class="form-section"> Datos Generales </h4>
                         <!--row-->
                         <div class="row">
@@ -120,8 +104,8 @@
                                 <md-select name="phase" ng-model="project.phase" required="">
                                   <md-option value="preparacion"> Preparación </md-option>
                                   <md-option value="negociacion"> Negociación </md-option>
-                                  <md-option value="ejecucion"> Ejecución </md-option>
-                                  <md-option value="evaluacion"> Evaluación </md-option>
+                                  <md-option value="ejecución"> Ejecución </md-option>
+                                  <md-option value="evaluación"> Evaluación </md-option>
                                 </md-select>
 
                                 <div ng-show="projectForm.phase.$touched || submitted">
@@ -151,9 +135,25 @@
 
                         </div>
                         <!--row-->
+
+                        <h4 class="form-section"> Roles del Proyecto</h4>
+                        <!--row-->
+                        <div class="row">
+                          <div class="col-md-4">
+                            <user-search field-name="Cliente" user-id="project.client"> </user-search>
+                          </div>
+
+                          <div class="col-md-4">
+                            <user-search field-name="Realizador" user-id="project.producer"> </user-search>
+                          </div>
+
+                          <div class="col-md-4">
+                            <user-search field-name="Observador" user-id="project.observer"> </user-search>
+                          </div>
+                        </div>
+
                         <h4 class="form-section"> ¿Qué haremos? - ¿Cómo lo haremos? </h4>
                         <div class="row">
-                          
                           <br><!--row-->
                           <div class="col-md-6">
                               <md-input-container class="md-block">
