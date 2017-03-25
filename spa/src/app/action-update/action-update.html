@@ -58,7 +58,7 @@
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em"> 
+            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em">
               Agregar Acción <!--small>Subciclos de Compromisos</small-->
             </h1>
             <!-- END PAGE TITLE-->
@@ -87,7 +87,7 @@
                                 </md-select>
 
                                 <div ng-show="actionForm.phase.$touched || submitted">
-                                   <div class="error"  style="margin-top: 0em" 
+                                   <div class="error"  style="margin-top: 0em"
                                         ng-show="actionForm.phase.$error.required">
                                      Campo requerido.
                                    </div>
@@ -118,15 +118,15 @@
                         <h4 class="form-section"> Roles en la Acción </h4>
                         <div class="row">
                           <div class="col-md-4">
-                            <user-search field-name="Cliente" user-id="action.client"> </user-search>
+                            <user-search field-name="Cliente" user-id="action.client" user-init="action.client"> </user-search>
                           </div>
 
                           <div class="col-md-4">
-                            <user-search field-name="Realizador" user-id="action.producer"> </user-search>
+                            <user-search field-name="Realizador" user-id="action.producer" user-init="action.producer"> </user-search>
                           </div>
 
                           <div class="col-md-4">
-                            <user-search field-name="Observador" user-id="action.observer"> </user-search>
+                            <user-search field-name="Observador" user-id="action.observer" user-init="action.observer"> </user-search>
                           </div>
                         </div>
 
@@ -372,7 +372,7 @@
                           </div>
                         </div>
                       </div>
-                
+
                 </div>
             </div>
             <!-- END TASK COMMENT FORM -->
