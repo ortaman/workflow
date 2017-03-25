@@ -8,8 +8,9 @@ app.controller('ActionListController', ['$scope', 'ActionListService', function(
 			console.log('reponse', response);
 		},
 		function(errorResponse) {
-			  error = errorResponse || 'Request failed';
-    		console.log('error', error);
+          console.log('errorResponse', errorResponse);
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
   		}
 	);
  

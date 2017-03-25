@@ -33,7 +33,7 @@ app.controller('ProjectUpdateController', [
       $scope.submitted = true;
 
       if ($scope.projectForm.$invalid) {
-        $scope.error = 'El formulario no es válido o no ha sido modificado.';
+        $scope.error = 'El formulario no es válido.';
         console.log($scope.projectForm);
         return;
       }
