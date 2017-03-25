@@ -9,7 +9,7 @@ app.controller('ProjectCreateController', [
       $scope.submitted = true;
 
       if ($scope.projectForm.$invalid) {
-        $scope.error = 'El formulario no es válido o no ha sido modificado.';
+        $scope.error = 'El formulario no es válido.';
         console.log($scope.projectForm);
         return;
       }
@@ -18,6 +18,7 @@ app.controller('ProjectCreateController', [
     	$scope.project.negotiation_at = moment($scope.project.negotiation_at1).format("DD-MM-YYYY");
     	$scope.project.execution_at = moment($scope.project.execution_at1).format("DD-MM-YYYY");
     	$scope.project.evaluation_at = moment($scope.project.evaluation_at1).format("DD-MM-YYYY");
+      
     	$scope.project.begin_at = moment($scope.project.begin_at1).format("DD-MM-YYYY");
     	$scope.project.accomplish_at = moment($scope.project.accomplish_at1).format("DD-MM-YYYY");
     	$scope.project.renegotiation_at = moment($scope.project.renegotiation_at1).format("DD-MM-YYYY");
@@ -29,9 +30,10 @@ app.controller('ProjectCreateController', [
   				$state.go('projectList');
   			},
   			function(errorResponse) {
-  				var error = errorResponse || 'Request failed';
-  	    		console.log('error', error);
-  	  		}
+          console.log('errorResponse', errorResponse);
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+  	  	}
   		);
     
     }

@@ -13,11 +13,12 @@ app.controller('ProjectListController', [
 		ProjectListService.getList(query).then(
 			function(response) {
 				$scope.data = response
-				console.log('$scope.data', $scope.data);
+				console.log('response', $scope.data);
 			},
 			function(errorResponse) {
-				error = errorResponse || 'Request failed';
-				console.log('errorResponse', error);
+				console.log('errorResponse', errorResponse);
+				$scope.status = errorResponse.statusText || 'Request failed';
+				$scope.errors = errorResponse.data;
 			}
 		);
 

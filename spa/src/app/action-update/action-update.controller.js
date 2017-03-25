@@ -18,9 +18,10 @@ app.controller('ActionUpdateController', [
 
         },
         function(errorResponse) {
-          var error = errorResponse || 'Request failed';
-            console.log('error', error);
-          }
+          console.log('errorResponse', errorResponse);
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+        }
       );
     }
 
@@ -44,9 +45,10 @@ app.controller('ActionUpdateController', [
   				$state.go('projectDetail',{id:action.project});
   			},
   			function(errorResponse) {
-  				var error = errorResponse || 'Request failed';
-  	    		console.log('error', error);
-  	  		}
+          console.log('errorResponse', errorResponse);
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+  	  	}
   		);
 
     }
