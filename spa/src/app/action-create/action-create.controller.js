@@ -23,12 +23,6 @@ app.controller('ActionCreateController', [
   $scope.submit = function (_action) {
     $scope.submitted = true;
     var action = angular.copy(_action);
-    action.accomplish_at = moment(action.accomplish_at).format("DD-MM-YYYY");
-    action.expire_at = moment(action.expire_at).format("DD-MM-YYYY");
-    action.renegotiation_at = moment(action.renegotiation_at).format("DD-MM-YYYY");
-    action.report_at = moment(action.report_at).format("DD-MM-YYYY");
-    action.begin_at = moment(action.begin_at).format("DD-MM-YYYY");
-
     ActionCreateService.create(action).then(
       function (data) {
         $state.go('projectDetail', {id:$scope.project.id})
