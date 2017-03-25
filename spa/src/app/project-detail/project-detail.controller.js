@@ -33,4 +33,12 @@ app.controller('ProjectDetailController', [
 
   };
 
+	$scope.hoverIn = function(){
+		this.hoverEdit = true;
+	};
+
+	$scope.hoverOut = function(){
+		this.hoverEdit = false;
+	};
+
 }]);
