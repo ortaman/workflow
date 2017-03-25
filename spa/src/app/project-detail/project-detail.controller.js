@@ -1,14 +1,20 @@
 
 app.controller('ProjectDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService',
-	function($scope, $state, ProjectGetService, ActionListService) {
+	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig',
+	function($scope, $state, ProjectGetService, ActionListService, APIConfig) {
 
 	$scope.currentPage = 1;
+	$scope.project = {};
 
   $scope.getProjectByIdInit = function() {
     ProjectGetService.getById($state.params.id).then(
       function(response) {
+      	console.log('getById', response);
         $scope.project = response;
+        $scope.project.image = APIConfig.baseUrl + response.image;
+        $scope.project.producer.photo = APIConfig.baseUrl + response.producer.photo;
+
+      
       },
       function(errorResponse) {
         var error = errorResponse || 'Request failed';

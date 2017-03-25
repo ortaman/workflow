@@ -5,7 +5,7 @@
     <my-navbar> </my-navbar>
     <!-- END SIDEBAR -->
     <!-- BEGIN CONTENT -->
-    <div class="page-content-wrapper" ng-init="getProjectByIdInit()">
+    <div class="page-content-wrapper" ng-init="getProjectByIdInit()" ng-cloack>
         <!-- BEGIN CONTENT BODY -->
         <div class="page-content">
             <!-- BEGIN PAGE HEADER-->
@@ -53,9 +53,9 @@
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title">
+            <!--h1 class="page-title">
                 <small>Action Workflow </small>
-            </h1>
+            </h1-->
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <div class="row">
@@ -64,49 +64,60 @@
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="icon-microphone font-dark hide"></i>
-                                <span class="caption-subject bold font-dark uppercase"> Promesa del Proyecto</span>
+                                <span class="caption-subject bold font-dark uppercase"> 
+                                    Promesa del Proyecto
+                                </span>
                             </div>
                         </div>
                         <div class="portlet-body">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mt-widget-2">
-                                        <div class="mt-head" style="background-image: url(../../assets/metronics/pages/img/background/5.jpg);">
+                                        <div class="mt-head" 
+                                            style="background-image: url({{project.image}})">
                                             <div class="mt-head-label">
-                                                <button type="button" class="btn btn-success">Marketing</button>
+                                                <button type="button" class="btn btn-success">
+                                                    Marketing
+                                                </button>
                                             </div>
                                             <div class="mt-head-user">
                                                 <div class="mt-head-user-img">
-                                                    <img src="../../assets/metronics/pages/img/avatars/team7.jpg"> </div>
-                                                <div class="mt-head-user-info">
-                                                    <span class="mt-user-name">Mario Moncada</span>
+                                                    <img src="{{project.producer.photo}}"> </div>
+                                                <div class="mt-head-user-info" style="font-weight: bold">
+                                                    <span class="mt-user-name"> 
+                                                    {{ project.client.name }} {{ project.client.first_surname }} {{ project.client.second_surname }} 
+                                                    </span>
                                                     <span class="mt-user-time">
-                                                                    <i class="icon-emoticon-smile"></i> Líder </span>
+                                                    <i class="icon-emoticon-smile"></i> Líder </span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mt-body">
-                                            <h3 class="mt-body-title"> Proyecto Business Unit </h3>
-                                            <p class="mt-body-description">Crear un Desarrollador de Negocios que produzca Médicos Especializados en los Diagnósticos Integrales tratados por los Productos de la Compañía.</p>
+                                            <h3 class="mt-body-title"> {{ project.name }} </h3>
+                                            <p class="mt-body-description">{{ project.toDo }} .</p>
                                         </div>
                                         <div class="mt-body-actions-icons">
                                             <div class="btn-group btn-group btn-group-justified">
-                                                <a href="javascript:;" class="btn ">
-                                                    <span class="mt-icon font-red">
-                                                                    <i class="fa fa-lightbulb-o"></i>
-                                                                </span>Preparación </a>
-                                                <a href="javascript:;" class="btn ">
-                                                    <span class="mt-icon font-yellow">
-                                                                    <i class="fa fa-check-circle-o"></i>
-                                                                </span>Negociación </a>
-                                                <a href="javascript:;" class="btn ">
-                                                    <span class="mt-icon font-green">
-                                                                    <i class="icon-layers"></i>
-                                                                </span>Ejecución </a>
-                                                <a href="javascript:;" class="btn ">
-                                                    <span class="mt-iconfont-blue">
-                                                                    <i class="icon-question"></i>
-                                                                </span>Evaluación </a>
+                                                <div class="btn"
+                                                    ng-class="{'bg-info': project.phase == 'preparacion'}">
+                                                    <span class="mt-icon font-blue">
+                                                        <i class="fa fa-lightbulb-o"></i>
+                                                    </span> Preparación </div>
+                                                <div class="btn"
+                                                    ng-class="{'bg-info': project.phase == 'negociacion'}">
+                                                    <span class="mt-icon font-blue">
+                                                        <i class="fa fa-check-circle-o"></i>
+                                                    </span> Negociación </div>
+                                                <div class="btn"
+                                                    ng-class="{'bg-info': project.phase == 'ejecucion'}">
+                                                    <span class="mt-icon font-blue">
+                                                        <i class="icon-layers"></i>
+                                                    </span> Ejecución </div>
+                                                <div class="btn"
+                                                    ng-class="{'bg-info': project.phase == 'evaluacion'}">
+                                                    <span class="mt-icon font-blue">
+                                                        <i class="icon-question"></i>
+                                                    </span> Evaluación </div>
                                             </div>
                                         </div>
                                     </div>
