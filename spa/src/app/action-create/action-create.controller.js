@@ -33,16 +33,6 @@ app.controller('ActionCreateController', [
     }
 
     var action = angular.copy(_action);
-    
-    $scope.action.project = $scope.project.id;
-    $scope.action.client = $scope.project.producer.id;
-
-    action.accomplish_at = moment(action.accomplish_at).format("DD-MM-YYYY");
-    action.expire_at = moment(action.expire_at).format("DD-MM-YYYY");
-    action.renegotiation_at = moment(action.renegotiation_at).format("DD-MM-YYYY");
-    action.report_at = moment(action.report_at).format("DD-MM-YYYY");
-    action.begin_at = moment(action.begin_at).format("DD-MM-YYYY");
-
     ActionCreateService.create(action).then(
       function (response) {
         console.log("Create", response);
@@ -54,7 +44,7 @@ app.controller('ActionCreateController', [
         $scope.errors = errorResponse.data;
       }
     );
-  
+
   }
 
 }]);

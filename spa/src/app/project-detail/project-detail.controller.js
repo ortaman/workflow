@@ -1,40 +1,46 @@
 
 app.controller('ProjectDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig) {
+	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService',
+	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService) {
 
-	$scope.currentPage = 1;
+	$scope.actionCurrentPage = 1;
+	$scope.producersCurrentPage = 1;
+
 	$scope.project = {};
+	$scope.producers = [];
 
-    $scope.getProjectByIdInit = function() {
-	    ProjectGetService.getById($state.params.id).then(
-	        function(response) {
-		      	console.log('getById', response);
-		        $scope.project = response;
-		        $scope.project.image = APIConfig.baseUrl + response.image;
-		        $scope.project.producer.photo = APIConfig.baseUrl + response.producer.photo;
-	        },
-		    function(errorResponse) {
-		        console.log('errorResponse', errorResponse);
-		        $scope.status = errorResponse.statusText || 'Request failed';
-		        $scope.errors = errorResponse.data;
-	        }
-	    );
-
-		$scope.pageChanged()
-	
+  $scope.getProjectByIdInit = function() {
+		$scope.getProject();
+		$scope.actionPageChanged()
+		$scope.producerPageChanged();
 	}
 
-	$scope.pageChanged = function() {
 
-	  	var query = {"page": $scope.currentPage};
 
+	//Service call
+	$scope.getProject = function(){
+		ProjectGetService.getById($state.params.id).then(
+				function(response) {
+					$scope.project = response;
+					$scope.project.image = APIConfig.baseUrl + response.image;
+					$scope.project.producer.photo = APIConfig.baseUrl + response.producer.photo;
+				},
+			function(errorResponse) {
+					console.log('errorResponse', errorResponse);
+					$scope.status = errorResponse.statusText || 'Request failed';
+					$scope.errors = errorResponse.data;
+				}
+		);
+	}
+
+	$scope.actionPageChanged = function() {
+
+	  var query = {"page": $scope.actionCurrentPage};
 		ActionListService.getList(query).then(
 			function(response) {
 				$scope.actions = response
 			},
 			function(errorResponse) {
-				console.log('errorResponse', errorResponse);
 				$scope.status = errorResponse.statusText || 'Request failed';
 				$scope.errors = errorResponse.data;
 			}
@@ -42,12 +48,29 @@ app.controller('ProjectDetailController', [
 
   };
 
-	$scope.hoverIn = function(){
-		this.hoverEdit = true;
+	$scope.producerPageChanged = function() {
+
+	  var query = {"page": $scope.producersCurrentPage};
+		ProducerGetListService.getList(query).then(
+			function(response) {
+				$scope.producers = response
+				console.log("respuesta", response);
+			},
+			function(errorResponse) {
+				$scope.status = errorResponse.statusText || 'Request failed';
+				$scope.errors = errorResponse.data;
+			}
+		);
+
+  };
+
+	//template interaction functions
+	$scope.hoverIn = function(show){
+		this.hoverEdit = show;
 	};
 
-	$scope.hoverOut = function(){
-		this.hoverEdit = false;
-	};
+	$scope.chunkArray = function(index){
+			return $scope.producers.slice(index*3, (index*3)+3);
+	}
 
 }]);
