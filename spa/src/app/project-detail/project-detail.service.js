@@ -16,31 +16,11 @@ app.service("ProducerGetListService", ['$http', 'APIConfig', function($http, API
   this.getList = function(object) {
 	  var params = $.param(object);
 
-	  var promise = $http.get(APIConfig.url + "projects/?" + params).then(function(response) {
-      var a = [
-        {
-          "user":"juan1",
-        },
-        {
-          "user":"juan2",
-        },
-        {
-          "user":"juan3",
-        },
-        {
-          "user":"juan4",
-        },
-        {
-          "user":"juan5",
-        },
-        {
-          "user":"juan6",
-        },
-      ];
-
-	  return a;
-	});
-	  return promise;
+	  var promise = $http.get(APIConfig.url + "users/?" + params).then(function(response) {
+      return response.data;
+	  });
+	
+    return promise;
 	};
 
 }]);

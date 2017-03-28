@@ -9,12 +9,25 @@ from django.contrib.auth.hashers import make_password
 
 class BaseUser(AbstractBaseUser, PermissionsMixin):
 
+    POSITIONS = (
+        ('commercial officer', 'Directora Comercial'),
+        ('national sales manager', 'Gerente Nacional de Ventas'),
+        ('product line manager', 'Gerente de Línea de Productos'),
+        ('corporate marketing Manager', 'Gerente de Marketing Corporativo'),
+        ('regional sales manager', 'Gerente Regional de Ventas'),
+        ('district manager', 'Gerente Distrital'),
+        ('coordinator', 'Coordinador'),
+    )
+
     username = models.CharField(max_length=128, unique=True)
     email = models.EmailField(max_length=256, unique=True)
 
     name = models.CharField(max_length=64, verbose_name='Nombre')
     first_surname = models.CharField(max_length=32, verbose_name='Primer apellido')
     second_surname = models.CharField(max_length=32, verbose_name='Segundo Apellido')
+
+    position = models.CharField(choices=POSITIONS, max_length=32, verbose_name='Posición')
+    cel_phone = models.CharField(max_length=16, verbose_name='Teléfono Móvil')
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
