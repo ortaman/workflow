@@ -53,6 +53,11 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
       templateUrl: URLTemplates + "app/action-create/action-create.html",
       controller: "ActionCreateController"
     })
+    .state('actionDetail', {
+      url: "/actionDetail/:id/",
+      templateUrl: URLTemplates + "app/action-detail/action-detail.html",
+      controller: "ActionDetailController"
+    })
     .state('actionUpdate', {
       url: "/actionUpdate/:id/",
       templateUrl: URLTemplates + "app/action-update/action-update.html",

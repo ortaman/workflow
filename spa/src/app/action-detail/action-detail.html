@@ -5,7 +5,7 @@
     <my-navbar> </my-navbar>
     <!-- END SIDEBAR -->
     <!-- BEGIN CONTENT -->
-    <div class="page-content-wrapper" ng-init="getProjectByIdInit()" ng-cloack>
+    <div class="page-content-wrapper" ng-init="init()" ng-cloack>
         <!-- BEGIN CONTENT BODY -->
         <div class="page-content">
             <!-- BEGIN PAGE HEADER-->
@@ -31,7 +31,7 @@
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
                             <li>
-                                <a ui-sref="actionCreate({ projectId: project.id })">
+                                <a ui-sref="actionCreate({ projectId: currentAction.id })">
                                     <i class="icon-fire"></i> Nueva Acción </a>
                             </li>
                             <li>
@@ -74,7 +74,7 @@
                                 <div class="col-md-12">
                                     <div class="mt-widget-2">
                                         <div class="mt-head"
-                                            style="background-image: url({{project.image}})">
+                                            style="background-image: url({{currentAction.project.image}})">
                                             <div class="mt-head-label">
                                                 <button type="button" class="btn btn-success">
                                                     Marketing
@@ -82,10 +82,10 @@
                                             </div>
                                             <div class="mt-head-user">
                                                 <div class="mt-head-user-img">
-                                                    <img src="{{project.producer.photo}}"> </div>
+                                                    <img src="{{currentAction.producer.photo}}"> </div>
                                                 <div class="mt-head-user-info" style="font-weight: bold">
                                                     <span class="mt-user-name">
-                                                    {{ project.client.name }} {{ project.client.first_surname }} {{ project.client.second_surname }}
+                                                    {{ currentAction.client.name }} {{ currentAction.client.first_surname }} {{ currentAction.client.second_surname }}
                                                     </span>
                                                     <span class="mt-user-time">
                                                     <i class="icon-emoticon-smile"></i> Líder </span>
@@ -93,28 +93,28 @@
                                             </div>
                                         </div>
                                         <div class="mt-body">
-                                            <h3 class="mt-body-title"> {{ project.name }} </h3>
-                                            <p class="mt-body-description">{{ project.toDo }} .</p>
+                                            <h3 class="mt-body-title"> {{ currentAction.name }} </h3>
+                                            <p class="mt-body-description">{{ currentAction.toDo }} .</p>
                                         </div>
                                         <div class="mt-body-actions-icons">
                                             <div class="btn-group btn-group btn-group-justified">
                                                 <div class="btn"
-                                                    ng-class="{'bg-info': project.phase == 'preparacion'}">
+                                                    ng-class="{'bg-info': currentAction.phase == 'preparacion'}">
                                                     <span class="mt-icon font-blue">
                                                         <i class="fa fa-lightbulb-o"></i>
                                                     </span> Preparación </div>
                                                 <div class="btn"
-                                                    ng-class="{'bg-info': project.phase == 'negociacion'}">
+                                                    ng-class="{'bg-info': currentAction.phase == 'negociacion'}">
                                                     <span class="mt-icon font-blue">
                                                         <i class="fa fa-check-circle-o"></i>
                                                     </span> Negociación </div>
                                                 <div class="btn"
-                                                    ng-class="{'bg-info': project.phase == 'ejecucion'}">
+                                                    ng-class="{'bg-info': currentAction.phase == 'ejecucion'}">
                                                     <span class="mt-icon font-blue">
                                                         <i class="icon-layers"></i>
                                                     </span> Ejecución </div>
                                                 <div class="btn"
-                                                    ng-class="{'bg-info': project.phase == 'evaluacion'}">
+                                                    ng-class="{'bg-info': currentAction.phase == 'evaluacion'}">
                                                     <span class="mt-icon font-blue">
                                                         <i class="icon-question"></i>
                                                     </span> Evaluación </div>
@@ -276,7 +276,7 @@
                                                 <div class="col1 ">
                                                     <div class="cont ">
                                                         <div class="cont-col1 ">
-                                                            <div class="label label-sm label-danger " ui-sref="actionDetail({id:action.id})">
+                                                            <div class="label label-sm label-danger ">
                                                                 <i class="icon-layers "></i>
                                                             </div>
                                                         </div>

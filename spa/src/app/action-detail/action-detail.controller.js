@@ -1,18 +1,20 @@
 
-app.controller('ProjectDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService) {
+app.controller('ActionDetailController', [
+	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', 'ActionGetService',
+	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, ActionGetService) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
 
+	$scope.currentAction = {};
 	$scope.project = {};
 	$scope.producers = [];
 
-  	$scope.getProjectByIdInit = function() {
-		$scope.getProject();
-		$scope.actionPageChanged()
-		$scope.producerPageChanged();
+  	$scope.init = function() {
+		//$scope.getProject();
+		$scope.getAction();
+		//$scope.actionPageChanged()
+		//$scope.producerPageChanged();
 	}
 
 	//Service call
@@ -22,6 +24,22 @@ app.controller('ProjectDetailController', [
 				$scope.project = response;
 				$scope.project.image = APIConfig.baseUrl + response.image;
 				$scope.project.producer.photo = APIConfig.baseUrl + response.producer.photo;
+			},
+			function(errorResponse) {
+					console.log('errorResponse', errorResponse);
+					$scope.status = errorResponse.statusText || 'Request failed';
+					$scope.errors = errorResponse.data;
+			}
+		);
+	}
+
+	$scope.getAction = function() {
+		ActionGetService.getById($state.params.id).then(
+			function(response) {
+				$scope.currentAction = response;
+				$scope.currentAction.producer.photo = APIConfig.baseUrl + response.producer.photo;
+				$scope.currentAction.project.image = APIConfig.baseUrl + response.project.image;
+				console.log("imagen", response);
 			},
 			function(errorResponse) {
 					console.log('errorResponse', errorResponse);
@@ -77,7 +95,7 @@ app.controller('ProjectDetailController', [
 	$scope.chunkArray = function(index){
 		if($scope.producers.results)
 			return $scope.producers.results.slice(index*3, (index*3)+3);
-	
+
 	}
 
 }]);
