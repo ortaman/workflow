@@ -53,7 +53,7 @@ class ActionList(APIView, CommonMixin):
 
     # Initial mixin variables
     model = Action
-    serializer_class = ActionSerializer
+    serializer_class = ActionSerializerExtended
     paginate_by = 10
 
     def get(self, request, format=None):
@@ -64,7 +64,7 @@ class ActionList(APIView, CommonMixin):
         return Response(data)
 
     def post(self, request, format=None):
-        serializer = self.serializer_class(data=request.data)
+        serializer = ActionSerializer(data=request.data)
         
         if serializer.is_valid():
             serializer.save(create_by=request.user)

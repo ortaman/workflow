@@ -9,7 +9,7 @@ app.controller('ProjectDetailController', [
 	$scope.project = {};
 	$scope.producers = [];
 
-  $scope.getProjectByIdInit = function() {
+  	$scope.getProjectByIdInit = function() {
 		$scope.getProject();
 		$scope.actionPageChanged()
 		$scope.producerPageChanged();
@@ -35,10 +35,12 @@ app.controller('ProjectDetailController', [
 
 	$scope.actionPageChanged = function() {
 
-	  var query = {"page": $scope.actionCurrentPage};
+	  var query = {"page": $scope.actionsCurrentPage};
+	  console.log($scope.actionsCurrentPage);
 		ActionListService.getList(query).then(
 			function(response) {
-				$scope.actions = response
+				$scope.actions = response;
+				console.log("actions", response);
 			},
 			function(errorResponse) {
 				$scope.status = errorResponse.statusText || 'Request failed';
@@ -50,11 +52,11 @@ app.controller('ProjectDetailController', [
 
 	$scope.producerPageChanged = function() {
 
-	  var query = {"page": $scope.producersCurrentPage};
+	    var query = {"page": $scope.producersCurrentPage};
 		ProducerGetListService.getList(query).then(
 			function(response) {
 				$scope.producers = response
-				console.log("respuesta", response);
+				console.log("producers", response);
 			},
 			function(errorResponse) {
 				$scope.status = errorResponse.statusText || 'Request failed';

@@ -33,6 +33,9 @@ app.controller('ActionCreateController', [
     }
 
     var action = angular.copy(_action);
+    action.project = $scope.project.id;
+    action.client = $scope.project.producer.id;
+
     ActionCreateService.create(action).then(
       function (response) {
         console.log("Create", response);

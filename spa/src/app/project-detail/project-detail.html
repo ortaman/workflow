@@ -159,10 +159,10 @@
                             <ul uib-pagination boundary-links="true" class="pagination-sm"
                                 previous-text="&lsaquo;" next-text="&rsaquo;"
                                 first-text="&laquo;" last-text="&raquo;"
-                                items-per-page="actions.paginate_by"
-                                total-items="actions.count"
-                                ng-model="currentPage"
-                                ng-change="pageChanged()">
+                                items-per-page="producers.paginate_by"
+                                total-items="producers.count"
+                                ng-model="producersCurrentPage"
+                                ng-change="producerPageChanged()">
                             </ul>
                         </div>
                     </div>
@@ -251,7 +251,7 @@
                         <div class="portlet-title tabbable-line ">
                             <div class="caption ">
                                 <i class="icon-globe font-dark hide "></i>
-                                <span class="caption-subject font-dark bold uppercase ">Acciones</span>
+                                <span class="caption-subject font-dark bold uppercase "> Acciones </span>
                             </div>
                             <ul class="nav nav-tabs ">
                                 <li class="active ">
@@ -276,17 +276,18 @@
                                                                 <i class="icon-layers "></i>
                                                             </div>
                                                         </div>
-                                                        <div class="cont-col2 ">
-                                                            <div class="desc ">{{ action.name }}
-                                                              <a ng-show="hoverEdit" ui-sref="actionUpdate({id:action.id})" class="label label-sm label-danger ">Editar acción
-                                                                  <i class="fa fa-share "></i>
-                                                              </a>
+                                                        <div class="cont-col2">
+                                                            <div class="desc "> {{ action.name }} - 
+                                                            {{ action.producer.first_surname }} 
+                                                            {{ action.producer.second_surname }} 
+                                                            {{ action.producer.name }}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col2 ">
-                                                    <div class="date "> 45 días </div>
+                                                <div class="col2">
+                                                    <a ng-show="hoverEdit" ui-sref="actionUpdate({id:action.id})" class="label label-sm label-danger"> Editar acción
+                                                    </a>
                                                 </div>
                                             </li>
                                         </ul>
@@ -297,8 +298,8 @@
                                             first-text="&laquo;" last-text="&raquo;"
                                             items-per-page="actions.paginate_by"
                                             total-items="actions.count"
-                                            ng-model="currentPage"
-                                            ng-change="pageChanged()">
+                                            ng-model="actionCurrentPage"
+                                            ng-change="actionPageChanged()">
                                         </ul>
                                     </div>
                                 </div>
