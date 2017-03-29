@@ -28,8 +28,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
     def list(self, request, *args, **kwargs):
-        """
-        """
         return super(UserViewSet, self).list(request, *args, **kwargs)
 
 
