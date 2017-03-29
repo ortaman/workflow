@@ -21,10 +21,11 @@ class ProjectDetail(APIView, CommonMixin):
     # Mixing initial variables
     model = Project
     serializer_class = ProjectSerializer
+    serializer_class_extended = ProjectSerializerExtended
 
     def get(self, request, pk, format=None):
         project = self.get_object(pk)
-        serializer = ProjectSerializerExtended(project)
+        serializer = self.serializer_class_extended(project)
 
         return Response(serializer.data)
 
@@ -45,7 +46,6 @@ class ProjectDetail(APIView, CommonMixin):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
 class ProjectList(APIView, CommonMixin):
     """
     List all proyects, or create a new project.
@@ -54,6 +54,8 @@ class ProjectList(APIView, CommonMixin):
     # Mixing initial variables
     model = Project
     serializer_class = ProjectSerializer
+    serializer_class_extended = ProjectSerializerExtended
+    
     paginate_by = 6
 
     def get(self, request, format=None):

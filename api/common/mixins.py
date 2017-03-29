@@ -40,7 +40,7 @@ class CommonMixin(object):
             page = paginator.num_pages
             objects_list = paginator.page(page)
 
-        serializer = self.serializer_class(objects_list, many=True)
+        serializer = self.serializer_class_extended(objects_list, many=True)
 
         data = {
             'page': page,
