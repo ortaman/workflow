@@ -5,6 +5,10 @@ app.service("ActionUpdateService", ['$http', 'APIConfig', function($http, APICon
 
     if(typeof(object.project) != Number)
       object.project = object.project.id;
+
+    if(typeof(object.client) != Number)
+      object.client = object.client.id;
+
     var transformFields = ['accomplish_at', 'expire_at', 'renegotiation_at', 'report_at', 'begin_at'];
     angular.forEach(object, function(value, key) {
       transformFields.forEach(function(item){
