@@ -68,12 +68,15 @@ class ActionSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Action
-        fields = ('id', 'project', 'phase', 'client', 'producer', 'observer',
-            'name', 'toDo', 'satisfactions', 'expire_at',
+        fields = (
+            'id', 'project', 'name', 'phase',
+            'progress', 'status', 'is_renegotiated',
+            'client', 'producer', 'observer',
+            'toDo', 'satisfactions', 'expire_at',
             'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at',
             'financial', 'operational', 'other1', 'other2', 'parent_action')
 
-    read_only_fields =  ('created_at', 'updated_at','create_by',)
+    read_only_fields =  ('created_at', 'updated_at','create_by', 'promise',)
 
 
 class ActionSerializerExtended(serializers.ModelSerializer):
