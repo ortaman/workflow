@@ -24,9 +24,9 @@ app.controller('ProjectDetailController', [
 				$scope.project.producer.photo = APIConfig.baseUrl + response.producer.photo;
 			},
 			function(errorResponse) {
-					console.log('errorResponse', errorResponse);
-					$scope.status = errorResponse.statusText || 'Request failed';
-					$scope.errors = errorResponse.data;
+				console.log('errorResponse', errorResponse);
+				$scope.status = errorResponse.statusText || 'Request failed';
+				$scope.errors = errorResponse.data;
 			}
 		);
 	}
@@ -75,7 +75,9 @@ app.controller('ProjectDetailController', [
 	};
 
 	$scope.chunkArray = function(index){
-		return $scope.producers.results.slice(index*3, (index*3)+3);
+		if (chunkArray) {
+			return $scope.producers.results.slice(index*3, (index*3)+3);
+		}
 	}
 
 }]);

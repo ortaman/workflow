@@ -14,17 +14,19 @@ app.controller('ProjectCreateController', [
         return;
       }
 
-      $scope.project.preparation_at = moment($scope.project.preparation_at1).format("DD-MM-YYYY");
-    	$scope.project.negotiation_at = moment($scope.project.negotiation_at1).format("DD-MM-YYYY");
-    	$scope.project.execution_at = moment($scope.project.execution_at1).format("DD-MM-YYYY");
-    	$scope.project.evaluation_at = moment($scope.project.evaluation_at1).format("DD-MM-YYYY");
-      
-    	$scope.project.begin_at = moment($scope.project.begin_at1).format("DD-MM-YYYY");
-    	$scope.project.accomplish_at = moment($scope.project.accomplish_at1).format("DD-MM-YYYY");
-    	$scope.project.renegotiation_at = moment($scope.project.renegotiation_at1).format("DD-MM-YYYY");
-    	$scope.project.report_at = moment($scope.project.report_at1).format("DD-MM-YYYY");
+      var project = angular.copy($scope.project);
 
-  		ProjectCreateService.create($scope.project).then(
+      project.preparation_at = moment(project.preparation_at).format("DD-MM-YYYY");
+    	project.negotiation_at = moment(project.negotiation_at).format("DD-MM-YYYY");
+    	project.execution_at = moment(project.execution_at).format("DD-MM-YYYY");
+    	project.evaluation_at = moment(project.evaluation_at).format("DD-MM-YYYY");
+      
+    	project.begin_at = moment(project.begin_at1).format("DD-MM-YYYY");
+    	project.accomplish_at = moment(project.accomplish_at).format("DD-MM-YYYY");
+    	project.renegotiation_at = moment(project.renegotiation_at).format("DD-MM-YYYY");
+    	project.report_at = moment(project.report_at).format("DD-MM-YYYY");
+
+  		ProjectCreateService.create(project).then(
   			function(response) {
   				console.log('reponse', response);
   				$state.go('projectList');
