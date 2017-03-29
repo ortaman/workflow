@@ -1,19 +1,22 @@
 
 app.controller('ActionCreateController', [
-  '$scope', 'ProjectListService', 'ActionCreateService', '$state', 'ProjectGetService',
-  function($scope, ProjectListService, ActionCreateService, $state, ProjectGetService) {
+  '$scope', '$state', 'ProjectListService', 'ActionCreateService', 'ProjectGetService',
+  function($scope, $state, ProjectListService, ActionCreateService, ProjectGetService) {
 
-  $scope.action ={};
+  var project = {};
+
+  $scope.action = {};
   $scope.submitted = false;
   $scope.projectId = $state.params.projectId.toString();
 
   $scope.getProjectByIdInit = function() {
     ProjectGetService.getById($state.params.projectId).then(
       function(response) {
-        console.log('response', response);
-        $scope.project = response;
-        $scope.action.project = $scope.project.name;
-        $scope.action.client = $scope.project.producer.name + " "+ $scope.project.producer.first_surname + " " + $scope.project.producer.second_surname;
+        console.log('ProjectGet', response);
+        project = response;
+
+        $scope.action.project = project.name;
+        $scope.action.client = project.producer.name + " "+ project.producer.first_surname + " " + project.producer.second_surname;
       },
       function(errorResponse) {
         console.log('errorResponse', errorResponse);
@@ -33,13 +36,14 @@ app.controller('ActionCreateController', [
     }
 
     var action = angular.copy(_action);
-    action.project = $scope.project.id;
-    action.client = $scope.project.producer.id;
+    
+    action.project = project.id;
+    action.client = project.producer.id;
 
     ActionCreateService.create(action).then(
       function (response) {
-        console.log("Create", response);
-        $state.go('projectDetail', {id:$scope.project.id})
+        console.log("ActionCreate", response);
+        $state.go('projectDetail', {id:project.id})
       },
       function (errorResponse) {
         console.log('errorResponse', errorResponse);

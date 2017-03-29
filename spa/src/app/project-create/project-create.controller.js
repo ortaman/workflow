@@ -5,6 +5,19 @@ app.controller('ProjectCreateController', [
     $scope.submitted = false;
     $scope.project = {};
 
+    var transformFields = [
+        'preparation_at',
+        'negotiation_at',
+        'execution_at',
+        'evaluation_at',
+
+        'accomplish_at', 
+        'expire_at', 
+        'renegotiation_at', 
+        'report_at', 
+        'begin_at',
+    ];
+      
     $scope.submitForm = function() {
       $scope.submitted = true;
 
@@ -16,19 +29,17 @@ app.controller('ProjectCreateController', [
 
       var project = angular.copy($scope.project);
 
-      project.preparation_at = moment(project.preparation_at).format("DD-MM-YYYY");
-    	project.negotiation_at = moment(project.negotiation_at).format("DD-MM-YYYY");
-    	project.execution_at = moment(project.execution_at).format("DD-MM-YYYY");
-    	project.evaluation_at = moment(project.evaluation_at).format("DD-MM-YYYY");
-      
-    	project.begin_at = moment(project.begin_at1).format("DD-MM-YYYY");
-    	project.accomplish_at = moment(project.accomplish_at).format("DD-MM-YYYY");
-    	project.renegotiation_at = moment(project.renegotiation_at).format("DD-MM-YYYY");
-    	project.report_at = moment(project.report_at).format("DD-MM-YYYY");
+      angular.forEach(project, function(value, key) {
+          transformFields.forEach(function(item) {
+          
+          if(key == item)
+              project[key] = new moment(value).format("DD-MM-YYYY");
+          })
+      });
 
   		ProjectCreateService.create(project).then(
   			function(response) {
-  				console.log('reponse', response);
+  				console.log('ProjectCreate', response);
   				$state.go('projectList');
   			},
   			function(errorResponse) {
