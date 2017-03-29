@@ -19,14 +19,16 @@ app.controller('ProjectDetailController', [
 	$scope.getProject = function() {
 		ProjectGetService.getById($state.params.id).then(
 			function(response) {
+				console.log("ProjectGet", response);
+				response.image = APIConfig.baseUrl + response.image;
+				response.producer.photo = APIConfig.baseUrl + response.producer.photo;
+
 				$scope.project = response;
-				$scope.project.image = APIConfig.baseUrl + response.image;
-				$scope.project.producer.photo = APIConfig.baseUrl + response.producer.photo;
 			},
 			function(errorResponse) {
-					console.log('errorResponse', errorResponse);
-					$scope.status = errorResponse.statusText || 'Request failed';
-					$scope.errors = errorResponse.data;
+				console.log('errorResponse', errorResponse);
+				$scope.status = errorResponse.statusText || 'Request failed';
+				$scope.errors = errorResponse.data;
 			}
 		);
 	}
@@ -36,8 +38,8 @@ app.controller('ProjectDetailController', [
 	  var query = {"page": $scope.actionsCurrentPage};
 		ActionListService.getList(query).then(
 			function(response) {
+				console.log("ActionList", response);
 				$scope.actions = response;
-				console.log("actions", response);
 			},
 			function(errorResponse) {
 				$scope.status = errorResponse.statusText || 'Request failed';
@@ -52,14 +54,13 @@ app.controller('ProjectDetailController', [
 	    var query = {"page": $scope.producersCurrentPage};
 		ProducerGetListService.getList(query).then(
 			function(response) {
-				$scope.producers = response
-
-				for (var i=0; i < $scope.producers.results.length; i++) {
-					console.log($scope.producers.results[i].photo);
-					$scope.producers.results[i].photo = APIConfig.baseUrl + $scope.producers.results[i].photo.substring(32);
+				console.log("ProducerGet", response);
+				for (var i=0; i < response.results.length; i++) {
+					console.log(response.results[i].photo);
+					response.results[i].photo = APIConfig.baseUrl + response.results[i].photo.substring(32);
 				}
 
-				console.log("producers", response);
+				$scope.producers = response;
 			},
 			function(errorResponse) {
 				$scope.status = errorResponse.statusText || 'Request failed';
@@ -77,7 +78,8 @@ app.controller('ProjectDetailController', [
 	$scope.chunkArray = function(index){
 		if($scope.producers.results)
 			return $scope.producers.results.slice(index*3, (index*3)+3);
-	
+
+
 	}
 
 }]);

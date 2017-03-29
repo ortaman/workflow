@@ -11,27 +11,12 @@ app.controller('ActionDetailController', [
 	$scope.producers = [];
 
   	$scope.init = function() {
-		//$scope.getProject();
 		$scope.getAction();
 		//$scope.actionPageChanged()
 		//$scope.producerPageChanged();
 	}
 
 	//Service call
-	$scope.getProject = function() {
-		ProjectGetService.getById($state.params.id).then(
-			function(response) {
-				$scope.project = response;
-				$scope.project.image = APIConfig.baseUrl + response.image;
-				$scope.project.producer.photo = APIConfig.baseUrl + response.producer.photo;
-			},
-			function(errorResponse) {
-					console.log('errorResponse', errorResponse);
-					$scope.status = errorResponse.statusText || 'Request failed';
-					$scope.errors = errorResponse.data;
-			}
-		);
-	}
 
 	$scope.getAction = function() {
 		ActionGetService.getById($state.params.id).then(

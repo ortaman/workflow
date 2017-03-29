@@ -5,21 +5,34 @@ app.controller('ProjectUpdateController', [
     $scope.submitted = false;
     $scope.project = {};
 
+    var transformFields = [
+        'preparation_at',
+        'negotiation_at',
+        'execution_at',
+        'evaluation_at',
+
+        'accomplish_at', 
+        'expire_at', 
+        'renegotiation_at', 
+        'report_at', 
+        'begin_at',
+    ];
+
     $scope.getProjectByIdInit = function() {
       ProjectGetService.getById($state.params.id).then(
         function(response) {
           console.log('getById', response);
+
+          angular.forEach(response, function(value, key) {
+              transformFields.forEach(function(item) {
+              
+              if(key == item)
+                  response[key] = new Date(value);
+              })
+
+          });
+
           $scope.project = response;
-
-          $scope.project.preparation_at1 = new Date($scope.project.preparation_at);
-          $scope.project.negotiation_at1 = new Date($scope.project.negotiation_at);
-          $scope.project.execution_at1 = new Date($scope.project.execution_at);
-          $scope.project.evaluation_at1 = new Date($scope.project.evaluation_at);
-          $scope.project.begin_at1 = new Date($scope.project.begin_at);
-          $scope.project.accomplish_at1 = new Date($scope.project.accomplish_at);
-          $scope.project.renegotiation_at1 = new Date($scope.project.renegotiation_at);
-          $scope.project.report_at1 = new Date($scope.project.report_at);
-
         },
         function(errorResponse) {
           console.log('errorResponse', errorResponse);
@@ -38,19 +51,20 @@ app.controller('ProjectUpdateController', [
         return;
       }
 
-      console.log('$scope.project', $scope.project);
-      $scope.project.preparation_at = moment($scope.project.preparation_at1).format("DD-MM-YYYY");
-    	$scope.project.negotiation_at = moment($scope.project.negotiation_at1).format("DD-MM-YYYY");
-    	$scope.project.execution_at = moment($scope.project.execution_at1).format("DD-MM-YYYY");
-    	$scope.project.evaluation_at = moment($scope.project.evaluation_at1).format("DD-MM-YYYY");
-    	$scope.project.begin_at = moment($scope.project.begin_at1).format("DD-MM-YYYY");
-    	$scope.project.accomplish_at = moment($scope.project.accomplish_at1).format("DD-MM-YYYY");
-    	$scope.project.renegotiation_at = moment($scope.project.renegotiation_at1).format("DD-MM-YYYY");
-    	$scope.project.report_at = moment($scope.project.report_at1).format("DD-MM-YYYY");
+      var project = angular.copy($scope.project);
 
-  		ProjectUpdateService.update($state.params.id, $scope.project).then(
+      angular.forEach(project, function(value, key) {
+          transformFields.forEach(function(item) {
+          
+          if(key == item)
+              project[key] = new moment(value).format("DD-MM-YYYY");
+          })
+
+      });
+
+  		ProjectUpdateService.update($state.params.id, project).then(
   			function(response) {
-  				console.log('reponse', response);
+  				console.log('ProjectUpdate', response);
   				$state.go('projectList');
   			},
         function(errorResponse) {

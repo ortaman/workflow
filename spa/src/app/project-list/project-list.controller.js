@@ -4,7 +4,6 @@ app.controller('ProjectListController', [
 	function($scope, ProjectListService, APIConfig) {
 
 	$scope.currentPage = 1;
-	$scope.baseUrl = APIConfig.baseUrl;
 
 	$scope.pageChanged = function() {
 
@@ -12,8 +11,12 @@ app.controller('ProjectListController', [
 
 		ProjectListService.getList(query).then(
 			function(response) {
+				console.log('ProjectList', response);	
+				for (var i=0; i < response.results.length; i++) {
+				 response.results[i].image = APIConfig.baseUrl + response.results[i].image;
+				}
+
 				$scope.data = response
-				console.log('response', $scope.data);
 			},
 			function(errorResponse) {
 				console.log('errorResponse', errorResponse);

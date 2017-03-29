@@ -1,6 +1,6 @@
 
 ### Gulp generated code. ###
-api/_static
+api/_static/
 
 spa/src/assets/app.js
 spa/src/assets/app.css
@@ -12,12 +12,12 @@ api/kroo/keys/production.py
 
 
 ### Frontend ###
-spa/bower_components
-spa/node_modules
+spa/bower_components/
+spa/node_modules/
 
 
 ### Vagrant ###
-.vagrant
+.vagrant/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
