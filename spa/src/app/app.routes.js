@@ -49,7 +49,7 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
     })
 
     .state('actionCreate', {
-      url: "/actionCreate/:projectId/",
+      url: "/actionCreate/:projectId/:actionId/",
       templateUrl: URLTemplates + "app/action-create/action-create.html",
       controller: "ActionCreateController"
     })

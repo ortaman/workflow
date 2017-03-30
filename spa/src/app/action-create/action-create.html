@@ -8,7 +8,7 @@
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <!-- BEGIN CONTENT BODY -->
-        <div class="page-content" ng-init="getProjectByIdInit()">
+        <div class="page-content" ng-init="init()">
             <!-- BEGIN PAGE HEADER-->
             <!-- BEGIN PAGE BAR -->
             <div class="page-bar">
@@ -58,7 +58,7 @@
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em"> 
+            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em">
               Agregar Acción <!--small>Subciclos de Compromisos</small-->
             </h1>
             <!-- END PAGE TITLE-->
@@ -82,7 +82,7 @@
                                 <label> Avance </label>
                                   <md-select name="progress"
                                              ng-init="action.progress='0'"
-                                             ng-model="action.progress" 
+                                             ng-model="action.progress"
                                              required>
                                   <md-option value="0"> 0% </md-option>
                                   <md-option value="10"> 10% </md-option>
@@ -110,8 +110,8 @@
                               <md-input-container class="md-block" >
                                 <label> Estado </label>
                                 <md-select name="status"
-                                           ng-init="action.status='open'" 
-                                           ng-model="action.status" 
+                                           ng-init="action.status='open'"
+                                           ng-model="action.status"
                                            required="">
                                   <md-option value="open"> Abierta </md-option>
                                   <md-option value="close"> Cerrada </md-option>
@@ -130,7 +130,7 @@
                               <md-input-container class="md-block" >
                                 <label> Promesa </label>
                                 <md-select name="promise"
-                                           ng-init="action.promise='process'" 
+                                           ng-init="action.promise='process'"
                                            ng-model="action.promise"
                                            required="">
                                   <md-option value="process"> En proceso </md-option>
@@ -191,7 +191,7 @@
                                 </md-select>
 
                                 <div ng-show="actionForm.phase.$touched || submitted">
-                                   <div class="error"  style="margin-top: 0em" 
+                                   <div class="error"  style="margin-top: 0em"
                                         ng-show="actionForm.phase.$error.required">
                                      Campo requerido.
                                    </div>
@@ -268,22 +268,22 @@
                               <div class="col-md-4 col-md-offset-4 text-center">
                                   <div class="form-group">
                                       <h4 class="font-red bold"> Fecha Límite de la Fase </h4>
-                                      <div ng-show="action.phase=='preparacion'" > 
-                                        <h4 class="font-red bold">{{ project.preparation_at }}</h4> 
+                                      <div ng-show="action.phase=='preparacion'" >
+                                        <h4 class="font-red bold">{{ project.preparation_at }}</h4>
                                       </div>
-                                      <div ng-show="action.phase=='negociacion'"> 
+                                      <div ng-show="action.phase=='negociacion'">
                                         <h4 class="font-red bold">{{ project.negotiation_at }}</h4>
                                       </div>
-                                      <div ng-show="action.phase=='ejecucion'"> 
+                                      <div ng-show="action.phase=='ejecucion'">
                                         <h4 class="font-red bold">{{ project.execution_at }}</h4>
                                       </div>
-                                      <div ng-show="action.phase=='evaluacion'"> 
+                                      <div ng-show="action.phase=='evaluacion'">
                                         <h4 class="font-red bold">{{ project.evaluation_at }}</h4>
                                       </div>
                                   </div>
                               </div>
                           </div>
-                          
+
                           <h4 class="form-section"> Fechas Compromisos </h4>
                           <div class="row">
 
@@ -473,7 +473,7 @@
                           </div>
                         </div>
                       </div>
-                
+
                 </div>
             </div>
             <!-- END TASK COMMENT FORM -->
