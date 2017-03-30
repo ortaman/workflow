@@ -50,7 +50,6 @@ class ProjectSerializerExtended(serializers.ModelSerializer):
     client = UserSerializer()
     producer = UserSerializer()
     observer = UserSerializer()
-    create_by = UserSerializer()
 
     class Meta:
         model = Project
@@ -81,14 +80,11 @@ class ActionSerializer(serializers.ModelSerializer):
 
 class ActionSerializerExtended(serializers.ModelSerializer):
 
-    project = ProjectSerializer()
-
     client = UserSerializer()
     producer = UserSerializer()
     observer = UserSerializer()
-    create_by = UserSerializer()
 
-    parent_action = ActionSerializer(many=True)
+    parent_action = ActionSerializer()
 
     class Meta:
         model = Action

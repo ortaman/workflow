@@ -49,6 +49,10 @@ class ActionDetail(APIView, CommonMixin):
 class ActionList(APIView, CommonMixin):
     """
     List all actions, or create a new action.
+    List all actions from specific project: ?project_id='id'
+    List the actions linked with the specific project: ?project_id='id'&action_isnull
+
+    List all actions from specific action: ?action_id='id'
     """
     permission_classes = (IsAuthenticated,)
 
@@ -61,9 +65,23 @@ class ActionList(APIView, CommonMixin):
 
     def get(self, request, format=None):
         page = request.GET.get('page')
-        actions = self.model.objects.all()
+        query = request.query_params
 
-        data = self.get_pagination(actions, page, self.paginate_by)
+        queryset = self.model.objects.all()
+
+        if 'project_id' in query.keys():
+            if 'action_isnull' in query.keys():
+                queryset = queryset.filter(
+                    project_id=query.get('project_id'), 
+                    parent_action__isnull=True
+                )
+            else:
+                queryset = queryset.filter(project_id=query.get('project_id'))
+
+        elif 'parent_action_id' in query.keys():
+            queryset = queryset.filter(parent_action_id=query.get('parent_action_id'))
+            
+        data = self.get_pagination(queryset, page, self.paginate_by)
         return Response(data)
 
     def post(self, request, format=None):

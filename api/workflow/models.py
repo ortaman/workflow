@@ -122,11 +122,12 @@ class Action(models.Model):
     other1 = models.CharField(max_length=64, verbose_name='Otros')
     other2 = models.CharField(max_length=64, verbose_name='Otros')
 
-    parent_action = models.ManyToManyField(
-        'self', 
+    parent_action = models.ForeignKey(
+        'self',
+        models.SET_NULL,
         blank=True,
-        related_name='parent_action', 
-        verbose_name='Acción hija')
+        null=True,
+        verbose_name='Acción Padre')
 
     created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación') 
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
