@@ -76,9 +76,10 @@ app.controller('ProjectDetailController', [
 	};
 
 	$scope.chunkArray = function(index){
-		if ($scope.producers.results) {
+		if($scope.producers.results)
 			return $scope.producers.results.slice(index*3, (index*3)+3);
-		}
+
+
 	}
 
 }]);

@@ -148,8 +148,8 @@
                                             </a>
                                         </div>
                                         <div class="mt-img">
-                                            <img class="avatar" src="{{user.photo}}"
-                                                 height="77" width="77"/> 
+                                            <img class="avatar" ng-src="{{user.photo}}"
+                                                 height="77" width="77"/>
                                         </div>
                                         <div class="mt-body">
                                             <h3 class="mt-username">
@@ -279,14 +279,14 @@
                                                 <div class="col1 ">
                                                     <div class="cont ">
                                                         <div class="cont-col1 ">
-                                                            <div class="label label-sm label-danger ">
+                                                            <div class="label label-sm label-danger " ui-sref="actionDetail({id:action.id})">
                                                                 <i class="icon-layers "></i>
                                                             </div>
                                                         </div>
                                                         <div class="cont-col2">
-                                                            <div class="desc "> {{ action.name }} - 
-                                                            {{ action.producer.first_surname }} 
-                                                            {{ action.producer.second_surname }} 
+                                                            <div class="desc "> {{ action.name }} -
+                                                            {{ action.producer.first_surname }}
+                                                            {{ action.producer.second_surname }}
                                                             {{ action.producer.name }}
                                                             </div>
                                                         </div>
