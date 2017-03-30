@@ -1,7 +1,9 @@
 
 app.controller('ActionDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', 'ActionGetService',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, ActionGetService) {
+	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 
+	'ProducerGetListService', 'ActionGetService',
+	function($scope, $state, ProjectGetService, ActionListService, APIConfig, 
+		ProducerGetListService, ActionGetService) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -36,7 +38,8 @@ app.controller('ActionDetailController', [
 
 	$scope.actionPageChanged = function() {
 
-	  var query = {"page": $scope.actionsCurrentPage};
+     	var query = {"page": $scope.actionsCurrentPage};
+		
 		ActionListService.getList(query).then(
 			function(response) {
 				$scope.actions = response;

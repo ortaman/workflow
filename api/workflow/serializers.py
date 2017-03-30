@@ -80,6 +80,8 @@ class ActionSerializer(serializers.ModelSerializer):
 
 class ActionSerializerExtended(serializers.ModelSerializer):
 
+    project = ProjectSerializer()
+
     client = UserSerializer()
     producer = UserSerializer()
     observer = UserSerializer()

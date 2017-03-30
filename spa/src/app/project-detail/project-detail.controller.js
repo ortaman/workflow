@@ -35,7 +35,12 @@ app.controller('ProjectDetailController', [
 
 	$scope.actionPageChanged = function() {
 
-	  var query = {"page": $scope.actionsCurrentPage};
+	  	var query = {
+	  		"page": $scope.actionsCurrentPage,
+	  		"project_id": $state.params.id,
+	  		"action_isnull": "true",
+	  	};
+		
 		ActionListService.getList(query).then(
 			function(response) {
 				console.log("ActionList", response);
@@ -47,11 +52,12 @@ app.controller('ProjectDetailController', [
 			}
 		);
 
-  };
+    };
 
 	$scope.producerPageChanged = function() {
 
 	    var query = {"page": $scope.producersCurrentPage};
+		
 		ProducerGetListService.getList(query).then(
 			function(response) {
 				console.log("ProducerGet", response);

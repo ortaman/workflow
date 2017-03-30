@@ -75,6 +75,71 @@
                     </div-->
                     <form name="actionForm" class="horizontal-form" novalidate ng-submit="submit(action)">
                         <h4 class="form-section"> Datos Generales </h4>
+
+                          <div class="row">
+                            <div class="col-md-4">
+                              <md-input-container class="md-block" >
+                                <label> Avance </label>
+                                <md-select name="progress" ng-model="action.progress" required>
+                                  <md-option value="0"> 0% </md-option>
+                                  <md-option value="10"> 10% </md-option>
+                                  <md-option value="20"> 20% </md-option>
+                                  <md-option value="30"> 30% </md-option>
+                                  <md-option value="40"> 40% </md-option>
+                                  <md-option value="50"> 50% </md-option>
+                                  <md-option value="60"> 60% </md-option>
+                                  <md-option value="70"> 70% </md-option>
+                                  <md-option value="80"> 80% </md-option>
+                                  <md-option value="90"> 90% </md-option>
+                                  <md-option value="100"> 100% </md-option>
+                                </md-select>
+
+                                <div ng-show="actionForm.progress.$touched || submitted">
+                                   <div class="error" style="margin-top: 0em"
+                                        ng-show="actionForm.progress.$error.required">
+                                     Campo requerido.
+                                   </div>
+                                 </div>
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-md-4">
+                              <md-input-container class="md-block" >
+                                <label> Estado </label>
+                                <md-select name="status" ng-model="action.status" required="">
+                                  <md-option value="Abierta"> Abierta </md-option>
+                                  <md-option value="Cerrada"> Cerrada </md-option>
+                                </md-select>
+
+                                <div ng-show="actionForm.status.$touched || submitted">
+                                   <div class="error"  style="margin-top: 0em"
+                                        ng-show="actionForm.status.$error.required">
+                                     Campo requerido.
+                                   </div>
+                                 </div>
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-md-4">
+                              <md-input-container class="md-block" >
+                                <label> Promesa </label>
+                                <md-select name="status" ng-model="action.promise" required="">
+                                  <md-option value="Proceso"> Proceso </md-option>
+                                  <md-option value="Cumplida"> Cumplida </md-option>
+                                  <md-option value="Incumplida"> Incumplida </md-option>
+                                </md-select>
+
+                                <div ng-show="actionForm.status.$touched || submitted">
+                                   <div class="error"  style="margin-top: 0em"
+                                        ng-show="actionForm.status.$error.required">
+                                     Campo requerido.
+                                   </div>
+                                 </div>
+                                </md-input-container>
+                            </div>
+                          </div>
+                          
+                          <br>        
                           <div class="row">
                             <div class="col-md-4">
                                 <md-input-container class="md-block">
@@ -123,93 +188,94 @@
                                  </div>
                                 </md-input-container>
                             </div>
-                        </div>
-                        <h4 class="form-section"> Roles en la Acción </h4>
-                        <div class="row">
-                          <div class="col-md-4">
-                              <md-input-container class="md-block">
-                                <label> Cliente </label>
-                                <input
-                                  maxlength="64"
-                                  ng-model="action.client.name"
-                                  disabled></input>
-                               </md-input-container>
                           </div>
 
-                          <div class="col-md-4">
-                            <user-search field-name="Realizador" user-id="action.producer" user-init="action.producer"> </user-search>
-                          </div>
-
-                          <div class="col-md-4">
-                            <user-search field-name="Observador" user-id="action.observer" user-init="action.observer"> </user-search>
-                          </div>
-                        </div>
-
-                        <h4 class="form-section"> ¿Qué haremos? - ¿Cómo lo haremos? </h4>
-                        <div class="row">
-                          <div class="col-md-6">
-                              <md-input-container class="md-block">
-                                <label> Acción </label>
-                                <textarea
-                                  name="toDo"
-                                  placeholder="Describe las acciones a realizar."
-                                  rows="5"
-                                  maxlength="512"
-                                  ng-model="action.toDo"
-                                  required></textarea>
-
-                                  <div ng-show="actionForm.toDo.$touched || submitted">
-                                     <div class="error" ng-show="actionForm.toDo.$error.required">
-                                       Campo requerido.
-                                     </div>
-                                   </div>
-
-                              </md-input-container>
-                          </div>
-
-                          <div class="col-md-6">
-                              <md-input-container class="md-block">
-                                <label> Requerimientos </label>
-                                <textarea
-                                  name="satisfaction"
-                                  placeholder="Describe las condiciones de satisfacción"
-                                  rows="5"
-                                  maxlength="512"
-                                  ng-model="action.satisfactions"
-                                  required></textarea>
-
-                                <div ng-show="actionForm.satisfaction.$touched || submitted">
-                                    <div class="error" ng-show="actionForm.satisfaction.$error.required">
-                                      Campo requerido.
-                                    </div>
-                                </div>
-
-                              </md-input-container>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4 col-md-offset-4 text-center">
-                                <div class="form-group">
-                                    <h4 class="font-red bold"> Fecha Límite de la Fase </h4>
-                                    <div ng-show="action.phase=='preparacion'" > 
-                                      <h4 class="font-red bold">{{ project.preparation_at }}</h4> 
-                                    </div>
-                                    <div ng-show="action.phase=='negociacion'"> 
-                                      <h4 class="font-red bold">{{ project.negotiation_at }}</h4>
-                                    </div>
-                                    <div ng-show="action.phase=='ejecucion'"> 
-                                      <h4 class="font-red bold">{{ project.execution_at }}</h4>
-                                    </div>
-                                    <div ng-show="action.phase=='evaluacion'"> 
-                                      <h4 class="font-red bold">{{ project.evaluation_at }}</h4>
-                                    </div>
-                                </div>
+                          <h4 class="form-section"> Roles en la Acción </h4>
+                          <div class="row">
+                            <div class="col-md-4">
+                                <md-input-container class="md-block">
+                                  <label> Cliente </label>
+                                  <input
+                                    maxlength="64"
+                                    ng-model="action.client.name"
+                                    disabled></input>
+                                 </md-input-container>
                             </div>
-                        </div>
-                        
-                        <h4 class="form-section">Fechas Compromisos</h4>
-                        <div class="row">
+
+                            <div class="col-md-4">
+                              <user-search field-name="Realizador" user-id="action.producer" user-init="action.producer"> </user-search>
+                            </div>
+
+                            <div class="col-md-4">
+                              <user-search field-name="Observador" user-id="action.observer" user-init="action.observer"> </user-search>
+                            </div>
+                          </div>
+
+                          <h4 class="form-section"> ¿Qué haremos? - ¿Cómo lo haremos? </h4>
+                          <div class="row">
+                            <div class="col-md-6">
+                                <md-input-container class="md-block">
+                                  <label> Acción </label>
+                                  <textarea
+                                    name="toDo"
+                                    placeholder="Describe las acciones a realizar."
+                                    rows="5"
+                                    maxlength="512"
+                                    ng-model="action.toDo"
+                                    required></textarea>
+
+                                    <div ng-show="actionForm.toDo.$touched || submitted">
+                                       <div class="error" ng-show="actionForm.toDo.$error.required">
+                                         Campo requerido.
+                                       </div>
+                                     </div>
+
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-md-6">
+                                <md-input-container class="md-block">
+                                  <label> Requerimientos </label>
+                                  <textarea
+                                    name="satisfaction"
+                                    placeholder="Describe las condiciones de satisfacción"
+                                    rows="5"
+                                    maxlength="512"
+                                    ng-model="action.satisfactions"
+                                    required></textarea>
+
+                                  <div ng-show="actionForm.satisfaction.$touched || submitted">
+                                      <div class="error" ng-show="actionForm.satisfaction.$error.required">
+                                        Campo requerido.
+                                      </div>
+                                  </div>
+
+                                </md-input-container>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-md-4 col-md-offset-4 text-center">
+                                  <div class="form-group">
+                                      <h4 class="font-red bold"> Fecha Límite de la Fase </h4>
+                                      <div ng-show="action.phase=='preparacion'" > 
+                                        <h4 class="font-red bold">{{ project.preparation_at }}</h4> 
+                                      </div>
+                                      <div ng-show="action.phase=='negociacion'"> 
+                                        <h4 class="font-red bold">{{ project.negotiation_at }}</h4>
+                                      </div>
+                                      <div ng-show="action.phase=='ejecucion'"> 
+                                        <h4 class="font-red bold">{{ project.execution_at }}</h4>
+                                      </div>
+                                      <div ng-show="action.phase=='evaluacion'"> 
+                                        <h4 class="font-red bold">{{ project.evaluation_at }}</h4>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          
+                          <h4 class="form-section">Fechas Compromisos</h4>
+                          <div class="row">
 
                             <div class="col-md-3">
                                 <div flex-gt-xs>
