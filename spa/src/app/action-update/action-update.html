@@ -106,9 +106,9 @@
                             <div class="col-md-4">
                               <md-input-container class="md-block" >
                                 <label> Estado </label>
-                                <md-select name="status" ng-model="action.status" required="">
-                                  <md-option value="Abierta"> Abierta </md-option>
-                                  <md-option value="Cerrada"> Cerrada </md-option>
+                                <md-select name="status" ng-model="action.status" required>
+                                  <md-option value="open"> Abierta </md-option>
+                                  <md-option value="close"> Cerrada </md-option>
                                 </md-select>
 
                                 <div ng-show="actionForm.status.$touched || submitted">
@@ -123,13 +123,13 @@
                             <div class="col-md-4">
                               <md-input-container class="md-block" >
                                 <label> Promesa </label>
-                                <md-select name="status" ng-model="action.promise" required="">
-                                  <md-option value="Proceso"> Proceso </md-option>
-                                  <md-option value="Cumplida"> Cumplida </md-option>
-                                  <md-option value="Incumplida"> Incumplida </md-option>
+                                <md-select name="promise" ng-model="action.promise" required>
+                                  <md-option value="process"> En proceso </md-option>
+                                  <md-option value="status"> kept </md-option>
+                                  <md-option value="promise"> empty </md-option>
                                 </md-select>
 
-                                <div ng-show="actionForm.status.$touched || submitted">
+                                <div ng-show="actionForm.promise.$touched || submitted">
                                    <div class="error"  style="margin-top: 0em"
                                         ng-show="actionForm.status.$error.required">
                                      Campo requerido.

@@ -262,10 +262,12 @@
                             </div>
                             <ul class="nav nav-tabs ">
                                 <li class="active ">
-                                    <a href="#tab_1_1 " class="active " data-toggle="tab "> Abiertas </a>
+                                    <a ui-sref="#" class="active" data-toggle="tab"
+                                       ng-click="queryOpenStatus()"> Abiertas </a>
                                 </li>
                                 <li>
-                                    <a href="#tab_1_2 " data-toggle="tab "> Cerradas </a>
+                                    <a ui-sref="#" data-toggle="tab"
+                                       ng-click="queryCloseStatus()"> Cerradas </a>
                                 </li>
                             </ul>
                         </div>

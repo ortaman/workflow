@@ -6,17 +6,19 @@ app.controller('ProjectDetailController', [
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
 
+	var queryStatus = "open";
+
 	$scope.project = {};
 	$scope.producers = [];
 
   	$scope.getProjectByIdInit = function() {
-		$scope.getProject();
+		getProject();
 		$scope.actionPageChanged()
 		$scope.producerPageChanged();
 	}
 
 	//Service call
-	$scope.getProject = function() {
+	var getProject = function() {
 		ProjectGetService.getById($state.params.id).then(
 			function(response) {
 				console.log("ProjectGet", response);
@@ -39,6 +41,7 @@ app.controller('ProjectDetailController', [
 	  		"page": $scope.actionsCurrentPage,
 	  		"project_id": $state.params.id,
 	  		"action_isnull": "true",
+	  		"status": queryStatus,
 	  	};
 		
 		ActionListService.getList(query).then(
@@ -53,6 +56,16 @@ app.controller('ProjectDetailController', [
 		);
 
     };
+
+	$scope.queryOpenStatus = function() {
+		queryStatus = "open";
+		$scope.actionPageChanged()
+	}
+
+	$scope.queryCloseStatus = function() {
+		queryStatus = "close";
+		$scope.actionPageChanged()
+	}
 
 	$scope.producerPageChanged = function() {
 

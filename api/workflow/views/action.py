@@ -70,10 +70,11 @@ class ActionList(APIView, CommonMixin):
         queryset = self.model.objects.all()
 
         if 'project_id' in query.keys():
-            if 'action_isnull' in query.keys():
-                queryset = queryset.filter(
+            if 'action_isnull' in query.keys() and 'status' in query.keys():
+                queryset = queryset.filter (
                     project_id=query.get('project_id'), 
-                    parent_action__isnull=True
+                    parent_action__isnull=True,
+                    status=query.get('status')
                 )
             else:
                 queryset = queryset.filter(project_id=query.get('project_id'))

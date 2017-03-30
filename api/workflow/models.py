@@ -74,14 +74,14 @@ class Action(models.Model):
     )
 
     STATUS = (
-        ('Abierta', 'Abierta'),
-        ('Cerrada', 'Cerrada'),
+        ('open', 'Abierta'),
+        ('close', 'Cerrada'),
     )
 
     PROMISE = (
-        ('Proceso', 'Proceso'),
-        ('Cumplida', 'Cumplida'),
-        ('Incumplida', 'Incumplida'),
+        ('process', 'Proceso'),
+        ('kept', 'Cumplida'),
+        ('empty', 'Incumplida'),
     )
 
     PERCENTAJES = (
@@ -95,8 +95,8 @@ class Action(models.Model):
     phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de la acción')      
 
     progress = models.CharField(choices=PERCENTAJES, max_length=3, default='0', verbose_name='Porcentaje de avance')
-    status = models.CharField(choices=STATUS, max_length=7, default='Abierta', verbose_name='Estado')  
-    promise = models.CharField(choices=PROMISE, max_length=10, default='Proceso', verbose_name='Promesa')
+    status = models.CharField(choices=STATUS, max_length=5, default='Abierta', verbose_name='Estado')  
+    promise = models.CharField(choices=PROMISE, max_length=7, default='Proceso', verbose_name='Promesa')
     is_renegotiated = models.BooleanField(default=False, verbose_name='Renegociado')
 
     # focus project
