@@ -9,7 +9,6 @@ app.controller('ActionUpdateController', [
     $scope.getActionByIdInit = function() {
       ActionGetService.getById($state.params.id).then(
         function(response) {
-          console.log('ActionGet', response);
           $scope.action = response;
         },
         function(errorResponse) {
@@ -22,17 +21,20 @@ app.controller('ActionUpdateController', [
 
     $scope.submit = function() {
       $scope.submitted = true;
-      
+
       if ($scope.actionForm.$invalid) {
         $scope.error = 'El formulario no es válido o no ha sido modificado.';
         return;
       }
 
       var action = angular.copy($scope.action);
-      
+
   		ActionUpdateService.update($state.params.id, action).then(
   			function(response) {
-  				$state.go('projectDetail',{id:action.project});
+          if(action.parent_action)
+            $state.go('actionDetail',{id:action.parent_action});
+          else
+  				  $state.go('projectDetail',{id:action.project});
   			},
   			function(errorResponse) {
           console.log('errorResponse', errorResponse);

@@ -31,8 +31,8 @@ class ActionDetail(APIView, CommonMixin):
     def put(self, request, pk, format=None):
         action = self.get_object(pk)
         serializer = self.serializer_class(action, data=request.data)
-        
-        if serializer.is_valid(): 
+
+        if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
 
@@ -60,7 +60,7 @@ class ActionList(APIView, CommonMixin):
     model = Action
     serializer_class = ActionSerializer
     serializer_class_extended = ActionSerializerExtended
-    
+
     paginate_by = 10
 
     def get(self, request, format=None):
@@ -72,7 +72,7 @@ class ActionList(APIView, CommonMixin):
         if 'project_id' in query.keys():
             if 'action_isnull' in query.keys() and 'status' in query.keys():
                 queryset = queryset.filter (
-                    project_id=query.get('project_id'), 
+                    project_id=query.get('project_id'),
                     parent_action__isnull=True,
                     status=query.get('status')
                 )
@@ -81,16 +81,16 @@ class ActionList(APIView, CommonMixin):
 
         elif 'parent_action_id' in query.keys():
             queryset = queryset.filter(parent_action_id=query.get('parent_action_id'))
-            
+
         data = self.get_pagination(queryset, page, self.paginate_by)
         return Response(data)
 
     def post(self, request, format=None):
-        serializer = serializer_class(data=request.data)
-        
+        serializer = self.serializer_class(data=request.data)
+
         if serializer.is_valid():
             serializer.save(create_by=request.user)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

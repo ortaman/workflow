@@ -31,7 +31,7 @@
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
                             <li>
-                                <a ui-sref="actionCreate({ projectId: currentAction.id })">
+                                <a ui-sref="actionCreate({ projectId: currentAction.project.id, actionId:currentAction.id })">
                                     <i class="icon-fire"></i> Nueva Acción </a>
                             </li>
                             <li>
@@ -261,10 +261,12 @@
                             </div>
                             <ul class="nav nav-tabs ">
                                 <li class="active ">
-                                    <a href="#tab_1_1 " class="active " data-toggle="tab "> Abiertas </a>
+                                    <a  class="active" data-toggle="tab"
+                                       ng-click="actionPageChanged('open')"> Abiertas </a>
                                 </li>
                                 <li>
-                                    <a href="#tab_1_2 " data-toggle="tab "> Cerradas </a>
+                                    <a  data-toggle="tab"
+                                       ng-click="actionPageChanged('close')"> Cerradas </a>
                                 </li>
                             </ul>
                         </div>
@@ -279,7 +281,7 @@
                                                     <div class="cont ">
                                                         <div class="cont-col1 ">
                                                             <div class="label label-sm label-danger ">
-                                                                <i class="icon-layers "></i>
+                                                                <i class="icon-layers " ui-sref="actionDetail({id:action.id})"></i>
                                                             </div>
                                                         </div>
                                                         <div class="cont-col2">
@@ -315,7 +317,7 @@
                 </div>
             </div>
             <!--END TABS-->
-            
+
         </div>
     </div>
 </div>

@@ -1,12 +1,13 @@
 
 app.controller('ActionDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 
+	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig',
 	'ProducerGetListService', 'ActionGetService',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig, 
+	function($scope, $state, ProjectGetService, ActionListService, APIConfig,
 		ProducerGetListService, ActionGetService) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
+	var actionStatus = "open"
 
 	$scope.currentAction = {};
 	$scope.project = {};
@@ -14,8 +15,8 @@ app.controller('ActionDetailController', [
 
   	$scope.init = function() {
 		$scope.getAction();
-		//$scope.actionPageChanged()
-		//$scope.producerPageChanged();
+		$scope.actionPageChanged()
+		$scope.producerPageChanged();
 	}
 
 	//Service call
@@ -36,10 +37,14 @@ app.controller('ActionDetailController', [
 		);
 	}
 
-	$scope.actionPageChanged = function() {
+	$scope.actionPageChanged = function(status) {
+			actionStatus = status||actionStatus;
+     	var query = {
+				"parent_action_id": $state.params.id,
+				"page": $scope.actionCurrentPage,
+				"status": actionStatus,
+			};
 
-     	var query = {"page": $scope.actionsCurrentPage};
-		
 		ActionListService.getList(query).then(
 			function(response) {
 				$scope.actions = response;
@@ -55,7 +60,11 @@ app.controller('ActionDetailController', [
 
 	$scope.producerPageChanged = function() {
 
-	    var query = {"page": $scope.producersCurrentPage};
+    var query = {
+			"page": $scope.producersCurrentPage,
+			"parent_action_id": $state.params.id,
+		};
+
 		ProducerGetListService.getList(query).then(
 			function(response) {
 				$scope.producers = response

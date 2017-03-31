@@ -9,11 +9,14 @@ app.service("ActionUpdateService", ['$http', 'APIConfig', function($http, APICon
         if(typeof(object.client) != Number)
             object.client = object.client.id;
 
-        var transformFields = [ 
-            'accomplish_at', 
-            'expire_at', 
-            'renegotiation_at', 
-            'report_at', 
+        if(object.parent_action && typeof(object.parent_action) != Number)
+            object.parent_action = object.parent_action.id;
+
+        var transformFields = [
+            'accomplish_at',
+            'expire_at',
+            'renegotiation_at',
+            'report_at',
             'begin_at'
         ];
 
