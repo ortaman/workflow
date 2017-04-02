@@ -80,7 +80,11 @@ class ActionList(APIView, CommonMixin):
                 queryset = queryset.filter(project_id=query.get('project_id'))
 
         elif 'parent_action_id' in query.keys():
-            queryset = queryset.filter(parent_action_id=query.get('parent_action_id'))
+            print ("condicion 2")
+            queryset = queryset.filter(
+                parent_action_id=query.get('parent_action_id'),
+                status=query.get('status'),
+            )
 
         data = self.get_pagination(queryset, page, self.paginate_by)
         return Response(data)
