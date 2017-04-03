@@ -17,11 +17,11 @@
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <a href="#"> Actualizar Proyecto </a>
+                        <a> Actualizar Proyecto </a>
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                          <a ui-sref="projectDetail({id:action.project.id})">Proyecto {{ action.project.name }}</span></a>
+                          <a ui-sref="projectDetail({id:project.id})">Proyecto {{ action.project.name }}</span></a>
                     </li>
                 </ul>
                 <div class="page-toolbar">
@@ -69,7 +69,7 @@
                     </div-->
 
                     <form name="projectForm" ng-submit="submitForm()" class="horizontal-form" novalidate>
-                        
+
                         <h4 class="form-section"> Datos Generales </h4>
                         <!--row-->
                         <div class="row">

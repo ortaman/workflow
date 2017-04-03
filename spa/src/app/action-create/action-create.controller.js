@@ -1,7 +1,7 @@
 
 app.controller('ActionCreateController', [
-  '$scope', '$state', 'ProjectListService', 'ActionCreateService', 'ProjectGetService',
-  function($scope, $state, ProjectListService, ActionCreateService, ProjectGetService) {
+  '$scope', '$state', 'ProjectListService', 'ActionCreateService', 'ProjectGetService', 'ActionGetService',
+  function($scope, $state, ProjectListService, ActionCreateService, ProjectGetService, ActionGetService) {
 
   $scope.action = {};
   $scope.submitted = false;
@@ -10,6 +10,8 @@ app.controller('ActionCreateController', [
 
   $scope.init = function() {
     $scope.getProject();
+    if($scope.actionId)
+      $scope.getParentAction($scope.actionId);
   }
 
   $scope.submit = function (_action) {
@@ -52,6 +54,22 @@ app.controller('ActionCreateController', [
 
         $scope.action.project = $scope.project.name;
         $scope.action.client = $scope.project.producer.name + " "+ $scope.project.producer.first_surname + " " + $scope.project.producer.second_surname;
+      },
+      function(errorResponse) {
+        console.log('errorResponse', errorResponse);
+        $scope.status = errorResponse.statusText || 'Request failed';
+        $scope.errors = errorResponse.data;
+      }
+    );
+  }
+
+  $scope.getParentAction = function(id){
+    ActionGetService.getById(id).then(
+      function(response) {
+
+        $scope.action.parent_action = response;
+        console.log('actiontGet', $scope.action);
+
       },
       function(errorResponse) {
         console.log('errorResponse', errorResponse);
