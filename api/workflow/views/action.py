@@ -80,7 +80,6 @@ class ActionList(APIView, CommonMixin):
                 queryset = queryset.filter(project_id=query.get('project_id'))
 
         elif 'parent_action_id' in query.keys():
-            print ("condicion 2")
             queryset = queryset.filter(
                 parent_action_id=query.get('parent_action_id'),
                 status=query.get('status'),
