@@ -76,11 +76,11 @@
                     <div class="portlet-body">
                         <div class="row">
 
-                            <div ng-repeat="project in data.results" ng-cloack> 
+                            <div ng-repeat="project in data.results" ng-cloack>
                                 <div class="col-md-4" style="margin-bottom: 3em;">
                                     <div class="mt-widget-4">
                                         <div class="mt-img-container">
-                                            <img src="{{ project.image }}"/>
+                                            <img ng-src="{{ project.image }}"/>
                                             <!--img src="../../assets/metronics/pages/img/background/14.jpg" />
                                              <img src="../../assets/metronics/pages/img/background/58.jpg" />
                                              <img src="../../assets/metronics/pages/img/background/58.jpg" />
@@ -93,7 +93,7 @@
                                                 Fase: {{ project.phase }}
                                             </div>
                                             <div class="mt-body-icons">
-                                                <a ui-sref="projectUpdate({ id: project.id })" 
+                                                <a ui-sref="projectUpdate({ id: project.id })"
                                                    class="md-icon-button test-tooltip" aria-label="Refresh">
                                                    <md-tooltip md-direction="top"> Editar proyecto </md-tooltip>
                                                    <i class=" fa fa-edit"></i>

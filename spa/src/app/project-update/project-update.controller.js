@@ -1,6 +1,6 @@
 
 app.controller('ProjectUpdateController', [
-  '$scope', '$state', 'ProjectGetService', 'ProjectUpdateService', 
+  '$scope', '$state', 'ProjectGetService', 'ProjectUpdateService',
   function($scope, $state, ProjectGetService, ProjectUpdateService) {
     $scope.submitted = false;
     $scope.project = {};
@@ -11,10 +11,10 @@ app.controller('ProjectUpdateController', [
         'execution_at',
         'evaluation_at',
 
-        'accomplish_at', 
-        'expire_at', 
-        'renegotiation_at', 
-        'report_at', 
+        'accomplish_at',
+        'expire_at',
+        'renegotiation_at',
+        'report_at',
         'begin_at',
     ];
 
@@ -25,7 +25,7 @@ app.controller('ProjectUpdateController', [
 
           angular.forEach(response, function(value, key) {
               transformFields.forEach(function(item) {
-              
+
               if(key == item)
                   response[key] = new Date(value);
               })
@@ -55,7 +55,7 @@ app.controller('ProjectUpdateController', [
 
       angular.forEach(project, function(value, key) {
           transformFields.forEach(function(item) {
-          
+
           if(key == item)
               project[key] = new moment(value).format("DD-MM-YYYY");
           })
@@ -73,7 +73,7 @@ app.controller('ProjectUpdateController', [
           $scope.errors = errorResponse.data;
         }
   		);
-    
+
     }
 
 }]);

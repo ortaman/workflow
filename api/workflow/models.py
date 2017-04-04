@@ -20,7 +20,7 @@ class Project(models.Model):
     )
 
     # focus project
-    name = models.CharField(max_length=64, verbose_name='Nombre')  
+    name = models.CharField(max_length=64, verbose_name='Nombre')
     clasification = models.CharField(choices=TYPES, max_length=8, default='estandar', verbose_name='Tipos de proyecto')
     phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de proyecto')
 
@@ -52,7 +52,7 @@ class Project(models.Model):
 
     image = models.ImageField(upload_to='images/', verbose_name='Imagen')
 
-    created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación') 
+    created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
     create_by = models.ForeignKey(User, related_name='project_create_by', verbose_name='Creado por')
 
@@ -85,18 +85,18 @@ class Action(models.Model):
     )
 
     PERCENTAJES = (
-        ('0', '0'), ('10', '10'), ('20', '20'), ('30', '30'), 
-        ('40', '40'), ('50', '50'), ('60', '60'), ('70', '70'), 
+        ('0', '0'), ('10', '10'), ('20', '20'), ('30', '30'),
+        ('40', '40'), ('50', '50'), ('60', '60'), ('70', '70'),
         ('80', '80'), ('90', '90'), ('100', '100'),
     )
 
     project = models.ForeignKey(Project, related_name='project', verbose_name='Proyecto relacionado')
     name = models.CharField(max_length=64, verbose_name='Nombre de la acción')
-    phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de la acción')      
+    phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de la acción')
 
     progress = models.CharField(choices=PERCENTAJES, max_length=3, default='0', verbose_name='Porcentaje de avance')
-    status = models.CharField(choices=STATUS, max_length=5, default='Abierta', verbose_name='Estado')  
-    promise = models.CharField(choices=PROMISE, max_length=7, default='Proceso', verbose_name='Promesa')
+    status = models.CharField(choices=STATUS, max_length=5, default='Abierta', verbose_name='Estado')
+    promise = models.CharField(choices=PROMISE, max_length=7, default='process', verbose_name='Promesa')
     is_renegotiated = models.BooleanField(default=False, verbose_name='Renegociado')
 
     # focus project
@@ -129,7 +129,7 @@ class Action(models.Model):
         null=True,
         verbose_name='Acción Padre')
 
-    created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación') 
+    created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
     create_by = models.ForeignKey(User, related_name='action_create_by', verbose_name='Creado por')
 
