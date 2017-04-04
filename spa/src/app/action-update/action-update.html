@@ -22,11 +22,11 @@
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <a ui-sref="projectList"> Bitácora del Proyecto </a>
+                        <a ui-sref="projectDetail({id:action.project.id})"> Bitácora del Proyecto </a>
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <span> Agregar Acción </span>
+                        <span> Editar Acción </span>
                     </li>
                 </ul>
                 <div class="page-toolbar">
@@ -59,7 +59,7 @@
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
             <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em">
-              Agregar Acción <!--small>Subciclos de Compromisos</small-->
+              Editar Acción <!--small>Subciclos de Compromisos</small-->
             </h1>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
@@ -138,8 +138,8 @@
                                 </md-input-container>
                             </div>
                           </div>
-                          
-                          <br>        
+
+                          <br>
                           <div class="row">
                             <div class="col-md-4">
                                 <md-input-container class="md-block">
@@ -258,22 +258,22 @@
                               <div class="col-md-4 col-md-offset-4 text-center">
                                   <div class="form-group">
                                       <h4 class="font-red bold"> Fecha Límite de la Fase </h4>
-                                      <div ng-show="action.phase=='preparacion'" > 
-                                        <h4 class="font-red bold">{{ project.preparation_at }}</h4> 
+                                      <div ng-show="action.phase=='preparacion'" >
+                                        <h4 class="font-red bold">{{ action.project.preparation_at }}</h4>
                                       </div>
-                                      <div ng-show="action.phase=='negociacion'"> 
-                                        <h4 class="font-red bold">{{ project.negotiation_at }}</h4>
+                                      <div ng-show="action.phase=='negociacion'">
+                                        <h4 class="font-red bold">{{ action.project.negotiation_at }}</h4>
                                       </div>
-                                      <div ng-show="action.phase=='ejecucion'"> 
-                                        <h4 class="font-red bold">{{ project.execution_at }}</h4>
+                                      <div ng-show="action.phase=='ejecucion'">
+                                        <h4 class="font-red bold">{{ action.project.execution_at }}</h4>
                                       </div>
-                                      <div ng-show="action.phase=='evaluacion'"> 
-                                        <h4 class="font-red bold">{{ project.evaluation_at }}</h4>
+                                      <div ng-show="action.phase=='evaluacion'">
+                                        <h4 class="font-red bold">{{ action.project.evaluation_at }}</h4>
                                       </div>
                                   </div>
                               </div>
                           </div>
-                          
+
                           <h4 class="form-section">Fechas Compromisos</h4>
                           <div class="row">
 

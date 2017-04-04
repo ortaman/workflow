@@ -22,7 +22,7 @@
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <a ui-sref="projectList"> Bitácora del Proyecto </a>
+                        <a ui-sref="projectDetail({id:project.id})"> Bitácora del Proyecto </a>
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
@@ -75,6 +75,65 @@
                     </div-->
                     <form name="actionForm" class="horizontal-form" novalidate ng-submit="submit(action)">
                         <h4 class="form-section"> Datos Generales </h4>
+                        <div class="row">
+                          <div ng-class="actionId ? 'col-md-3' : 'col-md-4'" ng-if="actionId">
+                            <md-input-container class="md-block">
+                              <label> Nombre del Proyecto </label>
+                              <input
+                                maxlength="64"
+                                ng-model="action.parent_action.name"
+                                disabled></input>
+                             </md-input-container>
+                          </div>
+                          <div ng-class="actionId ? 'col-md-3' : 'col-md-4'">
+                              <md-input-container class="md-block">
+                                <label> Nombre del Proyecto </label>
+                                <input
+                                  maxlength="64"
+                                  ng-model="action.project"
+                                  disabled></input>
+                               </md-input-container>
+                          </div>
+
+                          <div ng-class="actionId ? 'col-md-3' : 'col-md-4'">
+                              <md-input-container class="md-block">
+                                <label> Nombre de la acción </label>
+                                <input
+                                  name="name"
+                                  maxlength="64"
+                                  ng-model="action.name"
+                                  ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
+                                  required></input>
+                                <div ng-show="actionForm.name.$touched || submitted">
+                                  <div class="error" ng-show="actionForm.name.$error.required">
+                                    Campo requerido.
+                                  </div>
+                                  <div class="error" ng-show="actionForm.name.$error.pattern">
+                                     Debe contener espacios y caracteres alfabéticos.
+                                  </div>
+                                </div>
+                               </md-input-container>
+                          </div>
+
+                          <div ng-class="actionId ? 'col-md-3' : 'col-md-4'">
+                            <md-input-container class="md-block" >
+                              <label> Fase </label>
+                              <md-select name="phase" ng-model="action.phase" required="">
+                                <md-option value="preparacion"> Preparación </md-option>
+                                <md-option value="negociacion"> Negociación </md-option>
+                                <md-option value="ejecucion"> Ejecución </md-option>
+                                <md-option value="evaluacion"> Evaluación </md-option>
+                              </md-select>
+
+                              <div ng-show="actionForm.phase.$touched || submitted">
+                                 <div class="error"  style="margin-top: 0em"
+                                      ng-show="actionForm.phase.$error.required">
+                                   Campo requerido.
+                                 </div>
+                               </div>
+                              </md-input-container>
+                          </div>
+                        </div>
 
                           <div class="row">
                             <div class="col-md-4">
@@ -149,56 +208,6 @@
                           </div>
 
                           <br>
-                          <div class="row">
-                            <div class="col-md-4">
-                                <md-input-container class="md-block">
-                                  <label> Nombre del Proyecto </label>
-                                  <input
-                                    maxlength="64"
-                                    ng-model="action.project"
-                                    disabled></input>
-                                 </md-input-container>
-                            </div>
-
-                            <div class="col-md-4">
-                                <md-input-container class="md-block">
-                                  <label> Nombre de la acción </label>
-                                  <input
-                                    name="name"
-                                    maxlength="64"
-                                    ng-model="action.name"
-                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
-                                    required></input>
-                                  <div ng-show="actionForm.name.$touched || submitted">
-                                    <div class="error" ng-show="actionForm.name.$error.required">
-                                      Campo requerido.
-                                    </div>
-                                    <div class="error" ng-show="actionForm.name.$error.pattern">
-                                       Debe contener espacios y caracteres alfabéticos.
-                                    </div>
-                                  </div>
-                                 </md-input-container>
-                            </div>
-
-                            <div class="col-md-4">
-                              <md-input-container class="md-block" >
-                                <label> Fase </label>
-                                <md-select name="phase" ng-model="action.phase" required="">
-                                  <md-option value="preparacion"> Preparación </md-option>
-                                  <md-option value="negociacion"> Negociación </md-option>
-                                  <md-option value="ejecucion"> Ejecución </md-option>
-                                  <md-option value="evaluacion"> Evaluación </md-option>
-                                </md-select>
-
-                                <div ng-show="actionForm.phase.$touched || submitted">
-                                   <div class="error"  style="margin-top: 0em"
-                                        ng-show="actionForm.phase.$error.required">
-                                     Campo requerido.
-                                   </div>
-                                 </div>
-                                </md-input-container>
-                            </div>
-                          </div>
 
                           <h4 class="form-section"> Roles en la Acción </h4>
                           <div class="row">
@@ -268,16 +277,16 @@
                               <div class="col-md-4 col-md-offset-4 text-center">
                                   <div class="form-group">
                                       <h4 class="font-red bold"> Fecha Límite de la Fase </h4>
-                                      <div ng-show="action.phase=='preparacion'" >
+                                      <div ng-show="project.phase=='preparacion'" >
                                         <h4 class="font-red bold">{{ project.preparation_at }}</h4>
                                       </div>
-                                      <div ng-show="action.phase=='negociacion'">
+                                      <div ng-show="project.phase=='negociacion'">
                                         <h4 class="font-red bold">{{ project.negotiation_at }}</h4>
                                       </div>
-                                      <div ng-show="action.phase=='ejecucion'">
+                                      <div ng-show="project.phase=='ejecucion'">
                                         <h4 class="font-red bold">{{ project.execution_at }}</h4>
                                       </div>
-                                      <div ng-show="action.phase=='evaluacion'">
+                                      <div ng-show="project.phase=='evaluacion'">
                                         <h4 class="font-red bold">{{ project.evaluation_at }}</h4>
                                       </div>
                                   </div>
