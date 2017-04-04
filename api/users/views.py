@@ -4,6 +4,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
+from workflow.models import Action
+from workflow.serializers import ActionUserSerializer
+
 from .models import User
 from .permissions import UserIsOwnerOrReadOnly
 from .serializers import UserSerializer
@@ -38,6 +41,23 @@ class UserViewSet(viewsets.ModelViewSet):
         if 'first_surname' in query.keys():
             surname = query.get('first_surname')
             self.queryset = self.queryset.filter(first_surname__startswith=surname) 
+
+        elif 'project_id' in query.keys():
+            
+            self.queryset = Action.objects.all()
+            self.serializer_class = ActionUserSerializer
+
+            if query.get('parent_action')=='none':
+                self.queryset = self.queryset.filter(
+                    project_id=query.get('project_id'),
+                    parent_action__isnull=True) 
+            else:
+                self.queryset = self.queryset.filter(
+                    project_id=query.get('project_id'))
+
+        elif 'parent_action_id' in query.keys():
+            self.queryset = queryset.filter(parent_action_id=query.get('parent_action_id'))
+
 
         return self.queryset
 

@@ -5,8 +5,9 @@ from django.conf import settings
 
 from rest_framework import serializers
 
-from .models import Project, Action
 from users.serializers import UserSerializer
+
+from .models import Project, Action
 
  
 
@@ -91,3 +92,12 @@ class ActionSerializerExtended(serializers.ModelSerializer):
     class Meta:
         model = Action
         fields = '__all__'
+
+
+class ActionUserSerializer(serializers.ModelSerializer):
+
+    producer = UserSerializer()
+
+    class Meta:
+        model = Action
+        fields = ('producer',)
