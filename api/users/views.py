@@ -18,7 +18,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    
+
     lookup_field = 'id'
     permission_classes = (IsAuthenticated, UserIsOwnerOrReadOnly)
 
@@ -40,23 +40,23 @@ class UserViewSet(viewsets.ModelViewSet):
 
         if 'first_surname' in query.keys():
             surname = query.get('first_surname')
-            self.queryset = self.queryset.filter(first_surname__startswith=surname) 
+            self.queryset = self.queryset.filter(first_surname__startswith=surname)
 
         elif 'project_id' in query.keys():
-            
+
             self.queryset = Action.objects.all()
             self.serializer_class = ActionUserSerializer
 
             if query.get('parent_action')=='none':
                 self.queryset = self.queryset.filter(
                     project_id=query.get('project_id'),
-                    parent_action__isnull=True) 
+                    parent_action__isnull=True)
             else:
                 self.queryset = self.queryset.filter(
                     project_id=query.get('project_id'))
 
         elif 'parent_action_id' in query.keys():
-            self.queryset = queryset.filter(parent_action_id=query.get('parent_action_id'))
+            self.queryset = self.queryset.filter(parent_action_id=query.get('parent_action_id'))
 
 
         return self.queryset

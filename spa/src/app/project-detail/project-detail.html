@@ -149,14 +149,14 @@
                                             </a>
                                         </div>
                                         <div class="mt-img">
-                                            <img class="avatar" ng-src="{{user.photo}}"
+                                            <img class="avatar" ng-src="{{user.producer.photo}}"
                                                  height="77" width="77"/>
                                         </div>
                                         <div class="mt-body">
                                             <h3 class="mt-username">
-                                                {{ user.name }} {{user.first_surname}} {{ user.second_surname }}
+                                                {{ user.producer.name }} {{user.producer.first_surname}} {{ user.producer.second_surname }}
                                             </h3>
-                                            <p class="mt-user-title"> {{ user.position }} </p>
+                                            <p class="mt-user-title"> {{ user.producer.position }} </p>
                                         </div>
                                     </div>
                                     <!--end: widget 1-1 -->
@@ -324,6 +324,7 @@
             </div>
           </div>
             <!--END TABS-->
+
             <div class="row ">
                 <div class="col-md-12 ">
                     <div class="portlet light portlet-fit bordered ">
@@ -362,38 +363,8 @@
                                     <div class="events-wrapper ">
                                         <div class="events ">
                                             <ol>
-                                                <li>
-                                                    <a href="#0 " data-date="16/01/2014 " class="border-after-red bg-after-red selected ">16 Enero</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#0 " data-date="28/02/2014 " class="border-after-red bg-after-red ">22 Enero</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#0 " data-date="20/04/2014 " class="border-after-red bg-after-red ">25 Enero</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#0 " data-date="20/05/2014 " class="border-after-red bg-after-red ">10 Febrero</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#0 " data-date="09/07/2014 " class="border-after-red bg-after-red ">14 Febrerp</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#0 " data-date="30/08/2014 " class="border-after-red bg-after-red ">30 Aug</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#0 " data-date="15/09/2014 " class="border-after-red bg-after-red ">15 Sep</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#0 " data-date="01/11/2014 " class="border-after-red bg-after-red ">01 Nov</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#0 " data-date="10/12/2014 " class="border-after-red bg-after-red ">10 Dec</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#0 " data-date="19/01/2015 " class="border-after-red bg-after-red ">29 Jan</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#0 " data-date="03/03/2015 " class="border-after-red bg-after-red ">3 Mar</a>
+                                                <li  ng-repeat="action in timeline track by $index">
+                                                    <a href="#{{$index}} "  jquery-date="action.date" class="border-after-red bg-after-red " ng-class="{'selected':$index == 0}">16 Enero</a>
                                                 </li>
                                             </ol>
                                             <span class="filling-line bg-red " aria-hidden="true "></span>
@@ -418,235 +389,22 @@
                                 <!-- .timeline -->
                                 <div class="events-content ">
                                     <ol>
-                                        <li class="selected " data-date="16/01/2014 ">
+                                        <li ng-class="{'selected':$index == 0}"  jquery-date="action.date" ng-repeat="action in timeline track by $index">
                                             <div class="mt-title ">
-                                                <h2 class="mt-content-title ">Inicio del Proyecto</h2>
+                                                <h2 class="mt-content-title ">{{action.name}}</h2>
                                             </div>
                                             <div class="mt-author ">
                                                 <div class="mt-avatar ">
                                                     <img src="../../assets/metronics/pages/media/users/avatar80_1.jpg " />
                                                 </div>
                                                 <div class="mt-author-name ">
-                                                    <a href="javascript:; " class="font-blue ">Raúl Toro</a>
+                                                    <a href="javascript:; " class="font-blue ">{{ action.producer.first_surname}}</a>
                                                 </div>
-                                                <div class="mt-author-datetime font-grey-mint ">16 Enero 2017 : 7:45 PM</div>
+                                                <div class="mt-author-datetime font-grey-mint ">{{ action.date2}}</div>
                                             </div>
                                             <div class="clearfix "></div>
                                             <div class="mt-content border-grey-steel ">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod eleifend ipsum, at posuere augue. Pellentesque mi felis, aliquam at iaculis eu, mi felis, aliquam at iaculis mi felis, aliquam at iaculis finibus eu ex. Integer efficitur tincidunt malesuada. Sed sit amet molestie elit, vel placerat ipsum. Ut consectetur odio non est rhoncus volutpat.</p>
-                                            </div>
-                                        </li>
-                                        <li data-date="28/02/2014 ">
-                                            <div class="mt-title ">
-                                                <h2 class="mt-content-title ">Junta Inicial</h2>
-                                            </div>
-                                            <div class="mt-author ">
-                                                <div class="mt-avatar ">
-                                                    <img src="../../assets/metronics/pages/media/users/avatar80_7.jpg " />
-                                                </div>
-                                                <div class="mt-author-name ">
-                                                    <a href="javascript:; " class="font-blue-madison ">Carlos López</a>
-                                                </div>
-                                                <div class="mt-author-datetime font-grey-mint ">22 Enero 2014 : 10:15 AM</div>
-                                            </div>
-                                            <div class="clearfix "></div>
-                                            <div class="mt-content border-grey-steel ">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod eleifend ipsum, at posuere augue. Pellentesque mi felis, aliquam at iaculis eu, finibus eu ex. Integer efficitur leo eget dolor tincidunt, et dignissim risus lacinia. Nam in egestas nunc. Suspendisse potenti. Cras ullamcorper tincidunt malesuada. Sed sit amet molestie elit, vel placerat ipsum. Ut consectetur odio non est rhoncus volutpat. Nullam interdum, neque quis vehicula ornare, lacus elit dignissim purus, quis ultrices erat tortor eget felis. Cras commodo id massa at condimentum. Praesent dignissim luctus risus sed sodales.</p>
-                                            </div>
-                                        </li>
-                                        <li data-date="20/04/2014 ">
-                                            <div class="mt-title ">
-                                                <h2 class="mt-content-title ">Presentación Hallazgos Iniciales</h2>
-                                            </div>
-                                            <div class="mt-author ">
-                                                <div class="mt-avatar ">
-                                                    <img src="../../assets/metronics/pages/media/users/avatar80_1.jpg " />
-                                                </div>
-                                                <div class="mt-author-name ">
-                                                    <a href="javascript:; " class="font-blue ">Raúl Toro</a>
-                                                </div>
-                                                <div class="mt-author-datetime font-grey-mint ">25 Enero 2017 : 10:45 PM</div>
-                                            </div>
-                                            <div class="clearfix "></div>
-                                            <div class="mt-content border-grey-steel ">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod eleifend ipsum, at posuere augue. Pellentesque mi felis, aliquam at iaculis eu, finibus eu ex. Integer efficitur leo eget dolor tincidunt, et dignissim risus lacinia. Nam in egestas nunc. Suspendisse potenti. Cras ullamcorper tincidunt malesuada. Sed sit amet molestie elit, vel placerat ipsum. Ut consectetur odio non est rhoncus volutpat. Nullam interdum, neque quis vehicula ornare, lacus elit dignissim purus, quis ultrices erat tortor eget felis. Cras commodo id massa at condimentum. Praesent dignissim luctus risus sed sodales.</p>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut. laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut. </p>
-                                            </div>
-                                        </li>
-                                        <li data-date="20/05/2014 ">
-                                            <div class="mt-title ">
-                                                <h2 class="mt-content-title ">Timeline Received</h2>
-                                            </div>
-                                            <div class="mt-author ">
-                                                <div class="mt-avatar ">
-                                                    <img src="../../assets/metronics/pages/media/users/avatar80_2.jpg " />
-                                                </div>
-                                                <div class="mt-author-name ">
-                                                    <a href="javascript:; " class="font-blue-madison ">Andres Iniesta</a>
-                                                </div>
-                                                <div class="mt-author-datetime font-grey-mint ">20 May 2014 : 12:20 PM</div>
-                                            </div>
-                                            <div class="clearfix "></div>
-                                            <div class="mt-content border-grey-steel ">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod eleifend ipsum, at posuere augue. Pellentesque mi felis, aliquam at iaculis eu, finibus eu ex. Integer efficitur leo eget dolor tincidunt, et dignissim risus lacinia. Nam in egestas nunc. Suspendisse potenti. Cras ullamcorper tincidunt malesuada. Sed sit amet molestie elit, vel placerat ipsum. Ut consectetur odio non est rhoncus volutpat. Nullam interdum, neque quis vehicula ornare, lacus elit dignissim purus, quis ultrices erat tortor eget felis. Cras commodo id massa at condimentum. Praesent dignissim luctus risus sed sodales.</p>
-                                                <a href="javascript:; " class="btn btn-circle green-turquoise ">Read More</a>
-                                            </div>
-                                        </li>
-                                        <li data-date="09/07/2014 ">
-                                            <div class="mt-title ">
-                                                <h2 class="mt-content-title ">Event Success</h2>
-                                            </div>
-                                            <div class="mt-author ">
-                                                <div class="mt-avatar ">
-                                                    <img src="../../assets/metronics/pages/media/users/avatar80_1.jpg " />
-                                                </div>
-                                                <div class="mt-author-name ">
-                                                    <a href="javascript:; " class="font-blue-madison ">Matt Goldman</a>
-                                                </div>
-                                                <div class="mt-author-datetime font-grey-mint ">9 July 2014 : 8:15 PM</div>
-                                            </div>
-                                            <div class="clearfix "></div>
-                                            <div class="mt-content border-grey-steel ">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde.</p>
-                                                <a href="javascript:; " class="btn btn-circle btn-outline purple-medium ">View Summary</a>
-                                                <div class="btn-group dropup pull-right ">
-                                                    <button class="btn btn-circle green dropdown-toggle " type="button " data-toggle="dropdown " data-hover="dropdown " data-close-others="true " aria-expanded="false "> Actions
-                                                        <i class="fa fa-angle-down "></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu pull-right " role="menu ">
-                                                        <li>
-                                                            <a href="javascript:; ">Action </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="javascript:; ">Another action </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="javascript:; ">Something else here </a>
-                                                        </li>
-                                                        <li class="divider "> </li>
-                                                        <li>
-                                                            <a href="javascript:; ">Separated link </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li data-date="30/08/2014 ">
-                                            <div class="mt-title ">
-                                                <h2 class="mt-content-title ">Conference Call</h2>
-                                            </div>
-                                            <div class="mt-author ">
-                                                <div class="mt-avatar ">
-                                                    <img src="../../assets/metronics/pages/media/users/avatar80_1.jpg " />
-                                                </div>
-                                                <div class="mt-author-name ">
-                                                    <a href="javascript:; " class="font-blue-madison ">Rory Matthew</a>
-                                                </div>
-                                                <div class="mt-author-datetime font-grey-mint ">30 August 2014 : 5:45 PM</div>
-                                            </div>
-                                            <div class="clearfix "></div>
-                                            <div class="mt-content border-grey-steel ">
-                                                <img class="timeline-body-img pull-left " src="../../assets/metronics/pages/media/blog/5.jpg " alt=" ">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut. laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut. </p>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut. laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut. </p>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut. laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut. </p>
-                                                <a href="javascript:; " class="btn btn-circle red ">Read More</a>
-                                            </div>
-                                        </li>
-                                        <li data-date="15/09/2014 ">
-                                            <div class="mt-title ">
-                                                <h2 class="mt-content-title ">Conference Decision</h2>
-                                            </div>
-                                            <div class="mt-author ">
-                                                <div class="mt-avatar ">
-                                                    <img src="../../assets/metronics/pages/media/users/avatar80_5.jpg " />
-                                                </div>
-                                                <div class="mt-author-name ">
-                                                    <a href="javascript:; " class="font-blue-madison ">Jessica Wolf</a>
-                                                </div>
-                                                <div class="mt-author-datetime font-grey-mint ">15 September 2014 : 8:30 PM</div>
-                                            </div>
-                                            <div class="clearfix "></div>
-                                            <div class="mt-content border-grey-steel ">
-                                                <img class="timeline-body-img pull-right " src="../../assets/metronics/pages/media/blog/6.jpg " alt=" ">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
-                                                <a href="javascript:; " class="btn btn-circle green-sharp ">Read More</a>
-                                            </div>
-                                        </li>
-                                        <li data-date="01/11/2014 ">
-                                            <div class="mt-title ">
-                                                <h2 class="mt-content-title ">Timeline Received</h2>
-                                            </div>
-                                            <div class="mt-author ">
-                                                <div class="mt-avatar ">
-                                                    <img src="../../assets/metronics/pages/media/users/avatar80_2.jpg " />
-                                                </div>
-                                                <div class="mt-author-name ">
-                                                    <a href="javascript:; " class="font-blue-madison ">Andres Iniesta</a>
-                                                </div>
-                                                <div class="mt-author-datetime font-grey-mint ">1 November 2014 : 12:20 PM</div>
-                                            </div>
-                                            <div class="clearfix "></div>
-                                            <div class="mt-content border-grey-steel ">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod eleifend ipsum, at posuere augue. Pellentesque mi felis, aliquam at iaculis eu, finibus eu ex. Integer efficitur leo eget dolor tincidunt, et dignissim risus lacinia. Nam in egestas nunc. Suspendisse potenti. Cras ullamcorper tincidunt malesuada. Sed sit amet molestie elit, vel placerat ipsum. Ut consectetur odio non est rhoncus volutpat. Nullam interdum, neque quis vehicula ornare, lacus elit dignissim purus, quis ultrices erat tortor eget felis. Cras commodo id massa at condimentum. Praesent dignissim luctus risus sed sodales.</p>
-                                                <a href="javascript:; " class="btn btn-circle green-turquoise ">Read More</a>
-                                            </div>
-                                        </li>
-                                        <li data-date="10/12/2014 ">
-                                            <div class="mt-title ">
-                                                <h2 class="mt-content-title ">Timeline Received</h2>
-                                            </div>
-                                            <div class="mt-author ">
-                                                <div class="mt-avatar ">
-                                                    <img src="../../assets/metronics/pages/media/users/avatar80_2.jpg " />
-                                                </div>
-                                                <div class="mt-author-name ">
-                                                    <a href="javascript:; " class="font-blue-madison ">Andres Iniesta</a>
-                                                </div>
-                                                <div class="mt-author-datetime font-grey-mint ">10 December 2015 : 12:20 PM</div>
-                                            </div>
-                                            <div class="clearfix "></div>
-                                            <div class="mt-content border-grey-steel ">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod eleifend ipsum, at posuere augue. Pellentesque mi felis, aliquam at iaculis eu, finibus eu ex. Integer efficitur leo eget dolor tincidunt, et dignissim risus lacinia. Nam in egestas nunc. Suspendisse potenti. Cras ullamcorper tincidunt malesuada. Sed sit amet molestie elit, vel placerat ipsum. Ut consectetur odio non est rhoncus volutpat. Nullam interdum, neque quis vehicula ornare, lacus elit dignissim purus, quis ultrices erat tortor eget felis. Cras commodo id massa at condimentum. Praesent dignissim luctus risus sed sodales.</p>
-                                                <a href="javascript:; " class="btn btn-circle green-turquoise ">Read More</a>
-                                            </div>
-                                        </li>
-                                        <li data-date="19/01/2015 ">
-                                            <div class="mt-title ">
-                                                <h2 class="mt-content-title ">Timeline Received</h2>
-                                            </div>
-                                            <div class="mt-author ">
-                                                <div class="mt-avatar ">
-                                                    <img src="../../assets/metronics/pages/media/users/avatar80_2.jpg " />
-                                                </div>
-                                                <div class="mt-author-name ">
-                                                    <a href="javascript:; " class="font-blue-madison ">Andres Iniesta</a>
-                                                </div>
-                                                <div class="mt-author-datetime font-grey-mint ">19 January 2015 : 12:20 PM</div>
-                                            </div>
-                                            <div class="clearfix "></div>
-                                            <div class="mt-content border-grey-steel ">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod eleifend ipsum, at posuere augue. Pellentesque mi felis, aliquam at iaculis eu, finibus eu ex. Integer efficitur leo eget dolor tincidunt, et dignissim risus lacinia. Nam in egestas nunc. Suspendisse potenti. Cras ullamcorper tincidunt malesuada. Sed sit amet molestie elit, vel placerat ipsum. Ut consectetur odio non est rhoncus volutpat. Nullam interdum, neque quis vehicula ornare, lacus elit dignissim purus, quis ultrices erat tortor eget felis. Cras commodo id massa at condimentum. Praesent dignissim luctus risus sed sodales.</p>
-                                                <a href="javascript:; " class="btn btn-circle green-turquoise ">Read More</a>
-                                            </div>
-                                        </li>
-                                        <li data-date="03/03/2015 ">
-                                            <div class="mt-title ">
-                                                <h2 class="mt-content-title ">Timeline Received</h2>
-                                            </div>
-                                            <div class="mt-author ">
-                                                <div class="mt-avatar ">
-                                                    <img src="../../assets/metronics/pages/media/users/avatar80_2.jpg " />
-                                                </div>
-                                                <div class="mt-author-name ">
-                                                    <a href="javascript:; " class="font-blue-madison ">Andres Iniesta</a>
-                                                </div>
-                                                <div class="mt-author-datetime font-grey-mint ">3 March 2015 : 12:20 PM</div>
-                                            </div>
-                                            <div class="clearfix "></div>
-                                            <div class="mt-content border-grey-steel ">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod eleifend ipsum, at posuere augue. Pellentesque mi felis, aliquam at iaculis eu, finibus eu ex. Integer efficitur leo eget dolor tincidunt, et dignissim risus lacinia. Nam in egestas nunc. Suspendisse potenti. Cras ullamcorper tincidunt malesuada. Sed sit amet molestie elit, vel placerat ipsum. Ut consectetur odio non est rhoncus volutpat. Nullam interdum, neque quis vehicula ornare, lacus elit dignissim purus, quis ultrices erat tortor eget felis. Cras commodo id massa at condimentum. Praesent dignissim luctus risus sed sodales.</p>
-                                                <a href="javascript:; " class="btn btn-circle green-turquoise ">Read More</a>
+                                                <p>{{ action.text}}</p>
                                             </div>
                                         </li>
                                     </ol>

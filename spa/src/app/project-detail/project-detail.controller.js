@@ -15,6 +15,45 @@ app.controller('ProjectDetailController', [
 		getProject();
 		$scope.actionPageChanged()
 		$scope.producerPageChanged();
+
+		$scope.timeline = [
+			{
+				"name":"inicio del proyecto",
+				"date":"01/01/2014",
+				"producer":{
+					"first_surname":"juanito",
+				},
+				"date2":"16 Enero 2017 : 7:45 PM",
+				"text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+			},
+			{
+				"name":"inicio2 del proyecto",
+				"date":"02/01/2014",
+				"producer":{
+					"first_surname":"juanito2",
+				},
+				"date2":"16 Enero 2017 : 7:45 PM",
+				"text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+			},
+			{
+				"name":"inicio3 del proyecto",
+				"date":"03/01/2014",
+				"producer":{
+					"first_surname":"juanito",
+				},
+				"date2":"16 Enero 2017 : 7:45 PM",
+				"text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+			},
+			{
+				"name":"inici4 del proyecto",
+				"date":"04/01/2014",
+				"producer":{
+					"first_surname":"juanito",
+				},
+				"date2":"16 Enero 2017 : 7:45 PM",
+				"text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+			},
+		]
 	}
 
 	//Service call
@@ -33,6 +72,8 @@ app.controller('ProjectDetailController', [
 				$scope.errors = errorResponse.data;
 			}
 		);
+		$.getScript("/assets/metronics/global/plugins/horizontal-timeline/horizontal-timeline.js", function(){});
+
 	}
 
 	$scope.actionPageChanged = function() {
@@ -43,7 +84,7 @@ app.controller('ProjectDetailController', [
 	  		"action_isnull": "true",
 	  		"status": queryStatus,
 	  	};
-		
+
 		ActionListService.getList(query).then(
 			function(response) {
 				console.log("ActionList", response);
@@ -68,18 +109,21 @@ app.controller('ProjectDetailController', [
 	}
 
 	$scope.producerPageChanged = function() {
+	    var query = {
+				"page": $scope.producersCurrentPage,
+				"project_id": $state.params.id
+			};
 
-	    var query = {"page": $scope.producersCurrentPage};
-		
 		ProducerGetListService.getList(query).then(
 			function(response) {
-				console.log("ProducerGet", response);
 				for (var i=0; i < response.results.length; i++) {
-					console.log(response.results[i].photo);
-					response.results[i].photo = APIConfig.baseUrl + response.results[i].photo.substring(32);
+					console.log(response.results[i].producer.photo.substring(32));
+					response.results[i].producer.photo = APIConfig.baseUrl + response.results[i].producer.photo.substring(32);
 				}
 
 				$scope.producers = response;
+				console.log("ProducerGet", response);
+
 			},
 			function(errorResponse) {
 				$scope.status = errorResponse.statusText || 'Request failed';
