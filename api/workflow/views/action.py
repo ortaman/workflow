@@ -8,10 +8,10 @@ from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Action
 from workflow.serializers import ActionSerializer, ActionSerializerExtended
-from common.mixins import CommonMixin
+from common.mixins import APIMixin
 
 
-class ActionDetail(APIView, CommonMixin):
+class ActionDetail(APIView, APIMixin):
     """
     Retrieve, update or delete a action instance.
     """
@@ -46,7 +46,7 @@ class ActionDetail(APIView, CommonMixin):
 
 
 
-class ActionList(APIView, CommonMixin):
+class ActionList(APIView, APIMixin):
     """
     List all actions, or create a new action.
     List all actions from specific project: ?project_id='id'
@@ -70,7 +70,7 @@ class ActionList(APIView, CommonMixin):
         queryset = self.model.objects.all()
 
         if 'project_id' in query.keys():
-            if 'action_isnull' in query.keys() and 'status' in query.keys():
+            if query.get('parent_action') == 'none' and 'status' in query.keys():
                 queryset = queryset.filter (
                     project_id=query.get('project_id'),
                     parent_action__isnull=True,
@@ -86,6 +86,7 @@ class ActionList(APIView, CommonMixin):
             )
 
         data = self.get_pagination(queryset, page, self.paginate_by)
+
         return Response(data)
 
     def post(self, request, format=None):

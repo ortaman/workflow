@@ -81,7 +81,7 @@ app.controller('ProjectDetailController', [
 	  	var query = {
 	  		"page": $scope.actionsCurrentPage,
 	  		"project_id": $state.params.id,
-	  		"action_isnull": "true",
+	  		"parent_action": "none",
 	  		"status": queryStatus,
 	  	};
 
@@ -114,10 +114,16 @@ app.controller('ProjectDetailController', [
 				"project_id": $state.params.id
 			};
 
+	  	var query = {
+	  		"page": $scope.producersCurrentPage,
+	  		"project_id": $state.params.id,
+	  		"parent_action": "none",
+	  	};
+    
 		ProducerGetListService.getList(query).then(
 			function(response) {
 				for (var i=0; i < response.results.length; i++) {
-					console.log(response.results[i].producer.photo.substring(32));
+					console.log(response.results[i].producer.photo);
 					response.results[i].producer.photo = APIConfig.baseUrl + response.results[i].producer.photo.substring(32);
 				}
 
@@ -138,7 +144,7 @@ app.controller('ProjectDetailController', [
 		this.hoverEdit = show;
 	};
 
-	$scope.chunkArray = function(index){
+	$scope.chunkArray = function(index) {
 		if($scope.producers.results)
 			return $scope.producers.results.slice(index*3, (index*3)+3);
 
