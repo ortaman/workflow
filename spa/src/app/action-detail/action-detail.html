@@ -134,7 +134,9 @@
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="icon-bubble font-dark hide"></i>
-                                <span class="caption-subject font-hide bold uppercase">Realizadores</span>
+                                <span class="caption-subject font-hide bold uppercase">
+                                    Realizadores
+                                </span>
                             </div>
                         </div>
                         <div class="portlet-body row" ng-repeat="number in [0, 1] track by $index">
@@ -148,14 +150,18 @@
                                             </a>
                                         </div>
                                         <div class="mt-img">
-                                            <img class="avatar" ng-src="{{user.photo}}"
+                                            <img class="avatar" ng-src="{{ user.producer.photo }}"
                                                  height="77" width="77"/>
                                         </div>
                                         <div class="mt-body">
                                             <h3 class="mt-username">
-                                                {{ user.name }} {{user.first_surname}} {{ user.second_surname }}
+                                                {{ user.producer.name }} 
+                                                {{ user.producer.first_surname }} 
+                                                {{ user.producer.second_surname }}
                                             </h3>
-                                            <p class="mt-user-title"> {{ user.position }} </p>
+                                            <p class="mt-user-title"> 
+                                                {{ user.producer.position }} 
+                                            </p>
                                         </div>
                                     </div>
                                     <!--end: widget 1-1 -->
@@ -166,7 +172,7 @@
                             <ul uib-pagination boundary-links="true" class="pagination-sm"
                                 previous-text="&lsaquo;" next-text="&rsaquo;"
                                 first-text="&laquo;" last-text="&raquo;"
-                                items-per-page="producers.paginate_by"
+                                items-per-page="producers.paginated_by"
                                 total-items="producers.count"
                                 ng-model="producersCurrentPage"
                                 ng-change="producerPageChanged()">

@@ -38,12 +38,13 @@ app.controller('ActionDetailController', [
 	}
 
 	$scope.actionPageChanged = function(status) {
-			actionStatus = status||actionStatus;
+		actionStatus = status||actionStatus;
+     	
      	var query = {
-				"parent_action_id": $state.params.id,
-				"page": $scope.actionCurrentPage,
-				"status": actionStatus,
-			};
+			"parent_action_id": $state.params.id,
+			"page": $scope.actionCurrentPage,
+			"status": actionStatus,
+		};
 
 		ActionListService.getList(query).then(
 			function(response) {
@@ -60,21 +61,21 @@ app.controller('ActionDetailController', [
 
 	$scope.producerPageChanged = function() {
 
-    var query = {
-			"page": $scope.producersCurrentPage,
-			"parent_action_id": $state.params.id,
-		};
+	  	var query = {
+	  		"page": $scope.producersCurrentPage,
+	  		"parent_action_id": $state.params.id,
+	  	};
 
 		ProducerGetListService.getList(query).then(
 			function(response) {
-				$scope.producers = response
-
-				for (var i=0; i < $scope.producers.results.length; i++) {
-					console.log($scope.producers.results[i].photo);
-					$scope.producers.results[i].photo = APIConfig.baseUrl + $scope.producers.results[i].photo.substring(32);
+				for (var i=0; i < response.results.length; i++) {
+					console.log(response.results[i].producer.photo);
+					response.results[i].producer.photo = APIConfig.baseUrl + response.results[i].producer.photo.substring(32);
 				}
 
-				console.log("producers", response);
+				$scope.producers = response;
+				console.log("ProducerGet", response);
+
 			},
 			function(errorResponse) {
 				$scope.status = errorResponse.statusText || 'Request failed';

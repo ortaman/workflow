@@ -109,11 +109,7 @@ app.controller('ProjectDetailController', [
 	}
 
 	$scope.producerPageChanged = function() {
-	    var query = {
-				"page": $scope.producersCurrentPage,
-				"project_id": $state.params.id
-			};
-
+		
 	  	var query = {
 	  		"page": $scope.producersCurrentPage,
 	  		"project_id": $state.params.id,
