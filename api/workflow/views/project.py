@@ -9,10 +9,10 @@ from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Project
 from workflow.serializers import ProjectSerializer, ProjectSerializerExtended
-from common.mixins import CommonMixin
+from common.mixins import APIMixin
 
 
-class ProjectDetail(APIView, CommonMixin):
+class ProjectDetail(APIView, APIMixin):
     """
     Retrieve, update or delete a projects instance.
     """
@@ -46,7 +46,7 @@ class ProjectDetail(APIView, CommonMixin):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class ProjectList(APIView, CommonMixin):
+class ProjectList(APIView, APIMixin):
     """
     List all proyects, or create a new project.
     """
@@ -60,9 +60,9 @@ class ProjectList(APIView, CommonMixin):
 
     def get(self, request, format=None):
         page = request.GET.get('page')
-        proyects = self.model.objects.all()
+        queryset = self.model.objects.all()
 
-        data = self.get_pagination(proyects, page, self.paginate_by)
+        data = self.get_pagination(queryset, page, self.paginate_by)
         return Response(data)
 
 

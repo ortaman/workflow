@@ -3,6 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
 
 from workflow.models import Action
 from workflow.serializers import ActionUserSerializer
@@ -12,11 +13,27 @@ from .permissions import UserIsOwnerOrReadOnly
 from .serializers import UserSerializer
 
 
+class MyCustomPagination(PageNumberPagination):
+    page_size = 6
+    page_size_query_param = 'paginate_by'
+    max_page_size = 100
+
+    def get_paginated_response(self, data):
+        return Response({
+            'page': self.page.number,
+            'paginated_by': self.page.paginator.per_page,
+            'count': self.page.paginator.count,
+            'results': data
+        })
+
+
 class UserViewSet(viewsets.ModelViewSet):
     """
     Provides list, create, retrieve, update and destroy user.
     """
     queryset = User.objects.all()
+
+    pagination_class = MyCustomPagination
     serializer_class = UserSerializer
     
     lookup_field = 'id'
@@ -59,7 +76,7 @@ class UserViewSet(viewsets.ModelViewSet):
             self.queryset = queryset.filter(parent_action_id=query.get('parent_action_id'))
 
 
-        return self.queryset
+        return self.queryset.distinct('producer__id')
 
 
 class MyUser(APIView):

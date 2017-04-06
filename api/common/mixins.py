@@ -2,7 +2,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-class CommonMixin(object):
+class APIMixin(object):
     """
     Add funcionality:
         To get object or return 404  
