@@ -73,7 +73,11 @@ class UserViewSet(viewsets.ModelViewSet):
                     project_id=query.get('project_id'))
 
         elif 'parent_action_id' in query.keys():
-            self.queryset = queryset.filter(parent_action_id=query.get('parent_action_id'))
+
+            self.queryset = Action.objects.all()
+            self.serializer_class = ActionUserSerializer
+            
+            self.queryset = self.queryset.filter(parent_action_id=query.get('parent_action_id'))
 
 
         return self.queryset.distinct('producer__id')
