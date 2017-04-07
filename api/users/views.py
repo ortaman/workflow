@@ -67,20 +67,24 @@ class UserViewSet(viewsets.ModelViewSet):
             if query.get('parent_action')=='none':
                 self.queryset = self.queryset.filter(
                     project_id=query.get('project_id'),
-                    parent_action__isnull=True) 
+                    parent_action__isnull=True
+                ).distinct('producer__id') 
             else:
                 self.queryset = self.queryset.filter(
-                    project_id=query.get('project_id'))
+                    project_id=query.get('project_id')
+                ).distinct('producer__id')
 
         elif 'parent_action_id' in query.keys():
 
             self.queryset = Action.objects.all()
             self.serializer_class = ActionUserSerializer
             
-            self.queryset = self.queryset.filter(parent_action_id=query.get('parent_action_id'))
+            self.queryset = self.queryset.filter(
+                parent_action_id=query.get('parent_action_id')
+            ).distinct('producer__id')
 
 
-        return self.queryset.distinct('producer__id')
+        return self.queryset
 
 
 class MyUser(APIView):
