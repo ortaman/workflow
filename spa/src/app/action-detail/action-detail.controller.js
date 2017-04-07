@@ -70,7 +70,8 @@ app.controller('ActionDetailController', [
 			function(response) {
 				for (var i=0; i < response.results.length; i++) {
 					console.log(response.results[i].producer.photo);
-					response.results[i].producer.photo = APIConfig.baseUrl + response.results[i].producer.photo.substring(32);
+					APIConfig.baseUrl
+					response.results[i].producer.photo = response.results[i].producer.photo.replace("/api/producers", "");
 				}
 
 				$scope.producers = response;

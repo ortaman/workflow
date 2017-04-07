@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^token-auth/', obtain_auth_token),
     
     url(r'^', include(router.urls)),
-    
+    url(r'^producers/$', views.ProducerList.as_view()),
+
     url(r'^myuser/$', views.MyUser.as_view()),
 ]

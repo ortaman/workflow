@@ -1,9 +1,10 @@
 
-from rest_framework import viewsets, status
+from rest_framework import generics, viewsets, status, mixins
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
+
 
 from workflow.models import Action
 from workflow.serializers import ActionUserSerializer
@@ -59,32 +60,44 @@ class UserViewSet(viewsets.ModelViewSet):
             surname = query.get('first_surname')
             self.queryset = self.queryset.filter(first_surname__startswith=surname) 
 
-        elif 'project_id' in query.keys():
-            
-            self.queryset = Action.objects.all()
-            self.serializer_class = ActionUserSerializer
+        return self.queryset
+
+
+
+class ProducerList(mixins.ListModelMixin, generics.GenericAPIView):
+    """
+    Provides list of producers.
+    """
+    queryset = Action.objects.all()
+
+    pagination_class = MyCustomPagination
+    serializer_class = ActionUserSerializer
+    
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def get_queryset(self):
+
+        query = self.request.query_params
+
+        if 'project_id' in query.keys():
 
             if query.get('parent_action')=='none':
                 self.queryset = self.queryset.filter(
                     project_id=query.get('project_id'),
-                    parent_action__isnull=True
-                ).distinct('producer__id') 
+                    parent_action__isnull=True) 
             else:
                 self.queryset = self.queryset.filter(
-                    project_id=query.get('project_id')
-                ).distinct('producer__id')
+                    project_id=query.get('project_id'))
 
         elif 'parent_action_id' in query.keys():
 
-            self.queryset = Action.objects.all()
-            self.serializer_class = ActionUserSerializer
-            
             self.queryset = self.queryset.filter(
-                parent_action_id=query.get('parent_action_id')
-            ).distinct('producer__id')
+                parent_action_id=query.get('parent_action_id'))
 
-
-        return self.queryset
+        return self.queryset.distinct('producer__id')
 
 
 class MyUser(APIView):
