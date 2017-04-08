@@ -104,7 +104,10 @@ gulp.task('js-vendor', function () {
     "bower_components/angular-animate/angular-animate.js",
     "bower_components/angular-material/angular-material.js",
     "bower_components/moment/min/moment.min.js",
-    "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"
+    "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
+    "bower_components/angular-ui-calendar/src/calendar.js",
+    "bower_components/fullcalendar/dist/fullcalendar.js"
+
     ])
     //.pipe(uglify())
     .pipe(concat('vendors.js'))
@@ -119,6 +122,7 @@ gulp.task('css-vendor',function(){
       "bower_components/bootstrap/dist/css/bootstrap.min.css",
       "bower_components/ng-dialog/css/ngDialog.min.css",
       "bower_components/angular-material/angular-material.css",
+      "bower_components/fullcalendar/dist/fullcalendar.min.css"
        ])
       .pipe(concat('vendors.css'))
       .pipe(gulp.dest("src/assets"))
