@@ -67,13 +67,13 @@ app.controller('ProjectDetailController', [
 		);
   };
 
-	$scope.timeLineChanged = function(timelineDate) {
-			console.log("data", timelineDate);
+	$scope.timeLineChanged = function(_timelineDate) {
+			var timelineDate = angular.copy(_timelineDate);
 	  	var query = {
-	  		"page": $scope.actionsCurrentPage,
 	  		"project_id": $state.params.id,
 	  		"parent_action": "none",
-	  		"status": queryStatus,
+	  		"begin_date": moment(timelineDate.init_date).format('YYYY-MM-DD'),
+	  		"end_date": moment(timelineDate.end_date).format('YYYY-MM-DD'),
 	  	};
 
 		ActionListService.getList(query).then(
