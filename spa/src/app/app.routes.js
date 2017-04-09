@@ -68,6 +68,11 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
       templateUrl: "app/action-list/action-list.html",
       controller: "ActionListController",
     })
+    .state('calendar', {
+      url: "/calendar",
+      templateUrl: "app/calendar/calendar.html",
+      controller: "CalendarController",
+    })
 
   // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise("/coordinations");

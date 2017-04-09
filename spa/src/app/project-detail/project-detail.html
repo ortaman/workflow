@@ -84,7 +84,7 @@
                                             </div>
                                             <div class="mt-head-user">
                                                 <div class="mt-head-user-img">
-                                                    <img src="{{project.producer.photo}}"> </div>
+                                                    <img ng-src="{{project.producer.photo}}"> </div>
                                                 <div class="mt-head-user-info" style="font-weight: bold">
                                                     <span class="mt-user-name">
                                                     {{ project.client.name }} {{ project.client.first_surname }} {{ project.client.second_surname }}
@@ -268,12 +268,12 @@
                         </div>
                         <ul class="nav nav-tabs ">
                             <li class="active ">
-                                <a ui-sref="#" class="active" data-toggle="tab"
-                                   ng-click="queryOpenStatus()"> Abiertas </a>
+                                <a  class="active" data-toggle="tab"
+                                   ng-click="actionPageChanged('open')"> Abiertas </a>
                             </li>
                             <li>
-                                <a ui-sref="#" data-toggle="tab"
-                                   ng-click="queryCloseStatus()"> Cerradas </a>
+                                <a  data-toggle="tab"
+                                   ng-click="actionPageChanged('close')"> Cerradas </a>
                             </li>
                         </ul>
                     </div>
@@ -363,8 +363,8 @@
                                     <div class="events-wrapper ">
                                         <div class="events ">
                                             <ol>
-                                                <li  ng-repeat="action in timeline track by $index">
-                                                    <a href="#{{$index}} "  jquery-date="action.date" class="border-after-red bg-after-red " ng-class="{'selected':$index == 0}">16 Enero</a>
+                                                <li  ng-repeat="action in timeline.results | orderBy:'-begin_at' track by $index">
+                                                    <a href="#{{$index}} "  jquery-date="action.begin_at" class="border-after-red bg-after-red " ng-class="{'selected':$index == 0}">{{ action.begin_at | date:'dd-MMM'}}</a>
                                                 </li>
                                             </ol>
                                             <span class="filling-line bg-red " aria-hidden="true "></span>
@@ -389,22 +389,22 @@
                                 <!-- .timeline -->
                                 <div class="events-content ">
                                     <ol>
-                                        <li ng-class="{'selected':$index == 0}"  jquery-date="action.date" ng-repeat="action in timeline track by $index">
+                                        <li ng-class="{'selected':$index == 0}"  jquery-date="action.begin_at" ng-repeat="action in timeline.results | orderBy:'-begin_at'  track by $index">
                                             <div class="mt-title ">
                                                 <h2 class="mt-content-title ">{{action.name}}</h2>
                                             </div>
                                             <div class="mt-author ">
                                                 <div class="mt-avatar ">
-                                                    <img src="../../assets/metronics/pages/media/users/avatar80_1.jpg " />
+                                                    <img ng-src="{{action.producer.photo}}">
                                                 </div>
                                                 <div class="mt-author-name ">
-                                                    <a href="javascript:; " class="font-blue ">{{ action.producer.first_surname}}</a>
+                                                    <a href="javascript:; " class="font-blue ">{{ (action.producer.name + ' '+ action.producer.first_surname + ' '+ action.producer.second_surname)}}</a>
                                                 </div>
-                                                <div class="mt-author-datetime font-grey-mint ">{{ action.date2}}</div>
+                                                <div class="mt-author-datetime font-grey-mint ">{{ action.begin_at | date:'dd-MMM-yyyy'}}</div>
                                             </div>
                                             <div class="clearfix "></div>
                                             <div class="mt-content border-grey-steel ">
-                                                <p>{{ action.text}}</p>
+                                                <p>{{ action.toDo}}</p>
                                             </div>
                                         </li>
                                     </ol>

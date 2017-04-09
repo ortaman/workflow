@@ -39,7 +39,7 @@ app.controller('ActionDetailController', [
 
 	$scope.actionPageChanged = function(status) {
 		actionStatus = status||actionStatus;
-     	
+
      	var query = {
 			"parent_action_id": $state.params.id,
 			"page": $scope.actionCurrentPage,

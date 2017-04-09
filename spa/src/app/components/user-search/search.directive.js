@@ -55,5 +55,5 @@ app.directive('userSearch', ['URLTemplates', 'UserListService', '$timeout',
     }
 
   }
-  
+
 ]);
