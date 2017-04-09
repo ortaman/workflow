@@ -4,7 +4,8 @@ app.directive("jqueryDate", ['$compile',function ($compile,$scope) {
             jqueryDate: "="
         },
         link: function (scope, element, attributes) {
-            attributes.$set('data-date', scope.jqueryDate);
+            var date = moment(scope.jqueryDate);
+            attributes.$set('data-date', date.format('DD/MM/YYYY'));
         }
     }
 }]);

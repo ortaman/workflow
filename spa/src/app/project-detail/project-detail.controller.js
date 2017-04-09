@@ -10,50 +10,15 @@ app.controller('ProjectDetailController', [
 
 	$scope.project = {};
 	$scope.producers = [];
+	$scope.timeline = []
+
 
   	$scope.getProjectByIdInit = function() {
 		getProject();
 		$scope.actionPageChanged()
 		$scope.producerPageChanged();
+		$scope.timeLinePageChanged();
 
-		$scope.timeline = [
-			{
-				"name":"inicio del proyecto",
-				"date":"01/01/2014",
-				"producer":{
-					"first_surname":"juanito",
-				},
-				"date2":"16 Enero 2017 : 7:45 PM",
-				"text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-			},
-			{
-				"name":"inicio2 del proyecto",
-				"date":"02/01/2014",
-				"producer":{
-					"first_surname":"juanito2",
-				},
-				"date2":"16 Enero 2017 : 7:45 PM",
-				"text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-			},
-			{
-				"name":"inicio3 del proyecto",
-				"date":"03/01/2014",
-				"producer":{
-					"first_surname":"juanito",
-				},
-				"date2":"16 Enero 2017 : 7:45 PM",
-				"text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-			},
-			{
-				"name":"inici4 del proyecto",
-				"date":"04/01/2014",
-				"producer":{
-					"first_surname":"juanito",
-				},
-				"date2":"16 Enero 2017 : 7:45 PM",
-				"text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-			},
-		]
 	}
 
 	//Service call
@@ -72,12 +37,11 @@ app.controller('ProjectDetailController', [
 				$scope.errors = errorResponse.data;
 			}
 		);
-		$.getScript("/assets/metronics/global/plugins/horizontal-timeline/horizontal-timeline.js", function(){});
-
 	}
 
-	$scope.actionPageChanged = function() {
+	$scope.actionPageChanged = function(status) {
 
+			queryStatus = status||queryStatus;
 	  	var query = {
 	  		"page": $scope.actionsCurrentPage,
 	  		"project_id": $state.params.id,
@@ -95,27 +59,42 @@ app.controller('ProjectDetailController', [
 				$scope.errors = errorResponse.data;
 			}
 		);
+  };
 
-    };
+	$scope.timeLinePageChanged = function() {
 
-	$scope.queryOpenStatus = function() {
-		queryStatus = "open";
-		$scope.actionPageChanged()
-	}
+	  	var query = {
+	  		"page": $scope.actionsCurrentPage,
+	  		"project_id": $state.params.id,
+	  		"parent_action": "none",
+	  		"status": queryStatus,
+	  	};
 
-	$scope.queryCloseStatus = function() {
-		queryStatus = "close";
-		$scope.actionPageChanged()
-	}
+		ActionListService.getList(query).then(
+			function(response) {
+				$scope.timeline = response;
+				for (var i=0; i < $scope.timeline.results.length; i++) {
+					$scope.timeline.results[i].producer.photo = APIConfig.baseUrl + $scope.timeline.results[i].producer.photo;
+				}
+				$.getScript("/assets/metronics/global/plugins/horizontal-timeline/horizontal-timeline.js", function(){});
+			},
+			function(errorResponse) {
+				$scope.status = errorResponse.statusText || 'Request failed';
+				$scope.errors = errorResponse.data;
+			}
+		);
+  };
+
+
 
 	$scope.producerPageChanged = function() {
-		
+
 	  	var query = {
 	  		"page": $scope.producersCurrentPage,
 	  		"project_id": $state.params.id,
 	  		"parent_action": "none",
 	  	};
-    
+
 		ProducerGetListService.getList(query).then(
 			function(response) {
 				for (var i=0; i < response.results.length; i++) {
