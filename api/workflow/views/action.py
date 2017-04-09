@@ -72,31 +72,34 @@ class ActionList(APIView, APIMixin):
         queryset = self.model.objects.all()
 
         if 'project_id' in query.keys():
+            
             if query.get('parent_action') == 'none' and 'status' in query.keys():
                 queryset = queryset.filter (
                     project_id=query.get('project_id'),
                     parent_action__isnull=True,
                     status=query.get('status')
                 )
+
+            elif 'begin_date' in query.keys() and 'end_date' in query.keys():
+                range_date = [query.get('begin_date'), query.get('end_date')]
+                q1 = Q(project__id = query.get('project_id'))
+                q2 = (
+                    Q(begin_at__range         = range_date) |
+                    Q(accomplish_at__range    = range_date) |
+                    Q(renegotiation_at__range = range_date) |
+                    Q(report_at__range        = range_date))
+
+                queryset = queryset.filter(q1, q2)
+
             else:
                 queryset = queryset.filter(project_id=query.get('project_id'))
 
         elif 'parent_action_id' in query.keys():
+            
             queryset = queryset.filter(
                 parent_action_id=query.get('parent_action_id'),
                 status=query.get('status'),
             )
-        
-        elif 'begin_date' in query.keys() and 'end_date' in query.keys():
-            range_date = [query.get('begin_date'), query.get('end_date')]
-            q = (
-                Q(begin_at__range         = range_date) |
-                Q(accomplish_at__range    = range_date) |
-                Q(renegotiation_at__range = range_date) |
-                Q(report_at__range        = range_date)
-            )
-
-            queryset = queryset.filter(q)
 
         data = self.get_pagination(queryset, page, self.paginate_by)
         
