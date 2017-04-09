@@ -1,4 +1,5 @@
 
+from django.db.models import Q
 from django.http import Http404
 
 from rest_framework import status
@@ -85,9 +86,15 @@ class ActionList(APIView, APIMixin):
                 parent_action_id=query.get('parent_action_id'),
                 status=query.get('status'),
             )
+        
+        elif 'init_date' in query.keys() and 'end_date' in query.keys():
+            q = (Q(created_at__range=[query.get('init_date'), query.get('end_date')]) |
+                Q(accomplish_at__range=[query.get('init_date'), query.get('end_date')]))
+
+            queryset = queryset.filter(q)
 
         data = self.get_pagination(queryset, page, self.paginate_by)
-
+        
         return Response(data)
 
     def post(self, request, format=None):
