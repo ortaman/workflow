@@ -10,7 +10,7 @@ class APIMixin(object):
     """
 
     model = None
-    serializer_class = None
+    serializer_list = None
     paginate_by = 10
 
     def get_object(self, pk):

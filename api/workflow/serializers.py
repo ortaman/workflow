@@ -21,7 +21,6 @@ class Base64ImageField(serializers.ImageField):
         return super(Base64ImageField, self).to_internal_value(data)
 
 
-
 class ProjectPostSerializer(serializers.ModelSerializer):
     image = Base64ImageField(max_length=None, use_url=True)
 
@@ -36,7 +35,7 @@ class ProjectPostSerializer(serializers.ModelSerializer):
     report_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
     
     class Meta:
-        model = Project
+        model  = Project
         fields = ('id','client', 'producer', 'observer', 'name', 'clasification', 'phase',
             'toDo', 'satisfactions', 'preparation_at', 'negotiation_at', 'execution_at',
             'evaluation_at', 'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at',
@@ -59,10 +58,11 @@ class ProjectGetSerializer(serializers.ModelSerializer):
 class ProjectListSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Project
-        fields = ('id', 'name', 'clasification', 'phase', 'image',
-        'preparation_at', 'negotiation_at', 'execution_at', 'evaluation_at', 
-        'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at')
+        model  = Project
+        fields = (
+            'id', 'name', 'clasification', 'phase', 'image',
+            'preparation_at', 'negotiation_at', 'execution_at', 'evaluation_at', 
+            'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at')
 
 
 class ActionPostSerializer(serializers.ModelSerializer):
@@ -75,7 +75,7 @@ class ActionPostSerializer(serializers.ModelSerializer):
     report_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
     
     class Meta:
-        model = Action
+        model  = Action
         fields = (
             'id', 'project', 'name', 'phase',
             'progress', 'status', 'is_renegotiated',
@@ -96,7 +96,7 @@ class ActionGetSerializer(serializers.ModelSerializer):
     observer = UserSerializer()
 
     class Meta:
-        model = Action
+        model  = Action
         fields = '__all__'
 
 
@@ -105,12 +105,10 @@ class ActionListSerializer(serializers.ModelSerializer):
     producer = UserSerializer()
 
     class Meta:
-        model = Action
-        fields = '__all__'
-
-    fields = (
-        'id', 'name', 'producer', 'toDo'
-        'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at')
+        model  = Action
+        fields = (
+            'id', 'name', 'producer', 'toDo',
+            'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at')
 
 
 class ActionUserSerializer(serializers.ModelSerializer):
@@ -118,5 +116,5 @@ class ActionUserSerializer(serializers.ModelSerializer):
     producer = UserSerializer()
 
     class Meta:
-        model = Action
+        model  = Action
         fields = ('producer',)
