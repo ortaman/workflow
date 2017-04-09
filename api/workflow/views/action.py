@@ -88,8 +88,13 @@ class ActionList(APIView, APIMixin):
             )
         
         elif 'init_date' in query.keys() and 'end_date' in query.keys():
-            q = (Q(created_at__range=[query.get('init_date'), query.get('end_date')]) |
-                Q(accomplish_at__range=[query.get('init_date'), query.get('end_date')]))
+            range_date = [query.get('init_date'), query.get('end_date')]
+            q = (
+                Q(created_at__range       = range_date) |
+                Q(accomplish_at__range    = range_date) |
+                Q(renegotiation_at__range = range_date) |
+                Q(report_at__range        = range_date)
+            )
 
             queryset = queryset.filter(q)
 

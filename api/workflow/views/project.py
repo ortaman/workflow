@@ -1,4 +1,5 @@
 
+from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404
 
@@ -60,7 +61,24 @@ class ProjectList(APIView, APIMixin):
 
     def get(self, request, format=None):
         page = request.GET.get('page')
+        query = request.query_params
+
         queryset = self.model.objects.all()
+
+        if 'init_date' in query.keys() and 'end_date' in query.keys():
+            range_date = [query.get('init_date'), query.get('end_date')]
+            q = (
+                Q(preparation_at__range   = range_date) |
+                Q(negotiation_at__range   = range_date) |
+                Q(execution_at__range     = range_date) |
+                Q(evaluation_at__range    = range_date) |
+                Q(accomplish_at__range    = range_date) |
+                Q(created_at__range       = range_date) |
+                Q(renegotiation_at__range = range_date) |
+                Q(report_at__range        = range_date)
+            )
+
+            queryset = queryset.filter(q)
 
         data = self.get_pagination(queryset, page, self.paginate_by)
         return Response(data)
