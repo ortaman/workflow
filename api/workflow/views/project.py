@@ -65,15 +65,15 @@ class ProjectList(APIView, APIMixin):
 
         queryset = self.model.objects.all()
 
-        if 'init_date' in query.keys() and 'end_date' in query.keys():
-            range_date = [query.get('init_date'), query.get('end_date')]
+        if 'begin_date' in query.keys() and 'end_date' in query.keys():
+            range_date = [query.get('begin_date'), query.get('end_date')]
             q = (
                 Q(preparation_at__range   = range_date) |
                 Q(negotiation_at__range   = range_date) |
                 Q(execution_at__range     = range_date) |
                 Q(evaluation_at__range    = range_date) |
+                Q(begin_at__range__range       = range_date) |
                 Q(accomplish_at__range    = range_date) |
-                Q(created_at__range       = range_date) |
                 Q(renegotiation_at__range = range_date) |
                 Q(report_at__range        = range_date)
             )

@@ -120,7 +120,6 @@ class Action(models.Model):
     expire_at = models.DateField(auto_now=False, verbose_name='Fecha límite de la fase')
 
     # agremments
-    # agremments
     begin_at = models.DateField(auto_now=False, verbose_name='Fecha de inicio')
     
     accomplish_at = models.DateField(auto_now=False, verbose_name='Fecha de cumplimiento')

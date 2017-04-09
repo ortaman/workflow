@@ -87,10 +87,10 @@ class ActionList(APIView, APIMixin):
                 status=query.get('status'),
             )
         
-        elif 'init_date' in query.keys() and 'end_date' in query.keys():
-            range_date = [query.get('init_date'), query.get('end_date')]
+        elif 'begin_date' in query.keys() and 'end_date' in query.keys():
+            range_date = [query.get('begin_date'), query.get('end_date')]
             q = (
-                Q(created_at__range       = range_date) |
+                Q(begin_at__range         = range_date) |
                 Q(accomplish_at__range    = range_date) |
                 Q(renegotiation_at__range = range_date) |
                 Q(report_at__range        = range_date)
