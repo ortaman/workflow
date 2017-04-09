@@ -93,8 +93,8 @@ class Action(models.Model):
         ('reported', 'Reportada'),
         ('kept', 'Cumplida'),
         ('empty', 'Incumplida'),
-
-        ('negotiating', 'Negociando')
+        
+        ('negotiating', 'Negociando'),
         ('unaccepted', 'No aceptada'),
     )
 
