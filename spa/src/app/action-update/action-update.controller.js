@@ -9,6 +9,7 @@ app.controller('ActionUpdateController', [
     $scope.getActionByIdInit = function() {
       ActionGetService.getById($state.params.id).then(
         function(response) {
+          console.log('response', response);
           $scope.action = response;
         },
         function(errorResponse) {
