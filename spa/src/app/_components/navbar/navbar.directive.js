@@ -6,7 +6,7 @@ app.directive('myNavbar', ['URLTemplates',
   function myNavbar(URLTemplates) {
     var directive = {
       restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/navbar/navbar.html',
+      templateUrl: URLTemplates + 'app/_components/navbar/navbar.html',
       scope: {
           creationDate: '='
       },

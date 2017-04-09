@@ -6,7 +6,7 @@ app.directive('userSearch', ['URLTemplates', 'UserListService', '$timeout',
   function userSearch(URLTemplates, UserListService, $timeout) {
     var directive = {
       restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/user-search/search.html',
+      templateUrl: URLTemplates + 'app/_components/user-search/search.html',
       scope: {
           fieldName: '@',
           userId: '=',

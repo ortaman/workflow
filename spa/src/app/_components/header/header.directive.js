@@ -6,7 +6,7 @@ app.directive('myHeader', ['URLTemplates',
   function myHeader(URLTemplates) {
     var directive = {
       restrict: 'E',
-      templateUrl: URLTemplates + 'app/components/header/header.html',
+      templateUrl: URLTemplates + 'app/_components/header/header.html',
       scope: {
           creationDate: '='
       },

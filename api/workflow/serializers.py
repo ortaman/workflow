@@ -10,7 +10,6 @@ from users.serializers import UserSerializer
 from .models import Project, Action
 
  
-
 class Base64ImageField(serializers.ImageField):
     def to_internal_value(self, data):
         if isinstance(data, str) and data.startswith('data:'): # You can change "data:" to "data/image:"
@@ -22,8 +21,7 @@ class Base64ImageField(serializers.ImageField):
         return super(Base64ImageField, self).to_internal_value(data)
 
 
-
-class ProjectSerializer(serializers.ModelSerializer):
+class ProjectPostSerializer(serializers.ModelSerializer):
     image = Base64ImageField(max_length=None, use_url=True)
 
     preparation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
@@ -37,7 +35,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     report_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
     
     class Meta:
-        model = Project
+        model  = Project
         fields = ('id','client', 'producer', 'observer', 'name', 'clasification', 'phase',
             'toDo', 'satisfactions', 'preparation_at', 'negotiation_at', 'execution_at',
             'evaluation_at', 'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at',
@@ -46,7 +44,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     read_only_fields =  ('created_at', 'updated_at','create_by',)
 
 
-class ProjectSerializerExtended(serializers.ModelSerializer):
+class ProjectGetSerializer(serializers.ModelSerializer):
 
     client = UserSerializer()
     producer = UserSerializer()
@@ -57,7 +55,17 @@ class ProjectSerializerExtended(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ActionSerializer(serializers.ModelSerializer):
+class ProjectListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model  = Project
+        fields = (
+            'id', 'name', 'clasification', 'phase', 'image',
+            'preparation_at', 'negotiation_at', 'execution_at', 'evaluation_at', 
+            'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at')
+
+
+class ActionPostSerializer(serializers.ModelSerializer):
 
     expire_at =serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
     
@@ -67,7 +75,7 @@ class ActionSerializer(serializers.ModelSerializer):
     report_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
     
     class Meta:
-        model = Action
+        model  = Action
         fields = (
             'id', 'project', 'name', 'phase',
             'progress', 'status', 'is_renegotiated',
@@ -79,19 +87,28 @@ class ActionSerializer(serializers.ModelSerializer):
     read_only_fields =  ('created_at', 'updated_at','create_by', 'promise',)
 
 
-class ActionSerializerExtended(serializers.ModelSerializer):
+class ActionGetSerializer(serializers.ModelSerializer):
 
-    project = ProjectSerializer()
+    project = ProjectPostSerializer()
 
     client = UserSerializer()
     producer = UserSerializer()
     observer = UserSerializer()
 
-    parent_action = ActionSerializer()
+    class Meta:
+        model  = Action
+        fields = '__all__'
+
+
+class ActionListSerializer(serializers.ModelSerializer):
+
+    producer = UserSerializer()
 
     class Meta:
-        model = Action
-        fields = '__all__'
+        model  = Action
+        fields = (
+            'id', 'name', 'producer', 'toDo',
+            'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at')
 
 
 class ActionUserSerializer(serializers.ModelSerializer):
@@ -99,5 +116,5 @@ class ActionUserSerializer(serializers.ModelSerializer):
     producer = UserSerializer()
 
     class Meta:
-        model = Action
+        model  = Action
         fields = ('producer',)

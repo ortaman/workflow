@@ -10,7 +10,7 @@ class APIMixin(object):
     """
 
     model = None
-    serializer_class = None
+    serializer_list = None
     paginate_by = 10
 
     def get_object(self, pk):
@@ -40,7 +40,7 @@ class APIMixin(object):
             page = paginator.num_pages
             objects_list = paginator.page(page)
 
-        serializer = self.serializer_class_extended(objects_list, many=True)
+        serializer = self.serializer_list(objects_list, many=True)
 
         data = {
             'page': page,
