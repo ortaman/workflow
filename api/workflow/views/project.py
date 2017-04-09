@@ -68,8 +68,7 @@ class ProjectList(APIView, APIMixin):
         if 'begin_date' in query.keys() and 'end_date' in query.keys():
             range_date = [query.get('begin_date'), query.get('end_date')]
             
-            q1 = Q(project__id = query.get('project_id'))
-            q2 = (
+            q = (
                 Q(preparation_at__range   = range_date) |
                 Q(negotiation_at__range   = range_date) |
                 Q(execution_at__range     = range_date) |
@@ -80,7 +79,7 @@ class ProjectList(APIView, APIMixin):
                 Q(report_at__range        = range_date)
             )
 
-            queryset = queryset.filter(q1, q2)
+            queryset = queryset.filter(q)
 
         data = self.get_pagination(queryset, page, self.paginate_by)
         return Response(data)
