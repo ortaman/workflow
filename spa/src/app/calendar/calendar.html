@@ -1,1 +1,49 @@
-<div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div> 
+<my-header> </my-header>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <!-- BEGIN SIDEBAR -->
+    <my-navbar> </my-navbar>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper" ng-init="getProjectByIdInit()" ng-cloack>
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+            <!-- BEGIN PAGE BAR -->
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a ui-sref="coordinations"> Inicio </a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <span> Calendario  </span>
+                    </li>
+                </ul>
+                <div class="page-toolbar">
+
+                </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-12">
+                <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
+                
+              </div>
+
+            </div>
+            <!-- END PAGE BAR -->
+            <!-- BEGIN PAGE TITLE-->
+            <!--h1 class="page-title">
+                <small>Action Workflow </small>
+            </h1-->
+            <!-- END PAGE TITLE-->
+            <!-- END PAGE HEADER-->
+
+        </div>
+            <!--END TABS-->
+
+
+    </div>
+</div>
+<!-- END CONTENT -->
