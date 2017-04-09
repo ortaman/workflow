@@ -5,6 +5,12 @@ app.controller('ProjectDetailController', [
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
+	var currentDate = new Date();
+	var nexttDate = new Date();
+	$scope.timelineDate = {
+		"start": currentDate,
+		"end": currentDate,
+	}
 
 	var queryStatus = "open";
 
@@ -17,7 +23,7 @@ app.controller('ProjectDetailController', [
 		getProject();
 		$scope.actionPageChanged()
 		$scope.producerPageChanged();
-		$scope.timeLinePageChanged();
+		$scope.timeLineChanged($scope.timelineDate);
 
 	}
 
@@ -61,13 +67,13 @@ app.controller('ProjectDetailController', [
 		);
   };
 
-	$scope.timeLinePageChanged = function() {
-
+	$scope.timeLineChanged = function(_timelineDate) {
+			var timelineDate = angular.copy(_timelineDate);
 	  	var query = {
-	  		"page": $scope.actionsCurrentPage,
 	  		"project_id": $state.params.id,
 	  		"parent_action": "none",
-	  		"status": queryStatus,
+	  		"begin_date": moment(timelineDate.init_date).format('YYYY-MM-DD'),
+	  		"end_date": moment(timelineDate.end_date).format('YYYY-MM-DD'),
 	  	};
 
 		ActionListService.getList(query).then(
