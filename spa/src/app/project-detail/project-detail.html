@@ -363,7 +363,7 @@
                                     <div class="events-wrapper ">
                                         <div class="events ">
                                             <ol>
-                                                <li  ng-repeat="action in timeline.results | orderBy:'-begin_at' track by $index">
+                                                <li  ng-repeat="action in timeline | orderBy:'-begin_at' track by $index">
                                                     <a href="#{{$index}} "  jquery-date="action.begin_at" class="border-after-red bg-after-red " ng-class="{'selected':$index == 0}">{{ action.begin_at | date:'dd-MMM'}}</a>
                                                 </li>
                                             </ol>
@@ -389,7 +389,7 @@
                                 <!-- .timeline -->
                                 <div class="events-content ">
                                     <ol>
-                                        <li ng-class="{'selected':$index == 0}"  jquery-date="action.begin_at" ng-repeat="action in timeline.results | orderBy:'-begin_at'  track by $index">
+                                        <li ng-class="{'selected':$index == 0}"  jquery-date="action.begin_at" ng-repeat="action in timeline | orderBy:'-begin_at'  track by $index">
                                             <div class="mt-title ">
                                                 <h2 class="mt-content-title ">{{action.name}}</h2>
                                             </div>

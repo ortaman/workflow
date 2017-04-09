@@ -13,7 +13,14 @@ app.controller('ProjectDetailController', [
 	}
 
 	var queryStatus = "open";
-
+	var dateFields = [
+			'accomplish_at',
+			'expire_at',
+			'renegotiation_at',
+			'report_at',
+			'begin_at'
+	];
+	
 	$scope.project = {};
 	$scope.producers = [];
 	$scope.timeline = []
@@ -78,9 +85,9 @@ app.controller('ProjectDetailController', [
 
 		ActionListService.getList(query).then(
 			function(response) {
-				$scope.timeline = response;
-				for (var i=0; i < $scope.timeline.results.length; i++) {
-					$scope.timeline.results[i].producer.photo = APIConfig.baseUrl + $scope.timeline.results[i].producer.photo;
+				$scope.timeline = response.results;
+				for (var i=0; i < $scope.timeline.length; i++) {
+					$scope.timeline[i].producer.photo = APIConfig.baseUrl + $scope.timeline[i].producer.photo;
 				}
 				$.getScript("/assets/metronics/global/plugins/horizontal-timeline/horizontal-timeline.js", function(){});
 			},
