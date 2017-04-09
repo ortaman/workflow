@@ -37,6 +37,7 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
      var query = {
        'begin_date': today.startOf('month').format('YYYY-MM-DD'),
        'end_date': today.endOf('month').format('YYYY-MM-DD')
+
      };
 
      ProjectListService.getList(query).then(

@@ -20,7 +20,7 @@ app.controller('ProjectDetailController', [
 			'report_at',
 			'begin_at'
 	];
-	
+
 	$scope.project = {};
 	$scope.producers = [];
 	$scope.timeline = []
@@ -75,10 +75,9 @@ app.controller('ProjectDetailController', [
   };
 
 	$scope.timeLineChanged = function(_timelineDate) {
-			var timelineDate = angular.copy(_timelineDate);
+		var timelineDate = angular.copy(_timelineDate);
 	  	var query = {
 	  		"project_id": $state.params.id,
-	  		"parent_action": "none",
 	  		"begin_date": moment(timelineDate.init_date).format('YYYY-MM-DD'),
 	  		"end_date": moment(timelineDate.end_date).format('YYYY-MM-DD'),
 	  	};
@@ -88,6 +87,7 @@ app.controller('ProjectDetailController', [
 				$scope.timeline = response.results;
 				for (var i=0; i < $scope.timeline.length; i++) {
 					$scope.timeline[i].producer.photo = APIConfig.baseUrl + $scope.timeline[i].producer.photo;
+
 				}
 				$.getScript("/assets/metronics/global/plugins/horizontal-timeline/horizontal-timeline.js", function(){});
 			},
@@ -110,6 +110,8 @@ app.controller('ProjectDetailController', [
 
 		ProducerGetListService.getList(query).then(
 			function(response) {
+				console.log('producersList', response);
+
 				for (var i=0; i < response.results.length; i++) {
 					console.log(response.results[i].producer.photo);
 					response.results[i].producer.photo = APIConfig.baseUrl + response.results[i].producer.photo;
