@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Action
-from workflow.serializers import ActionSerializer, ActionSerializerExtended
+from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer
 from common.mixins import APIMixin
 
 
@@ -19,18 +19,18 @@ class ActionDetail(APIView, APIMixin):
 
     # Initial mixin variables
     model = Action
-    serializer_class = ActionSerializer
-    serializer_class_extended = ActionSerializerExtended
+    serializer_get = ActionGetSerializer
+    serializer_put = ActionPostSerializer
 
     def get(self, request, pk, format=None):
         action = self.get_object(pk)
-        serializer = self.serializer_class_extended(action)
+        serializer = self.serializer_get(action)
 
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         action = self.get_object(pk)
-        serializer = self.serializer_class(action, data=request.data)
+        serializer = self.serializer_put(action, data=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -56,10 +56,11 @@ class ActionList(APIView, APIMixin):
     """
     permission_classes = (IsAuthenticated,)
 
-    # Initial mixin variables
+    # Initial mixin variables (model and serializer_list)
     model = Action
-    serializer_class = ActionSerializer
-    serializer_class_extended = ActionSerializerExtended
+
+    serializer_list = ActionListSerializer
+    serializer_post = ActionPostSerializer
 
     paginate_by = 10
 
@@ -90,7 +91,7 @@ class ActionList(APIView, APIMixin):
         return Response(data)
 
     def post(self, request, format=None):
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.serializer_post(data=request.data)
 
         if serializer.is_valid():
             serializer.save(create_by=request.user)

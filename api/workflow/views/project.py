@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Project
-from workflow.serializers import ProjectSerializer, ProjectSerializerExtended
+from workflow.serializers import ProjectPostSerializer, ProjectGetSerializer, ProjectListSerializer
 from common.mixins import APIMixin
 
 
@@ -20,18 +20,18 @@ class ProjectDetail(APIView, APIMixin):
 
     # Mixing initial variables
     model = Project
-    serializer_class = ProjectSerializer
-    serializer_class_extended = ProjectSerializerExtended
+    serializer_get = ProjectGetSerializer
+    serializer_put = ProjectPostSerializer
 
     def get(self, request, pk, format=None):
         project = self.get_object(pk)
-        serializer = self.serializer_class_extended(project)
+        serializer = self.serializer_get(project)
 
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         project = self.get_object(pk)
-        serializer = self.serializer_class(project, data=request.data)
+        serializer = self.serializer_put(project, data=request.data)
         
         if serializer.is_valid(): 
             serializer.save()
@@ -53,9 +53,9 @@ class ProjectList(APIView, APIMixin):
 
     # Mixing initial variables
     model = Project
-    serializer_class = ProjectSerializer
-    serializer_class_extended = ProjectSerializerExtended
-    
+    serializer_list = ProjectListSerializer
+    serializer_post = ProjectGetSerializer
+
     paginate_by = 6
 
     def get(self, request, format=None):
@@ -67,7 +67,7 @@ class ProjectList(APIView, APIMixin):
 
 
     def post(self, request, format=None):
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.serializer_post(data=request.data)
         
         if serializer.is_valid():	
             serializer.save(create_by=request.user)
