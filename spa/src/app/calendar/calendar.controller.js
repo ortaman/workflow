@@ -5,18 +5,18 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
    $scope.events = [];
    var today = moment();
    $scope.eventSources = [$scope.events];
-   var dateFields = [
-       'preparation_at',
-       'negotiation_at',
-       'execution_at',
-       'evaluation_at',
+   var dateFields = {
+       'preparation_at':'Fecha de preparación',
+       'negotiation_at':'Fecha de negociación',
+       'execution_at':'Fecha de ejecución',
+       'evaluation_at':'Fecha de evaluación',
 
-       'accomplish_at',
-       'expire_at',
-       'renegotiation_at',
-       'report_at',
-       'begin_at',
-   ];
+       'accomplish_at':'Fecha de cumplimiento',
+       'expire_at':'Fecha de expiración',
+       'renegotiation_at':'Fecha de renegociación',
+       'report_at':'Fecha de reporte',
+       'begin_at':'Fecha de inicio',
+   };
 
    /* config object */
    $scope.uiConfig = {
@@ -30,7 +30,6 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
        },
      }
    };
-
    /* event sources array*/
 
    $scope.dateChanged = function() {
@@ -46,10 +45,10 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
           $scope.events.splice(0, $scope.events.length);
 
           angular.forEach(response.results, function(value, key){
-            dateFields.forEach(function(item){
+            angular.forEach(dateFields,function(value2, key2){
               var item2 = {};
-              item2.title = response.results[key].name+ '('+ item+')';
-              item2.start = new Date(response.results[key][item]);
+              item2.title = response.results[key].name+ ' ('+ value2+')';
+              item2.start = new Date(response.results[key][key2]);
               $scope.events.push(item2);
             })
 
