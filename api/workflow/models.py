@@ -88,15 +88,19 @@ class Action(models.Model):
     )
 
     PROMISE = (
-        ('process', 'Proceso'),
+        ('created', 'Creada'),
+        ('accepted', 'Aceptada'),  # acepted is a action in process
+        ('reported', 'Reportada'),
         ('kept', 'Cumplida'),
         ('empty', 'Incumplida'),
+
+        ('negotiating', 'Negociando')
+        ('unaccepted', 'No aceptada'),
     )
 
     PERCENTAJES = (
-        ('0', '0'), ('10', '10'), ('20', '20'), ('30', '30'),
-        ('40', '40'), ('50', '50'), ('60', '60'), ('70', '70'),
-        ('80', '80'), ('90', '90'), ('100', '100'),
+        ('0', '0'), ('25', '25'), ('50', '50'), 
+        ('75', '75'), ('100', '100'),
     )
 
     project = models.ForeignKey(Project, related_name='project', verbose_name='Proyecto relacionado')
@@ -105,8 +109,7 @@ class Action(models.Model):
 
     progress = models.CharField(choices=PERCENTAJES, max_length=3, default='0', verbose_name='Porcentaje de avance')
     status = models.CharField(choices=STATUS, max_length=5, default='Abierta', verbose_name='Estado')
-    promise = models.CharField(choices=PROMISE, max_length=7, default='process', verbose_name='Promesa')
-    is_renegotiated = models.BooleanField(default=False, verbose_name='Renegociado')
+    promise = models.CharField(choices=PROMISE, max_length=11, default='created', verbose_name='Promesa')
 
     # focus project
     toDo = models.TextField(max_length=512, verbose_name='¿Qué y como se realizará?')
