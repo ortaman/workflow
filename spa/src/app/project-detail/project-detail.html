@@ -329,33 +329,33 @@
                 <div class="col-md-12 ">
                     <div class="portlet light portlet-fit bordered ">
                         <div class="portlet-title ">
-                            <div class="caption ">
+                            <div class="caption col-md-6">
                                 <i class="icon-directions font-green hide "></i>
                                 <span class="caption-subject bold font-dark uppercase "> Bitácora</span>
                                 <span class="caption-helper ">Coordinaciones</span>
                             </div>
-                            <div class="actions ">
-                                <div class="btn-group ">
-                                    <a class="btn blue btn-outline btn-circle btn-sm " href="javascript:; " data-toggle="dropdown " data-hover="dropdown " data-close-others="true "> Fases
-                                                    <i class="fa fa-angle-down "></i>
-                                                </a>
-                                    <ul class="dropdown-menu pull-right ">
-                                        <li>
-                                            <a href="javascript:; "> Preparación</a>
-                                        </li>
-                                        <li class="divider "> </li>
-                                        <li>
-                                            <a href="javascript:; "> Negociación</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:; ">Realización</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:; ">Evaluación</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <form novalidate ng-submit="timeLineChanged(timelineDate)">
+                              <div class="col-md-2">
+                                <md-datepicker
+                                  name="preparation_at"
+                                  md-placeholder="Fecha inicio"
+                                  ng-model="timelineDate.start"
+                                  required></md-datepicker>
+                              </div>
+                              <div class="col-md-2">
+                                <md-datepicker
+                                  name="preparation_at"
+                                  md-placeholder="Fecha fin"
+                                  ng-model="timelineDate.end"
+                                  required></md-datepicker>
+                              </div>
+                              <div class="col-md-2">
+                                <button type="submit" class="btn btn-success" style="margin-left:5%;">
+                                    Consultar
+                                </button>
+                              </div>
+
+                            </form>
                         </div>
                         <div class="portlet-body ">
                             <div class="cd-horizontal-timeline mt-timeline-horizontal " data-spacing="60 ">
