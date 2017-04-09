@@ -40,9 +40,14 @@ class Project(models.Model):
 
     # agremments
     begin_at = models.DateField(auto_now=False, verbose_name='Fecha de inicio')
-    accomplish_at = models.DateField(auto_now=False, verbose_name='Fecha de cumplimiento')
-    renegotiation_at = models.DateField(auto_now=False, verbose_name='Fecha de regenociación')
-    report_at = models.DateField(auto_now=False, verbose_name='Fecha de reporte de Avance')
+    accomplish_at = models.DateField(auto_now=False, verbose_name='Fecha de cumplimiento')  
+    renegotiation_at = models.DateField(
+        null=True, blank=True, 
+        auto_now=False, verbose_name='Fecha de regenociación')
+
+    report_at = models.DateField(
+        null=True, blank=True, 
+        auto_now=False, verbose_name='Fecha de reporte de Avance')
 
     # indicators
     financial = models.CharField(max_length=64, verbose_name='Financieros')
@@ -54,7 +59,11 @@ class Project(models.Model):
 
     created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
-    create_by = models.ForeignKey(User, related_name='project_create_by', verbose_name='Creado por')
+    
+    create_by = models.ForeignKey(
+        User, 
+        related_name='project_create_by', 
+        verbose_name='Creado por')
 
     class Meta:
         verbose_name = ("Proyecto")
@@ -112,9 +121,16 @@ class Action(models.Model):
 
     # agremments
     begin_at = models.DateField(auto_now=False, verbose_name='Fecha de inicio')
+    
     accomplish_at = models.DateField(auto_now=False, verbose_name='Fecha de cumplimiento')
-    renegotiation_at = models.DateField(auto_now=False, verbose_name='Fecha de regenociación')
-    report_at = models.DateField(auto_now=False, verbose_name='Fecha de reporte de Avance')
+    
+    renegotiation_at = models.DateField(
+        null=True, blank=True, 
+        auto_now=False, verbose_name='Fecha de regenociación')
+
+    report_at = models.DateField(
+        null=True, blank=True, 
+        auto_now=False, verbose_name='Fecha de reporte de Avance')
 
     # indicators
     financial = models.CharField(max_length=64, verbose_name='Financieros')
