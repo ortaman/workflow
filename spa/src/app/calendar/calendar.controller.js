@@ -32,7 +32,7 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
    $scope.dateChanged = function() {
 
      var query = {
-       'begin_date':'2019-02-20',
+       'begin_date':'2017-02-20',
        'end_date':'2019-02-20'
      };
 

@@ -68,16 +68,16 @@ app.controller('ProjectDetailController', [
   };
 
 	$scope.timeLineChanged = function(_timelineDate) {
-			var timelineDate = angular.copy(_timelineDate);
+		var timelineDate = angular.copy(_timelineDate);
 	  	var query = {
 	  		"project_id": $state.params.id,
-	  		"parent_action": "none",
 	  		"begin_date": moment(timelineDate.init_date).format('YYYY-MM-DD'),
 	  		"end_date": moment(timelineDate.end_date).format('YYYY-MM-DD'),
 	  	};
 
 		ActionListService.getList(query).then(
 			function(response) {
+				console.log('ActionListTIMELINE', response);
 				$scope.timeline = response;
 				for (var i=0; i < $scope.timeline.results.length; i++) {
 					$scope.timeline.results[i].producer.photo = APIConfig.baseUrl + $scope.timeline.results[i].producer.photo;
@@ -103,6 +103,8 @@ app.controller('ProjectDetailController', [
 
 		ProducerGetListService.getList(query).then(
 			function(response) {
+				console.log('producersList', response);
+
 				for (var i=0; i < response.results.length; i++) {
 					console.log(response.results[i].producer.photo);
 					response.results[i].producer.photo = APIConfig.baseUrl + response.results[i].producer.photo;
