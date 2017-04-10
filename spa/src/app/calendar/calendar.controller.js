@@ -4,7 +4,6 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
 
    $scope.events = [];
    var today = moment();
-   $scope.eventSources = [$scope.events];
    var dateFields = {
        'preparation_at':'Fecha de preparación',
        'negotiation_at':'Fecha de negociación',
@@ -34,9 +33,15 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
 
    $scope.dateChanged = function() {
 
+
+
+   };
+
+   $scope.eventsF = function (start, end, timezone, callback) {
+
      var query = {
-       'begin_date': today.startOf('month').format('YYYY-MM-DD'),
-       'end_date': today.endOf('month').format('YYYY-MM-DD')
+       'begin_date': moment(start).format('YYYY-MM-DD'),
+       'end_date': moment(end).format('YYYY-MM-DD')
 
      };
 
@@ -54,6 +59,8 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
             })
 
           })
+          callback($scope.events);
+
        },
        function(errorResponse) {
          console.log('errorResponse', errorResponse);
@@ -61,9 +68,10 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
          $scope.errors = errorResponse.data;
        }
      );
-
    };
-   $scope.dateChanged();
+   $scope.eventSources = [$scope.eventsF];
+
+
 
 
 }]);
