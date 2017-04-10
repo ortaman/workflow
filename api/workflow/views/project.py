@@ -81,6 +81,9 @@ class ProjectList(APIView, APIMixin):
 
             queryset = queryset.filter(q)
 
+            serializer = self.serializer_list(queryset, many=True)
+            return Response(serializer.data)
+
         data = self.get_pagination(queryset, page, self.paginate_by)
         return Response(data)
 

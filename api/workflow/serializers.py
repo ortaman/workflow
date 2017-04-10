@@ -81,10 +81,10 @@ class ActionPostSerializer(serializers.ModelSerializer):
             'progress', 'status',
             'client', 'producer', 'observer',
             'toDo', 'satisfactions', 'expire_at',
-            'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at',
+            'begin_at', 'expire_at', 'accomplish_at', 'report_at', 'renegotiation_at',
             'financial', 'operational', 'other1', 'other2', 'parent_action')
 
-    read_only_fields =  ('created_at', 'updated_at','create_by', 'promise',)
+    read_only_fields =  ('created_at', 'updated_at','create_by', 'promise')
 
 
 class ActionGetSerializer(serializers.ModelSerializer):
@@ -108,7 +108,7 @@ class ActionListSerializer(serializers.ModelSerializer):
         model  = Action
         fields = (
             'id', 'name', 'producer', 'toDo',
-            'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at')
+            'begin_at', 'expire_at', 'accomplish_at', 'report_at', 'renegotiation_at')
 
 
 class ActionUserSerializer(serializers.ModelSerializer):
