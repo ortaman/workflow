@@ -85,11 +85,56 @@ class ActionList(APIView, APIMixin):
                 q1 = Q(project__id = query.get('project_id'))
                 q2 = (
                     Q(begin_at__range         = range_date) |
+                    Q(expire_at__range        = range_date) |
+                    Q(report_at__range        = range_date) |
                     Q(accomplish_at__range    = range_date) |
-                    Q(renegotiation_at__range = range_date) |
-                    Q(report_at__range        = range_date))
+                    Q(renegotiation_at__range = range_date))
 
                 queryset = queryset.filter(q1, q2)
+                serializer = self.serializer_list(queryset, many=True)
+
+                from datetime import datetime
+
+                begin_date = datetime.strptime(query.get('begin_date'), "%Y-%m-%d")
+                end_date   = datetime.strptime(query.get('end_date'), "%Y-%m-%d")                
+                
+                data = []
+
+                timelines = [
+                    {
+                    'date':'begin_at',
+                    'text':'Fecha de inicio'
+                    },{
+                    'date':'expire_at',
+                    'text':'Fecha de expiración'
+                    },{
+                    'date':'report_at',
+                    'text':'fecha de cumplimiento'
+                    },{
+                    'date':'accomplish_at',
+                    'text':'Fecha de reporte de avance'
+                    },{
+                    'date':'renegotiation_at',
+                    'text':'Fecha de Renegociación'
+                    },
+                ]
+                
+                for action in serializer.data:
+
+                    for tl in timelines:
+
+                        action_begin_date = datetime.strptime(action[tl['date']], "%Y-%m-%d")
+                        action_end_date   = datetime.strptime(action[tl['date']], "%Y-%m-%d")
+
+                        if action_begin_date >= begin_date and action_end_date <= end_date:
+
+                            action['timeline_text'] = tl['text']
+                            data.append({
+                                'timeline': action[tl['date']],
+                                'actions': [action]
+                            }) 
+
+                return Response(data)
 
             else:
                 queryset = queryset.filter(project_id=query.get('project_id'))
@@ -128,3 +173,12 @@ class ActionList(APIView, APIMixin):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def add_custom_action(self, action, begin_date, end_date, timeline_text):
+        if action['begin_at'] >= begin_date and action['begin_at'] <= end_date:
+
+            action['timeline_text'] = timeline_text
+            data.append({
+                'timeline': action['begin_at'],
+                'actions': [action]
+            }) 
