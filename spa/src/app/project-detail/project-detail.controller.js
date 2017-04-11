@@ -5,11 +5,9 @@ app.controller('ProjectDetailController', [
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
-	var currentDate = new Date();
-	var nexttDate = new Date();
 	$scope.timelineDate = {
-		"start": currentDate,
-		"end": currentDate,
+		"init_date": new Date(),
+		"end_date": moment().add(1,'month').toDate(),
 	}
 
 	var queryStatus = "open";
@@ -75,8 +73,8 @@ app.controller('ProjectDetailController', [
 		var timelineDate = angular.copy(_timelineDate);
 	  	var query = {
 	  		"project_id": $state.params.id,
-				"begin_date": '2017-02-01',
-				"end_date":'2017-08-01',
+				"begin_date": moment(timelineDate.start).format('YYYY-MM-DD'),
+				"end_date":moment(timelineDate.end).format('YYYY-MM-DD'),
 	  	};
 
 
