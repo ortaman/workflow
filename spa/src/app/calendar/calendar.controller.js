@@ -47,6 +47,7 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
 
      ProjectListService.getList(query).then(
        function(response) {
+          console.log('ProjectList', response);
 
           $scope.events.splice(0, $scope.events.length);
 
