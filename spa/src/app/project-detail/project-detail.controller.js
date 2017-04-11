@@ -73,8 +73,8 @@ app.controller('ProjectDetailController', [
 		var timelineDate = angular.copy(_timelineDate);
 	  	var query = {
 	  		"project_id": $state.params.id,
-				"begin_date": moment(timelineDate.start).format('YYYY-MM-DD'),
-				"end_date":moment(timelineDate.end).format('YYYY-MM-DD'),
+				"begin_date": moment(timelineDate.init_date).format('YYYY-MM-DD'),
+				"end_date":moment(timelineDate.end_date).format('YYYY-MM-DD'),
 	  	};
 
 
