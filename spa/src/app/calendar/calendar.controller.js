@@ -50,11 +50,11 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
 
           $scope.events.splice(0, $scope.events.length);
 
-          angular.forEach(response.results, function(value, key){
+          angular.forEach(response, function(value, key){
             angular.forEach(dateFields,function(value2, key2){
               var item2 = {};
-              item2.title = response.results[key].name+ ' ('+ value2+')';
-              item2.start = new Date(response.results[key][key2]);
+              item2.title = response[key].name+ ' ('+ value2+')';
+              item2.start = new Date(response[key][key2]);
               $scope.events.push(item2);
             })
 

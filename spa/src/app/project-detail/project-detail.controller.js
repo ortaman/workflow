@@ -75,8 +75,8 @@ app.controller('ProjectDetailController', [
 		var timelineDate = angular.copy(_timelineDate);
 	  	var query = {
 	  		"project_id": $state.params.id,
-				"begin_date": moment(timelineDate.init_date).format('YYYY-MM-DD'),
- 			 	"end_date": moment(timelineDate.end_date).format('YYYY-MM-DD'),
+				"begin_date": '2017-02-01',
+				"end_date":'2017-08-01',
 	  	};
 
 
@@ -131,34 +131,50 @@ app.controller('ProjectDetailController', [
 	$scope.chunkArray = function(index) {
 		if($scope.producers.results)
 			return $scope.producers.results.slice(index*3, (index*3)+3);
-
-
 	}
 
 	var getResults = function(results){
+		//private functions
 		function custom_sort(a, b) {
 		    return new Date(a.timeline).getTime() - new Date(b.timeline).getTime();
 		}
 
-		results = results.sort(custom_sort);
-
-		var newArray = [];
-		for(var i =0;i<results.length;i++){
-			if (typeof results[i-1] != 'undefined'){
-				if(results[i-1].timeline == results[i].timeline){
-					results[i-1].actions.push(results[i].actions[0])
-				}
-				else {
-					newArray.push(results[i]);
-
-				}
-			}
+		function arrayObjectIndexOf(myArray, searchTerm, property) {
+		    for(var i = 0, len = myArray.length; i < len; i++) {
+		        if (myArray[i][property] === searchTerm) return i;
+		    }
+		    return -1;
 		}
-		newArray.forEach(function(item){
+
+		function UniqueArraybyId(collection, keyname) {
+              var output = [],
+                  keys = [], d  =[];
+
+              angular.forEach(collection, function(item) {
+                  var key = item[keyname];
+                  if(keys.indexOf(key) === -1) {
+                      keys.push(key);
+                      output.push(item);
+                  }
+									else{
+										var pos = arrayObjectIndexOf(output,key,'timeline');
+										output[pos].actions.push(item.actions[0])
+									}
+              });
+							angular.forEach(d, function(item){
+								var key = item[keyname];
+							})
+        return output;
+		}
+
+		results = results.sort(custom_sort);
+		var results = UniqueArraybyId(results,'timeline');
+
+		results.forEach(function(item){
 			angular.forEach(item.actions, function(item2){
 				item2.producer.photo =  APIConfig.baseUrl+ item2.producer.photo;
 			})
 		})
-		return newArray;
+		return results;
 	}
 }]);
