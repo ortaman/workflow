@@ -363,8 +363,8 @@
                                     <div class="events-wrapper ">
                                         <div class="events ">
                                             <ol>
-                                                <li  ng-repeat="action in timeline.results | orderBy:'-begin_at' track by $index">
-                                                    <a href="#{{$index}} "  jquery-date="action.begin_at" class="border-after-red bg-after-red " ng-class="{'selected':$index == 0}">{{ action.begin_at | date:'dd-MMM'}}</a>
+                                                <li  ng-repeat="action in timelines  track by $index">
+                                                    <a href="#{{$index}} "  jquery-date="action.timeline" class="border-after-red bg-after-red " ng-class="{'selected':$index == 0}">{{ action.timeline | date:'dd-MMM'}}</a>
                                                 </li>
                                             </ol>
                                             <span class="filling-line bg-red " aria-hidden="true "></span>
@@ -389,9 +389,12 @@
                                 <!-- .timeline -->
                                 <div class="events-content ">
                                     <ol>
-                                        <li ng-class="{'selected':$index == 0}"  jquery-date="action.begin_at" ng-repeat="action in timeline.results | orderBy:'-begin_at'  track by $index">
+                                        <li ng-class="{'selected':$index == 0}"  jquery-date="time.timeline" ng-repeat="time in timelines  track by $index">
+
+                                          <div ng-repeat="action in time.actions">
+
                                             <div class="mt-title ">
-                                                <h2 class="mt-content-title ">{{action.name}}</h2>
+                                                <h2 class="mt-content-title ">{{action.name}} ({{ action.timeline_text}})</h2>
                                             </div>
                                             <div class="mt-author ">
                                                 <div class="mt-avatar ">
@@ -406,6 +409,10 @@
                                             <div class="mt-content border-grey-steel ">
                                                 <p>{{ action.toDo}}</p>
                                             </div>
+                                          </div>
+
+
+
                                         </li>
                                     </ol>
                                 </div>

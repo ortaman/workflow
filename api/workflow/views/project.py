@@ -33,8 +33,8 @@ class ProjectDetail(APIView, APIMixin):
     def put(self, request, pk, format=None):
         project = self.get_object(pk)
         serializer = self.serializer_put(project, data=request.data)
-        
-        if serializer.is_valid(): 
+
+        if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
 
@@ -55,7 +55,7 @@ class ProjectList(APIView, APIMixin):
     # Mixing initial variables
     model = Project
     serializer_list = ProjectListSerializer
-    serializer_post = ProjectGetSerializer
+    serializer_post = ProjectPostSerializer
 
     paginate_by = 6
 
@@ -67,7 +67,7 @@ class ProjectList(APIView, APIMixin):
 
         if 'begin_date' in query.keys() and 'end_date' in query.keys():
             range_date = [query.get('begin_date'), query.get('end_date')]
-            
+
             q = (
                 Q(preparation_at__range   = range_date) |
                 Q(negotiation_at__range   = range_date) |
@@ -90,10 +90,10 @@ class ProjectList(APIView, APIMixin):
 
     def post(self, request, format=None):
         serializer = self.serializer_post(data=request.data)
-        
-        if serializer.is_valid():	
+
+        if serializer.is_valid():
             serializer.save(create_by=request.user)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -13,10 +13,17 @@ app.controller('ProjectDetailController', [
 	}
 
 	var queryStatus = "open";
+	var dateFields = [
+			'accomplish_at',
+			'expire_at',
+			'renegotiation_at',
+			'report_at',
+			'begin_at'
+	];
 
 	$scope.project = {};
 	$scope.producers = [];
-	$scope.timeline = []
+	$scope.timelines = []
 
 
   	$scope.getProjectByIdInit = function() {
@@ -31,14 +38,12 @@ app.controller('ProjectDetailController', [
 	var getProject = function() {
 		ProjectGetService.getById($state.params.id).then(
 			function(response) {
-				console.log("ProjectGet", response);
 				response.image = APIConfig.baseUrl + response.image;
 				response.producer.photo = APIConfig.baseUrl + response.producer.photo;
 
 				$scope.project = response;
 			},
 			function(errorResponse) {
-				console.log('errorResponse', errorResponse);
 				$scope.status = errorResponse.statusText || 'Request failed';
 				$scope.errors = errorResponse.data;
 			}
@@ -57,7 +62,6 @@ app.controller('ProjectDetailController', [
 
 		ActionListService.getList(query).then(
 			function(response) {
-				console.log("ActionList", response);
 				$scope.actions = response;
 			},
 			function(errorResponse) {
@@ -71,17 +75,17 @@ app.controller('ProjectDetailController', [
 		var timelineDate = angular.copy(_timelineDate);
 	  	var query = {
 	  		"project_id": $state.params.id,
-	  		"begin_date": moment(timelineDate.init_date).format('YYYY-MM-DD'),
-	  		"end_date": moment(timelineDate.end_date).format('YYYY-MM-DD'),
+				"begin_date": moment(timelineDate.init_date).format('YYYY-MM-DD'),
+ 			 	"end_date": moment(timelineDate.end_date).format('YYYY-MM-DD'),
 	  	};
+
+
 
 		ActionListService.getList(query).then(
 			function(response) {
-				console.log('ActionListTIMELINE', response);
-				$scope.timeline = response;
-				for (var i=0; i < $scope.timeline.results.length; i++) {
-					$scope.timeline.results[i].producer.photo = APIConfig.baseUrl + $scope.timeline.results[i].producer.photo;
-				}
+				$scope.timelines = getResults(response);
+				console.log("timeline", $scope.timelines);
+
 				$.getScript("/assets/metronics/global/plugins/horizontal-timeline/horizontal-timeline.js", function(){});
 			},
 			function(errorResponse) {
@@ -103,15 +107,12 @@ app.controller('ProjectDetailController', [
 
 		ProducerGetListService.getList(query).then(
 			function(response) {
-				console.log('producersList', response);
 
 				for (var i=0; i < response.results.length; i++) {
-					console.log(response.results[i].producer.photo);
 					response.results[i].producer.photo = APIConfig.baseUrl + response.results[i].producer.photo;
 				}
 
 				$scope.producers = response;
-				console.log("ProducerGet", response);
 
 			},
 			function(errorResponse) {
@@ -134,4 +135,30 @@ app.controller('ProjectDetailController', [
 
 	}
 
+	var getResults = function(results){
+		function custom_sort(a, b) {
+		    return new Date(a.timeline).getTime() - new Date(b.timeline).getTime();
+		}
+
+		results = results.sort(custom_sort);
+
+		var newArray = [];
+		for(var i =0;i<results.length;i++){
+			if (typeof results[i-1] != 'undefined'){
+				if(results[i-1].timeline == results[i].timeline){
+					results[i-1].actions.push(results[i].actions[0])
+				}
+				else {
+					newArray.push(results[i]);
+
+				}
+			}
+		}
+		newArray.forEach(function(item){
+			angular.forEach(item.actions, function(item2){
+				item2.producer.photo =  APIConfig.baseUrl+ item2.producer.photo;
+			})
+		})
+		return newArray;
+	}
 }]);

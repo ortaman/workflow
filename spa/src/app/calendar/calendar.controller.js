@@ -1,17 +1,21 @@
 
 app.controller('CalendarController', ['$scope','$compile','ProjectListService', function($scope, $compile, ProjectListService) {
 
-  var date = new Date();
-   var d = date.getDate();
-   var m = date.getMonth();
-   var y = date.getFullYear();
 
+   $scope.events = [];
+   var today = moment();
+   var dateFields = {
+       'preparation_at':'Fecha de preparación',
+       'negotiation_at':'Fecha de negociación',
+       'execution_at':'Fecha de ejecución',
+       'evaluation_at':'Fecha de evaluación',
 
-   /* event source that contains custom events on the scope */
-   $scope.events = [
-
-   ];
-
+       'accomplish_at':'Fecha de cumplimiento',
+       'expire_at':'Fecha de expiración',
+       'renegotiation_at':'Fecha de renegociación',
+       'report_at':'Fecha de reporte',
+       'begin_at':'Fecha de inicio',
+   };
 
    /* config object */
    $scope.uiConfig = {
@@ -25,30 +29,37 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
        },
      }
    };
-
    /* event sources array*/
-   $scope.eventSources = [$scope.events];
 
    $scope.dateChanged = function() {
 
+
+
+   };
+
+   $scope.eventsF = function (start, end, timezone, callback) {
+
      var query = {
-       'begin_date':'2017-02-20',
-       'end_date':'2019-02-20'
+       'begin_date': moment(start).format('YYYY-MM-DD'),
+       'end_date': moment(end).format('YYYY-MM-DD')
+
      };
 
      ProjectListService.getList(query).then(
        function(response) {
 
+          $scope.events.splice(0, $scope.events.length);
 
-         $scope.events = response.results;
+          angular.forEach(response.results, function(value, key){
+            angular.forEach(dateFields,function(value2, key2){
+              var item2 = {};
+              item2.title = response.results[key].name+ ' ('+ value2+')';
+              item2.start = new Date(response.results[key][key2]);
+              $scope.events.push(item2);
+            })
 
-         angular.forEach($scope.events, function(value, key){
-           console.log($scope.events[key])
-           $scope.events[key].title = $scope.events[key].name;
-           $scope.events[key].start =  new Date(y, m, d - 3, 16, 0);
-         })
-         console.log('ProjectList', $scope.events);
-
+          })
+          callback($scope.events);
 
        },
        function(errorResponse) {
@@ -57,8 +68,10 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
          $scope.errors = errorResponse.data;
        }
      );
-
    };
-   $scope.dateChanged();
+   $scope.eventSources = [$scope.eventsF];
+
+
+
 
 }]);
