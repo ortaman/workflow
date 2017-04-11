@@ -72,7 +72,7 @@ class ActionList(APIView, APIMixin):
         queryset = self.model.objects.all()
 
         if 'project_id' in query.keys():
-            
+
             if query.get('parent_action') == 'none' and 'status' in query.keys():
                 queryset = queryset.filter (
                     project_id=query.get('project_id'),
@@ -96,8 +96,8 @@ class ActionList(APIView, APIMixin):
                 from datetime import datetime
 
                 begin_date = datetime.strptime(query.get('begin_date'), "%Y-%m-%d")
-                end_date   = datetime.strptime(query.get('end_date'), "%Y-%m-%d")                
-                
+                end_date   = datetime.strptime(query.get('end_date'), "%Y-%m-%d")
+
                 data = []
 
                 timelines = [
@@ -118,7 +118,7 @@ class ActionList(APIView, APIMixin):
                     'text':'Fecha de Renegociación'
                     },
                 ]
-                
+
                 for action in serializer.data:
 
                     for tl in timelines:
@@ -132,7 +132,7 @@ class ActionList(APIView, APIMixin):
                             data.append({
                                 'timeline': action[tl['date']],
                                 'actions': [action]
-                            }) 
+                            })
 
                 return Response(data)
 
@@ -140,7 +140,7 @@ class ActionList(APIView, APIMixin):
                 queryset = queryset.filter(project_id=query.get('project_id'))
 
         elif 'parent_action_id' in query.keys():
-            
+
             queryset = queryset.filter(
                 parent_action_id=query.get('parent_action_id'),
                 status=query.get('status'),
@@ -154,14 +154,14 @@ class ActionList(APIView, APIMixin):
             )
 
         elif 'producer' in query.keys() and 'promise' in query.keys():
-            
+
             queryset = queryset.filter(
                 producer_id=query.get('producer'),
                 promise=query.get('promise'),
             )
 
         data = self.get_pagination(queryset, page, self.paginate_by)
-        
+
         return Response(data)
 
     def post(self, request, format=None):
@@ -181,4 +181,4 @@ class ActionList(APIView, APIMixin):
             data.append({
                 'timeline': action['begin_at'],
                 'actions': [action]
-            }) 
+            })

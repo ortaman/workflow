@@ -19,4 +19,23 @@ app.service('UserService', function($http, APIConfig,$q) {
       return $q.when(results);
     };
 
+
+    this.me = function() {
+        var results = undefined;
+        var deferred = $q.defer();
+        URL = APIConfig.url + 'myuser/';
+
+        $http.get(URL)
+          .then(function(result) {
+            results = result.data;
+            deferred.resolve(results);
+          }, function(error) {
+            results = error;
+            deferred.reject(error);
+          });
+
+        results = deferred.promise;
+      return $q.when(results);
+    };
+
 });

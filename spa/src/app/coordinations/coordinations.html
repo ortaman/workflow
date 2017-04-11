@@ -7,7 +7,7 @@
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <!-- BEGIN CONTENT BODY -->
-        <div class="page-content">
+        <div class="page-content" ng-init="init()">
             <!-- BEGIN PAGE HEADER-->
             <!-- BEGIN PAGE BAR -->
             <div class="page-bar">
@@ -121,29 +121,29 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a href="#portlet_comments_1" data-toggle="tab"> Pendientes </a>
+                                    <a href="#portlet_comments_1" data-toggle="tab" ng-click="getCordinations('producer', 'created')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a href="#portlet_comments_2" data-toggle="tab"> Aceptadas </a>
+                                    <a href="#portlet_comments_2" data-toggle="tab" ng-click="getCordinations('producer', 'accepted')"> Aceptadas </a>
                                 </li>
                             </ul>
                         </div>
                         <div class="portlet-body">
                             <div class="tab-content">
-                                <div class="tab-pane active" id="portlet_comments_1">
+                                <div class="tab-pane active" id="portlet_comments_1" >
                                     <!-- BEGIN: Comments -->
                                     <div class="mt-comments">
-                                        <div class="mt-comment">
+                                        <div class="mt-comment" ng-repeat="action in promises track by $index">
                                             <div class="mt-comment-img">
                                                 <img src="../../assets/metronics/pages/media/users/avatar1.jpg" /> </div>
                                             <div class="mt-comment-body">
                                                 <div class="mt-comment-info">
-                                                    <span class="mt-comment-author">Roberto Herrera</span>
-                                                    <span class="mt-comment-date">26 Feb, 10:30AM</span>
+                                                    <span class="mt-comment-author">{{ action.client.second_surname}}</span>
+                                                    <span class="mt-comment-date">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
-                                                <div class="mt-comment-text"> Aprobar Prácticas de Visitas a Farmacias. </div>
+                                                <div class="mt-comment-text"> {{ action.name }} </div>
                                                 <div class="mt-comment-details">
-                                                    <span class="mt-comment-status mt-comment-status-pending">Proyecto Efectividad</span>
+                                                    <span class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
                                                     <ul class="mt-comment-actions">
                                                         <li>
                                                             <a href="#">Aceptar</a>
@@ -158,191 +158,38 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="mt-comment">
-                                            <div class="mt-comment-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar6.jpg" /> </div>
-                                            <div class="mt-comment-body">
-                                                <div class="mt-comment-info">
-                                                    <span class="mt-comment-author">Laura Gómez</span>
-                                                    <span class="mt-comment-date">12 Feb, 08:30AM</span>
-                                                </div>
-                                                <div class="mt-comment-text"> Aprobar Reportes de Investigación de Casos Mésdicos. </div>
-                                                <div class="mt-comment-details">
-                                                    <span class="mt-comment-status mt-comment-status-rejected">Proyecto Istofil</span>
-                                                    <ul class="mt-comment-actions">
-                                                        <ul class="mt-comment-actions">
-                                                            <li>
-                                                                <a href="#">Aceptar</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">Negociar</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">Declinar</a>
-                                                            </li>
-                                                        </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-comment">
-                                            <div class="mt-comment-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar8.jpg" /> </div>
-                                            <div class="mt-comment-body">
-                                                <div class="mt-comment-info">
-                                                    <span class="mt-comment-author">Gabriela Durán</span>
-                                                    <span class="mt-comment-date">23 Feb,09:50 AM</span>
-                                                </div>
-                                                <div class="mt-comment-text"> Aprobar Perfiles de Puestos para el Business Developer. </div>
-                                                <div class="mt-comment-details">
-                                                    <span class="mt-comment-status mt-comment-status-pending">Proyecto Business Unit</span>
-                                                    <ul class="mt-comment-actions">
-                                                        <li>
-                                                            <a href="#">Aceptar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">Negociar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">Declinar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-comment">
-                                            <div class="mt-comment-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar4.jpg" /> </div>
-                                            <div class="mt-comment-body">
-                                                <div class="mt-comment-info">
-                                                    <span class="mt-comment-author">Raúl González</span>
-                                                    <span class="mt-comment-date">10 Feb, 09:20 AM</span>
-                                                </div>
-                                                <div class="mt-comment-text"> Incrementar Piezas en Lanzamiento y Zonificar Regiones por Etapas. </div>
-                                                <div class="mt-comment-details">
-                                                    <span class="mt-comment-status mt-comment-status-rejected">Proyecto Ludlev</span>
-                                                    <ul class="mt-comment-actions">
-                                                        <li>
-                                                            <a href="#">Aceptar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">Negociar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">Declinar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <!-- END: Comments -->
                                 </div>
-                                <div class="tab-pane" id="portlet_comments_2">
+                                <div class="tab-pane" id="portlet_comments_2" >
                                     <!-- BEGIN: Comments -->
                                     <div class="mt-comments">
-                                        <div class="mt-comment">
-                                            <div class="mt-comment-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar4.jpg" /> </div>
-                                            <div class="mt-comment-body">
-                                                <div class="mt-comment-info">
-                                                    <span class="mt-comment-author">Raúl González</span>
-                                                    <span class="mt-comment-date">26 Feb, 10:30AM</span>
-                                                </div>
-                                                <div class="mt-comment-text"> Aprobar el Plan de Incentivos Variables a los Gerentes Distritales. Modificar el Pln de Distribución Regional</div>
-                                                <div class="mt-comment-details">
-                                                    <span class="mt-comment-status mt-comment-status-approved">Proyecto Istofil</span>
-                                                    <ul class="mt-comment-actions">
-                                                        <li>
-                                                            <a href="#">Cerrar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">Avance</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">Renegociar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-comment">
-                                            <div class="mt-comment-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar8.jpg" /> </div>
-                                            <div class="mt-comment-body">
-                                                <div class="mt-comment-info">
-                                                    <span class="mt-comment-author">Gabriela Durán</span>
-                                                    <span class="mt-comment-date">12 Feb, 08:30AM</span>
-                                                </div>
-                                                <div class="mt-comment-text"> Coordinar Plácticas con el Personal para Promover las Relaciones Públicas. </div>
-                                                <div class="mt-comment-details">
-                                                    <span class="mt-comment-status mt-comment-status-approved">Proyecto Ludlev</span>
-                                                    <ul class="mt-comment-actions">
-                                                        <ul class="mt-comment-actions">
-                                                            <li>
-                                                                <a href="#">Cerrar</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">Avance</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">Renegociar</a>
-                                                            </li>
-                                                        </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-comment">
-                                            <div class="mt-comment-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar6.jpg" /> </div>
-                                            <div class="mt-comment-body">
-                                                <div class="mt-comment-info">
-                                                    <span class="mt-comment-author">Laura Gómez</span>
-                                                    <span class="mt-comment-date">19 Marzo,09:50 AM</span>
-                                                </div>
-                                                <div class="mt-comment-text"> Desarrollar Conceptos de Mayor comprensión para el los Médicos de Provincia. </div>
-                                                <div class="mt-comment-details">
-                                                    <span class="mt-comment-status mt-comment-status-approved">Proyecto Efectividad</span>
-                                                    <ul class="mt-comment-actions">
-                                                        <ul class="mt-comment-actions">
-                                                            <li>
-                                                                <a href="#">Cerrar</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">Avance</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">Renegociar</a>
-                                                            </li>
-                                                        </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-comment">
-                                            <div class="mt-comment-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar1.jpg" /> </div>
-                                            <div class="mt-comment-body">
-                                                <div class="mt-comment-info">
-                                                    <span class="mt-comment-author">Roberto Herrera</span>
-                                                    <span class="mt-comment-date">10 Mar, 09:20 AM</span>
-                                                </div>
-                                                <div class="mt-comment-text"> Aprobar Coordinación Segunda Etapa de Lanzamiento con las demás Líneas de Negocio </div>
-                                                <div class="mt-comment-details">
-                                                    <span class="mt-comment-status mt-comment-status-approved">Proyecto Istofil</span>
-                                                    <ul class="mt-comment-actions">
-                                                        <ul class="mt-comment-actions">
-                                                            <li>
-                                                                <a href="#">Cerrar</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">Avance</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">Renegociar</a>
-                                                            </li>
-                                                        </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                      <div class="mt-comment" ng-repeat="action in promises track by $index">
+                                          <div class="mt-comment-img">
+                                              <img src="../../assets/metronics/pages/media/users/avatar1.jpg" /> </div>
+                                          <div class="mt-comment-body">
+                                              <div class="mt-comment-info">
+                                                  <span class="mt-comment-author">{{ action.producer.second_surname}}</span>
+                                                  <span class="mt-comment-date">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
+                                              </div>
+                                              <div class="mt-comment-text"> {{ action.name }} </div>
+                                              <div class="mt-comment-details">
+                                                  <span class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
+                                                  <ul class="mt-comment-actions">
+                                                      <li>
+                                                          <a href="#">Aceptar</a>
+                                                      </li>
+                                                      <li>
+                                                          <a href="#">Negociar</a>
+                                                      </li>
+                                                      <li>
+                                                          <a href="#">Declinar</a>
+                                                      </li>
+                                                  </ul>
+                                              </div>
+                                          </div>
+                                      </div>
                                     </div>
                                     <!-- END: Comments -->
                                 </div>
@@ -359,10 +206,10 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a href="#tab_actions_pending" data-toggle="tab"> Pendientes </a>
+                                    <a href="#tab_actions_pending" data-toggle="tab"  ng-click="getCordinations('client', 'created')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a href="#tab_actions_completed" data-toggle="tab"> Aceptados </a>
+                                    <a href="#tab_actions_completed" data-toggle="tab"  ng-click="getCordinations('client', 'accepted')"> Aceptados </a>
                                 </li>
                             </ul>
                         </div>
@@ -371,136 +218,19 @@
                                 <div class="tab-pane active" id="tab_actions_pending">
                                     <!-- BEGIN: Actions -->
                                     <div class="mt-actions">
-                                        <div class="mt-action">
+                                        <div class="mt-action" ng-repeat="action in orders track by $index">
                                             <div class="mt-action-img">
                                                 <img src="../../assets/metronics/pages/media/users/avatar10.jpg" /> </div>
                                             <div class="mt-action-body">
                                                 <div class="mt-action-row">
                                                     <div class="mt-action-info ">
-                                                        <div class="mt-action-icon ">
-                                                            <i class="icon-magnet"></i>
-                                                        </div>
                                                         <div class="mt-action-details ">
-                                                            <span class="mt-action-author">Irina Triviño</span>
-                                                            <p class="mt-action-desc">Evaluación de Gerentes Distritales</p>
+                                                            <span class="mt-action-author">{{ action.producer.second_surname }}</span>
+                                                            <p class="mt-action-desc">{{ action.name}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="mt-action-datetime ">
-                                                        <span class="mt-action-date">3 Ene</span>
-                                                        <span class="mt-action-dot bg-green"></span>
-                                                        <span class="mt=action-time">9:30-13:00</span>
-                                                    </div>
-                                                    <div class="mt-action-buttons ">
-                                                        <div class="btn-group btn-group-circle">
-                                                            <button type="button" class="btn btn-outline green btn-sm">Reiterar</button>
-                                                            <button type="button" class="btn btn-outline red btn-sm">Cancelar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-action">
-                                            <div class="mt-action-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar3.jpg" /> </div>
-                                            <div class="mt-action-body">
-                                                <div class="mt-action-row">
-                                                    <div class="mt-action-info ">
-                                                        <div class="mt-action-icon ">
-                                                            <i class=" icon-bubbles"></i>
-                                                        </div>
-                                                        <div class="mt-action-details ">
-                                                            <span class="mt-action-author">Carlos Rosas</span>
-                                                            <p class="mt-action-desc">Junta de Evaluación</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt-action-datetime ">
-                                                        <span class="mt-action-date">23 Feb</span>
-                                                        <span class="mt-action-dot bg-red"></span>
-                                                        <span class="mt=action-time">9:30-13:00</span>
-                                                    </div>
-                                                    <div class="mt-action-buttons ">
-                                                        <div class="btn-group btn-group-circle">
-                                                            <button type="button" class="btn btn-outline green btn-sm">Reiterar</button>
-                                                            <button type="button" class="btn btn-outline red btn-sm">Cancelar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-action">
-                                            <div class="mt-action-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar2.jpg" /> </div>
-                                            <div class="mt-action-body">
-                                                <div class="mt-action-row">
-                                                    <div class="mt-action-info ">
-                                                        <div class="mt-action-icon ">
-                                                            <i class="icon-call-in"></i>
-                                                        </div>
-                                                        <div class="mt-action-details ">
-                                                            <span class="mt-action-author">María Pérez</span>
-                                                            <p class="mt-action-desc">Llamada Pendiente</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt-action-datetime ">
-                                                        <span class="mt-action-date">23 feb</span>
-                                                        <span class="mt-action-dot bg-green"></span>
-                                                        <span class="mt=action-time">9:30-13:00</span>
-                                                    </div>
-                                                    <div class="mt-action-buttons ">
-                                                        <div class="btn-group btn-group-circle">
-                                                            <button type="button" class="btn btn-outline green btn-sm">Reiterar</button>
-                                                            <button type="button" class="btn btn-outline red btn-sm">Cancelar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-action">
-                                            <div class="mt-action-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar7.jpg" /> </div>
-                                            <div class="mt-action-body">
-                                                <div class="mt-action-row">
-                                                    <div class="mt-action-info ">
-                                                        <div class="mt-action-icon ">
-                                                            <i class=" icon-bell"></i>
-                                                        </div>
-                                                        <div class="mt-action-details ">
-                                                            <span class="mt-action-author">Enrique Patiño</span>
-                                                            <p class="mt-action-desc">Alertar Incumplimiento de Resultados Trimestrales</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt-action-datetime ">
-                                                        <span class="mt-action-date">3 Mar</span>
-                                                        <span class="mt-action-dot bg-red"></span>
-                                                        <span class="mt=action-time">9:30-13:00</span>
-                                                    </div>
-                                                    <div class="mt-action-buttons ">
-                                                        <div class="btn-group btn-group-circle">
-                                                            <button type="button" class="btn btn-outline green btn-sm">Reiterar</button>
-                                                            <button type="button" class="btn btn-outline red btn-sm">Cancelar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-action">
-                                            <div class="mt-action-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar8.jpg" /> </div>
-                                            <div class="mt-action-body">
-                                                <div class="mt-action-row">
-                                                    <div class="mt-action-info ">
-                                                        <div class="mt-action-icon ">
-                                                            <i class="icon-magnet"></i>
-                                                        </div>
-                                                        <div class="mt-action-details ">
-                                                            <span class="mt-action-author">Gabriela Durán </span>
-                                                            <p class="mt-action-desc">Candidatos a Gerentes Distritales Zona Norte</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt-action-datetime ">
-                                                        <span class="mt-action-date">3 Feb</span>
-                                                        <span class="mt-action-dot bg-green"></span>
-                                                        <span class="mt=action-time">9:30-13:00</span>
+                                                        <span class="mt-action-date">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
                                                     </div>
                                                     <div class="mt-action-buttons ">
                                                         <div class="btn-group btn-group-circle">
@@ -516,24 +246,19 @@
                                 <div class="tab-pane" id="tab_actions_completed">
                                     <!-- BEGIN:Completed-->
                                     <div class="mt-actions">
-                                        <div class="mt-action">
+                                        <div class="mt-action" ng-repeat="action in orders track by $index">
                                             <div class="mt-action-img">
                                                 <img src="../../assets/metronics/pages/media/users/avatar1.jpg" /> </div>
                                             <div class="mt-action-body">
                                                 <div class="mt-action-row">
                                                     <div class="mt-action-info ">
-                                                        <div class="mt-action-icon ">
-                                                            <i class="icon-action-redo"></i>
-                                                        </div>
                                                         <div class="mt-action-details ">
-                                                            <span class="mt-action-author">Roberto Herrera</span>
-                                                            <p class="mt-action-desc">Plan de Incremento de Piezas Zona Centro</p>
+                                                            <span class="mt-action-author">{{  action.producer.second_surname }}</span>
+                                                            <p class="mt-action-desc">{{ action.name }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="mt-action-datetime ">
-                                                        <span class="mt-action-date">3 Feb</span>
-                                                        <span class="mt-action-dot bg-red"></span>
-                                                        <span class="mt=action-time">9:30-13:00</span>
+                                                        <span class="mt-action-date">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
                                                     </div>
                                                     <div class="mt-action-buttons ">
                                                         <div class="btn-group btn-group-circle">
@@ -544,90 +269,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="mt-action">
-                                            <div class="mt-action-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar8.jpg" /> </div>
-                                            <div class="mt-action-body">
-                                                <div class="mt-action-row">
-                                                    <div class="mt-action-info ">
-                                                        <div class="mt-action-icon ">
-                                                            <i class="icon-cup"></i>
-                                                        </div>
-                                                        <div class="mt-action-details ">
-                                                            <span class="mt-action-author">Dabriela Durán </span>
-                                                            <p class="mt-action-desc">Modificar Comunicado Nuevo Proceso de Proyectos Estratégicos</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt-action-datetime ">
-                                                        <span class="mt-action-date">3 Mar</span>
-                                                        <span class="mt-action-dot bg-green"></span>
-                                                        <span class="mt=action-time">9:30-13:00</span>
-                                                    </div>
-                                                    <div class="mt-action-buttons">
-                                                        <div class="btn-group btn-group-circle">
-                                                            <button type="button" class="btn btn-outline green btn-sm">Aprobar</button>
-                                                            <button type="button" class="btn btn-outline red btn-sm">Rechazar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-action">
-                                            <div class="mt-action-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar5.jpg" /> </div>
-                                            <div class="mt-action-body">
-                                                <div class="mt-action-row">
-                                                    <div class="mt-action-info ">
-                                                        <div class="mt-action-icon ">
-                                                            <i class=" icon-graduation"></i>
-                                                        </div>
-                                                        <div class="mt-action-details ">
-                                                            <span class="mt-action-author">Carlos Ruíz </span>
-                                                            <p class="mt-action-desc">Modificar Estándares de Visitas a Farmacias</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt-action-datetime ">
-                                                        <span class="mt-action-date">3 Mar</span>
-                                                        <span class="mt-action-dot bg-red"></span>
-                                                        <span class="mt=action-time">9:30-13:00</span>
-                                                    </div>
-                                                    <div class="mt-action-buttons ">
-                                                        <div class="btn-group btn-group-circle">
-                                                            <button type="button" class="btn btn-outline green btn-sm">Aprobar</button>
-                                                            <button type="button" class="btn btn-outline red btn-sm">Rechazar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-action">
-                                            <div class="mt-action-img">
-                                                <img src="../../assets/metronics/pages/media/users/avatar2.jpg" /> </div>
-                                            <div class="mt-action-body">
-                                                <div class="mt-action-row">
-                                                    <div class="mt-action-info ">
-                                                        <div class="mt-action-icon ">
-                                                            <i class="icon-badge"></i>
-                                                        </div>
-                                                        <div class="mt-action-details ">
-                                                            <span class="mt-action-author">María Pérez</span>
-                                                            <p class="mt-action-desc">Reporte de Tasa de Coversión de Clientes</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt-action-datetime ">
-                                                        <span class="mt-action-date">3 Feb</span>
-                                                        <span class="mt-action-dot bg-green"></span>
-                                                        <span class="mt=action-time">9:30-13:00</span>
-                                                    </div>
-                                                    <div class="mt-action-buttons ">
-                                                        <div class="btn-group btn-group-circle">
-                                                            <button type="button" class="btn btn-outline green btn-sm">Aprobar</button>
-                                                            <button type="button" class="btn btn-outline red btn-sm">Rechazar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                         <!-- END: Completed -->
                                     </div>
                                 </div>
