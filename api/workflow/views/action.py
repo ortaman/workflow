@@ -128,10 +128,12 @@ class ActionList(APIView, APIMixin):
 
                         if action_begin_date >= begin_date and action_end_date <= end_date:
 
-                            action['timeline_text'] = tl['text']
+                            action_copy = action.copy()
+                            action_copy['timeline_text'] = tl['text']
+
                             data.append({
-                                'timeline': action[tl['date']],
-                                'actions': [action]
+                                'timeline': action_copy[tl['date']],
+                                'actions': [action_copy]
                             })
 
                 return Response(data)

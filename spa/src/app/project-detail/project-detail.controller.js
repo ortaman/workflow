@@ -81,6 +81,7 @@ app.controller('ProjectDetailController', [
 
 		ActionListService.getList(query).then(
 			function(response) {
+				console.log('ActionListServiceTimeline', response);
 				$scope.timelines = getResults(response);
 				console.log("timeline", $scope.timelines);
 
