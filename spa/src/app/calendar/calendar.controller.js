@@ -1,8 +1,21 @@
 
-app.controller('CalendarController', ['$scope','$compile','ProjectListService', function($scope, $compile, ProjectListService) {
+app.controller('CalendarController', ['$scope','$compile','ProjectListService', 'ActionListService', function($scope, $compile, ProjectListService, ActionListService) {
 
-
+  /* config object */
+  $scope.uiConfig = {
+    calendar:{
+      height: 450,
+      editable: false,
+      header:{
+        left: 'title',
+        center: '',
+        right: 'today prev,next'
+      },
+    }
+  };
    $scope.events = [];
+   $scope.projects = {};
+
    var today = moment();
    var dateFields = {
        'preparation_at':'Fecha de preparación',
@@ -17,49 +30,21 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
        'begin_at':'Fecha de inicio',
    };
 
-   /* config object */
-   $scope.uiConfig = {
-     calendar:{
-       height: 450,
-       editable: false,
-       header:{
-         left: 'title',
-         center: '',
-         right: 'today prev,next'
-       },
-     }
-   };
-   /* event sources array*/
-
-   $scope.dateChanged = function() {
-
-
-
-   };
 
    $scope.eventsF = function (start, end, timezone, callback) {
-
+     // TODO: cambiar  por filtrado sin paginador
      var query = {
        'begin_date': moment(start).format('YYYY-MM-DD'),
        'end_date': moment(end).format('YYYY-MM-DD')
-
      };
 
      ProjectListService.getList(query).then(
        function(response) {
-          console.log('ProjectList', response);
-
+          $scope.project = response;
           $scope.events.splice(0, $scope.events.length);
-
-          angular.forEach(response, function(value, key){
-            angular.forEach(dateFields,function(value2, key2){
-              var item2 = {};
-              item2.title = response[key].name+ ' ('+ value2+')';
-              item2.start = new Date(response[key][key2]);
-              $scope.events.push(item2);
-            })
-
-          })
+          addProjectToCalendar()
+          getProjectActions();
+          console.log("actions",$scope.actions);
           callback($scope.events);
 
        },
@@ -73,6 +58,34 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
    $scope.eventSources = [$scope.eventsF];
 
 
+   //functions
+   var addProjectToCalendar = function(){
+     angular.forEach($scope.projects, function(value, key){
+       angular.forEach(dateFields,function(value2, key2){
+         var item2 = {};
+         item2.title = $scope.projects[key].name+ ' ('+ value2+')';
+         item2.start = new Date($scope.projects[key][key2]);
+         $scope.events.push(item2);
+       })
+     })
+   }
+
+   var getProjectActions = function() {
+       var query = {
+         "page": 1,
+         "status": 'open',
+         "project_id":$scope.project[0].id
+       }
+       ActionListService.getList(query).then(
+         function(response) {
+           $scope.actions = response;
+         },
+         function(errorResponse) {
+           $scope.status = errorResponse.statusText || 'Request failed';
+           $scope.errors = errorResponse.data;
+         }
+       );
+   };
 
 
 }]);

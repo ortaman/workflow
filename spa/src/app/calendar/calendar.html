@@ -26,11 +26,32 @@
             </div>
             <br>
             <div class="row">
+              <div class="col-md-5">
+                <form novalidate name="searchForm" ng-submit="search(calendarForm)">
+                  <md-input-container class="md-block" >
+                    <label> Proyecto </label>
+                    <md-select name="project" ng-model="calendarForm.project" required>
+                      <md-option value="{{ project.id}}" ng-repeat="project in projects"> {{project.name}} </md-option>
+                    </md-select>
+
+                    <div ng-show="searchForm.project.$touched || submitted">
+                       <div class="error" style="margin-top: 0em" ng-show="searchForm.project.$error.required">
+                         Campo requerido.
+                       </div>
+                     </div>
+                    </md-input-container>
+                </form>
+              </div>
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-success" style="margin-top:5%;">
+                    Consultar
+                </button>
+              </div>
+            </div>
+            <div class="row">
               <div class="col-md-12">
                 <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
-                
               </div>
-
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
