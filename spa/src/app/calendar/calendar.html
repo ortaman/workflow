@@ -5,7 +5,7 @@
     <my-navbar> </my-navbar>
     <!-- END SIDEBAR -->
     <!-- BEGIN CONTENT -->
-    <div class="page-content-wrapper" ng-init="getProjectByIdInit()" ng-cloack>
+    <div class="page-content-wrapper" ng-init="init()" ng-cloack>
         <!-- BEGIN CONTENT BODY -->
         <div class="page-content">
             <!-- BEGIN PAGE HEADER-->
@@ -30,22 +30,11 @@
                 <form novalidate name="searchForm" ng-submit="search(calendarForm)">
                   <md-input-container class="md-block" >
                     <label> Proyecto </label>
-                    <md-select name="project" ng-model="calendarForm.project" required>
-                      <md-option value="{{ project.id}}" ng-repeat="project in projects"> {{project.name}} </md-option>
+                    <md-select name="project" ng-model="calendarForm.project" ng-change="onProjectSelect(calendarForm.project)" required>
+                      <md-option value="{{ project}}" ng-repeat="project in projects"> {{project.name}} </md-option>
                     </md-select>
-
-                    <div ng-show="searchForm.project.$touched || submitted">
-                       <div class="error" style="margin-top: 0em" ng-show="searchForm.project.$error.required">
-                         Campo requerido.
-                       </div>
-                     </div>
-                    </md-input-container>
+                  </md-input-container>
                 </form>
-              </div>
-              <div class="col-md-2">
-                <button type="submit" class="btn btn-success" style="margin-top:5%;">
-                    Consultar
-                </button>
               </div>
             </div>
             <div class="row">
