@@ -60,11 +60,11 @@ class ProjectList(APIView, APIMixin):
     paginate_by = 6
 
     def get(self, request, format=None):
-        page = request.GET.get('page')
+        page = request.GET.get('page', '')
         query = request.query_params
 
         queryset = self.model.objects.all()
-
+        '''
         if 'begin_date' in query.keys() and 'end_date' in query.keys():
             range_date = [query.get('begin_date'), query.get('end_date')]
 
@@ -83,8 +83,13 @@ class ProjectList(APIView, APIMixin):
 
             serializer = self.serializer_list(queryset, many=True)
             return Response(serializer.data)
+        '''
+        if not page:
+            data = self.serializer_list(queryset, many=True).data
+        else:
+            data = self.get_pagination(queryset, page, self.paginate_by)
 
-        data = self.get_pagination(queryset, page, self.paginate_by)
+        
         return Response(data)
 
 

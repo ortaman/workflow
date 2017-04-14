@@ -77,8 +77,6 @@ app.controller('ProjectDetailController', [
 				"end_date":moment(timelineDate.end_date).format('YYYY-MM-DD'),
 	  	};
 
-
-
 		ActionListService.getList(query).then(
 			function(response) {
 				console.log('ActionListServiceTimeline', response);
