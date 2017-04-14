@@ -5,10 +5,7 @@ app.controller('ProjectDetailController', [
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
-	$scope.timelineDate = {
-		"init_date": new Date(),
-		"end_date": moment().add(1,'month').toDate(),
-	}
+
 
 	var queryStatus = "open";
 	var dateFields = [
@@ -28,7 +25,7 @@ app.controller('ProjectDetailController', [
 		getProject();
 		$scope.actionPageChanged()
 		$scope.producerPageChanged();
-		$scope.timeLineChanged($scope.timelineDate);
+		$scope.timeLineChanged();
 
 	}
 
@@ -69,18 +66,16 @@ app.controller('ProjectDetailController', [
 		);
   };
 
-	$scope.timeLineChanged = function(_timelineDate) {
-		var timelineDate = angular.copy(_timelineDate);
+	$scope.timeLineChanged = function() {
 	  	var query = {
 	  		"project_id": $state.params.id,
-				"begin_date": moment(timelineDate.init_date).format('YYYY-MM-DD'),
-				"end_date":moment(timelineDate.end_date).format('YYYY-MM-DD'),
+				'begin_date': moment('2017-01-01').format('YYYY-MM-DD'),
+	      'end_date': moment('2017-11-11').format('YYYY-MM-DD'),
 	  	};
 
 		ActionListService.getList(query).then(
 			function(response) {
-				console.log('ActionListServiceTimeline', response);
-				$scope.timelines = getResults(response);
+				$scope.timelines = transformActions(response);
 				console.log("timeline", $scope.timelines);
 
 				$.getScript("/assets/metronics/global/plugins/horizontal-timeline/horizontal-timeline.js", function(){});
@@ -130,7 +125,7 @@ app.controller('ProjectDetailController', [
 			return $scope.producers.results.slice(index*3, (index*3)+3);
 	}
 
-	var getResults = function(results){
+	var transformActions = function(results){
 		//private functions
 		function custom_sort(a, b) {
 		    return new Date(a.timeline).getTime() - new Date(b.timeline).getTime();

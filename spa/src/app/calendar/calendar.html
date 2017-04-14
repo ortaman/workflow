@@ -5,7 +5,7 @@
     <my-navbar> </my-navbar>
     <!-- END SIDEBAR -->
     <!-- BEGIN CONTENT -->
-    <div class="page-content-wrapper" ng-init="getProjectByIdInit()" ng-cloack>
+    <div class="page-content-wrapper" ng-init="init()" ng-cloack>
         <!-- BEGIN CONTENT BODY -->
         <div class="page-content">
             <!-- BEGIN PAGE HEADER-->
@@ -26,11 +26,21 @@
             </div>
             <br>
             <div class="row">
+              <div class="col-md-5">
+                <form novalidate name="searchForm" ng-submit="search(calendarForm)">
+                  <md-input-container class="md-block" >
+                    <label> Proyecto </label>
+                    <md-select name="project" ng-model="calendarForm.project" ng-change="onProjectSelect(calendarForm.project)" required>
+                      <md-option value="{{ project}}" ng-repeat="project in projects"> {{project.name}} </md-option>
+                    </md-select>
+                  </md-input-container>
+                </form>
+              </div>
+            </div>
+            <div class="row">
               <div class="col-md-12">
                 <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
-                
               </div>
-
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->

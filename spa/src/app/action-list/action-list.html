@@ -84,140 +84,22 @@
                                             <th> Abiertas </th>
                                         </tr>
                                     </thead>
-                                    <tr>
+                                    <tr ng-repeat="action in actions ">
                                         <td class="fit">
                                             <img class="user-pic rounded" src="../../assets/metronics/pages/media/users/teambg6.jpg"> </td>
                                         <td>
-                                            <a href="javascript:;" class="primary-link">Eduardo González</a>
+                                            <a href="javascript:;" class="primary-link">
+                                              {{ action.producer.name }} {{action.producer.first_surname}}
+                                            </a>
                                         </td>
-                                        <td> Finanzas</td>
+                                        <td> {{ action.producer.position }}</td>
                                         <td>
-                                            <span class="bold theme-font">35%</span>
+                                            <span class="bold theme-font">{{ action.promise.kept_percent }}%</span>
                                         </td>
-                                        <td> 15 </td>
-                                        <td> 12 </td>
-                                        <td> 9 </td>
-                                        <td> 10 </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fit">
-                                            <img class="user-pic rounded" src="../../assets/metronics/pages/media/users/avatar80_6.jpg"> </td>
-                                        <td>
-                                            <a href="javascript:;" class="primary-link">Elena Martínez</a>
-                                        </td>
-                                        <td> Compras</td>
-                                        <td>
-                                            <span class="bold theme-font">43%</span>
-                                        </td>
-                                        <td> 35 </td>
-                                        <td> 45 </td>
-                                        <td> 35 </td>
-                                        <td> 25 </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fit">
-                                            <img class="user-pic rounded" src="../../assets/metronics/pages/media/users/teambg4.jpg"> </td>
-                                        <td>
-                                            <a href="javascript:;" class="primary-link">Mario Zapata</a>
-                                        </td>
-                                        <td> RRHH</td>
-                                        <td>
-                                            <span class="bold theme-font">47%</span>
-                                        </td>
-                                        <td> 46 </td>
-                                        <td> 32 </td>
-                                        <td> 23 </td>
-                                        <td> 35 </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fit">
-                                            <img class="user-pic rounded" src="../../assets/metronics/pages/media/users/avatar8.jpg"> </td>
-                                        <td>
-                                            <a href="javascript:;" class="primary-link">Adriana Morales</a>
-                                        </td>
-                                        <td> Marketing</td>
-                                        <td>
-                                            <span class="bold theme-font">48%</span>
-                                        </td>
-                                        <td> 55 </td>
-                                        <td> 27 </td>
-                                        <td> 41 </td>
-                                        <td> 18 </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fit">
-                                            <img class="user-pic rounded" src="../../assets/metronics/pages/media/users/teambg3.jpg"> </td>
-                                        <td>
-                                            <a href="javascript:;" class="primary-link">Carlos López</a>
-                                        </td>
-                                        <td> Gerente Distrital</td>
-                                        <td>
-                                            <span class="bold theme-font">48%</span>
-                                        </td>
-                                        <td> 46 </td>
-                                        <td> 29 </td>
-                                        <td> 19 </td>
-                                        <td> 26 </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fit">
-                                            <img class="user-pic rounded" src="../../assets/metronics/pages/media/users/avatar7.jpg"> </td>
-                                        <td>
-                                            <a href="javascript:;" class="primary-link">Humberto Ruíz</a>
-                                        </td>
-                                        <td> Productividad</td>
-                                        <td>
-                                            <span class="bold theme-font">50%</span>
-                                        </td>
-                                        <td> 51 </td>
-                                        <td> 27 </td>
-                                        <td> 19 </td>
-                                        <td> 23 </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fit">
-                                            <img class="user-pic rounded" src="../../assets/metronics/pages/media/users/avatar6.jpg"> </td>
-                                        <td>
-                                            <a href="javascript:;" class="primary-link">Silvia Durán</a>
-                                        </td>
-                                        <td> Dirección Médica</td>
-                                        <td>
-                                            <span class="bold theme-font">53%</span>
-                                        </td>
-                                        <td> 18 </td>
-                                        <td> 12 </td>
-                                        <td> 4 </td>
-                                        <td> 17 </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fit">
-                                            <img class="user-pic rounded" src="../../assets/metronics/pages/media/users/avatar1.jpg"> </td>
-                                        <td>
-                                            <a href="javascript:;" class="primary-link">Víctor Rosas</a>
-                                        </td>
-                                        <td> Gerente Regional</td>
-                                        <td>
-                                            <span class="bold theme-font">56%</span>
-                                        </td>
-                                        <td> 24 </td>
-                                        <td> 19 </td>
-                                        <td> 21 </td>
-                                        <td> 12 </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fit">
-                                            <img class="user-pic rounded" src="../../assets/metronics/pages/media/users/avatar80_1.jpg"> </td>
-                                        <td>
-                                            <a href="javascript:;" class="primary-link">Hernán Durán</a>
-                                        </td>
-                                        <td> Gerente Distrital</td>
-                                        <td>
-                                            <span class="bold theme-font">61%</span>
-                                        </td>
-                                        <td> 25 </td>
-                                        <td> 32 </td>
-                                        <td> 35 </td>
-                                        <td> 25 </td>
+                                        <td> {{ action.promise.kept }}</td>
+                                        <td> {{ action.promise.empty }} </td>
+                                        <td> {{ action.promise.negotiating}} </td>
+                                        <td> {{action.promise.open}} </td>
                                     </tr>
                                 </table>
                             </div>
