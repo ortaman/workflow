@@ -82,14 +82,7 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
        ActionListService.getList(query).then(
          function(response) {
            var actions = response.results;
-           angular.forEach(actions, function(value, key){
-             angular.forEach(actionDateFields,function(value2, key2){
-               var item2 = {};
-               item2.title = actions[key].name+ ' ('+ value2+')';
-               item2.start = new Date(actions[key][key2]);
-               $scope.events.push(item2);
-             })
-           })
+           addToCalendar(actions,actionDateFields);
          },
          function(errorResponse) {
            $scope.status = errorResponse.statusText || 'Request failed';
