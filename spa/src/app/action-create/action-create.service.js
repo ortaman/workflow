@@ -13,7 +13,7 @@ app.service("ActionCreateService", ['$http', 'APIConfig', function($http, APICon
             transformFields.forEach(function(item) {
             
             if(key == item)
-                object[key] = new moment(value).format("DD-MM-YYYY");
+                object[key] = new moment(value).format("YYYY-MM-DD");
             })
         });
 

@@ -67,10 +67,6 @@ class ProjectListSerializer(serializers.ModelSerializer):
 
 class ActionPostSerializer(serializers.ModelSerializer):
 
-    begin_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-    accomplish_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-    report_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-
     class Meta:
         model  = Action
         fields = (
