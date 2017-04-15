@@ -121,20 +121,10 @@ class Action(models.Model):
     producer = models.ForeignKey(User, related_name='producer_action', verbose_name='Realizador')
     observer = models.ForeignKey(User, related_name='agent_action', verbose_name='Observador')
 
-    expire_at = models.DateField(auto_now=False, verbose_name='Fecha límite de la fase')
-
     # agremments
     begin_at = models.DateField(auto_now=False, verbose_name='Fecha de inicio')
-    
     accomplish_at = models.DateField(auto_now=False, verbose_name='Fecha de cumplimiento')
-    
-    renegotiation_at = models.DateField(
-        null=True, blank=True, 
-        auto_now=False, verbose_name='Fecha de regenociación')
-
-    report_at = models.DateField(
-        null=True, blank=True, 
-        auto_now=False, verbose_name='Fecha de reporte de Avance')
+    report_at = models.DateField( auto_now=False, verbose_name='Fecha de reporte de Avance')
 
     # indicators
     financial = models.CharField(max_length=64, verbose_name='Financieros')

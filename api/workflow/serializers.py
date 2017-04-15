@@ -67,11 +67,8 @@ class ProjectListSerializer(serializers.ModelSerializer):
 
 class ActionPostSerializer(serializers.ModelSerializer):
 
-    expire_at =serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-
     begin_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
     accomplish_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-    renegotiation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
     report_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
 
     class Meta:
@@ -80,8 +77,8 @@ class ActionPostSerializer(serializers.ModelSerializer):
             'id', 'project', 'name', 'phase',
             'progress', 'status',
             'client', 'producer', 'observer',
-            'toDo', 'satisfactions', 'expire_at',
-            'begin_at', 'expire_at', 'accomplish_at', 'report_at', 'renegotiation_at',
+            'toDo', 'satisfactions',
+            'begin_at', 'accomplish_at', 'report_at',
             'financial', 'operational', 'other1', 'other2', 'parent_action')
 
     read_only_fields =  ('created_at', 'updated_at','create_by', 'promise')
@@ -110,7 +107,7 @@ class ActionListSerializer(serializers.ModelSerializer):
         model  = Action
         fields = (
             'id', 'name', 'producer', 'client', 'project','toDo',
-            'begin_at', 'expire_at', 'accomplish_at', 'report_at', 'renegotiation_at')
+            'begin_at', 'accomplish_at', 'report_at')
 
 
 class ActionUserSerializer(serializers.ModelSerializer):
