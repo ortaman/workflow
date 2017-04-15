@@ -8,6 +8,28 @@ app.controller('ActionCreateController', [
   $scope.projectId = $state.params.projectId.toString();
   $scope.actionId = $state.params.actionId.toString();
 
+  $scope.updateDates = function() {
+
+    switch($scope.action.phase) {
+        case 'Preparación':
+            $scope.minDate = new Date($scope.project.begin_at);
+            $scope.maxDate = new Date($scope.project.preparation_at);
+            break;
+        case 'Negociación':
+            $scope.maxDate = new Date($scope.project.negotiation_at);
+            $scope.minDate = new Date($scope.project.preparation_at);
+            break;
+        case 'Ejecución':
+            $scope.maxDate = new Date($scope.project.ejecution_at);
+            $scope.minDate = new Date($scope.project.negotiation_at);
+            break;          
+        default:
+            $scope.maxDate = new Date($scope.project.evaluation_at);
+            $scope.minDate = new Date($scope.project.ejecution_at);
+    }
+
+  };
+
   $scope.init = function() {
     $scope.getProject();
     if($scope.actionId)
@@ -54,6 +76,8 @@ app.controller('ActionCreateController', [
 
         $scope.action.project = $scope.project.name;
         $scope.action.client = $scope.project.producer.name + " "+ $scope.project.producer.first_surname + " " + $scope.project.producer.second_surname;
+        $scope.action.phase = $scope.project.phase;
+        $scope.updateDates();
       },
       function(errorResponse) {
         console.log('errorResponse', errorResponse);

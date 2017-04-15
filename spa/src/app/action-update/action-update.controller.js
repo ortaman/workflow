@@ -6,11 +6,34 @@ app.controller('ActionUpdateController', [
     $scope.submitted = false;
     $scope.action = {};
 
+    $scope.updateLimitDates = function() {
+
+      switch($scope.action.phase) {
+          case 'Preparación':
+              $scope.minDate = new Date($scope.action.project.begin_at);
+              $scope.maxDate = new Date($scope.action.project.preparation_at);
+              break;
+          case 'Negociación':
+              $scope.maxDate = new Date($scope.action.project.negotiation_at);
+              $scope.minDate = new Date($scope.action.project.preparation_at);
+              break;
+          case 'Ejecución':
+              $scope.maxDate = new Date($scope.action.project.ejecution_at);
+              $scope.minDate = new Date($scope.action.project.negotiation_at);
+              break;          
+          default:
+              $scope.maxDate = new Date($scope.action.project.evaluation_at);
+              $scope.minDate = new Date($scope.action.project.ejecution_at);
+      }
+
+    };
+
     $scope.getActionByIdInit = function() {
       ActionGetService.getById($state.params.id).then(
         function(response) {
           console.log('response', response);
           $scope.action = response;
+          $scope.updateLimitDates();
         },
         function(errorResponse) {
           console.log('errorResponse', errorResponse);
