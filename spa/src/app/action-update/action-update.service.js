@@ -21,7 +21,7 @@ app.service("ActionUpdateService", ['$http', 'APIConfig', function($http, APICon
         angular.forEach(object, function(value, key) {
             transformFields.forEach(function(item) {
                 if(key == item)
-                    object[key] = new moment(value).format("DD-MM-YYYY");
+                    object[key] = new moment(value).format("YYYY-MM-DD");
             })
         });
 
