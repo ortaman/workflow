@@ -85,10 +85,8 @@ class ActionList(APIView, APIMixin):
                 q1 = Q(project__id = query.get('project_id'))
                 q2 = (
                     Q(begin_at__range         = range_date) |
-                    Q(expire_at__range        = range_date) |
                     Q(report_at__range        = range_date) |
-                    Q(accomplish_at__range    = range_date) |
-                    Q(renegotiation_at__range = range_date))
+                    Q(accomplish_at__range    = range_date))
 
                 queryset = queryset.filter(q1, q2)
                 serializer = self.serializer_list(queryset, many=True)
@@ -105,17 +103,11 @@ class ActionList(APIView, APIMixin):
                     'date':'begin_at',
                     'text':'Fecha de inicio'
                     },{
-                    'date':'expire_at',
-                    'text':'Fecha de expiración'
-                    },{
                     'date':'report_at',
                     'text':'fecha de cumplimiento'
                     },{
                     'date':'accomplish_at',
                     'text':'Fecha de reporte de avance'
-                    },{
-                    'date':'renegotiation_at',
-                    'text':'Fecha de Renegociación'
                     },
                 ]
 

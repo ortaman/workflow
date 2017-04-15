@@ -13,11 +13,9 @@ app.service("ActionUpdateService", ['$http', 'APIConfig', function($http, APICon
             object.parent_action = object.parent_action.id;
 
         var transformFields = [
+            'begin_at',
             'accomplish_at',
-            'expire_at',
-            'renegotiation_at',
             'report_at',
-            'begin_at'
         ];
 
         angular.forEach(object, function(value, key) {

@@ -97,17 +97,16 @@ gulp.task('js-vendor', function () {
     // Include all compiled plugins (below), or include individual files as needed
     // "bower_components/bootstrap/dist/js/bootstrap.min.js",
     "bower_components/angular/angular.min.js",
-    "bower_components/angular-ui-router/release/angular-ui-router.min.js",
-    "bower_components/ng-dialog/js/ngDialog.js",
+    "bower_components/angular-aria/angular-aria.min.js",
+    "bower_components/angular-animate/angular-animate.min.js",
+    "bower_components/angular-material/angular-material.min.js",
 
-    "bower_components/angular-aria/angular-aria.js",
-    "bower_components/angular-animate/angular-animate.js",
-    "bower_components/angular-material/angular-material.js",
+    "bower_components/angular-ui-router/release/angular-ui-router.min.js",
+    "bower_components/ng-dialog/js/ngDialog.min.js",
     "bower_components/moment/min/moment.min.js",
     "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
     "bower_components/angular-ui-calendar/src/calendar.js",
-    "bower_components/fullcalendar/dist/fullcalendar.js"
-
+    "bower_components/fullcalendar/dist/fullcalendar.min.js",
     ])
     //.pipe(uglify())
     .pipe(concat('vendors.js'))
@@ -121,8 +120,8 @@ gulp.task('css-vendor',function(){
       "bower_components/normalize-css/normalize.css",
       "bower_components/bootstrap/dist/css/bootstrap.min.css",
       "bower_components/ng-dialog/css/ngDialog.min.css",
-      "bower_components/angular-material/angular-material.css",
-      "bower_components/fullcalendar/dist/fullcalendar.min.css"
+      "bower_components/angular-material/angular-material.min.css",
+      "bower_components/fullcalendar/dist/fullcalendar.min.css",
        ])
       .pipe(concat('vendors.css'))
       .pipe(gulp.dest("src/assets"))

@@ -3,6 +3,7 @@ app.controller('ProjectCreateController', [
   '$scope', '$state', 'ProjectCreateService',
   function($scope, $state, ProjectCreateService) {
     $scope.submitted = false;
+    
     $scope.project = {};
 
     var transformFields = [

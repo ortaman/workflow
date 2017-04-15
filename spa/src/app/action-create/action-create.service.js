@@ -4,11 +4,9 @@ app.service("ActionCreateService", ['$http', 'APIConfig', function($http, APICon
     this.create = function(object) {
 
         var transformFields = [
+            'begin_at',
             'accomplish_at', 
-            'expire_at', 
-            'renegotiation_at', 
             'report_at', 
-            'begin_at'
         ];
 
         angular.forEach(object, function(value, key) {

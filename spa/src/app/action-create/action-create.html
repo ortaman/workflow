@@ -295,13 +295,14 @@
                           <h4 class="form-section"> Fechas Compromisos </h4>
                           <div class="row">
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Inicio </h5>
                                   <md-datepicker
                                     name="begin_at"
+                                    md-current-view="year"
+                                    md-placeholder="Ingresar fecha"
                                     ng-model="action.begin_at"
-                                    md-placeholder="ingrese fecha"
                                     required ></md-datepicker>
 
                                   <!--div ng-show="actionForm.begin_at.$touched || submitted">
@@ -312,30 +313,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div flex-gt-xs>
-                                  <h5> Fecha de expiracion </h5>
-                                  <md-datepicker
-                                    name="expire_at"
-                                    ng-model="action.expire_at"
-                                    md-placeholder="ingrese fecha"
-                                    required ></md-datepicker>
-
-                                  <!--div ng-show="actionForm.expire_at.$touched || submitted">
-                                    <div class="error" ng-show="actionForm.expire_at.$error.required">
-                                      Campo requerido.
-                                    </div>
-                                  </div-->
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Cumplimiento </h5>
                                   <md-datepicker
                                     name="accomplish_at"
+                                    md-current-view="year"
+                                    md-placeholder="Ingresar fecha"
                                     ng-model="action.accomplish_at"
-                                    md-placeholder="ingrese fecha"
                                     required></md-datepicker>
 
                                     <!--div ng-show="actionForm.accomplish_at.$touched || submitted">
@@ -346,12 +331,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Reporte de Avance </h5>
                                   <md-datepicker
                                   name="report_at"
-                                  md-placeholder="ingrese fecha"
+                                  md-current-view="year"
+                                  md-placeholder="Ingresar fecha"
                                   ng-model="action.report_at"
                                   required ></md-datepicker>
 
@@ -363,27 +349,7 @@
 
                                 </div>
                             </div>
-                        </div>
 
-                        <br>
-                        <div class="row">
-                          <div class="col-md-4 col-md-offset-4 text-center">
-                              <div flex-gt-xs>
-                                <h5> Fecha de Renegoaciación </h5>
-                                <md-datepicker
-                                name="renegotiation_at"
-                                md-placeholder="ingrese fecha"
-                                ng-model="action.renegotiation_at"
-                                required ></md-datepicker>
-
-                                <!--div ng-show="actionForm.renegotiation_at.$touched || submitted">
-                                  <div class="error" ng-show="actionForm.renegotiation_at.$error.required">
-                                    Campo requerido.
-                                  </div>
-                                </div-->
-
-                              </div>
-                          </div>
                         </div>
 
                         <br>
