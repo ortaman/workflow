@@ -100,8 +100,33 @@
 
                             <div class="col-md-4">
                               <md-input-container class="md-block" >
+                                <label> Tipo </label>
+                                <md-select 
+                                  name="kind"
+                                  ng-init="project.kind='Estándar'"
+                                  ng-model="project.kind" 
+                                  required>
+                                  <md-option value="Estándar"> Estándar </md-option>
+                                  <md-option value="Piloto"> Piloto </md-option>
+                                  <md-option value="Jardín"> Jardín </md-option>
+                                </md-select>
+
+                                <div ng-show="projectForm.kind.$touched || submitted">
+                                   <div class="error" style="margin-top: 0em" ng-show="projectForm.kind.$error.required">
+                                     Campo requerido.
+                                   </div>
+                                 </div>
+                              </md-input-container>
+                            </div>
+
+                            <div class="col-md-4">
+                              <md-input-container class="md-block" >
                                 <label> Fase </label>
-                                <md-select name="phase" ng-model="project.phase" required="">
+                                <md-select 
+                                  name="phase" 
+                                  ng-init="project.phase='Preparación'"
+                                  ng-model="project.phase" 
+                                  required>
                                   <md-option value="Preparación"> Preparación </md-option>
                                   <md-option value="Negociación"> Negociación </md-option>
                                   <md-option value="Ejecución"> Ejecución </md-option>
@@ -114,23 +139,6 @@
                                    </div>
                                  </div>
                                 </md-input-container>
-                            </div>
-
-                            <div class="col-md-4">
-                              <md-input-container class="md-block" >
-                                <label> Tipo </label>
-                                <md-select name="clasification" ng-model="project.clasification" required="">
-                                  <md-option value="Estándar"> Estándar </md-option>
-                                  <md-option value="Piloto"> Piloto </md-option>
-                                  <md-option value="Jardín"> Jardín </md-option>
-                                </md-select>
-
-                                <div ng-show="projectForm.clasification.$touched || submitted">
-                                   <div class="error" style="margin-top: 0em" ng-show="projectForm.clasification.$error.required">
-                                     Campo requerido.
-                                   </div>
-                                 </div>
-                              </md-input-container>
                             </div>
 
                         </div>
@@ -194,8 +202,97 @@
                               </md-input-container>
                           </div>
                             <!--row-->
+                        </div>                        
+                        <!--end row-->
+
+                        <h4 class="form-section"> Fechas Compromisos </h4>
+                        <!--row-->
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div flex-gt-xs>
+                                  <h5> Fecha de Inicio </h5>
+                                  <md-datepicker
+                                    name="begin_at"
+                                    md-current-view="year"
+                                    md-placeholder="ingrese fecha"
+                                    ng-model="project.begin_at"
+                                    required></md-datepicker>
+
+                                  <div ng-show="projectForm.begin_at.$touched || submitted">
+                                    <div class="error" ng-show="projectForm.begin_at.$error.required">
+                                      Campo requerido.
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div flex-gt-xs>
+                                  <h5> Fecha de Cumplimiento </h5>
+                                  <md-datepicker
+                                    name="accomplish_at"
+                                    md-current-view="year"
+                                    md-placeholder="ingrese fecha"
+                                    md-min-date="project.begin_at"
+                                    ng-disabled="project.begin_at===undefined"
+                                    ng-model="project.accomplish_at"
+                                    required></md-datepicker>
+
+                                    <div ng-show="projectForm.accomplish_at.$touched || submitted">
+                                      <div class="error" ng-show="projectForm.accomplish_at.$error.required">
+                                        Campo requerido.
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div flex-gt-xs>
+                                  <h5> Fecha de Reporte de Avance </h5>
+                                  <md-datepicker
+                                  name="report_at"
+                                  md-current-view="year"
+                                  md-placeholder="ingrese fecha"
+                                  md-max-date="project.accomplish_at"
+                                  md-min-date="project.begin_at"
+                                  ng-disabled="project.begin_at===undefined || project.accomplish_at===undefined"
+                                  ng-model="project.report_at"
+                                  required ></md-datepicker>
+
+                                  <div ng-show="projectForm.report_at.$touched || submitted">
+                                    <div class="error" ng-show="projectForm.report_at.$error.required">
+                                      Campo requerido.
+                                    </div>
+                                  </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div flex-gt-xs>
+                                  <h5> Fecha de Renegociación </h5>
+                                  <md-datepicker
+                                    name="renegotiation_at"
+                                    md-current-view="year"
+                                    md-placeholder="ingrese fecha"
+                                    md-min-date="project.accomplish_at"
+                                    ng-disabled="project.begin_at===undefined || project.accomplish_at===undefined"
+                                    ng-model="project.renegotiation_at"></md-datepicker>
+
+                                    <div ng-show="projectForm.renegotiation_at.$touched || submitted">
+                                      <div class="error" ng-show="projectForm.renegotiation_at.$error.required">
+                                        Campo requerido.
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <h4 class="form-section"> Fases Action Workflow </h4>
+                        <!--end row-->
+
+                        <br><br>
+                        <h4 class="form-section"> Fechas límites de las fases Action Workflow </h4>
                         <!--row-->
                         <div class="row">
 
@@ -204,9 +301,12 @@
                                   <h5>Fase de Preparación</h5>
                                   <md-datepicker
                                     name="preparation_at"
-                                    md-placeholder="ingrese fecha"
                                     md-current-view="year"
+                                    md-placeholder="ingrese fecha"
+                                    md-min-date="project.begin_at"
+                                    md-max-date="project.accomplish_at"
                                     ng-model="project.preparation_at"
+                                    ng-disabled="project.begin_at===undefined || project.accomplish_at===undefined"
                                     required></md-datepicker>
 
                                   <div ng-show="projectForm.preparation_at.$touched || submitted">
@@ -222,9 +322,12 @@
                                   <h5>Fase de negociación</h5>
                                   <md-datepicker
                                     name="negotiation_at"
-                                    md-placeholder="ingrese fecha"
                                     md-current-view="year"
+                                    md-placeholder="ingrese fecha"
+                                    md-min-date="project.preparation_at"
+                                    md-max-date="project.accomplish_at"
                                     ng-model="project.negotiation_at"
+                                    ng-disabled=" project.preparation_at===undefined"
                                     required ></md-datepicker>
 
                                   <div ng-show="projectForm.negotiation_at.$touched || submitted">
@@ -240,9 +343,12 @@
                                   <h5>Fase de ejecución</h5>
                                   <md-datepicker
                                     name="execution_at"
-                                    md-placeholder="ingrese fecha"
                                     md-current-view="year"
+                                    md-placeholder="ingrese fecha"
+                                    md-min-date="project.negotiation_at"
+                                    md-max-date="project.accomplish_at"
                                     ng-model="project.execution_at"
+                                    ng-disabled=" project.negotiation_at===undefined"
                                     required ></md-datepicker>
 
                                   <div ng-show="projectForm.execution_at.$touched || submitted">
@@ -258,9 +364,12 @@
                                   <h5>Fase de evaluación</h5>
                                   <md-datepicker
                                     name="evaluation_at"
-                                    md-placeholder="ingrese fecha"
                                     md-current-view="year"
+                                    md-placeholder="ingrese fecha"
+                                    md-min-date="project.execution_at"
+                                    md-max-date="project.accomplish_at"
                                     ng-model="project.evaluation_at"
+                                    ng-disabled=" project.negotiation_at===undefined"
                                     required></md-datepicker>
                                 </div>
 
@@ -272,88 +381,6 @@
                             </div>
 
                         </div>
-                        <!--end row-->
-
-                        <br><br>
-                        <h4 class="form-section"> Fechas Compromisos </h4>
-                        <!--row-->
-                        <div class="row">
-
-                            <div class="col-md-3">
-                                <div flex-gt-xs>
-                                  <h5>"Fecha de Inicio"</h5>
-                                  <md-datepicker
-                                    name="begin_at"
-                                    ng-model="project.begin_at"
-                                    md-placeholder="ingrese fecha"
-                                    md-current-view="year"
-                                    required ></md-datepicker>
-
-                                  <div ng-show="projectForm.begin_at.$touched || submitted">
-                                    <div class="error" ng-show="projectForm.begin_at.$error.required">
-                                      Campo requerido.
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div flex-gt-xs>
-                                  <h5>Fecha de Cumplimiento...</h5>
-                                  <md-datepicker
-                                    name="accomplish_at"
-                                    ng-model="project.accomplish_at"
-                                    md-placeholder="ingrese fecha"
-                                    md-current-view="year"
-                                    required></md-datepicker>
-
-                                    <div ng-show="projectForm.accomplish_at.$touched || submitted">
-                                      <div class="error" ng-show="projectForm.accomplish_at.$error.required">
-                                        Campo requerido.
-                                      </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div flex-gt-xs>
-                                  <h5>Fecha de Renegociación...</h5>
-                                  <md-datepicker
-                                    name="renegotiation_at"
-                                    md-placeholder="ingrese fecha"
-                                    md-current-view="year"
-                                    ng-model="project.renegotiation_at"
-                                    required></md-datepicker>
-
-                                    <div ng-show="projectForm.renegotiation_at.$touched || submitted">
-                                      <div class="error" ng-show="projectForm.renegotiation_at.$error.required">
-                                        Campo requerido.
-                                      </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div flex-gt-xs>
-                                  <h5>Fecha de Reporte de Avance...</h5>
-                                  <md-datepicker
-                                  name="report_at"
-                                  md-placeholder="ingrese fecha"
-                                  md-current-view="year"
-                                  ng-model="project.report_at"
-                                  required ></md-datepicker>
-
-                                  <div ng-show="projectForm.report_at.$touched || submitted">
-                                    <div class="error" ng-show="projectForm.report_at.$error.required">
-                                      Campo requerido.
-                                    </div>
-                                  </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <!--end row-->
 
                         <br><br>
                         <h4 class="form-section">Indicadores</h4>

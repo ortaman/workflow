@@ -21,7 +21,7 @@ class Project(models.Model):
 
     # focus project
     name = models.CharField(max_length=64, verbose_name='Nombre')
-    clasification = models.CharField(choices=TYPES, max_length=8, default='estandar', verbose_name='Tipos de proyecto')
+    kind = models.CharField(choices=TYPES, max_length=8, default='estandar', verbose_name='Tipos de proyecto')
     phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de proyecto')
 
     # action roles
