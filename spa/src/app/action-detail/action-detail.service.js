@@ -13,9 +13,13 @@ app.service("ActionGetService", ['$http', 'APIConfig', function($http, APIConfig
             ];
 
             angular.forEach(response.data, function(value, key) {
-                transformFields.forEach(function(item){
-                    if(key == item)
-                    response.data[key] = new Date(response.data[key]);
+                transformFields.forEach(function(item) {
+
+                    if(key == item) {
+                        var d = new Date(value);
+                        response.data[key] = new Date(d.getTime() + d.getTimezoneOffset() *60*1000);
+                    }
+
                 })
             });
 

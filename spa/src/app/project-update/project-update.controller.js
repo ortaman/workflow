@@ -26,9 +26,12 @@ app.controller('ProjectUpdateController', [
           angular.forEach(response, function(value, key) {
               transformFields.forEach(function(item) {
 
-              if(key == item)
-                  response[key] = new Date(value);
-              })
+              if(key == item) {
+                var d = new Date(value);
+                response[key] = new Date(d.getTime() + d.getTimezoneOffset() *60*1000);
+              }
+
+            })
 
           });
 

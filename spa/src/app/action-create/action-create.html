@@ -119,10 +119,10 @@
                             <md-input-container class="md-block" >
                               <label> Fase </label>
                               <md-select name="phase" ng-model="action.phase" required="">
-                                <md-option value="preparacion"> Preparación </md-option>
-                                <md-option value="negociacion"> Negociación </md-option>
-                                <md-option value="ejecucion"> Ejecución </md-option>
-                                <md-option value="evaluacion"> Evaluación </md-option>
+                                <md-option value="Preparación"> Preparación </md-option>
+                                <md-option value="Negociación"> Negociación </md-option>
+                                <md-option value="Ejecución"> Ejecución </md-option>
+                                <md-option value="Evaluación"> Evaluación </md-option>
                               </md-select>
 
                               <div ng-show="actionForm.phase.$touched || submitted">
@@ -166,8 +166,9 @@
                                            ng-init="action.status='open'"
                                            ng-model="action.status"
                                            required="">
-                                  <md-option value="open"> Abierta </md-option>
-                                  <md-option value="close"> Cerrada </md-option>
+                                  <md-option value="Abierta"> Abierta </md-option>
+                                  <md-option value="Concluida satisfactoriamente"> Concluida satisfactoriamente </md-option>
+                                  <md-option value="Concluida insatisfactoriamente"> Concluida insatisfactoriamente </md-option>
                                 </md-select>
 
                                 <div ng-show="actionForm.status.$touched || submitted">
@@ -186,13 +187,13 @@
                                            ng-init="action.promise='created'"
                                            ng-model="action.promise"
                                            ng-disabled="true">
-                                     <md-option value="created"> Creada </md-option>
-                                     <md-option value="accepted"> Aceptada </md-option>
-                                     <md-option value="reported"> Reportada </md-option>
-                                     <md-option value="kept"> Cumplida </md-option>
-                                     <md-option value="empty"> Incumplida </md-option>
-                                     <md-option value="negotiating"> Negociando </md-option>
-                                     <md-option value="unaccepted"> No aceptada  </md-option>
+                                     <md-option value="Creada"> Creada </md-option>
+                                     <md-option value="Aceptada"> Aceptada </md-option>
+                                     <md-option value="Reportada"> Reportada </md-option>
+                                     <md-option value="Cumplida"> Cumplida </md-option>
+                                     <md-option value="Incumplida"> Incumplida </md-option>
+                                     <md-option value="Negociando"> Negociando </md-option>
+                                     <md-option value="No aceptada"> No aceptada </md-option>
                                 </md-select>
 
                                 <div ng-show="actionForm.promise.$touched || submitted">

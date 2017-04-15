@@ -7,7 +7,7 @@ app.controller('ActionDetailController', [
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
-	var actionStatus = "open"
+	var actionStatus = "Abierta"
 
 	$scope.currentAction = {};
 	$scope.project = {};

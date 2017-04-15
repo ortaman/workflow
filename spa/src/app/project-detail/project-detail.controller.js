@@ -7,7 +7,7 @@ app.controller('ProjectDetailController', [
 	$scope.producersCurrentPage = 1;
 
 
-	var queryStatus = "open";
+	var queryStatus = "Abierta";
 	var dateFields = [
 			'accomplish_at',
 			'expire_at',

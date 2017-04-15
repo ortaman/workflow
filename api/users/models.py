@@ -10,13 +10,13 @@ from django.contrib.auth.hashers import make_password
 class BaseUser(AbstractBaseUser, PermissionsMixin):
 
     POSITIONS = (
-        ('commercial officer', 'Directora Comercial'),
-        ('national sales manager', 'Gerente Nacional de Ventas'),
-        ('product line manager', 'Gerente de Línea de Productos'),
-        ('corporate marketing Manager', 'Gerente de Marketing Corporativo'),
-        ('regional sales manager', 'Gerente Regional de Ventas'),
-        ('district manager', 'Gerente Distrital'),
-        ('coordinator', 'Coordinador'),
+        ('Directora Comercial', 'Directora Comercial'),
+        ('Gerente Nacional de Ventas', 'Gerente Nacional de Ventas'),
+        ('Gerente de Línea de Productos', 'Gerente de Línea de Productos'),
+        ('Gerente de Marketing Corporativo', 'Gerente de Marketing Corporativo'),
+        ('Gerente Regional de Ventas', 'Gerente Regional de Ventas'),
+        ('Gerente Distrital', 'Gerente Distrital'),
+        ('Coordinador', 'Coordinador'),
     )
 
     username = models.CharField(max_length=128, unique=True)

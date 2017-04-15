@@ -7,16 +7,16 @@ from users.models import User
 class Project(models.Model):
 
     PHASES = (
-        ('preparacion', 'Preparación'),
-        ('negociacion', 'Negociación'),
-        ('ejecucion', 'Ejecución'),
-        ('evaluacion', 'Evaluación'),
+        ('Preparación', 'Preparación'),
+        ('Negociación', 'Negociación'),
+        ('Ejecución', 'Ejecución'),
+        ('Evaluación', 'Evaluación'),
     )
 
     TYPES = (
-        ('estandar', 'Estándar'),
-        ('piloto', 'Piloto'),
-        ('jardin', 'Jardín'),
+        ('Estándar', 'Estándar'),
+        ('Piloto', 'Piloto'),
+        ('Jardín', 'Jardín'),
     )
 
     # focus project
@@ -76,26 +76,27 @@ class Project(models.Model):
 class Action(models.Model):
 
     PHASES = (
-        ('preparacion', 'Preparación'),
-        ('negociacion', 'Negociación'),
-        ('ejecucion', 'Ejecución'),
-        ('evaluacion', 'Evaluación'),
+        ('Preparación', 'Preparación'),
+        ('Negociación', 'Negociación'),
+        ('Ejecución', 'Ejecución'),
+        ('Evaluación', 'Evaluación'),
     )
 
     STATUS = (
-        ('open', 'Abierta'),
-        ('close', 'Cerrada'),
+        ('Abierta', 'Abierta'),
+        ('Concluida satisfactoriamente', 'Concluida satisfactoriamente'),
+        ('Concluida insatisfactoriamente', 'Concluida no satisfactoriamente'),
     )
 
     PROMISE = (
-        ('created', 'Creada'),
-        ('accepted', 'Aceptada'),  # acepted is a action in process
-        ('reported', 'Reportada'),
-        ('kept', 'Cumplida'),
-        ('empty', 'Incumplida'),
+        ('Creada', 'Creada'),
+        ('Aceptada', 'Aceptada'),  # acepted is a action in process
+        ('Reportada', 'Reportada'),
+        ('Cumplida', 'Cumplida'),
+        ('Incumplida', 'Incumplida'),
         
-        ('negotiating', 'Negociando'),
-        ('unaccepted', 'No aceptada'),
+        ('Negociando', 'Negociando'),
+        ('No aceptada', 'No aceptada'),
     )
 
     PERCENTAJES = (
@@ -108,7 +109,7 @@ class Action(models.Model):
     phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de la acción')
 
     progress = models.CharField(choices=PERCENTAJES, max_length=3, default='0', verbose_name='Porcentaje de avance')
-    status = models.CharField(choices=STATUS, max_length=5, default='Abierta', verbose_name='Estado')
+    status = models.CharField(choices=STATUS, max_length=30, default='Abierta', verbose_name='Estado')
     promise = models.CharField(choices=PROMISE, max_length=11, default='created', verbose_name='Promesa')
 
     # focus project

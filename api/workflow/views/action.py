@@ -141,6 +141,7 @@ class ActionList(APIView, APIMixin):
             else:
                 queryset = queryset.filter(project_id=query.get('project_id'))
 
+        # Search by parent action and status. 
         elif 'parent_action_id' in query.keys():
 
             queryset = queryset.filter(
@@ -148,6 +149,7 @@ class ActionList(APIView, APIMixin):
                 status=query.get('status'),
             )
 
+        # Search actions by client and promise status.
         elif 'client' in query.keys() and 'promise' in query.keys():
             
             queryset = queryset.filter(
@@ -155,6 +157,7 @@ class ActionList(APIView, APIMixin):
                 promise=query.get('promise'),
             )
 
+        # Search actions by producer and promise status.
         elif 'producer' in query.keys() and 'promise' in query.keys():
 
             queryset = queryset.filter(
