@@ -12,8 +12,7 @@ app.controller('ProjectCreateController', [
         'execution_at',
         'evaluation_at',
 
-        'accomplish_at', 
-        'expire_at', 
+        'accomplish_at',
         'renegotiation_at', 
         'report_at', 
         'begin_at',
@@ -34,7 +33,7 @@ app.controller('ProjectCreateController', [
           transformFields.forEach(function(item) {
           
           if(key == item)
-              project[key] = new moment(value).format("DD-MM-YYYY");
+              project[key] = new moment(value).format("YYYY-MM-DD");
           })
       });
 

@@ -24,19 +24,9 @@ class Base64ImageField(serializers.ImageField):
 class ProjectPostSerializer(serializers.ModelSerializer):
     image = Base64ImageField(max_length=None, use_url=True)
 
-    preparation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-    negotiation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-    execution_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-    evaluation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-
-    begin_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-    accomplish_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-    renegotiation_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-    report_at = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-
     class Meta:
         model  = Project
-        fields = ('id','client', 'producer', 'observer', 'name', 'clasification', 'phase',
+        fields = ('id','client', 'producer', 'observer', 'name', 'kind', 'phase',
             'toDo', 'satisfactions', 'preparation_at', 'negotiation_at', 'execution_at',
             'evaluation_at', 'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at',
             'financial', 'operational', 'other1', 'other2', 'image')
