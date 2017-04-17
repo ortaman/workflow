@@ -8,13 +8,11 @@ app.controller('ProjectDetailController', [
 
 
 	var queryStatus = "Abierta";
-	var dateFields = [
-			'accomplish_at',
-			'expire_at',
-			'renegotiation_at',
-			'report_at',
-			'begin_at'
-	];
+	var dateFields = {
+      'accomplish_at':'Fecha de cumplimiento',
+      'report_at':'Fecha de reporte',
+      'begin_at':'Fecha de inicio',
+    };
 
 	$scope.project = {};
 	$scope.producers = [];
@@ -25,8 +23,6 @@ app.controller('ProjectDetailController', [
 		getProject();
 		$scope.actionPageChanged()
 		$scope.producerPageChanged();
-		$scope.timeLineChanged();
-
 	}
 
 	//Service call
@@ -35,8 +31,9 @@ app.controller('ProjectDetailController', [
 			function(response) {
 				response.image = APIConfig.baseUrl + response.image;
 				response.producer.photo = APIConfig.baseUrl + response.producer.photo;
-
 				$scope.project = response;
+				$scope.timeLineChanged();
+
 			},
 			function(errorResponse) {
 				$scope.status = errorResponse.statusText || 'Request failed';
@@ -69,14 +66,13 @@ app.controller('ProjectDetailController', [
 	$scope.timeLineChanged = function() {
 	  	var query = {
 	  		"project_id": $state.params.id,
-				'begin_date': moment('2017-01-01').format('YYYY-MM-DD'),
-	      'end_date': moment('2017-11-11').format('YYYY-MM-DD'),
+				'begin_date': moment($scope.project.begin_at).format('YYYY-MM-DD'),
+	      'end_date': moment($scope.project.accomplish_at).format('YYYY-MM-DD'),
 	  	};
 
 		ActionListService.getList(query).then(
 			function(response) {
 				$scope.timelines = transformActions(response);
-				console.log("timeline", $scope.timelines);
 
 				$.getScript("/assets/metronics/global/plugins/horizontal-timeline/horizontal-timeline.js", function(){});
 			},
@@ -159,14 +155,32 @@ app.controller('ProjectDetailController', [
         return output;
 		}
 
-		results = results.sort(custom_sort);
-		var results = UniqueArraybyId(results,'timeline');
 
-		results.forEach(function(item){
-			angular.forEach(item.actions, function(item2){
-				item2.producer.photo =  APIConfig.baseUrl+ item2.producer.photo;
+		var newArray = [];
+		angular.forEach(results, function (result) {
+			angular.forEach(dateFields, function(key, value){
+				var obj = {}
+				obj.timeline = result[value];
+				obj.actions = [];
+				result.timeline_text = key
+				obj.actions.push(angular.copy(result))
+				newArray.push(obj)
+
 			})
 		})
-		return results;
+
+		newArray = newArray.sort(custom_sort);
+		var newArray = UniqueArraybyId(newArray,'timeline');
+
+
+		//asign photo
+		newArray.forEach(function(item){
+			angular.forEach(item.actions, function(item2){
+				item2.producer.photo =  APIConfig.baseUrl+ angular.copy(item2.producer.photo);
+			})
+		})
+		//end of asignment
+
+		return newArray;
 	}
 }]);
