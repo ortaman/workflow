@@ -92,7 +92,7 @@ class ActionListSerializer(serializers.ModelSerializer):
     class Meta:
         model  = Action
         fields = (
-            'id', 'name', 'producer', 'client', 'project','toDo',
+            'id', 'name', 'producer', 'client', 'project', 'toDo', 'progress',
             'begin_at', 'accomplish_at', 'report_at')
 
 
