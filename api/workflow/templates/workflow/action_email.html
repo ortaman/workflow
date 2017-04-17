@@ -1,0 +1,66 @@
+
+<div style="
+	color:black;
+	margin: 11px 50px;
+	padding: 0px;
+	text-align: center;">
+
+	<h3 style="
+		color:#cc1414;
+		font-size: 20px;
+		margin: 25px 0px; 
+	    padding:0px;"> 
+	    		
+	    La acción <strong> " {{ action.name }} " </strong> {{ status }}. 
+	</h3> 
+
+	<h3 style="
+		color:black;
+		font-size: 18px; 
+		margin: 0px;
+		padding: 0px;"> 
+		Roles de la acción: 
+	</h3>
+
+	<p style="
+		color:black;
+		font-size: 16px; 
+		margin: 4px 0px 20px 0px;
+		padding: 0px;"> 
+		Cliente: {{ action.client.name }} {{ action.client.first_surname }} {{ action.client.first_surname }}
+		<br>
+		Realizador: {{ action.producer.name }} {{ action.producer.first_surname }} {{ action.producer.first_surname }}
+		<br>
+		Observador: {{ action.observer.name }} {{ action.observer.first_surname }} {{ action.observer.first_surname }}
+	</p> 
+
+	<h3 style="color:black; font-size: 18px; padding:0px; margin: 0px;"> Acción: </h3>
+	<p style="
+		color:black;
+		font-size: 16px; 
+		margin: 4px 0px 20px 0px;
+		padding: 0px;">  
+		{{ action.toDo }} 
+	</p>
+
+	<h3 style="color:black; font-size: 18px; padding:0px; margin: 0px;"> Requerimientos: </h3>
+		<p style="
+		color:black;
+		font-size: 16px; 
+		margin: 4px 0px 20px 0px;
+		padding: 0px;">  
+		{{ action.toDo }} 
+	</p>
+
+	<h3 style="color:black; font-size: 18px; padding:0px; margin: 0px;"> Fechas compromiso: </h3>
+    <p style="
+    	color:black;
+		font-size: 16px; 
+		margin: 4px 0px 90px 0px;
+		padding: 0px;">  
+		 Inicio: {{ action.begin_at }}
+    	<br> Compromiso: {{ action.accomplish_at }}
+    	<br> Reporte de Avance: {{ action.report_at }} 
+	</p>
+
+</div>

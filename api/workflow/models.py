@@ -45,9 +45,7 @@ class Project(models.Model):
         null=True, blank=True, 
         auto_now=False, verbose_name='Fecha de regenociación')
 
-    report_at = models.DateField(
-        null=True, blank=True, 
-        auto_now=False, verbose_name='Fecha de reporte de Avance')
+    report_at = models.DateField(auto_now=False, verbose_name='Fecha de reporte de Avance')
 
     # indicators
     financial = models.CharField(max_length=64, verbose_name='Financieros')

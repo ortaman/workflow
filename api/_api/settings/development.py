@@ -45,9 +45,6 @@ MIDDLEWARE += [
 # This IP addresses ensure debug toolbar shows development environment
 INTERNAL_IPS = ('127.0.0.1', '10.0.2.2')
 
-ALLOWED_HOSTS = ['localhost', '192.168.130.163', '127.0.0.1']
-
-
 # ***** DEBUG-CORS-HEADERS SETTINGS ***** #
 # CORS_ORIGIN_WHITELIST = ()
 CORS_ORIGIN_WHITELIST = (
@@ -57,28 +54,12 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:9090',
 )
 
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_METHODS = (
-    'GET',
-    'POST',
-    'PUT',
-    'PATCH',
-    'DELETE',
-    'OPTIONS',
-)
-
-CORS_ALLOW_HEADERS = (
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-    'time-zone',
-)
+# Email configuration
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'workflow.manage@gmail.com'
+EMAIL_HOST_PASSWORD = 'qwe123qwe'
+EMAIL_PORT = 587
 
 # ***** CELERY SETTINGS ***** #
 # CELERY_RESULT_BACKEND = 'django-db'

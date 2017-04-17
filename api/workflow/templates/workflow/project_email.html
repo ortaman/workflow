@@ -1,0 +1,78 @@
+
+<div style="
+	color:black;
+	margin: 11px 50px;
+	padding: 0px;
+	text-align: center;">
+
+	<h3 style="
+		color:#cc1414;
+		font-size: 20px;
+		margin: 25px 0px; 
+	    padding:0px;"> 
+	    		
+	    El proyecto <strong> " {{ project.name }} " </strong> {{ status }}. 
+	</h3> 
+
+	<h3 style="
+		color:black;
+		font-size: 18px; 
+		margin: 0px;
+		padding: 0px;"> 
+		Roles del Proyecto: 
+	</h3>
+
+	<p style="
+		color:black;
+		font-size: 16px; 
+		margin: 4px 0px 20px 0px;
+		padding: 0px;"> 
+		Cliente: {{ project.client.name }} {{ project.client.first_surname }} {{ project.client.first_surname }}
+		<br>
+		Realizador: {{ project.producer.name }} {{ project.producer.first_surname }} {{ project.producer.first_surname }}
+		<br>
+		Observador: {{ project.observer.name }} {{ project.observer.first_surname }} {{ project.observer.first_surname }}
+	</p> 
+
+	<h3 style="color:black; font-size: 18px; padding:0px; margin: 0px;"> Acción: </h3>
+	<p style="
+		color:black;
+		font-size: 16px; 
+		margin: 4px 0px 20px 0px;
+		padding: 0px;">  
+		{{ project.toDo }} 
+	</p>
+
+	<h3 style="color:black; font-size: 18px; padding:0px; margin: 0px;"> Requerimientos: </h3>
+		<p style="
+		color:black;
+		font-size: 16px; 
+		margin: 4px 0px 20px 0px;
+		padding: 0px;">  
+		{{ project.toDo }} 
+	</p>
+
+	<h3 style="color:black; font-size: 18px; padding:0px; margin: 0px;"> Fechas compromiso: </h3>
+    <p style="
+    	color:black;
+		font-size: 16px; 
+		margin: 4px 0px 20px 0px;
+		padding: 0px;">  
+		 Inicio: {{ project.begin_at }}
+    	<br> Compromiso: {{ project.accomplish_at }}
+    	<br> Reporte de Avance: {{ project.report_at }} 
+	</p>
+
+	<h3 style="color:black; font-size: 18px; padding:0px; margin: 0px;"> Fechas Action Workflow: </h3>
+    <p style="
+    	color:black;
+		font-size: 16px; 
+		margin: 4px 0px 90px 0px;
+		padding: 0px;">  
+		 Preparación: {{ project.begin_at }} - {{ project.preparation_at }}
+    	<br> Negociación: {{ project.preparation_at }} - {{ project.negotiation_at }}
+    	<br> Ejecución: {{ project.negotiation_at }} - {{ project.execution_at }} 
+    	<br> Evaluación: {{ project.execution_at }} - {{ project.evaluation_at }} 
+	</p>
+
+</div>

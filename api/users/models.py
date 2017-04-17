@@ -47,11 +47,11 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         # The user is identified by their email address
-        return self.email
+        return "%s %s %s" % (self.user.name, self.first_surname, self.second_surname)
 
     def get_short_name(self):
         # The user is identified by their email address
-        return self.email
+        return "%s %s" % (self.user.name, self.first_surname)
 
     def __str__(self):              # __unicode__ on Python 2
         return self.email
