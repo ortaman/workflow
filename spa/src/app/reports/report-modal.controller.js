@@ -1,6 +1,7 @@
 
-app.controller('ReportModalController', [ '$uibModalInstance','$state', 'ReportCreateService', '$scope', function($uibModalInstance, $state, ReportCreateService, $scope) {
-
+app.controller('ReportModalController', [ '$uibModalInstance','$state', 'ReportCreateService', '$scope','$rootScope',
+ function($uibModalInstance, $state, ReportCreateService, $scope, $rootScope) {
+    console.log($rootScope);
     $scope = this
     $scope.report = {
       'project':$state.params.id

@@ -13,7 +13,7 @@ var app = angular.module('myApp',
   ]
 );
 
-app.run(function($http, $rootScope, $location, StorageService) {
+app.run(function($http, $rootScope, $location, StorageService, UserService) {
 
   $http.defaults.headers.common['Accept'] = 'application/json';
   $http.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
@@ -22,13 +22,23 @@ app.run(function($http, $rootScope, $location, StorageService) {
     $http.defaults.headers.common.Authorization = 'Token ' + StorageService.get('token');
   }
 
-  // initialise google analytics
-  // $window.ga('create', 'UA-81230345-1', 'auto');
+  $rootScope.getCurrentUser = function(){
+    if(StorageService.get('user')){
+      return StorageService.get('user')
+    }else{
+      UserService.me().then(
+        function(response) {
+          $StorageService.set('user',1)
+          return StorageService.get('user')
+        },
+        function(errorResponse) {
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+        }
+      );
+    }
+  }
 
-  // track pageview on state change
-  // $rootScope.$on('$stateChangeSuccess', function (event) {
-    // $window.ga('send', 'pageview', $location.path());
-  // });
 
 });
 
