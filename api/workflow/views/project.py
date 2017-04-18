@@ -51,6 +51,7 @@ class ProjectList(APIView, APIMixin):
     """
     List all proyects, or create a new project.
     """
+    permission_classes = (IsAuthenticated,)
 
     # Mixing initial variables
     model = Project

@@ -29,8 +29,8 @@ class Project(models.Model):
     producer = models.ForeignKey(User, related_name='producer_project', verbose_name='Realizador')
     observer = models.ForeignKey(User, related_name='agent_project', verbose_name='Observador')
 
-    toDo = models.TextField(max_length=512, verbose_name='¿Qué y como se realizará?')
-    satisfactions = models.TextField(max_length=512, verbose_name='Condiciones de satisfacción')
+    toDo = models.TextField(max_length=1024, verbose_name='¿Qué y como se realizará?')
+    satisfactions = models.TextField(max_length=1024, verbose_name='Condiciones de satisfacción')
 
     # workflow dates
     preparation_at = models.DateField(auto_now=False, verbose_name='Fecha de preparación')
@@ -111,8 +111,8 @@ class Action(models.Model):
     promise = models.CharField(choices=PROMISE, max_length=11, default='created', verbose_name='Promesa')
 
     # focus project
-    toDo = models.TextField(max_length=512, verbose_name='¿Qué y como se realizará?')
-    satisfactions = models.TextField(max_length=512, verbose_name='Condiciones de satisfacción')
+    toDo = models.TextField(max_length=1024, verbose_name='¿Qué y como se realizará?')
+    satisfactions = models.TextField(max_length=1024, verbose_name='Condiciones de satisfacción')
 
     # action roles
     client = models.ForeignKey(User, related_name='client_action', verbose_name='Cliente')
@@ -122,7 +122,7 @@ class Action(models.Model):
     # agremments
     begin_at = models.DateField(auto_now=False, verbose_name='Fecha de inicio')
     accomplish_at = models.DateField(auto_now=False, verbose_name='Fecha de cumplimiento')
-    report_at = models.DateField( auto_now=False, verbose_name='Fecha de reporte de Avance')
+    report_at = models.DateField(auto_now=False, verbose_name='Fecha de reporte de Avance')
 
     # indicators
     financial = models.CharField(max_length=64, verbose_name='Financieros')
@@ -147,3 +147,28 @@ class Action(models.Model):
 
     def __str__(self):
         return "%s" % (self.name)
+
+
+class Report(models.Model):
+
+    PERCENTAJES = (
+        ('0', '0'), ('25', '25'), ('50', '50'), 
+        ('75', '75'), ('100', '100'),
+    )
+
+    project = models.ForeignKey(Project, related_name='project_report', verbose_name='Proyecto')
+    action = models.ForeignKey(
+                Action,         
+                blank=True,
+                null=True,
+                related_name='action_report', 
+                verbose_name='Acción'
+             )
+
+    progress = models.CharField(choices=PERCENTAJES, max_length=3, default='0', verbose_name='Porcentaje de avance')
+
+    accomplished = models.TextField(max_length=1024, verbose_name='Relizado')
+    pending = models.TextField(max_length=1024, verbose_name='Pendiente')
+
+    created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación')
+    create_by = models.ForeignKey(User, related_name='report_create_by', verbose_name='Creado por')

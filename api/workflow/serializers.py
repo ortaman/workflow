@@ -7,7 +7,7 @@ from rest_framework import serializers
 
 from users.serializers import UserSerializer
 
-from .models import Project, Action
+from .models import Project, Action, Report
 
 
 class Base64ImageField(serializers.ImageField):
@@ -103,3 +103,17 @@ class ActionUserSerializer(serializers.ModelSerializer):
     class Meta:
         model  = Action
         fields = ('producer',)
+
+
+class ReportPostSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model  = Report
+        fields = '__all__'
+
+
+class ReportGetSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model  = Report
+        fields = '__all__'

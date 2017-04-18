@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from .models import Project, Action
+from .models import Project, Action, Report
 
 
 class ProyectAdmin(admin.ModelAdmin):
@@ -11,5 +11,10 @@ class ActionAdmin(admin.ModelAdmin):
 	pass
 
 
-admin.site.register(Action, ActionAdmin)
+class ReportAdmin(admin.ModelAdmin):
+	pass
+
+
 admin.site.register(Project, ProyectAdmin)
+admin.site.register(Action, ActionAdmin)
+admin.site.register(Report, ReportAdmin)
