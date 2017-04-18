@@ -91,43 +91,6 @@ class ActionList(APIView, APIMixin):
                 queryset = queryset.filter(q1, q2)
                 serializer = self.serializer_list(queryset, many=True)
 
-                from datetime import datetime
-
-                begin_date = datetime.strptime(query.get('begin_date'), "%Y-%m-%d")
-                end_date   = datetime.strptime(query.get('end_date'), "%Y-%m-%d")
-
-                data = []
-
-                timelines = [
-                    {
-                    'date':'begin_at',
-                    'text':'Fecha de inicio'
-                    },{
-                    'date':'report_at',
-                    'text':'fecha de cumplimiento'
-                    },{
-                    'date':'accomplish_at',
-                    'text':'Fecha de reporte de avance'
-                    },
-                ]
-
-                for action in serializer.data:
-
-                    for tl in timelines:
-
-                        action_begin_date = datetime.strptime(action[tl['date']], "%Y-%m-%d")
-                        action_end_date   = datetime.strptime(action[tl['date']], "%Y-%m-%d")
-
-                        if action_begin_date >= begin_date and action_end_date <= end_date:
-
-                            action_copy = action.copy()
-                            action_copy['timeline_text'] = tl['text']
-
-                            data.append({
-                                'timeline': action_copy[tl['date']],
-                                'actions': [action_copy]
-                            })
-
                 return Response(serializer.data)
 
             else:
