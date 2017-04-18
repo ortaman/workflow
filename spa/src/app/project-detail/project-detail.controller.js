@@ -1,7 +1,7 @@
 
 app.controller('ProjectDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService) {
+	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal',
+	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -119,6 +119,17 @@ app.controller('ProjectDetailController', [
 	$scope.chunkArray = function(index) {
 		if($scope.producers.results)
 			return $scope.producers.results.slice(index*3, (index*3)+3);
+	}
+
+	$scope.openReportModal = function() {
+		var modalInstance = $uibModal.open({
+			ariaLabelledBy: 'modal-title',
+			ariaDescribedBy: 'modal-body',
+			templateUrl: '/app/reports/add-report.html',
+			controller: 'ReportModalController',
+			controllerAs: '$scope',
+			size: 'md',
+		});
 	}
 
 	var transformActions = function(results){
