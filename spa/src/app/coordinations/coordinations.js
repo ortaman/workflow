@@ -1,15 +1,17 @@
 
-app.controller('CoordinationsController', ['$scope','ActionListService','UserService','$rootScope', function($scope, ActionListService, UserService, $rootScope) {
+app.controller('CoordinationsController', ['$scope','ActionListService','UserService', function($scope, ActionListService, UserService) {
 
   $scope.promises = [];
   $scope.user;
   $scope.init = function(){
 
-
-    $scope.user = $rootScope.getCurrentUser().id;
-    $scope.getCordinations('producer','created' );
-    $scope.getCordinations('client','created' );
-
+    UserService.me().then(function(response){
+      $scope.user = response.id
+      $scope.getCordinations('producer','created' );
+      $scope.getCordinations('client','created' );
+    }, function(error){
+      console.log("error",error);
+    })
   }
 
   $scope.getCordinations = function(userType, status){

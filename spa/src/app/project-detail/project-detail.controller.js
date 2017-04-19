@@ -125,9 +125,9 @@ app.controller('ProjectDetailController', [
 		var modalInstance = $uibModal.open({
 			ariaLabelledBy: 'modal-title',
 			ariaDescribedBy: 'modal-body',
-			templateUrl: '/app/reports/add-report.html',
+			templateUrl: '/app/report-create/add-report.html',
 			controller: 'ReportModalController',
-			controllerAs: '$scope',
+			controllerAs: 'vm',
 			size: 'md',
 		});
 	}

@@ -2,14 +2,13 @@
     <h3 class="modal-title" id="modal-title">Creación de reporte</h3>
 </div>
 <div class="modal-body" id="modal-body">
-  <form novalidate name="reportForm" ng-submit="$scope.sendReport(report)">
+  <form novalidate name="vm.reportForm" ng-submit="vm.sendReport(report)">
     <div class="row">
       <div class="col-md-6">
         <md-input-container class="md-block" >
-          <label> Avance </label>
+          <label> Avance</label>
             <md-select name="progress"
-                       ng-init="$scope.report.progress='0'"
-                       ng-model="$scope.report.progress"
+                       ng-model="vm.report.progress"
                        required>
             <md-option value="0"> 0% </md-option>
             <md-option value="20"> 25% </md-option>
@@ -18,9 +17,9 @@
             <md-option value="100"> 100% </md-option>
           </md-select>
 
-          <div ng-show="reportForm.progress.$touched || submitted">
+          <div ng-show="vm.reportForm.progress.$touched || vm.submitted">
              <div class="error" style="margin-top: 0em"
-                  ng-show="reportForm.progress.$error.required">
+                  ng-show="vm.reportForm.progress.$error.required">
                Campo requerido.
              </div>
            </div>
@@ -36,11 +35,11 @@
                 placeholder="Describe las acciones realizadas."
                 rows="5"
                 maxlength="512"
-                ng-model="$scope.report.accomplished"
+                ng-model="vm.report.accomplished"
                 required></textarea>
 
-                <div ng-show="reportForm.accomplished.$touched || submitted">
-                   <div class="error" ng-show="reportForm.accomplished.$error.required">
+                <div ng-show="vm.reportForm.accomplished.$touched || vm.submitted">
+                   <div class="error" ng-show="vm.reportForm.accomplished.$error.required">
                      Campo requerido.
                    </div>
                  </div>
@@ -56,11 +55,11 @@
                 placeholder="Describe las acciones pendientes"
                 rows="5"
                 maxlength="512"
-                ng-model="$scope.report.pending"
+                ng-model="vm.report.pending"
                 required></textarea>
 
-              <div ng-show="reportForm.pending.$touched || submitted">
-                  <div class="error" ng-show="reportForm.pending.$error.required">
+              <div ng-show="vm.reportForm.pending.$touched || vm.submitted">
+                  <div class="error" ng-show="vm.reportForm.pending.$error.required">
                     Campo requerido.
                   </div>
               </div>
@@ -68,10 +67,14 @@
             </md-input-container>
         </div>
   </div>
+  <button class="btn btn-primary" type="submit"  >OvvvK</button>
+  <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
   </form>
 
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="submit"  ng-click="$scope.sendReport(report)">OvvvK</button>
-    <button class="btn btn-warning" type="button" ng-click="$scope.cancel()">Cancel</button>
+    <div class="error">
+      {{ vm.errors }}
+    </div>
+
 </div>

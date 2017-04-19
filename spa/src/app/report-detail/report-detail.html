@@ -1,0 +1,83 @@
+
+<my-header> </my-header>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <!-- BEGIN SIDEBAR -->
+    <my-navbar> </my-navbar>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper" ng-init="init()" ng-cloack>
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+          <div class="col-lg-6 col-xs-12 col-sm-12">
+
+            <div class="portlet light portlet-fit bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-microphone font-dark hide"></i>
+                        <span class="caption-subject bold font-dark uppercase">
+                            Reporte de proyecto
+                        </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mt-widget-2">
+                                <div class="mt-head"
+                                    style="background-image: url({{project.image}})">
+                                    <div class="mt-head-label">
+                                        <button type="button" class="btn btn-success">
+                                            Marketing
+                                        </button>
+                                    </div>
+                                    <div class="mt-head-user">
+                                        <div class="mt-head-user-img">
+                                            <img ng-src="{{project.producer.photo}}"> </div>
+                                        <div class="mt-head-user-info" style="font-weight: bold">
+                                            <span class="mt-user-name">
+                                            {{ project.client.name }} {{ project.client.first_surname }}
+                                            </span>
+                                            <span class="mt-user-time">
+                                            <i class="icon-emoticon-smile"></i> Líder </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-body margin-top-5">
+                                    <h3 class="mt-body-title"> {{ project.name }} </h3>
+                                    <p class="mt-body-description">{{ project.toDo }} .</p>
+                                </div>
+                                <div class="mt-body-actions-icons">
+                                    <div class="btn-group btn-group btn-group-justified">
+                                        <div class="btn"
+                                            ng-class="{'bg-info': project.phase == 'Preparación'}">
+                                            <span class="mt-icon font-blue">
+                                                <i class="fa fa-lightbulb-o"></i>
+                                            </span> Preparación </div>
+                                        <div class="btn"
+                                            ng-class="{'bg-info': project.phase == 'Negociación'}">
+                                            <span class="mt-icon font-blue">
+                                                <i class="fa fa-check-circle-o"></i>
+                                            </span> Negociación </div>
+                                        <div class="btn"
+                                            ng-class="{'bg-info': project.phase == 'Ejecución'}">
+                                            <span class="mt-icon font-blue">
+                                                <i class="icon-layers"></i>
+                                            </span> Ejecución </div>
+                                        <div class="btn"
+                                            ng-class="{'bg-info': project.phase == 'Evaluación'}">
+                                            <span class="mt-icon font-blue">
+                                                <i class="icon-question"></i>
+                                            </span> Evaluación </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+<!-- END CONTENT -->

@@ -22,24 +22,6 @@ app.run(function($http, $rootScope, $location, StorageService, UserService) {
     $http.defaults.headers.common.Authorization = 'Token ' + StorageService.get('token');
   }
 
-  $rootScope.getCurrentUser = function(){
-    if(StorageService.get('user')){
-      return JSON.parse(StorageService.get('user'))
-    }else{
-      UserService.me().then(
-        function(response) {
-          StorageService.set('user',JSON.stringify(response))
-          return JSON.parse(StorageService.get('user'))
-        },
-        function(errorResponse) {
-          $scope.status = errorResponse.statusText || 'Request failed';
-          $scope.errors = errorResponse.data;
-        }
-      );
-    }
-  }
-
-
 });
 
 if(window.location.hash === '#_=_') window.location.hash = '#!';

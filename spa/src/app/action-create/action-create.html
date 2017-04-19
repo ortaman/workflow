@@ -118,10 +118,10 @@
                           <div ng-class="actionId ? 'col-md-3' : 'col-md-4'">
                             <md-input-container class="md-block" >
                               <label> Fase </label>
-                              <md-select 
-                                name="phase" 
+                              <md-select
+                                name="phase"
                                 ng-model="action.phase"
-                                ng-change="updateDates()" 
+                                ng-change="updateDates()"
                                 required>
                                 <md-option value="Preparación"> Preparación </md-option>
                                 <md-option value="Negociación"> Negociación </md-option>
@@ -279,7 +279,7 @@
                           <div class="row">
                               <div class="col-md-6 col-md-offset-3 text-center">
                                   <div class="form-group">
-                                      <h4 class="font-red bold"> 
+                                      <h4 class="font-red bold">
                                         Fecha límite de la fase de {{ action.phase | lowercase}}
                                       </h4>
                                       <div ng-show="action.phase==='Preparación'" >
@@ -352,7 +352,7 @@
                                     md-min-date="action.begin_at"
                                     md-placeholder="Ingresar fecha"
                                     ng-model="action.report_at"
-                                    ng-disabled="action.begin_at===undefined 
+                                    ng-disabled="action.begin_at===undefined
                                       || action.accomplish_at===undefined"
                                     required ></md-datepicker>
 

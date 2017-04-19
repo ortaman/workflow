@@ -81,10 +81,10 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
        angular.forEach(dates,function(value2, key2){
          var item2 = {};
          item2.title = array[key].name+ ' ('+ value2+')';
-         item2.start = new Date(array[key][key2]);
+         item2.start = moment(array[key][key2]).toDate();
          item2.stick = true
+         item2.className = getColor(value, key2, type);
          if(type=="actions"){
-           item2.className = getColor(value, key2);
            $scope.actionEvents.push(item2);
          }else {
            $scope.projectEvents.push(item2);
@@ -123,24 +123,12 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
     getProjectActions(project)
   }
 
-  var getColor = function (action, value){
-    switch (value) {
-      case 'accomplish_at':
-        if(action['progress'] != 100 && moment(action[value]).isAfter(moment()))
+  var getColor = function (action, value, type){
+    if(type == "actions")
+        if(action['progress'] != '100' && moment(action['report_at']).isAfter(moment()))
           return 'red'
-        ;
-        break;
-      case 'begin_at':
-        if(action['progress'] != 100 && moment(action['begin_at']).isAfter(moment()))
-          return 'red'
-        break;
-      case 'report_at':
-        if(action['progress'] != 100 && moment(action['report_at']).isAfter(moment()))
+        if(action['progress'] == '0' && moment(action['report_at']).isBefore(moment()))
           return 'yellow'
-        break;
-      default:
-
-    }
 
     return 'green';
   }
