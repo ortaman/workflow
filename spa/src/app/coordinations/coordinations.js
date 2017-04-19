@@ -1,20 +1,15 @@
 
-app.controller('CoordinationsController', ['$scope','ActionListService','UserService', function($scope, ActionListService, UserService) {
+app.controller('CoordinationsController', ['$scope','ActionListService','UserService','$rootScope', function($scope, ActionListService, UserService, $rootScope) {
 
   $scope.promises = [];
   $scope.user;
   $scope.init = function(){
-    UserService.me().then(
-      function(response) {
-        $scope.user = response.id;
-        $scope.getCordinations('producer','created' );
-        $scope.getCordinations('client','created' );
-      },
-      function(errorResponse) {
-        $scope.status = errorResponse.statusText || 'Request failed';
-        $scope.errors = errorResponse.data;
-      }
-    );
+
+
+    $scope.user = $rootScope.getCurrentUser().id;
+    $scope.getCordinations('producer','created' );
+    $scope.getCordinations('client','created' );
+
   }
 
   $scope.getCordinations = function(userType, status){
@@ -24,7 +19,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     };
 
     if(userType == 'producer'){
-      query.producer = 1; // id usuario
+      query.producer = $scope.user; // id usuario
       delete(query.client);
     }
 
