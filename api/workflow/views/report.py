@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Report
-from workflow.serializers import ReportPostSerializer, ReportGetSerializer
+from workflow.serializers import ReportPostSerializer, ReportListSerializer, ReportGetSerializer
 from common.mixins import APIMixin
 
 
@@ -35,6 +35,25 @@ class ReportList(APIView, APIMixin):
     # Mixing initial variables
     model = Report
     serializer_post = ReportPostSerializer
+    serializer_list = ReportListSerializer
+
+
+    def get(self, request, format=None):
+        query = request.query_params
+        query_keys = query.keys()
+
+        if 'proyect_id' in query_keys and 'action_id' in query_keys:
+            queryset = self.model.objects.filter(
+                project_id=query.get('proyect_id'),
+                action_id=query.get('action_id'))
+            
+            data = self.serializer_list(queryset, many=True).data
+        
+        else:
+            data = []
+
+
+        return Response(data)
 
     def post(self, request, format=None):
         serializer = self.serializer_post(data=request.data)

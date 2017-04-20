@@ -112,6 +112,13 @@ class ReportPostSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ReportListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model  = Report
+        fields = '__all__'
+
+
 class ReportGetSerializer(serializers.ModelSerializer):
 
     class Meta:
