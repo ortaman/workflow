@@ -5,7 +5,11 @@ app.controller('ProjectDetailController', [
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
-
+	$scope.producersPerformanceCurrentPage = 1;
+	$scope.project = {};
+	$scope.producers = [];
+	$scope.producersPerformance = [];
+	$scope.timelines = []
 
 	var queryStatus = "Abierta";
 	var dateFields = {
@@ -14,16 +18,12 @@ app.controller('ProjectDetailController', [
       'begin_at':'Fecha de inicio',
     };
 
-	$scope.project = {};
-	$scope.producers = [];
-	$scope.timelines = []
-
-
   	$scope.getProjectByIdInit = function() {
-		getProject();
-		$scope.actionPageChanged()
-		$scope.producerPageChanged();
-		$scope.getReport();
+			getProject();
+			$scope.actionPageChanged()
+			$scope.producerPageChanged($scope.producersCurrentPage,'producers' );
+			$scope.producerPageChanged($scope.producersPerformanceCurrentPage,'producersPerformance' );
+			$scope.getReport();
 	}
 
 	//Service call
@@ -99,10 +99,9 @@ app.controller('ProjectDetailController', [
 
 
 
-	$scope.producerPageChanged = function() {
-
+	$scope.producerPageChanged = function(page, list) {
 	  	var query = {
-	  		"page": $scope.producersCurrentPage,
+	  		"page": page,
 	  		"project_id": $state.params.id,
 	  		"parent_action": "none",
 	  	};
@@ -110,11 +109,11 @@ app.controller('ProjectDetailController', [
 		ProducerGetListService.getList(query).then(
 			function(response) {
 
-				for (var i=0; i < response.results.length; i++) {
-					response.results[i].producer.photo = APIConfig.baseUrl + response.results[i].producer.photo;
+				for (var i=0; i < response.producers.length; i++) {
+					response.producers[i].producer.photo = APIConfig.baseUrl + response.producers[i].producer.photo;
 				}
 
-				$scope.producers = response;
+				$scope[list] = response;
 
 			},
 			function(errorResponse) {
@@ -122,18 +121,8 @@ app.controller('ProjectDetailController', [
 				$scope.errors = errorResponse.data;
 			}
 		);
-
   };
 
-	//template interaction functions
-	$scope.hoverIn = function(show){
-		this.hoverEdit = show;
-	};
-
-	$scope.chunkArray = function(index) {
-		if($scope.producers.results)
-			return $scope.producers.results.slice(index*3, (index*3)+3);
-	}
 
 	$scope.openReportModal = function() {
 
@@ -168,8 +157,18 @@ app.controller('ProjectDetailController', [
 			 report: $scope.report
 		 }
 		})
-
 	}
+
+	//template interaction functions
+	$scope.hoverIn = function(show){
+		this.hoverEdit = show;
+	};
+
+	$scope.chunkArray = function(index) {
+		if($scope.producers.producers)
+			return $scope.producers.producers.slice(index*3, (index*3)+3);
+	}
+
 	var transformActions = function(results){
 		//private functions
 		function custom_sort(a, b) {

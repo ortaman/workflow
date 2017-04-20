@@ -4,9 +4,9 @@
       <h3 class="modal-title" id="modal-title">Creación de reporte</h3>
   </div>
   <form novalidate name="vm.reportForm" ng-submit="vm.sendReport(report)">
-    <div class="modal-body" id="modal-body">
+    <div class="modal-body" id="modal-body" style="padding:3%">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5 col-md-offset-3">
           <md-input-container class="md-block" >
             <label> Avance</label>
               <md-select name="progress"
@@ -72,15 +72,13 @@
 
   </div>
     <div class="modal-footer">
-      <div class="row">
-        <div class="col-md-12 text-center">
+        <div class=" text-center" style="padding-top:1%">
           <button type="button" class="btn red" ng-click="vm.cancel()">Cancelar</button>
           <button type="submit" class="btn blue">Crear</button>
           <br><br>
           <div class="error">
             {{ vm.errors }}
           </div>
-        </div>
       </div>
     </div>
   </form>

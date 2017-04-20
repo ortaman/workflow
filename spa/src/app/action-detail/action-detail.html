@@ -180,10 +180,10 @@
                             <ul uib-pagination boundary-links="true" class="pagination-sm"
                                 previous-text="&lsaquo;" next-text="&rsaquo;"
                                 first-text="&laquo;" last-text="&raquo;"
-                                items-per-page="producers.paginated_by"
-                                total-items="producers.count"
+                                items-per-page="producers.producers.paginated_by"
+                                total-items="producers.producers.count"
                                 ng-model="producersCurrentPage"
-                                ng-change="producerPageChanged()">
+                                ng-change="producerPageChanged(producersPerformanceCurrentPage, producersPerformance)">
                             </ul>
                         </div>
                     </div>
@@ -191,84 +191,55 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-6 col-xs-12 col-sm-12 ">
-                    <div class="portlet light portlet-fit bordered ">
-                        <div class="portlet-title ">
-                            <div class="caption ">
-                                <i class="icon-microphone font-dark hide "></i>
-                                <span class="caption-subject bold font-dark uppercase "> Performance de Cumplimiento</span>
-                            </div>
-                        </div>
-                        <div class="portlet-body ">
-                            <div class="table-scrollable table-scrollable-borderless ">
-                                <table class="table table-hover table-light ">
-                                    <thead>
-                                        <tr class="uppercase ">
-                                            <th colspan="2 "> Realizador </th>
-                                            <th><i class=" fa fa-comments-o "></i></th>
-                                            <th><i class=" fa fa-thumbs-o-up "></i></th>
-                                            <th><i class=" fa fa-thumbs-o-down "></i> </th>
-                                            <th><i class=" fa fa-calculator "></i></th>
-                                        </tr>
-                                    </thead>
-                                    <tr>
-                                        <td class="fit ">
-                                            <img class="user-pic " src="../../assets/metronics/pages/media/users/avatar1.jpg "> </td>
-                                        <td>
-                                            <a href="javascript:; " class="primary-link ">Victor</a>
-                                        </td>
-                                        <td> 9</td>
-                                        <td> 4</td>
-                                        <td>3</td>
-                                        <td>
-                                            <span class="bold theme-font ">44%</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fit ">
-                                            <img class="user-pic " src="../../assets/metronics/pages/media/users/teambg4.jpg "> </td>
-                                        <td>
-                                            <a href="javascript:; " class="primary-link ">Mario</a>
-                                        </td>
-                                        <td> 5</td>
-                                        <td> 3</td>
-                                        <td> 2</td>
-                                        <td>
-                                            <span class="bold theme-font ">66%</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fit ">
-                                            <img class="user-pic " src="../../assets/metronics/pages/media/users/teambg6.jpg "> </td>
-                                        <td>
-                                            <a href="javascript:; " class="primary-link ">Eduardo</a>
-                                        </td>
-                                        <td> 4 </td>
-                                        <td> 1 </td>
-                                        <td> 3 </td>
-                                        <td>
-                                            <span class="bold theme-font ">25%</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fit ">
-                                            <img class="user-pic " src="../../assets/metronics/pages/media/users/avatar80_8.jpg "> </td>
-                                        <td>
-                                            <a href="javascript:; " class="primary-link ">Silvia</a>
-                                        </td>
-                                        <td> 2 </td>
-                                        <td> 1 </td>
-                                        <td> 0 </td>
-                                        <td>
-                                            <span class="bold theme-font ">50%</span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END PORTLET -->
-                </div>
+              <div class="col-lg-6 col-xs-12 col-sm-12 ">
+                  <div class="portlet light portlet-fit bordered ">
+                      <div class="portlet-title ">
+                          <div class="caption ">
+                              <i class="icon-microphone font-dark hide "></i>
+                              <span class="caption-subject bold font-dark uppercase "> Performance de Cumplimiento</span>
+                          </div>
+                      </div>
+                      <div class="portlet-body ">
+                          <div class="table-scrollable table-scrollable-borderless ">
+                              <table class="table table-hover table-light ">
+                                  <thead>
+                                      <tr class="uppercase ">
+                                          <th colspan="2 "> Realizador </th>
+                                          <th><i class=" fa fa-comments-o "></i></th>
+                                          <th><i class=" fa fa-thumbs-o-up "></i></th>
+                                          <th><i class=" fa fa-thumbs-o-down "></i> </th>
+                                          <th><i class=" fa fa-calculator "></i></th>
+                                      </tr>
+                                  </thead>
+                                  <tr ng-repeat="producer in producersPerformance.producers track by $index">
+                                      <td class="fit ">
+                                        <img height="40" width="40" ng-src="{{producer.producer.photo}}"/>
+                                      <td>
+                                          <a href="javascript:; " class="primary-link ">{{producer.producer.username}}</a>
+                                      </td>
+                                      <td>{{ producer.open}}</td>
+                                      <td>{{ producer.satisfactories }}</td>
+                                      <td>{{ producer.unsatisfactories}}</td>
+                                      <td>
+                                          <span class="bold theme-font ">{{ (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories)}}%</span>
+                                      </td>
+                                  </tr>
+                              </table>
+                          </div>
+                      </div>
+                      <div class="text-center">
+                          <ul uib-pagination boundary-links="true" class="pagination-sm"
+                              previous-text="&lsaquo;" next-text="&rsaquo;"
+                              first-text="&laquo;" last-text="&raquo;"
+                              items-per-page="producersPerformance.paginated_by"
+                              total-items="producersPerformance.count"
+                              ng-model="producersPerformanceCurrentPage"
+                              ng-change="producerPageChanged(producersPerformanceCurrentPage, 'producersPerformance')">
+                          </ul>
+                      </div>
+                  </div>
+                  <!-- END PORTLET -->
+              </div>
                 <div class="col-lg-6 col-xs-12 col-sm-12 ">
                     <!-- BEGIN PORTLET-->
                     <div class="portlet light bordered ">

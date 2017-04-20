@@ -25,14 +25,15 @@ app.service('UserService', function($http, APIConfig,$q, StorageService) {
         var deferred = $q.defer();
         URL = APIConfig.url + 'myuser/';
 
-        if(StorageService.get('userks')){
-          results = JSON.parse(StorageService.get('userks'));
+        if(StorageService.get('users1')){
+          results = JSON.parse(StorageService.get('users1'));
           deferred.resolve(results);
         }else{
           $http.get(URL)
             .then(function(result) {
               results = result.data;
-              StorageService.set('userks',JSON.stringify(results))
+              results.photo =  APIConfig.baseUrl+ results.photo
+              StorageService.set('users1',JSON.stringify(results))
               deferred.resolve(results);
             }, function(error) {
               results = error;

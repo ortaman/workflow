@@ -177,7 +177,7 @@
                                 items-per-page="producers.paginated_by"
                                 total-items="producers.count"
                                 ng-model="producersCurrentPage"
-                                ng-change="producerPageChanged()">
+                                ng-change="producerPageChanged(producersCurrentPage, 'producers')">
                             </ul>
                         </div>
                     </div>
@@ -205,60 +205,31 @@
                                           <th><i class=" fa fa-calculator "></i></th>
                                       </tr>
                                   </thead>
-                                  <tr>
+                                  <tr ng-repeat="producer in producersPerformance.producers track by $index">
                                       <td class="fit ">
-                                          <img class="user-pic " src="../../assets/metronics/pages/media/users/avatar1.jpg "> </td>
+                                        <img height="40" width="40" ng-src="{{producer.producer.photo}}"/>
                                       <td>
-                                          <a href="javascript:; " class="primary-link ">Victor</a>
+                                          <a href="javascript:; " class="primary-link ">{{producer.producer.username}}</a>
                                       </td>
-                                      <td> 9</td>
-                                      <td> 4</td>
-                                      <td>3</td>
+                                      <td>{{ producer.open}}</td>
+                                      <td>{{ producer.satisfactories }}</td>
+                                      <td>{{ producer.unsatisfactories}}</td>
                                       <td>
-                                          <span class="bold theme-font ">44%</span>
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td class="fit ">
-                                          <img class="user-pic " src="../../assets/metronics/pages/media/users/teambg4.jpg "> </td>
-                                      <td>
-                                          <a href="javascript:; " class="primary-link ">Mario</a>
-                                      </td>
-                                      <td> 5</td>
-                                      <td> 3</td>
-                                      <td> 2</td>
-                                      <td>
-                                          <span class="bold theme-font ">66%</span>
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td class="fit ">
-                                          <img class="user-pic " src="../../assets/metronics/pages/media/users/teambg6.jpg "> </td>
-                                      <td>
-                                          <a href="javascript:; " class="primary-link ">Eduardo</a>
-                                      </td>
-                                      <td> 4 </td>
-                                      <td> 1 </td>
-                                      <td> 3 </td>
-                                      <td>
-                                          <span class="bold theme-font ">25%</span>
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td class="fit ">
-                                          <img class="user-pic " src="../../assets/metronics/pages/media/users/avatar80_8.jpg "> </td>
-                                      <td>
-                                          <a href="javascript:; " class="primary-link ">Silvia</a>
-                                      </td>
-                                      <td> 2 </td>
-                                      <td> 1 </td>
-                                      <td> 0 </td>
-                                      <td>
-                                          <span class="bold theme-font ">50%</span>
+                                          <span class="bold theme-font ">{{ (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories)}}%</span>
                                       </td>
                                   </tr>
                               </table>
                           </div>
+                      </div>
+                      <div class="text-center">
+                          <ul uib-pagination boundary-links="true" class="pagination-sm"
+                              previous-text="&lsaquo;" next-text="&rsaquo;"
+                              first-text="&laquo;" last-text="&raquo;"
+                              items-per-page="producersPerformance.paginated_by"
+                              total-items="producersPerformance.count"
+                              ng-model="producersPerformanceCurrentPage"
+                              ng-change="producerPageChanged(producersPerformanceCurrentPage, 'producersPerformance')">
+                          </ul>
                       </div>
                   </div>
                   <!-- END PORTLET -->

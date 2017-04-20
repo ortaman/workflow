@@ -7,6 +7,7 @@ app.controller('ActionDetailController', [
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
+	$scope.producersPerformanceCurrentPage = 1;
 	var actionStatus = "Abierta"
 
 	$scope.currentAction = {};
@@ -16,7 +17,8 @@ app.controller('ActionDetailController', [
   	$scope.init = function() {
 		$scope.getAction();
 		$scope.actionPageChanged()
-		$scope.producerPageChanged();
+		$scope.producerPageChanged($scope.producersPerformanceCurrentPage, 'producers');
+		$scope.producerPageChanged($scope.producersCurrentPage, 'producersPerformance');
 		$scope.getReport();
 	}
 
@@ -108,22 +110,21 @@ app.controller('ActionDetailController', [
 
   };
 
-	$scope.producerPageChanged = function() {
+	$scope.producerPageChanged = function(page, list) {
 
 	  	var query = {
-	  		"page": $scope.producersCurrentPage,
+	  		"page": page,
 	  		"parent_action_id": $state.params.id,
 	  	};
 
 		ProducerGetListService.getList(query).then(
 			function(response) {
-				for (var i=0; i < response.results.length; i++) {
-					console.log(response.results[i].producer.photo);
-					response.results[i].producer.photo = APIConfig.baseUrl + response.results[i].producer.photo;
+				for (var i=0; i < response.producers.length; i++) {
+					console.log(response.producers[i].producer.photo);
+					response.producers[i].producer.photo = APIConfig.baseUrl + response.producers[i].producer.photo;
 				}
 
-				$scope.producers = response;
-				console.log("ProducerGet", response);
+				$scope[list] = response;
 
 			},
 			function(errorResponse) {
@@ -140,8 +141,8 @@ app.controller('ActionDetailController', [
 	};
 
 	$scope.chunkArray = function(index){
-		if($scope.producers.results)
-			return $scope.producers.results.slice(index*3, (index*3)+3);
+		if($scope.producers.producers)
+			return $scope.producers.producers.slice(index*3, (index*3)+3);
 
 	}
 
