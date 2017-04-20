@@ -1,5 +1,5 @@
 
-app.service('UserService', function($http, APIConfig,$q) {
+app.service('UserService', function($http, APIConfig,$q, StorageService) {
 
     this.search = function(name) {
         var results = undefined;
@@ -25,16 +25,23 @@ app.service('UserService', function($http, APIConfig,$q) {
         var deferred = $q.defer();
         URL = APIConfig.url + 'myuser/';
 
-        $http.get(URL)
-          .then(function(result) {
-            results = result.data;
-            deferred.resolve(results);
-          }, function(error) {
-            results = error;
-            deferred.reject(error);
-          });
+        if(StorageService.get('userks')){
+          results = JSON.parse(StorageService.get('userks'));
+          deferred.resolve(results);
+        }else{
+          $http.get(URL)
+            .then(function(result) {
+              results = result.data;
+              StorageService.set('userks',JSON.stringify(results))
+              deferred.resolve(results);
+            }, function(error) {
+              results = error;
+              deferred.reject(error);
+            });
+            results = deferred.promise;
+        }
 
-        results = deferred.promise;
+
       return $q.when(results);
     };
 

@@ -73,6 +73,11 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
       templateUrl: "app/calendar/calendar.html",
       controller: "CalendarController",
     })
+    .state('reportDetail', {
+      url: "/reportDetail/:id/",
+      templateUrl: "app/report-detail/report-detail.html",
+      controller: "ReportDetailController",
+    })
 
   // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise("/coordinations");

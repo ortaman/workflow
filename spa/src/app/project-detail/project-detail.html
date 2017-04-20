@@ -39,10 +39,11 @@
                                 <a href="#">
                                     <i class="icon-pin"></i> Nueva Alerta</a>
                             </li>
-                            <!--li>
-                                <a href="#">
-                                    <i class="icon-user"></i> Ubicar a Alguien </a>
+                            <li>
+                                <a href="" ng-click="openReportModal()">
+                                    <i class="icon-user"></i> Agregar reporte </a>
                             </li>
+                            <!--
                             <li class="divider"> </li>
                             <li>
                                 <a href="#">
@@ -69,6 +70,12 @@
                                 <span class="caption-subject bold font-dark uppercase">
                                     Promesa del Proyecto
                                 </span>
+
+
+                            </div>
+                            <div class="btn-group pull-right">
+                              <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" ng-click="openReportDetailModal()"> Ver reporte
+                              </button>
                             </div>
                         </div>
                         <div class="portlet-body">
