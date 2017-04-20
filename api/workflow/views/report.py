@@ -42,11 +42,12 @@ class ReportList(APIView, APIMixin):
         query = request.query_params
         query_keys = query.keys()
 
-        if 'proyect_id' in query_keys and 'action_id' in query_keys:
-            queryset = self.model.objects.filter(
-                project_id=query.get('proyect_id'),
-                action_id=query.get('action_id'))
-            
+        if 'project_id' in query_keys:
+            queryset = self.model.objects.filter(project_id=query.get('project_id'))
+            data = self.serializer_list(queryset, many=True).data
+        
+        elif 'action_id' in query_keys:
+            queryset = self.model.objects.filter(action_id=query.get('action_id'))
             data = self.serializer_list(queryset, many=True).data
         
         else:
