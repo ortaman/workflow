@@ -71,7 +71,6 @@ class ProjectList(APIView, APIMixin):
         else:
             data = self.get_pagination(queryset, page, self.paginate_by)
 
-        
         return Response(data)
 
 
