@@ -82,8 +82,8 @@ class Action(models.Model):
 
     STATUS = (
         ('Abierta', 'Abierta'),
-        ('Cerrada satisfactoriamente', 'Cerrada satisfactoriamente'),
-        ('Cerrada insatisfactoriamente', 'Cerrada no satisfactoriamente'),
+        ('Satisfactoria', 'Satisfactoria'),
+        ('Insatisfactoria', 'Insatisfactoria'),
     )
 
     PROMISE = (

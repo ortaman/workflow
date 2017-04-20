@@ -9,9 +9,11 @@ from rest_framework.pagination import PageNumberPagination
 from workflow.models import Action
 from workflow.serializers import ActionUserSerializer
 
+from common.mixins import APIMixin
 from .models import User
 from .permissions import UserIsOwnerOrReadOnly
 from .serializers import UserSerializer
+
 
 
 class MyCustomPagination(PageNumberPagination):
@@ -63,20 +65,57 @@ class UserViewSet(viewsets.ModelViewSet):
         return self.queryset
 
 
-
-class ProducerList(mixins.ListModelMixin, generics.GenericAPIView):
+class ProducerList(APIView, APIMixin):
     """
-    Provides list of producers.
+    List all prodicer and producer stadistics 
+    searching by the project or action.
     """
-    queryset = Action.objects.all()
-
-    pagination_class = MyCustomPagination
-    serializer_class = ActionUserSerializer
-    
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+    # Mixing initial variables
+    model = Action
+    serializer_list = ActionUserSerializer
+
+    paginate_by = 6
+
+    def get(self, request, format=None):
+        page = request.GET.get('page', None)
+        query = request.query_params
+        query_keys = query.keys()
+
+        if 'project_id' in query_keys:
+
+            if query.get('parent_action')=='none':
+                queryset = self.model.objects.filter(
+                    project_id=query.get('project_id'),
+                    parent_action__isnull=True) 
+            else:
+                queryset = self.model.objects.filter(
+                    project_id=query.get('project_id'))
+
+        elif 'parent_action_id' in query_keys:
+
+            queryset = self.model.objects.filter(
+                parent_action_id=query.get('parent_action_id'))
+
+        paginated_data = self.get_pagination(queryset.distinct('producer__id'), page, self.paginate_by)
+        
+        data = {
+            'count':  paginated_data['count'],
+            'page': paginated_data['page'],
+            'paginate_by': paginated_data['paginate_by'],
+            'producers': []
+        }
+
+        for producer in paginated_data['results']:
+            data['producers'].append({
+                'producer': producer['producer'],
+                'open': Action.objects.filter(status="Abierta", producer_id=producer['producer']['id']).count(),
+                'satisfactories': Action.objects.filter(status="Satisfactoria", producer_id=producer['producer']['id']).count(),
+                'unsatisfactories': Action.objects.filter(status="Insatisfactoria", producer_id=producer['producer']['id']).count()
+            })
+
+        return Response(data)
 
     def get_queryset(self):
 
@@ -97,7 +136,19 @@ class ProducerList(mixins.ListModelMixin, generics.GenericAPIView):
             self.queryset = self.queryset.filter(
                 parent_action_id=query.get('parent_action_id'))
 
-        return self.queryset.distinct('producer__id')
+        self.queryset = self.queryset.distinct('producer__id')
+
+        data = []
+        for producer in self.queryset:
+            data.append({
+                'producer': producer,
+                'open': Action.objects.filter(status="Abierta", producer_id=producer.id).count(),
+                'satisfactories': Action.objects.filter(status="Satisfactorias", producer_id=producer.id).count(),
+                'unsatisfactories': Action.objects.filter(status="Insatisfactorias", producer_id=producer.id).count()
+            })
+
+        import pdb; pdb.set_trace()
+        return data
 
 
 class MyUser(APIView):
