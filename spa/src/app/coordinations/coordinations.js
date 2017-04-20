@@ -4,7 +4,6 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
   $scope.promises = [];
   $scope.user;
   $scope.init = function(){
-
     UserService.me().then(function(response){
       $scope.user = response.id
       $scope.getCordinations('producer','created' );
@@ -32,8 +31,6 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
     ActionListService.getList(query).then(
       function(response) {
-        console.log("CoordinationsController", response);
-
         if(userType == 'producer')
           $scope.promises = response.results;
         else if ( userType == 'client')
@@ -45,8 +42,15 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
         $scope.errors = errorResponse.data;
       }
     );
-
-
   }
 
+  $scope.makeAction = function(action,type){
+    console.log(action, type);
+    if(type == 'retry'){
+
+    }
+    else{
+
+    }
+  }
 }]);

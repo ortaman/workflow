@@ -30,7 +30,7 @@
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
-                          
+
                             <li>
                                 <a href="#">
                                     <i class="icon-user"></i> Ubicar a Alguien</a>
@@ -135,13 +135,13 @@
                                                     <span class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
                                                     <ul class="mt-comment-actions">
                                                         <li>
-                                                            <a href="#">Aceptar</a>
+                                                            <a ng-click="makeAction(action,'accept')" >Aceptar</a>
                                                         </li>
                                                         <li>
-                                                            <a href="#">Negociar</a>
+                                                            <a ng-click="makeAction(action,'negociate')" >Negociar</a>
                                                         </li>
                                                         <li>
-                                                            <a href="#">Declinar</a>
+                                                            <a ng-click="makeAction(action,'decline')" >Declinar</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -167,13 +167,13 @@
                                                   <span class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
                                                   <ul class="mt-comment-actions">
                                                       <li>
-                                                          <a href="#">Aceptar</a>
+                                                          <a  ng-click="makeAction(action,'accept')" >Aceptar</a>
                                                       </li>
                                                       <li>
-                                                          <a href="#">Negociar</a>
+                                                          <a  ng-click="makeAction(action,'negociate')" >Negociar</a>
                                                       </li>
                                                       <li>
-                                                          <a href="#">Declinar</a>
+                                                          <a  ng-click="makeAction(action,'decline')" >Declinar</a>
                                                       </li>
                                                   </ul>
                                               </div>
@@ -223,8 +223,8 @@
                                                     </div>
                                                     <div class="mt-action-buttons ">
                                                         <div class="btn-group btn-group-circle">
-                                                            <button type="button" class="btn btn-outline green btn-sm">Reiterar</button>
-                                                            <button type="button" class="btn btn-outline red btn-sm">Cancelar</button>
+                                                            <button type="button" class="btn btn-outline green btn-sm" ng-click="makeAction(action,'retry')" >Reiterar</button>
+                                                            <button type="button" class="btn btn-outline red btn-sm"  ng-click="makeAction(action,'cancel')">Cancelar</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -251,8 +251,8 @@
                                                     </div>
                                                     <div class="mt-action-buttons ">
                                                         <div class="btn-group btn-group-circle">
-                                                            <button type="button" class="btn btn-outline green btn-sm">Aprobar</button>
-                                                            <button type="button" class="btn btn-outline red btn-sm">Rechazar</button>
+                                                            <button type="button" class="btn btn-outline green btn-sm" ng-click="makeAction(action,'aprove')">Aprobar</button>
+                                                            <button type="button" class="btn btn-outline red btn-sm" ng-click="makeAction(action,'reject')">Rechazar</button>
                                                         </div>
                                                     </div>
                                                 </div>
