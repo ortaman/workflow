@@ -1,7 +1,7 @@
 
 app.controller('ProjectDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog) {
+	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog', 'ReportGetService',
+	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog, ReportGetService) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -23,6 +23,7 @@ app.controller('ProjectDetailController', [
 		getProject();
 		$scope.actionPageChanged()
 		$scope.producerPageChanged();
+		$scope.getReport();
 	}
 
 	//Service call
@@ -41,6 +42,19 @@ app.controller('ProjectDetailController', [
 			}
 		);
 	}
+
+	$scope.getReport = function (){
+    var query = {
+      project_id: $state.params.id,
+      action_id:'None'
+    }
+    ReportGetService.getList(query).then(
+      function(response){
+         $scope.report = response[0]
+      }, function(errors){
+        console.log(errors);
+      });
+  }
 
 	$scope.actionPageChanged = function(status) {
 
@@ -132,13 +146,15 @@ app.controller('ProjectDetailController', [
 		 parent: angular.element(document.body),
 		 clickOutsideToClose:true,
 		 size: 'md',
-
-		})
-
+		 locals:{
+			 type:'project'
+		 }
+		}).finally(function() {
+      	$scope.getReport()
+    });
 	}
 
 	$scope.openReportDetailModal = function() {
-
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,
@@ -148,7 +164,9 @@ app.controller('ProjectDetailController', [
 		 parent: angular.element(document.body),
 		 clickOutsideToClose:true,
 		 size: 'md',
-
+		 locals:{
+			 report: $scope.report
+		 }
 		})
 
 	}

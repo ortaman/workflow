@@ -1,9 +1,9 @@
 
 app.controller('ActionDetailController', [
 	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig',
-	'ProducerGetListService', 'ActionGetService',
+	'ProducerGetListService', 'ActionGetService','ReportGetService','$mdDialog',
 	function($scope, $state, ProjectGetService, ActionListService, APIConfig,
-		ProducerGetListService, ActionGetService) {
+		ProducerGetListService, ActionGetService, ReportGetService, $mdDialog) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -17,6 +17,7 @@ app.controller('ActionDetailController', [
 		$scope.getAction();
 		$scope.actionPageChanged()
 		$scope.producerPageChanged();
+		$scope.getReport();
 	}
 
 	//Service call
@@ -37,6 +38,54 @@ app.controller('ActionDetailController', [
 		);
 	}
 
+	$scope.getReport = function (){
+    var query = {
+      action_id:$state.params.id
+    }
+    ReportGetService.getList(query).then(
+      function(response){
+         $scope.report = response[0]
+      }, function(errors){
+        console.log(errors);
+      });
+  }
+
+	$scope.openReportModal = function() {
+
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'ReportModalController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/report-create/add-report.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 size: 'md',
+		 locals:{
+			 type:'action'
+		 }
+		})
+		.finally(function() {
+      $scope.getReport()
+    });
+	}
+
+	$scope.openReportDetailModal = function() {
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'ReportDetailController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/report-detail/report-detail.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 size: 'md',
+		 locals:{
+			 report: $scope.report
+		 }
+		})
+
+	}
 	$scope.actionPageChanged = function(status) {
 		actionStatus = status||actionStatus;
 

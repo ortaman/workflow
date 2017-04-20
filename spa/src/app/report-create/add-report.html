@@ -1,81 +1,87 @@
-<div class="modal-header">
-    <h3 class="modal-title" id="modal-title">Creación de reporte</h3>
-</div>
-<form novalidate name="vm.reportForm" ng-submit="vm.sendReport(report)">
-  <div class="modal-body" id="modal-body">
-    <div class="row">
-      <div class="col-md-6">
-        <md-input-container class="md-block" >
-          <label> Avance</label>
-            <md-select name="progress"
-                       ng-model="vm.report.progress"
-                       required>
-            <md-option value="0"> 0% </md-option>
-            <md-option value="25"> 25% </md-option>
-            <md-option value="50"> 50% </md-option>
-            <md-option value="75"> 75% </md-option>
-            <md-option value="100"> 100% </md-option>
-          </md-select>
+<div class="modal-dialog modal-lg">
 
-          <div ng-show="vm.reportForm.progress.$touched || vm.submitted">
-             <div class="error" style="margin-top: 0em"
-                  ng-show="vm.reportForm.progress.$error.required">
-               Campo requerido.
+  <div class="modal-header text-center">
+      <h3 class="modal-title" id="modal-title">Creación de reporte</h3>
+  </div>
+  <form novalidate name="vm.reportForm" ng-submit="vm.sendReport(report)">
+    <div class="modal-body" id="modal-body">
+      <div class="row">
+        <div class="col-md-6">
+          <md-input-container class="md-block" >
+            <label> Avance</label>
+              <md-select name="progress"
+                         ng-model="vm.report.progress"
+                         required>
+              <md-option value="0"> 0% </md-option>
+              <md-option value="25"> 25% </md-option>
+              <md-option value="50"> 50% </md-option>
+              <md-option value="75"> 75% </md-option>
+              <md-option value="100"> 100% </md-option>
+            </md-select>
+
+            <div ng-show="vm.reportForm.progress.$touched || vm.submitted">
+               <div class="error" style="margin-top: 0em"
+                    ng-show="vm.reportForm.progress.$error.required">
+                 Campo requerido.
+               </div>
              </div>
-           </div>
-          </md-input-container>
+            </md-input-container>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6">
+              <md-input-container class="md-block">
+                <label> Actividades realizadas </label>
+                <textarea
+                  name="accomplished"
+                  placeholder="Describe las acciones realizadas."
+                  rows="5"
+                  maxlength="512"
+                  ng-model="vm.report.accomplished"
+                  required></textarea>
+
+                  <div ng-show="vm.reportForm.accomplished.$touched || vm.submitted">
+                     <div class="error" ng-show="vm.reportForm.accomplished.$error.required">
+                       Campo requerido.
+                     </div>
+                   </div>
+
+              </md-input-container>
+          </div>
+
+          <div class="col-md-6">
+              <md-input-container class="md-block">
+                <label> Actividades pendientes </label>
+                <textarea
+                  name="pending"
+                  placeholder="Describe las acciones pendientes"
+                  rows="5"
+                  maxlength="512"
+                  ng-model="vm.report.pending"
+                  required></textarea>
+
+                <div ng-show="vm.reportForm.pending.$touched || vm.submitted">
+                    <div class="error" ng-show="vm.reportForm.pending.$error.required">
+                      Campo requerido.
+                    </div>
+                </div>
+
+              </md-input-container>
+          </div>
+    </div>
+
+  </div>
+    <div class="modal-footer">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <button type="button" class="btn red" ng-click="vm.cancel()">Cancelar</button>
+          <button type="submit" class="btn blue">Crear</button>
+          <br><br>
+          <div class="error">
+            {{ vm.errors }}
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <md-input-container class="md-block">
-              <label> Actividades realizadas </label>
-              <textarea
-                name="accomplished"
-                placeholder="Describe las acciones realizadas."
-                rows="5"
-                maxlength="512"
-                ng-model="vm.report.accomplished"
-                required></textarea>
-
-                <div ng-show="vm.reportForm.accomplished.$touched || vm.submitted">
-                   <div class="error" ng-show="vm.reportForm.accomplished.$error.required">
-                     Campo requerido.
-                   </div>
-                 </div>
-
-            </md-input-container>
-        </div>
-
-        <div class="col-md-6">
-            <md-input-container class="md-block">
-              <label> Actividades pendientes </label>
-              <textarea
-                name="pending"
-                placeholder="Describe las acciones pendientes"
-                rows="5"
-                maxlength="512"
-                ng-model="vm.report.pending"
-                required></textarea>
-
-              <div ng-show="vm.reportForm.pending.$touched || vm.submitted">
-                  <div class="error" ng-show="vm.reportForm.pending.$error.required">
-                    Campo requerido.
-                  </div>
-              </div>
-
-            </md-input-container>
-        </div>
-  </div>
-
+  </form>
 </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary" type="submit"  >Crear</button>
-    <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancelar</button>
-
-      <div class="error">
-        {{ vm.errors }}
-      </div>
-
-  </div>
-</form>
