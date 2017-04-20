@@ -1,6 +1,6 @@
 
 
-app.directive('myHeader', ['URLTemplates',
+app.directive('myHeader', ['URLTemplates','UserService',
 
   /** @ngInject */
   function myHeader(URLTemplates) {
@@ -18,8 +18,11 @@ app.directive('myHeader', ['URLTemplates',
     return directive;
 
     /** @ngInject */
-    function HeaderController(APIConfig, $state, StorageService) {
+    function HeaderController(APIConfig, $state, StorageService, UserService) {
       var vm = this;
+      UserService.me().then(function(result){
+        vm.user = result
+      })
 
       if (!StorageService.get('token')) {
         $state.go('login');

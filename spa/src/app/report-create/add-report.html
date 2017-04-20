@@ -1,8 +1,8 @@
 <div class="modal-header">
     <h3 class="modal-title" id="modal-title">Creación de reporte</h3>
 </div>
-<div class="modal-body" id="modal-body">
-  <form novalidate name="vm.reportForm" ng-submit="vm.sendReport(report)">
+<form novalidate name="vm.reportForm" ng-submit="vm.sendReport(report)">
+  <div class="modal-body" id="modal-body">
     <div class="row">
       <div class="col-md-6">
         <md-input-container class="md-block" >
@@ -11,9 +11,9 @@
                        ng-model="vm.report.progress"
                        required>
             <md-option value="0"> 0% </md-option>
-            <md-option value="20"> 25% </md-option>
+            <md-option value="25"> 25% </md-option>
             <md-option value="50"> 50% </md-option>
-            <md-option value="70"> 75% </md-option>
+            <md-option value="75"> 75% </md-option>
             <md-option value="100"> 100% </md-option>
           </md-select>
 
@@ -67,14 +67,15 @@
             </md-input-container>
         </div>
   </div>
-  <button class="btn btn-primary" type="submit"  >OvvvK</button>
-  <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
-  </form>
 
 </div>
-<div class="modal-footer">
-    <div class="error">
-      {{ vm.errors }}
-    </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="submit"  >Crear</button>
+    <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancelar</button>
 
-</div>
+      <div class="error">
+        {{ vm.errors }}
+      </div>
+
+  </div>
+</form>

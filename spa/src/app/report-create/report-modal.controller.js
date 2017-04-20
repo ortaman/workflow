@@ -1,8 +1,8 @@
 
-app.controller('ReportModalController', [ '$uibModalInstance','$state', 'ReportCreateService', 'UserService',
- function($uibModalInstance, $state, ReportCreateService, UserService) {
+app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateService', 'UserService',
+ function($mdDialog, $state, ReportCreateService, UserService) {
    var $ctrl = this;
-   
+
     console.log($ctrl);
     $ctrl.submitted = false;
     $ctrl.report = {
@@ -24,7 +24,7 @@ app.controller('ReportModalController', [ '$uibModalInstance','$state', 'ReportC
 
         ReportCreateService.create($ctrl.report).then(
           function (response) {
-            $uibModalInstance.dismiss('cancel');
+            $mdDialog.hide();
 
             console.log("response", response);
           },
@@ -40,6 +40,6 @@ app.controller('ReportModalController', [ '$uibModalInstance','$state', 'ReportC
     }
 
     $ctrl.cancel = function () {
-      $uibModalInstance.dismiss('cancel');
+      $mdDialog.hide();
     };
 }]);

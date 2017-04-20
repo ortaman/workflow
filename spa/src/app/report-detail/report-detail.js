@@ -1,21 +1,25 @@
 
-app.controller('ReportDetailController', ['$scope', 'ReportGetService', '$state', function($scope, ReportGetService, $state) {
-  console.log("detail", ReportGetService);
+app.controller('ReportDetailController', [ 'ReportGetService', '$state', '$mdDialog',function( ReportGetService, $state, $mdDialog) {
+  console.log("detail" );
+  var $ctrl = this;
 
-  $scope.report = {};
-  
-  $scope.init = function(){
+  $ctrl.report = {};
+
+  $ctrl.init = function(){
     var reportId = $state.params.id
-    $scope.getReport(reportId);
+    $ctrl.getReport(reportId);
   }
 
-  $scope.getReport = function (reportId){
+  $ctrl.getReport = function (reportId){
     ReportGetService.getById(reportId).then(
       function(response){
-        $scope.report = response
+        $ctrl.report = response
         console.log(response);
       }, function(errors){
         console.log(errors);
       });
   }
+  $ctrl.cancel = function () {
+    $mdDialog.hide();
+  };
 }]);
