@@ -17,7 +17,7 @@ app.controller('ReportDetailController', [ 'ReportGetService', '$state', '$mdDia
     }
     ReportGetService.getList(query).then(
       function(response){
-        $ctrl.report = response
+        $ctrl.report = response[0]
         console.log(response);
       }, function(errors){
         console.log(errors);

@@ -42,20 +42,17 @@ class ReportList(APIView, APIMixin):
         query = request.query_params
         query_keys = query.keys()
 
-        if 'project_id' in query_keys and 'action_id' in query_keys:
-            print("kkkkk")
-            queryset = self.model.objects.filter(
-                project_id=query.get('proyect_id'),
-                action_id=query.get('action_id'))
 
-            data = self.serializer_list(queryset, many=True).data
+        if 'project_id' in query_keys:
+            queryset = self.model.objects.filter(project_id=query.get('project_id'))
+
+        elif 'action_id' in query_keys:
+            queryset = self.model.objects.filter(action_id=query.get('action_id'))
 
         else:
-            print("uuuuu")
+            queryset = []
 
-            data = []
-
-
+        data = self.serializer_list(queryset, many=True).data
         return Response(data)
 
     def post(self, request, format=None):
