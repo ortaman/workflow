@@ -38,6 +38,10 @@
                                 <a href="#">
                                     <i class="icon-pin"></i> Nueva Alerta</a>
                             </li>
+                            <li ng-if="!report">
+                                <a href="" ng-click="openReportModal()">
+                                    <i class="icon-user"></i> Agregar reporte </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -59,6 +63,10 @@
                                 <span class="caption-subject bold font-dark uppercase">
                                     Detalle de acción
                                 </span>
+                            </div>
+                            <div class="btn-group pull-right" ng-if="report">
+                              <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" ng-click="openReportDetailModal()"> Ver reporte
+                              </button>
                             </div>
                         </div>
                         <div class="portlet-body">

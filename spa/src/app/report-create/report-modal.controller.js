@@ -1,17 +1,19 @@
 
-app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateService', 'UserService',
- function($mdDialog, $state, ReportCreateService, UserService) {
+app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateService', 'UserService','type','$scope',
+ function($mdDialog, $state, ReportCreateService, UserService, type,  $scope) {
    var $ctrl = this;
 
-    console.log($ctrl);
     $ctrl.submitted = false;
     $ctrl.report = {
-      'project':$state.params.id,
       'progress':'0'
     }
 
+    $ctrl.report[type] = $state.params.id;
+    if(type == 'action'){
+      $ctrl.report['project'] = $scope.currentAction.project.id;
+    }
+
     $ctrl.sendReport = function(){
-      console.log($ctrl);
       $ctrl.submitted = true;
 
       if ($ctrl.reportForm.$invalid) {
