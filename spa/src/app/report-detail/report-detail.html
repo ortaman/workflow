@@ -2,20 +2,20 @@
   <div class="modal-header text-center">
     <h3 class="modal-title" id="modal-title">Reporte de avance </h3>
   </div>
-  <div class="modal-body" id="modal-body" >
+  <div class="modal-body" id="modal-body" style="padding:3%">
       <div class="row">
         <div class="col-md-12">
             <strong>Progreso</strong>
-            <p>{{vm.report.progress}}</p>
+            <p>Se preportó {{vm.report.progress}}% de avance.</p>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6">
-          <h5>Tareas pendientes</h5>
+          <h5>Actividades pendientes</h5>
           <span>{{vm.report.pending}}</span>
         </div>
         <div class="col-md-6">
-          <h5>Tareas completadas</h5>
+          <h5>Actividades completadas</h5>
 
           <span>{{vm.report.accomplished}}</span>
         </div>
@@ -24,10 +24,8 @@
   </div>
   <div class="modal-footer">
 
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <button type="button" class="btn red" ng-click="vm.cancel()">Cerrar</button>
+      <div class="col-md-12 text-center" >
+        <button style="margin-top:3%" type="button" class="btn red" ng-click="vm.cancel()">Cerrar</button>
       </div>
-    </div>
   </div>
 </div>
