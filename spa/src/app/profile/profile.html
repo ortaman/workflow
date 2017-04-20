@@ -26,7 +26,7 @@
                     </li>
                 </ul>
                 <div class="page-toolbar">
-                    <div class="btn-group pull-right">
+                    <!-- <div class="btn-group pull-right">
                         <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Acciones
                             <i class="fa fa-angle-down"></i>
                         </button>
@@ -49,7 +49,7 @@
                                     <i class="icon-layers"></i> Proyectos en Ejecución</a>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <!-- END PAGE BAR -->
@@ -60,19 +60,19 @@
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12" ng-init="init()">
                     <!-- BEGIN PROFILE SIDEBAR -->
                     <div class="profile-sidebar">
                         <!-- PORTLET MAIN -->
                         <div class="portlet light profile-sidebar-portlet ">
                             <!-- SIDEBAR USERPIC -->
                             <div class="profile-userpic">
-                                <img src="../../assets/metronics/pages/media/profile/profile_user.jpg" class="img-responsive" alt=""> </div>
+                                <img src="{{ user.photo}}" class="img-responsive" alt=""> </div>
                             <!-- END SIDEBAR USERPIC -->
                             <!-- SIDEBAR USER TITLE -->
                             <div class="profile-usertitle">
-                                <div class="profile-usertitle-name"> Raúl Toro </div>
-                                <div class="profile-usertitle-job"> Dirección Médica </div>
+                                <div class="profile-usertitle-name"> {{user.first_surname}} {{user.second_surname}}</div>
+                                <div class="profile-usertitle-job"> {{user.position}} </div>
                             </div>
                             <!-- END SIDEBAR USER TITLE -->
                             <!-- SIDEBAR BUTTONS -->
@@ -133,69 +133,30 @@
                                     </div>
                                     <div class="portlet-body">
                                         <div class="table-scrollable table-scrollable-borderless">
-                                            <table class="table table-hover table-light">
-                                                <thead>
-                                                    <tr class="uppercase">
-                                                        <th colspan="2"> Cliente </th>
-                                                        <th><i class=" fa fa-comments-o"></i></th>
-                                                        <th><i class=" fa fa-thumbs-o-up"></i></th>
-                                                        <th><i class=" fa fa-thumbs-o-down"></i> </th>
-                                                        <th><i class=" fa fa-calculator"></i></th>
-                                                    </tr>
-                                                </thead>
-                                                <tr>
-                                                    <td class="fit">
-                                                        <img class="user-pic" src="../../assets/metronics/pages/media/users/avatar1.jpg"> </td>
-                                                    <td>
-                                                        <a href="javascript:;" class="primary-link">Victor</a>
-                                                    </td>
-                                                    <td> 9</td>
-                                                    <td> 4</td>
-                                                    <td>3</td>
-                                                    <td>
-                                                        <span class="bold theme-font">44%</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="fit">
-                                                        <img class="user-pic" src="../../assets/metronics/pages/media/users/teambg4.jpg"> </td>
-                                                    <td>
-                                                        <a href="javascript:;" class="primary-link">Mario</a>
-                                                    </td>
-                                                    <td> 5</td>
-                                                    <td> 3</td>
-                                                    <td> 2</td>
-                                                    <td>
-                                                        <span class="bold theme-font">66%</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="fit">
-                                                        <img class="user-pic" src="../../assets/metronics/pages/media/users/teambg6.jpg"> </td>
-                                                    <td>
-                                                        <a href="javascript:;" class="primary-link">Eduardo</a>
-                                                    </td>
-                                                    <td> 4 </td>
-                                                    <td> 1 </td>
-                                                    <td> 3 </td>
-                                                    <td>
-                                                        <span class="bold theme-font">25%</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="fit">
-                                                        <img class="user-pic" src="../../assets/metronics/pages/media/users/avatar80_8.jpg"> </td>
-                                                    <td>
-                                                        <a href="javascript:;" class="primary-link">Silvia</a>
-                                                    </td>
-                                                    <td> 2 </td>
-                                                    <td> 1 </td>
-                                                    <td> 0 </td>
-                                                    <td>
-                                                        <span class="bold theme-font">50%</span>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                          <table class="table table-hover table-light ">
+                                              <thead>
+                                                  <tr class="uppercase ">
+                                                      <th colspan="2 "> Cliente </th>
+                                                      <th><i class=" fa fa-comments-o "></i></th>
+                                                      <th><i class=" fa fa-thumbs-o-up "></i></th>
+                                                      <th><i class=" fa fa-thumbs-o-down "></i> </th>
+                                                      <th><i class=" fa fa-calculator "></i></th>
+                                                  </tr>
+                                              </thead>
+                                              <tr ng-repeat="producer in clients.producers track by $index">
+                                                  <td class="fit ">
+                                                    <img height="40" width="40" ng-src="{{producer.producer.photo}}"/>
+                                                  <td>
+                                                      <a href="javascript:; " class="primary-link ">{{producer.producer.username}}</a>
+                                                  </td>
+                                                  <td>{{ producer.open}}</td>
+                                                  <td>{{ producer.satisfactories }}</td>
+                                                  <td>{{ producer.unsatisfactories}}</td>
+                                                  <td>
+                                                      <span class="bold theme-font ">{{ (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories)}}%</span>
+                                                  </td>
+                                              </tr>
+                                          </table>
                                         </div>
                                     </div>
                                 </div>
@@ -212,69 +173,30 @@
                                     </div>
                                     <div class="portlet-body">
                                         <div class="table-scrollable table-scrollable-borderless">
-                                            <table class="table table-hover table-light">
-                                                <thead>
-                                                    <tr class="uppercase">
-                                                        <th colspan="2"> Realizador </th>
-                                                        <th><i class=" fa fa-comments-o"></i></th>
-                                                        <th><i class=" fa fa-thumbs-o-up"></i></th>
-                                                        <th><i class=" fa fa-thumbs-o-down"></i> </th>
-                                                        <th><i class=" fa fa-calculator"></i></th>
-                                                    </tr>
-                                                </thead>
-                                                <tr>
-                                                    <td class="fit">
-                                                        <img class="user-pic" src="../../assets/metronics/pages/media/users/avatar1.jpg"> </td>
-                                                    <td>
-                                                        <a href="javascript:;" class="primary-link">Victor</a>
-                                                    </td>
-                                                    <td> 7</td>
-                                                    <td> 5</td>
-                                                    <td>3</td>
-                                                    <td>
-                                                        <span class="bold theme-font">54%</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="fit">
-                                                        <img class="user-pic" src="../../assets/metronics/pages/media/users/teambg4.jpg"> </td>
-                                                    <td>
-                                                        <a href="javascript:;" class="primary-link">Mario</a>
-                                                    </td>
-                                                    <td> 8</td>
-                                                    <td> 6</td>
-                                                    <td> 2</td>
-                                                    <td>
-                                                        <span class="bold theme-font">70%</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="fit">
-                                                        <img class="user-pic" src="../../assets/metronics/pages/media/users/teambg6.jpg"> </td>
-                                                    <td>
-                                                        <a href="javascript:;" class="primary-link">Eduardo</a>
-                                                    </td>
-                                                    <td> 3 </td>
-                                                    <td> 1 </td>
-                                                    <td> 3 </td>
-                                                    <td>
-                                                        <span class="bold theme-font">33%</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="fit">
-                                                        <img class="user-pic" src="../../assets/metronics/pages/media/users/avatar80_8.jpg"> </td>
-                                                    <td>
-                                                        <a href="javascript:;" class="primary-link">Silvia</a>
-                                                    </td>
-                                                    <td> 2 </td>
-                                                    <td> 1 </td>
-                                                    <td> 0 </td>
-                                                    <td>
-                                                        <span class="bold theme-font">50%</span>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                          <table class="table table-hover table-light ">
+                                              <thead>
+                                                  <tr class="uppercase ">
+                                                      <th colspan="2 "> Realizador </th>
+                                                      <th><i class=" fa fa-comments-o "></i></th>
+                                                      <th><i class=" fa fa-thumbs-o-up "></i></th>
+                                                      <th><i class=" fa fa-thumbs-o-down "></i> </th>
+                                                      <th><i class=" fa fa-calculator "></i></th>
+                                                  </tr>
+                                              </thead>
+                                              <tr ng-repeat="producer in producers.producers track by $index">
+                                                  <td class="fit ">
+                                                    <img height="40" width="40" ng-src="{{producer.producer.photo}}"/>
+                                                  <td>
+                                                      <a href="javascript:; " class="primary-link ">{{producer.producer.username}}</a>
+                                                  </td>
+                                                  <td>{{ producer.open}}</td>
+                                                  <td>{{ producer.satisfactories }}</td>
+                                                  <td>{{ producer.unsatisfactories}}</td>
+                                                  <td>
+                                                      <span class="bold theme-font ">{{ (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories)}}%</span>
+                                                  </td>
+                                              </tr>
+                                          </table>
                                         </div>
                                     </div>
                                 </div>
