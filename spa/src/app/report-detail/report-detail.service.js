@@ -9,6 +9,13 @@ app.service("ReportGetService", ['$http', 'APIConfig', function($http, APIConfig
         return promise;
     }
 
+    this.getList = function(object) {
+  		var params = $.param(object);
+  	  var promise = $http.get(APIConfig.url + "reports/?" + params).then(function(response) {
+  	  return response.data;
+  	});
+  	  return promise;
+  	};
 
 
 }]);

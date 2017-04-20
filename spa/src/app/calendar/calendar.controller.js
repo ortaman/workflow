@@ -80,7 +80,7 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
      angular.forEach(array, function(value, key){
        angular.forEach(dates,function(value2, key2){
          var item2 = {};
-         item2.title = array[key].name+ ' ('+ value2+')';
+         item2.title = array[key].name+ ' - '+ value2;
          item2.start = moment(array[key][key2]).toDate();
          item2.stick = true
          item2.className = getColor(value, key2, type);

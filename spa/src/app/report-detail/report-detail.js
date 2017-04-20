@@ -11,7 +11,11 @@ app.controller('ReportDetailController', [ 'ReportGetService', '$state', '$mdDia
   }
 
   $ctrl.getReport = function (reportId){
-    ReportGetService.getById(reportId).then(
+    var query = {
+      project_id: reportId,
+      action_id:'None'
+    }
+    ReportGetService.getList(query).then(
       function(response){
         $ctrl.report = response
         console.log(response);
