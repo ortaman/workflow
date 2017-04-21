@@ -69,6 +69,9 @@ class ProjectList(APIView, APIMixin):
         if page is None:
             data = self.serializer_list(queryset, many=True).data
         else:
+            if 'phase' in query.keys():
+                queryset = queryset.filter(phase=query.get('phase'))
+
             data = self.get_pagination(queryset, page, self.paginate_by)
 
         return Response(data)
