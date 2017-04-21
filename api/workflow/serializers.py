@@ -60,7 +60,7 @@ class ActionPostSerializer(serializers.ModelSerializer):
         model  = Action
         fields = (
             'id', 'project', 'name', 'phase',
-            'progress', 'status', 'promise',
+            'status', 'promise',
             'client', 'producer', 'observer',
             'toDo', 'satisfactions',
             'begin_at', 'accomplish_at', 'report_at',
@@ -91,7 +91,7 @@ class ActionListSerializer(serializers.ModelSerializer):
     class Meta:
         model  = Action
         fields = (
-            'id', 'name', 'producer', 'client', 'project', 'toDo', 'progress',
+            'id', 'name', 'producer', 'client', 'project', 'toDo',
             'begin_at', 'accomplish_at', 'report_at')
 
 

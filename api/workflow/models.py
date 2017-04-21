@@ -97,16 +97,10 @@ class Action(models.Model):
         ('No aceptada', 'No aceptada'),
     )
 
-    PERCENTAJES = (
-        ('0', '0'), ('25', '25'), ('50', '50'), 
-        ('75', '75'), ('100', '100'),
-    )
-
     project = models.ForeignKey(Project, related_name='project', verbose_name='Proyecto relacionado')
     name = models.CharField(max_length=64, verbose_name='Nombre de la acción')
     phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de la acción')
 
-    progress = models.CharField(choices=PERCENTAJES, max_length=3, default='0', verbose_name='Porcentaje de avance')
     status = models.CharField(choices=STATUS, max_length=30, default='Abierta', verbose_name='Estado')
     promise = models.CharField(choices=PROMISE, max_length=11, default='created', verbose_name='Promesa')
 

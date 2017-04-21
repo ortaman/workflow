@@ -140,55 +140,12 @@
                         </div>
 
                           <div class="row">
-                            <div class="col-md-4">
-                              <md-input-container class="md-block" >
-                                <label> Avance </label>
-                                  <md-select name="progress"
-                                             ng-init="action.progress='0'"
-                                             ng-model="action.progress"
-                                             required>
-                                  <md-option value="0"> 0% </md-option>
-                                  <md-option value="20"> 25% </md-option>
-                                  <md-option value="50"> 50% </md-option>
-                                  <md-option value="70"> 75% </md-option>
-                                  <md-option value="100"> 100% </md-option>
-                                </md-select>
-
-                                <div ng-show="actionForm.progress.$touched || submitted">
-                                   <div class="error" style="margin-top: 0em"
-                                        ng-show="actionForm.progress.$error.required">
-                                     Campo requerido.
-                                   </div>
-                                 </div>
-                                </md-input-container>
-                            </div>
-
-                            <div class="col-md-4">
-                              <md-input-container class="md-block" >
-                                <label> Estado </label>
-                                <md-select name="status"
-                                           ng-init="action.status='open'"
-                                           ng-model="action.status"
-                                           required="">
-                                  <md-option value="Abierta"> Abierta </md-option>
-                                  <md-option value="Cerrada satisfactoriamente"> Cerrada satisfactoriamente </md-option>
-                                  <md-option value="Cerrada insatisfactoriamente"> Cerrada insatisfactoriamente </md-option>
-                                </md-select>
-
-                                <div ng-show="actionForm.status.$touched || submitted">
-                                   <div class="error"  style="margin-top: 0em"
-                                        ng-show="actionForm.status.$error.required">
-                                     Campo requerido.
-                                   </div>
-                                 </div>
-                                </md-input-container>
-                            </div>
 
                             <div class="col-md-4">
                               <md-input-container class="md-block" >
                                 <label> Promesa </label>
                                 <md-select name="promise"
-                                           ng-init="action.promise='created'"
+                                           ng-init="action.promise='Creada'"
                                            ng-model="action.promise"
                                            ng-disabled="true">
                                      <md-option value="Creada"> Creada </md-option>
@@ -208,10 +165,31 @@
                                  </div>
                                 </md-input-container>
                             </div>
+
+                            <div class="col-md-4">
+                              <md-input-container class="md-block" >
+                                <label> Estado </label>
+                                <md-select name="status"
+                                           ng-init="action.status='Abierta'"
+                                           ng-model="action.status"
+                                           required
+                                           disabled>
+                                  <md-option value="Abierta"> Abierta </md-option>
+                                  <md-option value="Cerrada satisfactoriamente"> Cerrada satisfactoriamente </md-option>
+                                  <md-option value="Cerrada insatisfactoriamente"> Cerrada insatisfactoriamente </md-option>
+                                </md-select>
+
+                                <div ng-show="actionForm.status.$touched || submitted">
+                                   <div class="error"  style="margin-top: 0em"
+                                        ng-show="actionForm.status.$error.required">
+                                     Campo requerido.
+                                   </div>
+                                 </div>
+                                </md-input-container>
+                            </div>
                           </div>
-
+                          
                           <br>
-
                           <h4 class="form-section"> Roles en la Acción </h4>
                           <div class="row">
                               <div class="col-md-4">
