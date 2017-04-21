@@ -83,22 +83,25 @@ class ProducerList(APIView, APIMixin):
         query = request.query_params
         query_keys = query.keys()
 
+        queryset = self.model.objects.all()
+
         if 'project_id' in query_keys:
 
             if query.get('parent_action')=='none':
-                queryset = self.model.objects.filter(
+                queryset = queryset.filter(
                     project_id=query.get('project_id'),
                     parent_action__isnull=True) 
             else:
-                queryset = self.model.objects.filter(
+                queryset = queryset.filter(
                     project_id=query.get('project_id'))
 
         elif 'parent_action_id' in query_keys:
 
-            queryset = self.model.objects.filter(
+            queryset = queryset.filter(
                 parent_action_id=query.get('parent_action_id'))
 
-        paginated_data = self.get_pagination(queryset.distinct('producer__id'), page, self.paginate_by)
+        queryset = queryset.distinct('producer__id')
+        paginated_data = self.get_pagination(queryset, page, self.paginate_by)
         
         data = {
             'count':  paginated_data['count'],
