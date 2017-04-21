@@ -1,13 +1,14 @@
 
-app.controller('CoordinationsController', ['$scope','ActionListService','UserService', function($scope, ActionListService, UserService) {
+app.controller('CoordinationsController', ['$scope','ActionListService','UserService','ActionCreateService',
+  function($scope, ActionListService, UserService, ActionCreateService) {
 
   $scope.promises = [];
   $scope.user;
   $scope.init = function(){
     UserService.me().then(function(response){
       $scope.user = response.id
-      $scope.getCordinations('producer','created' );
-      $scope.getCordinations('client','created' );
+      $scope.getCordinations('producer','Creada' );
+      $scope.getCordinations('client','Creada' );
     }, function(error){
       console.log("error",error);
     })
@@ -45,12 +46,18 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
   }
 
   $scope.makeAction = function(action,type){
-    console.log(action, type);
-    if(type == 'retry'){
-
-    }
-    else{
-
+    var response = confirm("¿Está seguro que quiere aceptar esta accion?");
+    if(response == true){
+      action.promise = type
+      ActionCreateService.update(action.id,action).then(
+        function (response) {
+          $scope.getCordinations('producer','Creada' );
+          $scope.getCordinations('client','Creada' );
+        },
+        function (errors) {
+          console.log(errors);
+        }
+      )
     }
   }
 }]);
