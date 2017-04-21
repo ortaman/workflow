@@ -110,10 +110,10 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a href="#portlet_comments_1" data-toggle="tab" ng-click="getCordinations('producer', 'created')"> Pendientes </a>
+                                    <a href="#portlet_comments_1" data-toggle="tab" ng-click="getCordinations('producer', 'Creada')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a href="#portlet_comments_2" data-toggle="tab" ng-click="getCordinations('producer', 'accepted')"> Aceptadas </a>
+                                    <a href="#portlet_comments_2" data-toggle="tab" ng-click="getCordinations('producer', 'Aceptada')"> Aceptadas </a>
                                 </li>
                             </ul>
                         </div>
@@ -135,14 +135,14 @@
                                                     <span class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
                                                     <ul class="mt-comment-actions">
                                                         <li>
-                                                            <a ng-click="makeAction(action,'accept')" >Aceptar</a>
+                                                            <a ng-click="makeAction(action,'Aceptada')" >Aceptar</a>
+                                                        </li>
+                                                        <!-- <li>
+                                                            <a ng-click="makeAction(action,'Negociando')" >Negociar</a>
                                                         </li>
                                                         <li>
-                                                            <a ng-click="makeAction(action,'negociate')" >Negociar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a ng-click="makeAction(action,'decline')" >Declinar</a>
-                                                        </li>
+                                                            <a ng-click="makeAction(action,'No aceptada')" >Declinar</a>
+                                                        </li> -->
                                                     </ul>
                                                 </div>
                                             </div>
@@ -167,14 +167,14 @@
                                                   <span class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
                                                   <ul class="mt-comment-actions">
                                                       <li>
-                                                          <a  ng-click="makeAction(action,'accept')" >Aceptar</a>
+                                                          <a  ng-click="makeAction(action,'Aceptada')" >Aceptar</a>
+                                                      </li>
+                                                      <!-- <li>
+                                                          <a  ng-click="makeAction(action,'Negociando')" >Negociar</a>
                                                       </li>
                                                       <li>
-                                                          <a  ng-click="makeAction(action,'negociate')" >Negociar</a>
-                                                      </li>
-                                                      <li>
-                                                          <a  ng-click="makeAction(action,'decline')" >Declinar</a>
-                                                      </li>
+                                                          <a  ng-click="makeAction(action,'No aceptada')" >Declinar</a>
+                                                      </li> -->
                                                   </ul>
                                               </div>
                                           </div>
@@ -195,10 +195,10 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a href="#tab_actions_pending" data-toggle="tab"  ng-click="getCordinations('client', 'created')"> Pendientes </a>
+                                    <a href="#tab_actions_pending" data-toggle="tab"  ng-click="getCordinations('client', 'Creada')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a href="#tab_actions_completed" data-toggle="tab"  ng-click="getCordinations('client', 'accepted')"> Aceptados </a>
+                                    <a href="#tab_actions_completed" data-toggle="tab"  ng-click="getCordinations('client', 'Aceptada')"> Aceptados </a>
                                 </li>
                             </ul>
                         </div>
@@ -223,8 +223,8 @@
                                                     </div>
                                                     <div class="mt-action-buttons ">
                                                         <div class="btn-group btn-group-circle">
-                                                            <button type="button" class="btn btn-outline green btn-sm" ng-click="makeAction(action,'retry')" >Reiterar</button>
-                                                            <button type="button" class="btn btn-outline red btn-sm"  ng-click="makeAction(action,'cancel')">Cancelar</button>
+                                                            <!-- <button type="button" class="btn btn-outline green btn-sm" ng-click="makeAction(action,'retry')" >Reiterar</button> -->
+                                                            <!-- <button type="button" class="btn btn-outline red btn-sm"  ng-click="makeAction(action,'cancel')">Cancelar</button> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -252,7 +252,7 @@
                                                     <div class="mt-action-buttons ">
                                                         <div class="btn-group btn-group-circle">
                                                             <button type="button" class="btn btn-outline green btn-sm" ng-click="makeAction(action,'aprove')">Aprobar</button>
-                                                            <button type="button" class="btn btn-outline red btn-sm" ng-click="makeAction(action,'reject')">Rechazar</button>
+                                                            <!-- <button type="button" class="btn btn-outline red btn-sm" ng-click="makeAction(action,'reject')">Rechazar</button> -->
                                                         </div>
                                                     </div>
                                                 </div>
