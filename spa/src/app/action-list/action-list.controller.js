@@ -1,43 +1,28 @@
 
-app.controller('ActionListController', ['$scope', 'ActionListService', 'ProducerGetListService',
- function($scope, ActionListService, ProducerGetListService) {
+app.controller('ActionListController', ['$scope', 'ActionListService', 'ProducerGetListService','ProjectListService',
+ function($scope, ActionListService, ProducerGetListService, ProjectListService) {
 
    $scope.producersCurrentPage = 1;
+   $scope.producers = []
+   $scope.projects = [];
 
    $scope.init = function () {
-     //$scope.producerPageChanged();
-
+     $scope.producerPageChanged();
+     $scope.getProjects();
    }
 
-
-    $scope.actions = [
-      {
-        "producer":{
-          'name':"jankl",
-          "first_surname":"valdes",
-          "position":"empleado"
-        },
-        'promise':{
-          "kept_percent": 1,
-          "kept": 2,
-          "empty": 3,
-          "negotiating": 4,
-          "open": 5,
-        }
-      }
-    ]
-
-
   	$scope.producerPageChanged = function() {
-
-  	  	var query = {
-  	  		"page": $scope.producersCurrentPage,
+        var query = {
+          "page": $scope.producersCurrentPage,
+  	  		"project_id":1,
+  	  		"parent_action": "none",
   	  	};
 
   		ProducerGetListService.getList(query).then(
   			function(response) {
 
           console.log("respue", response);
+          $scope.producers = response
 
   			},
   			function(errorResponse) {
@@ -48,4 +33,21 @@ app.controller('ActionListController', ['$scope', 'ActionListService', 'Producer
 
     };
 
+    $scope.onProjectSelect =  function (project) {
+      console.log(project);
+    }
+
+    $scope.getProjects = function(){
+      var query = {}
+      ProjectListService.getList(query).then(
+        function(response) {
+           $scope.projects = response;
+        },
+        function(errorResponse) {
+          console.log('errorResponse', errorResponse);
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+        }
+      );
+    }
 }]);
