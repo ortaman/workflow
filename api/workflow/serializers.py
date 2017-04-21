@@ -60,7 +60,7 @@ class ActionPostSerializer(serializers.ModelSerializer):
         model  = Action
         fields = (
             'id', 'project', 'name', 'phase',
-            'progress', 'status',
+            'progress', 'status', 'promise',
             'client', 'producer', 'observer',
             'toDo', 'satisfactions',
             'begin_at', 'accomplish_at', 'report_at',

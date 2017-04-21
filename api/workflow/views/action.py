@@ -39,6 +39,17 @@ class ActionDetail(APIView, APIMixin):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def patch(self, request, pk, format=None):
+        action = self.get_object(pk)
+        serializer = self.serializer_put(action, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
     def delete(self, request, pk, format=None):
         action = self.get_object(pk)
         action.delete()
@@ -133,12 +144,3 @@ class ActionList(APIView, APIMixin):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def add_custom_action(self, action, begin_date, end_date, timeline_text):
-        if action['begin_at'] >= begin_date and action['begin_at'] <= end_date:
-
-            action['timeline_text'] = timeline_text
-            data.append({
-                'timeline': action['begin_at'],
-                'actions': [action]
-            })
