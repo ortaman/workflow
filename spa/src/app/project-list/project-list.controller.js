@@ -4,10 +4,20 @@ app.controller('ProjectListController', [
 	function($scope, ProjectListService, APIConfig) {
 
 	$scope.currentPage = 1;
+	$scope.listForm = {
+		phase : 'Ejecución',
+		level : 'time'
+	}
 
+	$scope.init = function () {
+		$scope.pageChanged()
+	}
 	$scope.pageChanged = function() {
 
-		var query = {"page": $scope.currentPage};
+		var query = {
+			"page": $scope.currentPage,
+			"phase":$scope.listForm.phase
+		};
 
 		ProjectListService.getList(query).then(
 			function(response) {
@@ -27,6 +37,7 @@ app.controller('ProjectListController', [
 
 	};
 
-	$scope.pageChanged()
-
+	$scope.onProjectSelect = function () {
+		$scope.pageChanged()
+	}
 }]);
