@@ -110,10 +110,13 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a href="#portlet_comments_1" data-toggle="tab" ng-click="getCordinations('producer', 'Creada')"> Pendientes </a>
+                                    <a  data-toggle="tab" ng-click="getCordinations('producer', 'Creada')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a href="#portlet_comments_2" data-toggle="tab" ng-click="getCordinations('producer', 'Aceptada')"> Aceptadas </a>
+                                    <a  data-toggle="tab" ng-click="getCordinations('producer', 'Aceptada')"> Aceptadas </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab"  ng-click="getCordinations('producer', 'Cumplida')"> Terminadas </a>
                                 </li>
                             </ul>
                         </div>
@@ -123,7 +126,7 @@
                                     <!-- BEGIN: Comments -->
                                     <div class="mt-comments">
                                         <div class="mt-comment" ng-repeat="action in promises track by $index">
-                                            <div class="mt-comment-img">
+                                            <div class="mt-comment-img" ng-click="openModal(action)">
                                                 <img src="../../assets/metronics/pages/media/users/avatar1.jpg" /> </div>
                                             <div class="mt-comment-body">
                                                 <div class="mt-comment-info">
@@ -195,10 +198,13 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a href="#tab_actions_pending" data-toggle="tab"  ng-click="getCordinations('client', 'Creada')"> Pendientes </a>
+                                    <a  data-toggle="tab"  ng-click="getCordinations('client', 'Creada')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a href="#tab_actions_completed" data-toggle="tab"  ng-click="getCordinations('client', 'Aceptada')"> Aceptados </a>
+                                    <a  data-toggle="tab"  ng-click="getCordinations('client', 'Aceptada')"> Aceptados </a>
+                                </li>
+                                <li>
+                                    <a  data-toggle="tab"  ng-click="getCordinations('client', 'Cumplida')"> Terminadas </a>
                                 </li>
                             </ul>
                         </div>

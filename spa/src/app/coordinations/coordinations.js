@@ -1,6 +1,6 @@
 
-app.controller('CoordinationsController', ['$scope','ActionListService','UserService','ActionCreateService',
-  function($scope, ActionListService, UserService, ActionCreateService) {
+app.controller('CoordinationsController', ['$scope','ActionListService','UserService','ActionCreateService','$mdDialog',
+  function($scope, ActionListService, UserService, ActionCreateService, $mdDialog) {
 
   $scope.promises = [];
   $scope.user;
@@ -60,4 +60,23 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
       )
     }
   }
+
+
+	$scope.openModal = function(action) {
+    console.log(action);
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'CoordinationsModalController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/coordinations/action-detail.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 locals:{
+			 currentAction: action
+		 }
+		}).finally(function() {
+
+    });
+	}
 }]);
