@@ -51,14 +51,20 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     );
   }
 
-  $scope.makeAction = function(action,type, currentTab){
+  $scope.makeAction = function(action,type, currentTab, userType){
+
     console.log(action);
-    var response = confirm("¿Está seguro que quiere aceptar esta accion?");
+    var actionType = {
+      'Aceptada':'aceptar',
+      'Cumplida':'terminar',
+    }
+    
+    var response = confirm("¿Está seguro que quiere "+ actionType[type]+" esta accion?");
     if(response == true){
       action.promise = type
       ActionCreateService.update(action.id,action).then(
         function (response) {
-          $scope.getCordinations('producer',currentTab );
+          $scope.getCordinations(userType,currentTab );
         },
         function (errors) {
           console.log(errors);

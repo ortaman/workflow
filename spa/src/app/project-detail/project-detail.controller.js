@@ -24,6 +24,7 @@ app.controller('ProjectDetailController', [
 			$scope.producerPageChanged($scope.producersCurrentPage,'producers' );
 			$scope.producerPageChanged($scope.producersPerformanceCurrentPage,'producersPerformance' );
 			$scope.getReport();
+
 	}
 
 	//Service call
@@ -167,6 +168,18 @@ app.controller('ProjectDetailController', [
 	$scope.chunkArray = function(index) {
 		if($scope.producers.producers)
 			return $scope.producers.producers.slice(index*3, (index*3)+3);
+	}
+
+	$scope.getColor = function(phase){
+			if($scope.project.phase == phase){
+				if(moment($scope.project.report_at).isBefore(moment()) && !$scope.report)
+					return 'bg-info yellow-status'
+
+				if(moment($scope.project.report_at).isAfter(moment()) && !$scope.report)
+					return 'bg-info red-stat'
+
+			return 'bg-info green-status'
+		}
 	}
 
 	var transformActions = function(results){
