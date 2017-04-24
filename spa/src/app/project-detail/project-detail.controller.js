@@ -176,7 +176,7 @@ app.controller('ProjectDetailController', [
 					return 'bg-info yellow-status'
 
 				if(moment($scope.project.report_at).isAfter(moment()) && !$scope.report)
-					return 'bg-info red-stat'
+					return 'bg-info red-status'
 
 			return 'bg-info green-status'
 		}
