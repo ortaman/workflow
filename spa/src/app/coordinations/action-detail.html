@@ -1,8 +1,8 @@
 <div class="modal-dialog modal-lg">
   <div class="modal-header text-center">
-    <h3 class="modal-title" id="modal-title">Reporte de avance </h3>
+    <h3 class="modal-title" id="modal-title">Detalle de accion </h3>
   </div>
-  <div class="modal-body" id="modal-body" style="padding:3%">
+  <div class="modal-body" id="modal-body" >
 
         <div class="row">
             <div class="col-lg-6 col-xs-12 col-sm-12">
@@ -32,7 +32,7 @@
                                         </div>
                                         <div class="mt-head-user">
                                             <div class="mt-head-user-img">
-                                                <img src="{{vm.currentAction.producer.photo}}"> </div>
+                                                <img ng-src="{{vm.currentAction.producer.photo}}"> </div>
                                             <div class="mt-head-user-info" style="font-weight: bold">
                                                 <span class="mt-user-name">
                                                 {{ vm.currentAction.client.name }} {{ vm.currentAction.client.first_surname }}
@@ -98,15 +98,15 @@
                         <ul class="nav nav-tabs ">
                             <li class="active ">
                                 <a  class="active" data-toggle="tab"
-                                   ng-click="actionPageChanged('Abierta')"> Abiertas </a>
+                                   ng-click="vm.actionPageChanged('Abierta')"> Abiertas </a>
                             </li>
                             <li>
                                 <a  data-toggle="tab"
-                                   ng-click="actionPageChanged('Satisfactoria')"> Satisfactorias </a>
+                                   ng-click="vm.actionPageChanged('Satisfactoria')"> Satisfactorias </a>
                             </li>
                             <li>
                                 <a  data-toggle="tab"
-                                   ng-click="actionPageChanged('Insatisfactoria')"> Insatisfactorias </a>
+                                   ng-click="vm.actionPageChanged('Insatisfactoria')"> Insatisfactorias </a>
                             </li>
                         </ul>
                     </div>
@@ -116,7 +116,7 @@
                             <div class="tab-pane active " id="tab_1_1 ">
                                 <div class="scroller " style="height: 320px; " data-always-visible="1 " data-rail-visible1="0 " data-handle-color="#D7DCE2 ">
                                     <ul class="feeds ">
-                                        <li ng-repeat="action in actions.results" ng-mouseover="hoverIn(true)" ng-mouseleave="hoverIn(false)">
+                                        <li ng-repeat="action in vm.actions.results" ng-mouseover="hoverIn(true)" ng-mouseleave="hoverIn(false)">
                                             <div class="col1 ">
                                                 <div class="cont ">
                                                     <div class="cont-col1 ">
@@ -144,10 +144,10 @@
                                     <ul uib-pagination boundary-links="true" class="pagination-sm"
                                         previous-text="&lsaquo;" next-text="&rsaquo;"
                                         first-text="&laquo;" last-text="&raquo;"
-                                        items-per-page="actions.paginate_by"
-                                        total-items="actions.count"
-                                        ng-model="actionCurrentPage"
-                                        ng-change="actionPageChanged()">
+                                        items-per-page="vm.actions.paginate_by"
+                                        total-items="vm.actions.count"
+                                        ng-model="vm.actionCurrentPage"
+                                        ng-change="vm.actionPageChanged()">
                                     </ul>
                                 </div>
                             </div>
