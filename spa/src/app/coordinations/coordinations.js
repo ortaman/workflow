@@ -7,41 +7,24 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
   $scope.init = function(){
     UserService.me().then(function(response){
       $scope.user = response.id
-      $scope.getCordinations('producer','Creada' );
-      $scope.getCordinations('client','Creada' );
+      $scope.getClients('Creada' , 'promise');
+      $scope.getProducers('Creada', 'promise' );
     }, function(error){
       console.log("error",error);
     })
   }
 
-  $scope.getCordinations = function(userType, status, typeOfFilter){
-
+  $scope.getClients = function(status, typeOfFilter){
     var query = {};
     query[typeOfFilter] = status;
 
-    if(userType == 'producer'){
-      $scope.producerStatus = status
-      query.producer = $scope.user; // id usuario
-      delete(query.client);
-    }
-
-    else if (userType == 'client'){
-      $scope.clientStatus = status
-      query.client = $scope.user; // id usuario
-      delete(query.producer);
-    }
+    $scope.clientStatus = status // status for display button according the promise
+    query.producer = $scope.user; // id usuario
 
     ActionListService.getList(query).then(
       function(response) {
-        if(userType == 'producer'){
           $scope.promises = response.results;
           $scope.getPhoto($scope.promises)
-        }
-
-        else if ( userType == 'client'){
-          $scope.orders = response.results;
-          $scope.getPhoto($scope.orders)
-          }
       },
       function(errorResponse) {
         $scope.status = errorResponse.statusText || 'Request failed';
@@ -50,8 +33,27 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     );
   }
 
-  $scope.makeAction = function(action,type, currentTab, userType){
+  $scope.getProducers = function(status, typeOfFilter){
+    var query = {};
+    query[typeOfFilter] = status;
 
+    $scope.producerStatus = status // status for display button according the promise
+    console.log("aaaa",$scope.producerStatus);
+    query.client = $scope.user; // id usuario
+
+    ActionListService.getList(query).then(
+      function(response) {
+          $scope.orders = response.results;
+          $scope.getPhoto($scope.orders)
+      },
+      function(errorResponse) {
+        $scope.status = errorResponse.statusText || 'Request failed';
+        $scope.errors = errorResponse.data;
+      }
+    );
+  }
+
+  $scope.makeClientAction = function(action,type){
     var actionType = {
       'Aceptada':'aceptar',
       'Cumplida':'terminar',
@@ -62,7 +64,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
       action.promise = type
       ActionCreateService.update(action.id,action).then(
         function (response) {
-          $scope.getCordinations(userType,currentTab );
+          $scope.getClients($scope.clientStatus, 'promise');
         },
         function (errors) {
           console.log(errors);
@@ -70,6 +72,49 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
       )
     }
   }
+
+  $scope.makeProducerAction = function(action,type){
+    console.log("tipo", type);
+    var actionType = {
+      'Satisfactoria':'satisfactoria',
+      'Insatisfactoria':'insatisfactoria',
+    }
+
+    var response = confirm("¿Está seguro que quiere calificar esta cción como "+ actionType[type]+" ?");
+    if(response == true){
+      action.status = type
+      ActionCreateService.update(action.id,action).then(
+        function (response) {
+          $scope.getProducers($scope.producerStatus, 'promise');
+        },
+        function (errors) {
+          console.log(errors);
+        }
+      )
+    }
+  }
+
+  $scope.makeClientAction = function(action,type){
+    var actionType = {
+      'Aceptada':'aceptar',
+      'Cumplida':'terminar',
+    }
+
+    var response = confirm("¿Está seguro que quiere "+ actionType[type]+" esta accion?");
+    if(response == true){
+      action.promise = type
+      ActionCreateService.update(action.id,action).then(
+        function (response) {
+          $scope.getClients($scope.clientStatus, 'promise');
+        },
+        function (errors) {
+          console.log(errors);
+        }
+      )
+    }
+  }
+
+
 
 
 	$scope.openModal = function(action) {
@@ -89,10 +134,13 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     });
 	}
 
+
+
   $scope.getPhoto = function (obj) {
     angular.forEach(obj, function(item){
       item.project.image =  angular.copy(APIConfig.baseUrl+ item.project.image)
       item.producer.photo =  angular.copy(APIConfig.baseUrl+ item.producer.photo)
+      item.client.photo =  angular.copy(APIConfig.baseUrl+ item.client.photo)
     })
   }
 }]);

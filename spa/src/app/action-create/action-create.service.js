@@ -30,7 +30,7 @@ app.service("ActionCreateService", ['$http', 'APIConfig', function($http, APICon
       var transformDateFields = ['accomplish_at','begin_at', 'report_at'];
 
         angular.forEach(transformFields, function(item){
-          if (typeof object[item] != 'number')
+          if (object[item] && typeof object[item] != 'number')
               object[item] = object[item].id
         })
         angular.forEach(transformDateFields, function(item){
