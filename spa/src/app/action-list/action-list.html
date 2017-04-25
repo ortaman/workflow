@@ -72,15 +72,27 @@
                             <div class="tab-content">
                               <div class="row">
                                 <div class="col-md-5">
-                                  <form novalidate name="searchForm" ng-submit="search(listForm)">
                                     <md-input-container class="md-block" >
                                       <label> Proyecto </label>
                                       <md-select name="project" ng-model="listForm.project" ng-change="onProjectSelect(listForm.project)" required>
                                         <md-option value="{{ project.id}}" ng-repeat="project in projects"> {{project.name}} </md-option>
                                       </md-select>
                                     </md-input-container>
-                                  </form>
+
                                 </div>
+                                <!-- <div class="col-md-4">
+                                  <md-input-container class="md-block" >
+
+                                      <label> Fecha  </label>
+                                      <md-datepicker
+                                        name="date"
+                                        md-current-view="year"
+                                        md-placeholder="Ingresar fecha"
+                                        ng-model="listForm.date"
+                                        required ></md-datepicker>
+                                      </md-input-container>
+
+                                </div> -->
                               </div>
                                 <div class="table-scrollable table-scrollable-borderless">
                                     <table class="table table-hover table-light">
