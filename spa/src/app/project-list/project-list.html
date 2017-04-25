@@ -50,7 +50,7 @@
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <div class="row">
+            <div class="row" ng-init="init()">
                 <div class="col-md-10">
                     <h1 class="page-title"> Tablero de Proyectos
                         <small>Niveles de Cumplimiento</small>
@@ -58,7 +58,6 @@
                 </div>
                 <div class="col-md-2" style="padding:1%">
                     <button type="button" class="btn blue" ui-sref="projectCreate">Crear proyecto</button>
-
                 </div>
             </div>
             <!-- END PAGE TITLE-->
@@ -73,6 +72,37 @@
                         </div>
                     </div-->
                     <div class="portlet-body">
+                      <div class="row">
+                        <div class="col-md-5">
+                          <form novalidate name="searchForm" >
+                            <md-input-container class="md-block" >
+                              <label> Estatus </label>
+                              <md-select name="phase" ng-model="listForm.phase" ng-change="onProjectSelect(listForm.phase)" required>
+
+                                <md-option value="Preparación" >Preparación</md-option>
+                                <md-option value="Negociación" >Negociación</md-option>
+                                <md-option value="Ejecución" >Ejecución</md-option>
+                                <md-option value="Evaluación" >Evaluación</md-option>
+
+                              </md-select>
+                            </md-input-container>
+                          </form>
+                        </div>
+                        <div class="col-md-5">
+                          <form novalidate name="searchForm" >
+                            <md-input-container class="md-block" >
+                              <label> Nivel de cumplimiento </label>
+                              <md-select name="level" ng-model="listForm.level" ng-change="onProjectSelect()" required>
+
+                                <md-option value="delayed" >Retrasado</md-option>
+                                <md-option value="risk" >En riesgo</md-option>
+                                <md-option value="time" >En tiempo</md-option>
+
+                              </md-select>
+                            </md-input-container>
+                          </form>
+                        </div>
+                      </div>
                         <div class="row">
 
                             <div ng-repeat="project in data.results" ng-cloack>
@@ -142,114 +172,114 @@
                                 <span class="caption-helper">Niveles de Cumplimiento</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="portlet-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="mt-widget-3">
-                                    <div class="mt-head bg-red">
-                                        <div class="mt-head-icon">
-                                            <i class=" fa fa-hourglass-end"></i>
+                        <div class="portlet-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mt-widget-3">
+                                        <div class="mt-head bg-red">
+                                            <div class="mt-head-icon">
+                                                <i class=" fa fa-hourglass-end"></i>
+                                            </div>
+                                            <div class="mt-head-desc"> Proyectos Retrasados: </div>
+                                            <span class="mt-head-date"> 3 </span>
+                                            <div class="mt-head-button">
+                                                <button type="button" class="btn btn-circle btn-outline white btn-sm">Ver</button>
+                                            </div>
                                         </div>
-                                        <div class="mt-head-desc"> Proyectos Retrasados: </div>
-                                        <span class="mt-head-date"> 3 </span>
-                                        <div class="mt-head-button">
-                                            <button type="button" class="btn btn-circle btn-outline white btn-sm">Ver</button>
-                                        </div>
-                                    </div>
-                                    <div class="mt-body-actions-icons">
-                                        <div class="btn-group btn-group btn-group-justified">
-                                            <a href="javascript:;" class="btn ">
-                                                <span class="mt-icon">
-                                                                    <i class="fa fa-lightbulb-o"></i>
-                                                                </span>Preparación </a>
-                                            <a href="javascript:;" class="btn ">
-                                                <span class="mt-icon">
-                                                                    <i class="fa fa-check-circle-o"></i>
-                                                                </span>Negociación </a>
-                                            <a href="javascript:;" class="btn ">
-                                                <span class="mt-icon">
-                                                                    <i class="icon-layers"></i>
-                                                                </span>Ejecución </a>
-                                            <a href="javascript:;" class="btn ">
-                                                <span class="mt-icon">
-                                                                    <i class="icon-question"></i>
-                                                                </span>Evaluación </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mt-widget-3">
-                                    <div class="mt-head bg-yellow-crusta-opacity">
-                                        <div class="mt-head-icon">
-                                            <i class="fa fa-warning"></i>
-                                        </div>
-                                        <div class="mt-head-desc"> Proyectos en Riesgo: </div>
-                                        <span class="mt-head-date"> 1 </span>
-                                        <div class="mt-head-button">
-                                            <button type="button" class="btn btn-circle btn-outline white btn-sm">Ver</button>
-                                        </div>
-                                    </div>
-                                    <div class="mt-body-actions-icons">
-                                        <div class="btn-group btn-group btn-group-justified">
-                                            <a href="javascript:;" class="btn ">
-                                                <span class="mt-icon">
-                                                                    <i class="fa fa-lightbulb-o"></i>
-                                                                </span>Preparación </a>
-                                            <a href="javascript:;" class="btn ">
-                                                <span class="mt-icon">
-                                                                    <i class="fa fa-check-circle-o"></i>
-                                                                </span>Negociación </a>
-                                            <a href="javascript:;" class="btn ">
-                                                <span class="mt-icon">
-                                                                    <i class="icon-layers"></i>
-                                                                </span>Ejecución </a>
-                                            <a href="javascript:;" class="btn ">
-                                                <span class="mt-icon">
-                                                                    <i class="icon-question"></i>
-                                                                </span>Evaluación </a>
+                                        <div class="mt-body-actions-icons">
+                                            <div class="btn-group btn-group btn-group-justified">
+                                                <a href="javascript:;" class="btn ">
+                                                    <span class="mt-icon">
+                                                                        <i class="fa fa-lightbulb-o"></i>
+                                                                    </span>Preparación </a>
+                                                <a href="javascript:;" class="btn ">
+                                                    <span class="mt-icon">
+                                                                        <i class="fa fa-check-circle-o"></i>
+                                                                    </span>Negociación </a>
+                                                <a href="javascript:;" class="btn ">
+                                                    <span class="mt-icon">
+                                                                        <i class="icon-layers"></i>
+                                                                    </span>Ejecución </a>
+                                                <a href="javascript:;" class="btn ">
+                                                    <span class="mt-icon">
+                                                                        <i class="icon-question"></i>
+                                                                    </span>Evaluación </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mt-widget-3">
-                                    <div class="mt-head bg-green">
-                                        <div class="mt-head-icon">
-                                            <i class=" fa fa-line-chart"></i>
+                                <div class="col-md-4">
+                                    <div class="mt-widget-3">
+                                        <div class="mt-head bg-yellow-crusta-opacity">
+                                            <div class="mt-head-icon">
+                                                <i class="fa fa-warning"></i>
+                                            </div>
+                                            <div class="mt-head-desc"> Proyectos en Riesgo: </div>
+                                            <span class="mt-head-date"> 1 </span>
+                                            <div class="mt-head-button">
+                                                <button type="button" class="btn btn-circle btn-outline white btn-sm">Ver</button>
+                                            </div>
                                         </div>
-                                        <div class="mt-head-desc"> Proyectos en Tiempo </div>
-                                        <span class="mt-head-date"> 1 </span>
-                                        <div class="mt-head-button">
-                                            <button type="button" class="btn btn-circle btn-outline white btn-sm">Ver</button>
-                                        </div>
-                                    </div>
-                                    <div class="mt-body-actions-icons">
-                                        <div class="btn-group btn-group btn-group-justified">
-                                            <a href="javascript:;" class="btn ">
-                                                <span class="mt-icon">
-                                                                    <i class="fa fa-lightbulb-o"></i>
-                                                                </span>Preparación </a>
-                                            <a href="javascript:;" class="btn ">
-                                                <span class="mt-icon">
-                                                                    <i class="fa fa-check-circle-o"></i>
-                                                                </span>Negociación </a>
-                                            <a href="javascript:;" class="btn ">
-                                                <span class="mt-icon">
-                                                                    <i class="icon-layers"></i>
-                                                                </span>Ejecución </a>
-                                            <a href="javascript:;" class="btn ">
-                                                <span class="mt-icon">
-                                                                    <i class="icon-question"></i>
-                                                                </span>Evaluación </a>
+                                        <div class="mt-body-actions-icons">
+                                            <div class="btn-group btn-group btn-group-justified">
+                                                <a href="javascript:;" class="btn ">
+                                                    <span class="mt-icon">
+                                                                        <i class="fa fa-lightbulb-o"></i>
+                                                                    </span>Preparación </a>
+                                                <a href="javascript:;" class="btn ">
+                                                    <span class="mt-icon">
+                                                                        <i class="fa fa-check-circle-o"></i>
+                                                                    </span>Negociación </a>
+                                                <a href="javascript:;" class="btn ">
+                                                    <span class="mt-icon">
+                                                                        <i class="icon-layers"></i>
+                                                                    </span>Ejecución </a>
+                                                <a href="javascript:;" class="btn ">
+                                                    <span class="mt-icon">
+                                                                        <i class="icon-question"></i>
+                                                                    </span>Evaluación </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="mt-widget-3">
+                                        <div class="mt-head bg-green">
+                                            <div class="mt-head-icon">
+                                                <i class=" fa fa-line-chart"></i>
+                                            </div>
+                                            <div class="mt-head-desc"> Proyectos en Tiempo </div>
+                                            <span class="mt-head-date"> 1 </span>
+                                            <div class="mt-head-button">
+                                                <button type="button" class="btn btn-circle btn-outline white btn-sm">Ver</button>
+                                            </div>
+                                        </div>
+                                        <div class="mt-body-actions-icons">
+                                            <div class="btn-group btn-group btn-group-justified">
+                                                <a href="javascript:;" class="btn ">
+                                                    <span class="mt-icon">
+                                                                        <i class="fa fa-lightbulb-o"></i>
+                                                                    </span>Preparación </a>
+                                                <a href="javascript:;" class="btn ">
+                                                    <span class="mt-icon">
+                                                                        <i class="fa fa-check-circle-o"></i>
+                                                                    </span>Negociación </a>
+                                                <a href="javascript:;" class="btn ">
+                                                    <span class="mt-icon">
+                                                                        <i class="icon-layers"></i>
+                                                                    </span>Ejecución </a>
+                                                <a href="javascript:;" class="btn ">
+                                                    <span class="mt-icon">
+                                                                        <i class="icon-question"></i>
+                                                                    </span>Evaluación </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END CONTENT BODY -->
                             </div>
-                            <!-- END CONTENT BODY -->
                         </div>
-                    </div>
+                  </div>
                 </div>
             </div>
         </div>

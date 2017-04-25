@@ -68,106 +68,130 @@
                                 <span class="caption-helper">Estadísticas Anuales</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="portlet-body">
-                        <div class="tab-content">
-                            <div class="table-scrollable table-scrollable-borderless">
-                                <table class="table table-hover table-light">
-                                    <thead>
-                                        <tr class="uppercase">
-                                            <th colspan="2"> Realizador </th>
-                                            <th> Área </th>
-                                            <th> % de Cumplimiento </th>
-                                            <th> Cumplidas </th>
-                                            <th> Incumplidas </th>
-                                            <th> Renegociadas </th>
-                                            <th> Abiertas </th>
+                        <div class="portlet-body">
+                            <div class="tab-content">
+                              <div class="row">
+                                <div class="col-md-5">
+                                  <form novalidate name="searchForm" ng-submit="search(listForm)">
+                                    <md-input-container class="md-block" >
+                                      <label> Proyecto </label>
+                                      <md-select name="project" ng-model="listForm.project" ng-change="onProjectSelect(listForm.project)" required>
+                                        <md-option value="{{ project.id}}" ng-repeat="project in projects"> {{project.name}} </md-option>
+                                      </md-select>
+                                    </md-input-container>
+                                  </form>
+                                </div>
+                              </div>
+                                <div class="table-scrollable table-scrollable-borderless">
+                                    <table class="table table-hover table-light">
+                                        <thead>
+                                            <tr class="uppercase">
+                                                <th colspan="2"> Realizador </th>
+                                                <th> Área </th>
+                                                <th> Abiertas </th>
+                                                <th> Cumplidas </th>
+                                                <th> Incumplidas </th>
+                                                <th> % de Cumplimiento </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat="producer in producers.producers ">
+                                            <td class="fit">
+                                                <img class="user-pic rounded" src="../../assets/metronics/pages/media/users/teambg6.jpg"> </td>
+                                            <td>
+                                                <a href="javascript:;" class="primary-link">
+                                                  {{ producer.producer.name }} {{producer.producer.first_surname}}
+                                                </a>
+                                            </td>
+                                            <td> {{ producer.producer.position || '-' }}</td>
+
+                                            <td> {{producer.open}} </td>
+                                            <td> {{ producer.satisfactories }}</td>
+                                            <td> {{ producer.unsatisfactories }} </td>
+                                            <td>
+                                                <span class="bold theme-font">{{ getPercentage(producer)}}%</span>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tr ng-repeat="action in actions ">
-                                        <td class="fit">
-                                            <img class="user-pic rounded" src="../../assets/metronics/pages/media/users/teambg6.jpg"> </td>
-                                        <td>
-                                            <a href="javascript:;" class="primary-link">
-                                              {{ action.producer.name }} {{action.producer.first_surname}}
-                                            </a>
-                                        </td>
-                                        <td> {{ action.producer.position }}</td>
-                                        <td>
-                                            <span class="bold theme-font">{{ action.promise.kept_percent }}%</span>
-                                        </td>
-                                        <td> {{ action.promise.kept }}</td>
-                                        <td> {{ action.promise.empty }} </td>
-                                        <td> {{ action.promise.negotiating}} </td>
-                                        <td> {{action.promise.open}} </td>
-                                    </tr>
-                                </table>
+                                    </table>
+                                </div>
+                                <div class="text-center">
+                                    <ul uib-pagination boundary-links="true" class="pagination-sm"
+                                        previous-text="&lsaquo;" next-text="&rsaquo;"
+                                        first-text="&laquo;" last-text="&raquo;"
+                                        items-per-page="producers.paginated_by"
+                                        total-items="producers.count"
+                                        ng-model="producersCurrentPage"
+                                        ng-change="producerPageChanged()">
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="portlet light ">
-                                <div class="portlet-title">
-                                    <div class="caption caption-md">
-                                        <i class="icon-bar-chart font-dark hide"></i>
-                                        <span class="caption-subject font-dark bold uppercase">Performance de Cumplimiento Áreas</span>
-                                        <span class="caption-helper">Estadísticas Anuales</span>
+                            <div class="col-md-12">
+                                <div class="portlet light ">
+                                    <div class="portlet-title">
+                                        <div class="caption caption-md">
+                                            <i class="icon-bar-chart font-dark hide"></i>
+                                            <span class="caption-subject font-dark bold uppercase">Performance de Cumplimiento Áreas</span>
+                                            <span class="caption-helper">Estadísticas Anuales</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="portlet-body">
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                <a class="dashboard-stat dashboard-stat-v2 red" href="#">
-                                    <div class="visual">
-                                        <i class="fa fa-comments"></i>
-                                    </div>
-                                    <div class="details">
-                                        <div class="number">
-                                            <span data-counter="counterup" data-value="45">12</span><span>%</span>
+                            <div class="portlet-body">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                                        <div class="visual">
+                                            <i class="fa fa-comments"></i>
                                         </div>
-                                        <div class="desc"> Finanzas </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                <a class="dashboard-stat dashboard-stat-v2 red" href="#">
-                                    <div class="visual">
-                                        <i class="fa fa-bar-chart-o"></i>
-                                    </div>
-                                    <div class="details">
-                                        <div class="number">
-                                            <span data-counter="counterup" data-value="56">3</span>%</div>
-                                        <div class="desc"> Gerencias Distritales </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                <a class="dashboard-stat dashboard-stat-v2 red" href="#">
-                                    <div class="visual">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </div>
-                                    <div class="details">
-                                        <div class="number">
-                                            <span data-counter="counterup" data-value="65">10</span><span>%</span>
+                                        <div class="details">
+                                            <div class="number">
+                                                <span data-counter="counterup" data-value="45">12</span><span>%</span>
+                                            </div>
+                                            <div class="desc"> Finanzas </div>
                                         </div>
-                                        <div class="desc"> Marketing </div>
-                                    </div>
-                                </a>
+                                    </a>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                                        <div class="visual">
+                                            <i class="fa fa-bar-chart-o"></i>
+                                        </div>
+                                        <div class="details">
+                                            <div class="number">
+                                                <span data-counter="counterup" data-value="56">3</span>%</div>
+                                            <div class="desc"> Gerencias Distritales </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                                        <div class="visual">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </div>
+                                        <div class="details">
+                                            <div class="number">
+                                                <span data-counter="counterup" data-value="65">10</span><span>%</span>
+                                            </div>
+                                            <div class="desc"> Marketing </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <a class="dashboard-stat dashboard-stat-v2 yellow-lemon" href="#">
+                                        <div class="visual">
+                                            <i class="fa fa-globe"></i>
+                                        </div>
+                                        <div class="details">
+                                            <div class="number">
+                                                <span data-counter="counterup" data-value="89">10</span>%</div>
+                                            <div class="desc"> Gerentes Regionales</div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                <a class="dashboard-stat dashboard-stat-v2 yellow-lemon" href="#">
-                                    <div class="visual">
-                                        <i class="fa fa-globe"></i>
-                                    </div>
-                                    <div class="details">
-                                        <div class="number">
-                                            <span data-counter="counterup" data-value="89">10</span>%</div>
-                                        <div class="desc"> Gerentes Regionales</div>
-                                    </div>
-                                </a>
-                            </div>
+
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
