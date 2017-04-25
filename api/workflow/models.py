@@ -19,10 +19,29 @@ class Project(models.Model):
         ('Jardín', 'Jardín'),
     )
 
+    STATUS = (
+        ('Abierta', 'Abierta'),
+        ('Satisfactoria', 'Satisfactoria'),
+        ('Insatisfactoria', 'Insatisfactoria'),
+    )
+
+    PROMISE = (
+        ('Creada', 'Creada'),
+        ('Aceptada', 'Aceptada'),  # acepted is a action in process
+        ('Reportada', 'Reportada'),
+        ('Cumplida', 'Cumplida'),
+        ('Incumplida', 'Incumplida'),
+
+        ('Negociando', 'Negociando'),
+        ('No aceptada', 'No aceptada'),
+    )
+    
     # focus project
     name = models.CharField(max_length=64, verbose_name='Nombre')
     kind = models.CharField(choices=TYPES, max_length=8, default='estandar', verbose_name='Tipos de proyecto')
     phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de proyecto')
+    status = models.CharField(choices=STATUS, max_length=30, default='Abierta', verbose_name='Estado')
+    promise = models.CharField(choices=PROMISE, max_length=11, default='created', verbose_name='Promesa')
 
     # action roles
     client = models.ForeignKey(User, related_name='client_project', verbose_name='Cliente')
@@ -40,9 +59,9 @@ class Project(models.Model):
 
     # agremments
     begin_at = models.DateField(auto_now=False, verbose_name='Fecha de inicio')
-    accomplish_at = models.DateField(auto_now=False, verbose_name='Fecha de cumplimiento')  
+    accomplish_at = models.DateField(auto_now=False, verbose_name='Fecha de cumplimiento')
     renegotiation_at = models.DateField(
-        null=True, blank=True, 
+        null=True, blank=True,
         auto_now=False, verbose_name='Fecha de regenociación')
 
     report_at = models.DateField(auto_now=False, verbose_name='Fecha de reporte de Avance')
@@ -57,10 +76,10 @@ class Project(models.Model):
 
     created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
-    
+
     create_by = models.ForeignKey(
-        User, 
-        related_name='project_create_by', 
+        User,
+        related_name='project_create_by',
         verbose_name='Creado por')
 
     class Meta:
@@ -92,7 +111,7 @@ class Action(models.Model):
         ('Reportada', 'Reportada'),
         ('Cumplida', 'Cumplida'),
         ('Incumplida', 'Incumplida'),
-        
+
         ('Negociando', 'Negociando'),
         ('No aceptada', 'No aceptada'),
     )
@@ -146,16 +165,16 @@ class Action(models.Model):
 class Report(models.Model):
 
     PERCENTAJES = (
-        ('0', '0'), ('25', '25'), ('50', '50'), 
+        ('0', '0'), ('25', '25'), ('50', '50'),
         ('75', '75'), ('100', '100'),
     )
 
     project = models.ForeignKey(Project, related_name='project_report', verbose_name='Proyecto')
     action = models.ForeignKey(
-                Action,         
+                Action,
                 blank=True,
                 null=True,
-                related_name='action_report', 
+                related_name='action_report',
                 verbose_name='Acción'
              )
 

@@ -110,13 +110,19 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab" ng-click="getCordinations('producer', 'Creada')"> Pendientes </a>
+                                    <a  data-toggle="tab" ng-click="getClients('Creada', 'promise')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab" ng-click="getCordinations('producer', 'Aceptada')"> Aceptadas </a>
+                                    <a  data-toggle="tab" ng-click="getClients('Aceptada', 'promise')"> Aceptadas </a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab"  ng-click="getCordinations('producer', 'Cumplida')"> Terminadas </a>
+                                    <a  data-toggle="tab" ng-click="getClients('Cumplida', 'promise')"> Terminadas </a>
+                                </li>
+                                <li>
+                                    <a  data-toggle="tab"  ng-click="getClients('Satisfactoria' , 'status')"> Satisfactoria </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab"  ng-click="getClients('Insatisfactoria', 'status')"> Insatisfactoria </a>
                                 </li>
                             </ul>
                         </div>
@@ -127,7 +133,7 @@
                                     <div class="mt-comments">
                                         <div class="mt-comment" ng-repeat="action in promises track by $index">
                                             <div class="mt-comment-img" >
-                                              <img  style="height:45px; width:45px " ng-src="{{ action.producer.photo }}" /> </div>
+                                              <img  style="height:45px; width:45px " ng-src="{{ action.client.photo }}" /> </div>
 
                                             <div class="mt-comment-body" >
                                                 <div class="mt-comment-info" ng-click="openModal(action)">
@@ -138,11 +144,11 @@
                                                 <div class="mt-comment-details">
                                                     <span class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
                                                     <ul class="mt-comment-actions">
-                                                        <li ng-if="producerStatus == 'Creada'">
-                                                            <a ng-click="makeAction(action,'Aceptada', 'Creada', 'producer')" >Aceptar</a>
+                                                        <li ng-if="clientStatus == 'Creada'">
+                                                            <a ng-click="makeClientAction(action,'Aceptada')" >Aceptar</a>
                                                         </li>
-                                                        <li ng-if="producerStatus == 'Aceptada'">
-                                                            <a ng-click="makeAction(action,'Cumplida' ,'Aceptada', 'producer')" >Terminar</a>
+                                                        <li ng-if="clientStatus == 'Aceptada'">
+                                                            <a ng-click="makeClientAction(action,'Cumplida')" >Terminar</a>
                                                         </li>
                                                         <!-- <li>
                                                             <a ng-click="makeAction(action,'','Negociando')" >Negociar</a>
@@ -154,7 +160,16 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                    </div>
+                                    <div class="text-center">
+                                        <ul uib-pagination boundary-links="true" class="pagination-sm"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            first-text="&laquo;" last-text="&raquo;"
+                                            items-per-page="promises.paginated_by"
+                                            total-items="promises.count"
+                                            ng-model="promisesCurrentPage"
+                                            ng-change="producerPageChanged()">
+                                        </ul>
                                     </div>
                                     <!-- END: Comments -->
                                 </div>
@@ -172,13 +187,19 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab"  ng-click="getCordinations('client', 'Creada')"> Pendientes </a>
+                                    <a  data-toggle="tab"  ng-click="getProducers( 'Creada', 'promise')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab"  ng-click="getCordinations('client', 'Aceptada')"> Aceptados </a>
+                                    <a  data-toggle="tab"  ng-click="getProducers( 'Aceptada', 'promise')"> Aceptados </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab"  ng-click="getCordinations('client', 'Cumplida')"> Terminadas </a>
+                                    <a  data-toggle="tab" ng-click="getProducers( 'Cumplida', 'promise')"> Terminadas </a>
+                                </li>
+                                <li>
+                                    <a  data-toggle="tab"  ng-click="getProducers( 'Satisfactoria' , 'status')"> Satisfactoria </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab"  ng-click="getProducers( 'Insatisfactoria', 'status')"> Insatisfactoria </a>
                                 </li>
                             </ul>
                         </div>
@@ -186,30 +207,43 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab_actions_pending">
                                     <!-- BEGIN: Actions -->
-                                    <div class="mt-actions">
-                                        <div class="mt-action" ng-repeat="action in orders track by $index">
-                                            <div class="mt-action-img">
-                                                <img  style="height:45px; width:45px " ng-src="{{ action.producer.photo }}" /> </div>
-                                            <div class="mt-action-body">
-                                                <div class="mt-action-row">
-                                                    <div class="mt-action-info " ng-click="openModal(action)">
-                                                        <div class="mt-action-details ">
-                                                            <span class="mt-action-author">{{ action.producer.second_surname }}</span>
-                                                            <p class="mt-action-desc">{{ action.name}}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt-action-datetime ">
-                                                        <span class="mt-action-date">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
-                                                    </div>
-                                                    <div class="mt-action-buttons ">
-                                                        <div class="btn-group btn-group-circle">
-                                                            <!-- <button type="button" class="btn btn-outline green btn-sm" ng-click="makeAction(action,'retry')" >Reiterar</button> -->
-                                                            <!-- <button type="button" class="btn btn-outline red btn-sm"  ng-click="makeAction(action,'cancel')">Cancelar</button> -->
-                                                        </div>
-                                                    </div>
+
+
+                                    <div class="mt-comments">
+                                        <div class="mt-comment" ng-repeat="action in orders track by $index">
+                                            <div class="mt-comment-img" >
+                                              <img  style="height:45px; width:45px " ng-src="{{ action.producer.photo }}" /> </div>
+
+                                            <div class="mt-comment-body" >
+                                                <div uib-tooltip="Click para ver la descripción" class="mt-comment-info" ng-click="openModal(action)">
+                                                    <span class="mt-comment-author">{{ action.producer.second_surname}}</span>
+                                                    <span class="mt-comment-date">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
+                                                </div>
+                                                <div uib-tooltip="Click para ver la descripción"  class="mt-comment-text" ng-click="openModal(action)"> {{ action.name }} </div>
+                                                <div uib-tooltip="Click para ver la descripción"  class="mt-comment-details">
+                                                    <span   class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
+                                                    <ul class="mt-comment-actions">
+                                                      <div class="mt-action-buttons ">
+                                                          <div class="btn-group btn-group-circle">
+                                                              <button ng-if="producerStatus == 'Cumplida'" type="button" class="btn btn-outline green btn-sm" ng-click="makeProducerAction(action,'Satisfactoria')" >Satisfactoria</button>
+                                                              <button ng-if="producerStatus == 'Cumplida'" type="button" class="btn btn-outline red btn-sm"  ng-click="makeProducerAction(action,'Insatisfactoria')">Insatisfactoria</button>
+                                                          </div>
+                                                      </div>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <ul uib-pagination boundary-links="true" class="pagination-sm"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            first-text="&laquo;" last-text="&raquo;"
+                                            items-per-page="orders.paginated_by"
+                                            total-items="orders.count"
+                                            ng-model="ordersCurrentPage"
+                                            ng-change="producerPageChanged()">
+                                        </ul>
                                     </div>
                                 </div>
 

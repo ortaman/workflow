@@ -42,6 +42,11 @@
                                 <a href="" ng-click="openReportModal()">
                                     <i class="icon-user"></i> Agregar reporte </a>
                             </li>
+                            <li class="divider"> </li>
+                            <li ng-if="currentAction.promise != finishedStatus" ng-click="closeAction()">
+                                <a href="">
+                                    <i class="icon-layers"></i> Cerrar proyecto</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
