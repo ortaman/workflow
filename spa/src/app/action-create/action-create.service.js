@@ -26,11 +26,17 @@ app.service("ActionCreateService", ['$http', 'APIConfig', function($http, APICon
 
 
     this.update = function(id,object) {
-        var transformFields = ['project', 'producer', 'client'];
+      var transformFields = ['project', 'producer', 'client', 'observer'];
+      var transformDateFields = ['accomplish_at','begin_at', 'report_at'];
+
         angular.forEach(transformFields, function(item){
           if (typeof object[item] != 'number')
               object[item] = object[item].id
         })
+        angular.forEach(transformDateFields, function(item){
+              object[item] = moment(object[item]).format('YYYY-MM-DD')
+        })
+
         var promise = $http.patch(APIConfig.url + "actions/"+id+"/", object).then(function(response) {
             return response;
         });

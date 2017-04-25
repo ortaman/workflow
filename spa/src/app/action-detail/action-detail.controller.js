@@ -2,19 +2,21 @@
 app.controller('ActionDetailController', [
 	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig',
 	'ProducerGetListService', 'ActionGetService','ReportGetService','$mdDialog',
+	'ActionCreateService',
 	function($scope, $state, ProjectGetService, ActionListService, APIConfig,
-		ProducerGetListService, ActionGetService, ReportGetService, $mdDialog) {
+		ProducerGetListService, ActionGetService, ReportGetService, $mdDialog, ActionCreateService) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
 	$scope.producersPerformanceCurrentPage = 1;
 	var actionStatus = "Abierta"
+	$scope.finishedStatus = 'Cumplida'
 
 	$scope.currentAction = {};
 	$scope.project = {};
 	$scope.producers = [];
 
-  	$scope.init = function() {
+  $scope.init = function() {
 		$scope.getAction();
 		$scope.actionPageChanged()
 		$scope.producerPageChanged($scope.producersPerformanceCurrentPage, 'producers');
@@ -22,14 +24,11 @@ app.controller('ActionDetailController', [
 		$scope.getReport();
 	}
 
-	//Service call
-
+	//Service calls
 	$scope.getAction = function() {
 		ActionGetService.getById($state.params.id).then(
 			function(response) {
 				$scope.currentAction = response;
-				$scope.currentAction.producer.photo = APIConfig.baseUrl + response.producer.photo;
-				$scope.currentAction.project.image = APIConfig.baseUrl + response.project.image;
 				console.log("imagen", response);
 			},
 			function(errorResponse) {
@@ -38,6 +37,18 @@ app.controller('ActionDetailController', [
 					$scope.errors = errorResponse.data;
 			}
 		);
+	}
+
+	$scope.closeAction = function(){
+		$scope.currentAction.promise = $scope.finishedStatus
+		ActionCreateService.update($scope.currentAction.id,$scope.currentAction).then(
+			function (response) {
+				$scope.currentAction = response;
+			},
+			function (errors) {
+				console.log(errors);
+			}
+		)
 	}
 
 	$scope.getReport = function (){
