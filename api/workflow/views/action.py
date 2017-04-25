@@ -123,6 +123,20 @@ class ActionList(APIView, APIMixin):
                 promise=query.get('promise'),
             )
 
+        # Search actions by producer and  status.
+        elif 'producer' in query.keys() and 'status' in query.keys():
+                queryset = queryset.filter(
+                    producer_id=query.get('producer'),
+                    status=query.get('status'),
+                )
+
+        # Search actions by client and  status.
+        elif 'client' in query.keys() and 'status' in query.keys():
+                queryset = queryset.filter(
+                    client_id=query.get('client'),
+                    status=query.get('status'),
+                )
+
         # Search actions by producer and promise status.
         elif 'producer' in query.keys() and 'promise' in query.keys():
 

@@ -14,11 +14,10 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     })
   }
 
-  $scope.getCordinations = function(userType, status){
+  $scope.getCordinations = function(userType, status, typeOfFilter){
 
-    var query = {
-      "promise": status,
-    };
+    var query = {};
+    query[typeOfFilter] = status;
 
     if(userType == 'producer'){
       $scope.producerStatus = status
@@ -53,12 +52,11 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
   $scope.makeAction = function(action,type, currentTab, userType){
 
-    console.log(action);
     var actionType = {
       'Aceptada':'aceptar',
       'Cumplida':'terminar',
     }
-    
+
     var response = confirm("¿Está seguro que quiere "+ actionType[type]+" esta accion?");
     if(response == true){
       action.promise = type
@@ -75,7 +73,6 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
 
 	$scope.openModal = function(action) {
-    console.log(action);
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,
@@ -93,7 +90,6 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 	}
 
   $scope.getPhoto = function (obj) {
-    console.log("obj",obj);
     angular.forEach(obj, function(item){
       item.project.image =  angular.copy(APIConfig.baseUrl+ item.project.image)
       item.producer.photo =  angular.copy(APIConfig.baseUrl+ item.producer.photo)

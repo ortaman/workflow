@@ -110,13 +110,16 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab" ng-click="getCordinations('producer', 'Creada')"> Pendientes </a>
+                                    <a  data-toggle="tab" ng-click="getCordinations('producer', 'Creada', 'promise')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab" ng-click="getCordinations('producer', 'Aceptada')"> Aceptadas </a>
+                                    <a  data-toggle="tab" ng-click="getCordinations('producer', 'Aceptada', 'promise')"> Aceptadas </a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab"  ng-click="getCordinations('producer', 'Cumplida')"> Terminadas </a>
+                                    <a  data-toggle="tab"  ng-click="getCordinations('producer', 'Satisfactoria' , 'status')"> Satisfactoria </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab"  ng-click="getCordinations('producer', 'Insatisfactoria', 'status')"> Insatisfactoria </a>
                                 </li>
                             </ul>
                         </div>
@@ -172,13 +175,16 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab"  ng-click="getCordinations('client', 'Creada')"> Pendientes </a>
+                                    <a  data-toggle="tab"  ng-click="getCordinations('client', 'Creada', 'promise')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab"  ng-click="getCordinations('client', 'Aceptada')"> Aceptados </a>
+                                    <a  data-toggle="tab"  ng-click="getCordinations('client', 'Aceptada', 'promise')"> Aceptados </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab"  ng-click="getCordinations('client', 'Cumplida')"> Terminadas </a>
+                                    <a  data-toggle="tab"  ng-click="getCordinations('client', 'Satisfactoria' , 'status')"> Satisfactoria </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab"  ng-click="getCordinations('client', 'Insatisfactoria', 'status')"> Insatisfactoria </a>
                                 </li>
                             </ul>
                         </div>
