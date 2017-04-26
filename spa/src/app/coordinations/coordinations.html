@@ -131,7 +131,7 @@
                                 <div class="tab-pane active" id="portlet_comments_1" >
                                     <!-- BEGIN: Comments -->
                                     <div class="mt-comments">
-                                        <div class="mt-comment" ng-repeat="action in promises track by $index">
+                                        <div class="mt-comment" ng-repeat="action in promises.results track by $index">
                                             <div class="mt-comment-img" >
                                               <img  style="height:45px; width:45px " ng-src="{{ action.client.photo }}" /> </div>
 
@@ -210,7 +210,7 @@
 
 
                                     <div class="mt-comments">
-                                        <div class="mt-comment" ng-repeat="action in orders track by $index">
+                                        <div class="mt-comment" ng-repeat="action in orders.results track by $index">
                                             <div class="mt-comment-img" >
                                               <img  style="height:45px; width:45px " ng-src="{{ action.producer.photo }}" /> </div>
 

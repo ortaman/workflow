@@ -2,6 +2,12 @@
 app.controller('CoordinationsController', ['$scope','ActionListService','UserService','ActionCreateService','$mdDialog','APIConfig',
   function($scope, ActionListService, UserService, ActionCreateService, $mdDialog, APIConfig) {
 
+  $scope.promisesCurrentPage = 1
+  $scope.ordersCurrentPage = 1
+
+  $scope.producerFiltertype;
+  $scope.clientFiltertype;
+
   $scope.promises = [];
   $scope.user;
   $scope.init = function(){
@@ -14,17 +20,20 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     })
   }
 
-  $scope.getClients = function(status, typeOfFilter){
-    var query = {};
+  $scope.getClients = function(status, typeOfFilter, page=1){
+    var query = {
+      page:page
+    };
     query[typeOfFilter] = status;
+    $scope.clientFiltertype = typeOfFilter;
 
     $scope.clientStatus = status // status for display button according the promise
     query.producer = $scope.user; // id usuario
 
     ActionListService.getList(query).then(
       function(response) {
-          $scope.promises = response.results;
-          $scope.getPhoto($scope.promises)
+          $scope.promises = response;
+          $scope.getPhoto($scope.promises.results)
       },
       function(errorResponse) {
         $scope.status = errorResponse.statusText || 'Request failed';
@@ -33,9 +42,12 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     );
   }
 
-  $scope.getProducers = function(status, typeOfFilter){
-    var query = {};
+  $scope.getProducers = function(status, typeOfFilter, page=1){
+    var query = {
+      page:page
+    };
     query[typeOfFilter] = status;
+    $scope.producerFiltertype = typeOfFilter;
 
     $scope.producerStatus = status // status for display button according the promise
     console.log("aaaa",$scope.producerStatus);
@@ -43,8 +55,8 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
     ActionListService.getList(query).then(
       function(response) {
-          $scope.orders = response.results;
-          $scope.getPhoto($scope.orders)
+          $scope.orders = response;
+          $scope.getPhoto($scope.orders.results)
       },
       function(errorResponse) {
         $scope.status = errorResponse.statusText || 'Request failed';
@@ -134,7 +146,11 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     });
 	}
 
+  $scope.producerPageChanged = function () {
+    $scope.producerStatus
+    $scope.promisesCurrentPage = 1
 
+  }
 
   $scope.getPhoto = function (obj) {
     angular.forEach(obj, function(item){
