@@ -40,15 +40,30 @@ app.controller('ActionDetailController', [
 	}
 
 	$scope.closeAction = function(){
-		$scope.currentAction.promise = $scope.finishedStatus
-		ActionCreateService.update($scope.currentAction.id,$scope.currentAction).then(
-			function (response) {
-				$scope.currentAction = response;
-			},
-			function (errors) {
-				console.log(errors);
-			}
-		)
+		var confirm = $mdDialog.confirm()
+				.title('¿ Desea cerrar esta acción ?')
+				.ok('Sí')
+				.cancel('No');
+
+		$mdDialog.show(confirm).then(function() {
+			$scope.currentAction.promise = $scope.finishedStatus
+			ActionCreateService.update($scope.currentAction.id,angular.copy($scope.currentAction)).then(
+				function (response) {
+					$mdDialog.show(
+						$mdDialog.alert()
+							 .clickOutsideToClose(true)
+							 .title('Se ha cerrado la acción')
+							 .ok('Ok')
+						 );
+				},
+				function (errors) {
+					console.log(errors);
+				}
+			)
+		}, function() {
+		});
+
+
 	}
 
 	$scope.getReport = function (){
