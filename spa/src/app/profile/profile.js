@@ -3,40 +3,40 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 
   $scope.producersCurrentPage = 1;
   $scope.clientsCurrentPage = 1;
-  $scope.producers = [];
-  $scope.clients = [];
+
+  $scope.producer = [];
+  $scope.client = [];
 
   $scope.init = function(){
-    //$scope.producerPageChanged(clientsCurrentPage, 'clients');
-    //$scope.producerPageChanged(producersCurrentPage, 'producers');
     UserService.me().then(
       function(response){
         $scope.user = response;
-        console.log(response);
+        $scope.performancePageChanged($scope.clientsCurrentPage, 'client');
+        $scope.performancePageChanged($scope.producersCurrentPage, 'producer');
       }
     )
   }
 
-  $scope.producerPageChanged = function(page, list) {
-	  	var query = {
-	  		"page": page,
-	  		"project_id": $state.params.id,
-	  		"parent_action": "none",
-	  	};
+  $scope.performancePageChanged = function(page, list) {
+  	var query = {
+  		"page": page,
+  	};
+    query[list] = $scope.user
 
-		ProducerGetListService.getList(query).then(
-			function(response) {
 
-				for (var i=0; i < response.producers.length; i++) {
-					response.producers[i].producer.photo = APIConfig.baseUrl + response.producers[i].producer.photo;
-				}
-				$scope[list] = response;
-			},
-			function(errorResponse) {
-				$scope.status = errorResponse.statusText || 'Request failed';
-				$scope.errors = errorResponse.data;
-			}
-		);
+  	ProducerGetListService.getList(query).then(
+  		function(response) {
+
+  			for (var i=0; i < response.producers.length; i++) {
+  				response.producers[i].producer.photo = APIConfig.baseUrl + response.producers[i].producer.photo;
+  			}
+  			$scope[list] = response;
+  		},
+  		function(errorResponse) {
+  			$scope.status = errorResponse.statusText || 'Request failed';
+  			$scope.errors = errorResponse.data;
+  		}
+  	);
   };
 
 }]);
