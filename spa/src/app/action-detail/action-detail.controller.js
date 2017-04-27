@@ -145,11 +145,6 @@ app.controller('ActionDetailController', [
 
 		ProducerGetListService.getList(query).then(
 			function(response) {
-				for (var i=0; i < response.producers.length; i++) {
-					console.log(response.producers[i].producer.photo);
-					response.producers[i].producer.photo = APIConfig.baseUrl + response.producers[i].producer.photo;
-				}
-
 				$scope[list] = response;
 
 			},

@@ -110,9 +110,7 @@ app.controller('ProjectDetailController', [
 		ProducerGetListService.getList(query).then(
 			function(response) {
 
-				for (var i=0; i < response.producers.length; i++) {
-					response.producers[i].producer.photo = APIConfig.baseUrl + response.producers[i].producer.photo;
-				}
+
 
 				$scope[list] = response;
 
