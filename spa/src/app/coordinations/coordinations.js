@@ -95,6 +95,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     var response = confirm("¿Está seguro que quiere calificar esta cción como "+ actionType[type]+" ?");
     if(response == true){
       action.status = type
+      action.promise = 'Calificada'
       ActionCreateService.update(action.id,action).then(
         function (response) {
           $scope.getProducers($scope.producerStatus, 'promise');
