@@ -5,7 +5,7 @@ app.controller('ProjectListController', [
 
 	$scope.currentPage = 1;
 	$scope.listForm = {
-		phase : 'Ejecución',
+		phase : 'Preparación',
 		level : 'time'
 	}
 
