@@ -3,7 +3,7 @@ app.controller('ProjectCreateController', [
   '$scope', '$state', 'ProjectCreateService',
   function($scope, $state, ProjectCreateService) {
     $scope.submitted = false;
-    
+
     $scope.project = {};
 
     var transformFields = [
@@ -13,11 +13,11 @@ app.controller('ProjectCreateController', [
         'evaluation_at',
 
         'accomplish_at',
-        'renegotiation_at', 
-        'report_at', 
+        'renegotiation_at',
+        'report_at',
         'begin_at',
     ];
-      
+
     $scope.submitForm = function() {
       $scope.submitted = true;
 
@@ -31,13 +31,13 @@ app.controller('ProjectCreateController', [
 
       angular.forEach(project, function(value, key) {
           transformFields.forEach(function(item) {
-          
+
           if(key == item)
               project[key] = new moment(value).format("YYYY-MM-DD");
           })
       });
 
-  		ProjectCreateService.create(project).then(
+  		$scope.submmitPromise = ProjectCreateService.create(project).then(
   			function(response) {
   				console.log('ProjectCreate', response);
   				$state.go('projectList');
@@ -48,7 +48,7 @@ app.controller('ProjectCreateController', [
           $scope.errors = errorResponse.data;
   	  	}
   		);
-    
+
     }
 
 }]);
