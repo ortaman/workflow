@@ -107,6 +107,7 @@ gulp.task('js-vendor', function () {
     "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
     "bower_components/angular-ui-calendar/src/calendar.js",
     "bower_components/fullcalendar/dist/fullcalendar.min.js",
+    "bower_components/angular-promise-buttons/dist/angular-promise-buttons.min.js",
     ])
     //.pipe(uglify())
     .pipe(concat('vendors.js'))

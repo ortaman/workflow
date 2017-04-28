@@ -7,7 +7,8 @@ var app = angular.module('myApp',
 		'ngMaterial',
     'ngDialog',
     'ui.bootstrap',
-    'ui.calendar'
+    'ui.calendar',
+    'angularPromiseButtons'
 
     // 'myApp.actionList',
   ]
@@ -25,3 +26,9 @@ app.run(function($http, $rootScope, $location, StorageService, UserService) {
 });
 
 if(window.location.hash === '#_=_') window.location.hash = '#!';
+
+app.config(function (angularPromiseButtonsProvider)
+{
+  angularPromiseButtonsProvider.extendConfig({
+    spinnerTpl: '<i class="fa fa-circle-o-notch fa-spin"></i>',
+  });})

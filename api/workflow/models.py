@@ -35,7 +35,7 @@ class Project(models.Model):
         ('Negociando', 'Negociando'),
         ('No aceptada', 'No aceptada'),
     )
-    
+
     # focus project
     name = models.CharField(max_length=64, verbose_name='Nombre')
     kind = models.CharField(choices=TYPES, max_length=8, default='estandar', verbose_name='Tipos de proyecto')
@@ -111,6 +111,7 @@ class Action(models.Model):
         ('Reportada', 'Reportada'),
         ('Cumplida', 'Cumplida'),
         ('Incumplida', 'Incumplida'),
+        ('Calificada', 'Calificada'),
 
         ('Negociando', 'Negociando'),
         ('No aceptada', 'No aceptada'),
