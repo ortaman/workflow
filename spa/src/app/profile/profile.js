@@ -10,6 +10,7 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
   $scope.producer_id = [];
   $scope.projects = {}
 
+
   $scope.init = function(){
     UserService.me().then(
       function(response){
@@ -17,6 +18,8 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
         $scope.performancePageChanged($scope.clientsCurrentPage, 'client_id');
         $scope.performancePageChanged($scope.producersCurrentPage, 'producer_id');
         $scope.projectPageChanged();
+
+
       }
     )
   }
