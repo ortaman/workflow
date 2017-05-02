@@ -1,7 +1,7 @@
 
 app.controller('ProjectDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog', 'ReportGetService','ProjectUpdateService',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog, ReportGetService, ProjectUpdateService) {
+	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog', 'ReportGetService','ProjectCreateService',
+	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog, ReportGetService, ProjectCreateService) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -10,6 +10,7 @@ app.controller('ProjectDetailController', [
 	$scope.producers = [];
 	$scope.producersPerformance = [];
 	$scope.timelines = []
+	$scope.accomplishedStatus = 'Cumplida'
 
 	var queryStatus = "Abierta";
 	var dateFields = {
@@ -165,7 +166,9 @@ app.controller('ProjectDetailController', [
 				.cancel('No');
 
 		$mdDialog.show(confirm).then(function() {
-			ProjectUpdateService.update($scope.project.id,angular.copy($scope.project)).then(
+			var project = angular.copy($scope.project);
+			project.promise = $scope.accomplishedStatus;
+			ProjectCreateService.update($scope.project.id,project).then(
 				function (response) {
 					$mdDialog.show(
 						$mdDialog.alert()
