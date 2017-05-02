@@ -1,7 +1,7 @@
 
 app.controller('ProjectDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog', 'ReportGetService',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog, ReportGetService) {
+	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog', 'ReportGetService','ProjectUpdateService',
+	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog, ReportGetService, ProjectUpdateService) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -110,9 +110,7 @@ app.controller('ProjectDetailController', [
 		ProducerGetListService.getList(query).then(
 			function(response) {
 
-				for (var i=0; i < response.producers.length; i++) {
-					response.producers[i].producer.photo = APIConfig.baseUrl + response.producers[i].producer.photo;
-				}
+
 
 				$scope[list] = response;
 
@@ -158,6 +156,32 @@ app.controller('ProjectDetailController', [
 			 report: $scope.report
 		 }
 		})
+	}
+
+	$scope.closeProject = function(){
+		var confirm = $mdDialog.confirm()
+				.title('¿ Desea cerrar este proyecto ?')
+				.ok('Sí')
+				.cancel('No');
+
+		$mdDialog.show(confirm).then(function() {
+			ProjectUpdateService.update($scope.project.id,angular.copy($scope.project)).then(
+				function (response) {
+					$mdDialog.show(
+						$mdDialog.alert()
+							 .clickOutsideToClose(true)
+							 .title('Se ha cerrado el proyecto')
+							 .ok('Ok')
+						 );
+				},
+				function (errors) {
+					console.log(errors);
+				}
+			)
+		}, function() {
+		});
+
+
 	}
 
 	//template interaction functions

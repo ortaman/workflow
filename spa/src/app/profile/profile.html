@@ -143,7 +143,7 @@
                                                       <th><i class=" fa fa-calculator "></i></th>
                                                   </tr>
                                               </thead>
-                                              <tr ng-repeat="producer in clients.producers track by $index">
+                                              <tr ng-repeat="producer in client_id.producers track by $index">
                                                   <td class="fit ">
                                                     <img height="40" width="40" ng-src="{{producer.producer.photo}}"/>
                                                   <td>
@@ -153,11 +153,21 @@
                                                   <td>{{ producer.satisfactories }}</td>
                                                   <td>{{ producer.unsatisfactories}}</td>
                                                   <td>
-                                                      <span class="bold theme-font ">{{ (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories)}}%</span>
+                                                      <span class="bold theme-font ">{{ (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories) | number:2 }} %</span>
                                                   </td>
                                               </tr>
                                           </table>
                                         </div>
+                                        <div class="text-center">
+                                          <ul uib-pagination boundary-links="true" class="pagination-sm"
+                                              previous-text="&lsaquo;" next-text="&rsaquo;"
+                                              first-text="&laquo;" last-text="&raquo;"
+                                              items-per-page="client_id.paginate_by"
+                                              total-items="client_id.count"
+                                              ng-model="clientsCurrentPage"
+                                              ng-change="performancePageChanged(clientsCurrentPage,'client_id' )">
+                                        </div>
+
                                     </div>
                                 </div>
                                 <!-- END PORTLET -->
@@ -183,7 +193,7 @@
                                                       <th><i class=" fa fa-calculator "></i></th>
                                                   </tr>
                                               </thead>
-                                              <tr ng-repeat="producer in producers.producers track by $index">
+                                              <tr ng-repeat="producer in producer_id.producers track by $index">
                                                   <td class="fit ">
                                                     <img height="40" width="40" ng-src="{{producer.producer.photo}}"/>
                                                   <td>
@@ -193,10 +203,20 @@
                                                   <td>{{ producer.satisfactories }}</td>
                                                   <td>{{ producer.unsatisfactories}}</td>
                                                   <td>
-                                                      <span class="bold theme-font ">{{ (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories)}}%</span>
+                                                      <span class="bold theme-font ">{{ (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories) | number:2 }}%</span>
                                                   </td>
                                               </tr>
                                           </table>
+                                        </div>
+                                        <div class="text-center">
+
+                                          <ul uib-pagination boundary-links="true" class="pagination-sm"
+                                              previous-text="&lsaquo;" next-text="&rsaquo;"
+                                              first-text="&laquo;" last-text="&raquo;"
+                                              items-per-page="producer_id.paginate_by"
+                                              total-items="producer_id.count"
+                                              ng-model="producersCurrentPage"
+                                              ng-change="performancePageChanged(producersCurrentPage,'producer_id' )">
                                         </div>
                                     </div>
                                 </div>
@@ -211,14 +231,14 @@
                                     <span class="caption-helper">Avance de Acciones</span>
                                 </div>
                             </div>
-                            <div class="portlet-body">
-                                <div class="row">
-                                    <div class="col-md-4">
+                            <div class="portlet-body row" ng-repeat="number in getSize() track by $index">
+
+                                    <div class="col-md-4" ng-repeat="project in chunkArray($index)">
                                         <div class="mt-widget-4">
                                             <div class="mt-img-container">
                                                 <img src="../../assets/metronics/pages/img/background/5.jpg" /> </div>
                                             <div class="mt-container bg-red-opacity">
-                                                <div class="mt-head-title"> Proyecto Business Unit </div>
+                                                <div class="mt-head-title"> {{project.name}} </div>
                                                 <div class="mt-body-icons">
                                                     <a href="bitacora.html">
                                                         <i class=" fa fa-lightbulb-o"></i>
@@ -236,103 +256,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="mt-widget-4">
-                                            <div class="mt-img-container">
-                                                <img src="../../assets/metronics/pages/img/background/14.jpg" /> </div>
-                                            <div class="mt-container bg-red-opacity">
-                                                <div class="mt-head-title"> Proyecto Efectividad</div>
-                                                <div class="mt-body-icons">
-                                                    <a href="#">
-                                                        <i class=" fa fa-lightbulb-o"></i>
-                                                    </a>
-                                                    <a href="#">
-                                                        <i class=" fa fa-hourglass-end"></i>
-                                                    </a>
-                                                    <a href="#">
-                                                        <i class=" fa fa-warning"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="mt-footer-button">
-                                                    <button type="button" class="btn btn-circle btn-danger btn-sm">Productividad Comercial</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mt-widget-4">
-                                            <div class="mt-img-container">
-                                                <img src="../../assets/metronics/pages/img/background/15.jpg" /> </div>
-                                            <div class="mt-container bg-red-opacity">
-                                                <div class="mt-head-title"> Conversión de Clientes </div>
-                                                <div class="mt-body-icons">
-                                                    <a href="#">
-                                                        <i class=" fa fa-lightbulb-o"></i>
-                                                    </a>
-                                                    <a href="#">
-                                                        <i class=" fa fa-hourglass-end"></i>
-                                                    </a>
-                                                    <a href="#">
-                                                        <i class=" fa fa-warning"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="mt-footer-button">
-                                                    <button type="button" class="btn btn-circle btn-danger btn-sm">Marketing</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="mt-widget-4">
-                                                <div class="mt-img-container">
-                                                    <img src="../../assets/metronics/pages/img/background/58.jpg" /> </div>
-                                                <div class="mt-container bg-yellow-crusta-opacity">
-                                                    <div class="mt-head-title"> Proyecto Ludlev </div>
-                                                    <div class="mt-body-icons">
-                                                        <a href="#">
-                                                            <i class=" fa fa-check-circle-o"></i>
-                                                        </a>
-                                                        <a href="#">
-                                                            <i class=" fa fa-hourglass-half"></i>
-                                                        </a>
-                                                        <a href="#">
-                                                            <i class=" fa fa-calculator"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div class="mt-footer-button">
-                                                        <button type="button" class="btn btn-circle blue-ebonyclay btn-sm">Gastro/Gine</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="mt-widget-4">
-                                                <div class="mt-img-container">
-                                                    <img src="../../assets/metronics/pages/img/background/46.jpg" /> </div>
-                                                <div class="mt-container bg-green-opacity">
-                                                    <div class="mt-head-title"> Istofil</div>
-                                                    <div class="mt-body-icons">
-                                                        <a href="#">
-                                                            <i class=" icon-layers"></i>
-                                                        </a>
-                                                        <a href="#">
-                                                            <i class=" fa fa-hourglass"></i>
-                                                        </a>
-                                                        <a href="#">
-                                                            <i class=" fa fa-line-chart"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div class="mt-footer-button">
-                                                        <button type="button" class="btn btn-circle btn-success btn-sm">SNC</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+                            </div>
+                            <div class="text-center">
+                              <ul uib-pagination boundary-links="true" class="pagination-sm"
+                                  previous-text="&lsaquo;" next-text="&rsaquo;"
+                                  first-text="&laquo;" last-text="&raquo;"
+                                  items-per-page="project.results.paginate_by"
+                                  total-items="project.results.count"
+                                  ng-model="currentProjectPage"
+                                  ng-change="performancePageChanged()">
                             </div>
                         </div>
                         <!-- END PROFILE CONTENT -->
