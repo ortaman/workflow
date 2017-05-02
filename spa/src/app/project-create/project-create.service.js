@@ -7,9 +7,8 @@ app.service("ProjectCreateService", ['$http', 'APIConfig', function($http, APICo
 
     return promise;
   };
-}]);
 
-app.service("ProjectUpdateService", ['$http', 'APIConfig', function($http, APIConfig) {
+
   this.update = function(id, object) {
 
     if(typeof(object.client) != Number)
@@ -21,7 +20,11 @@ app.service("ProjectUpdateService", ['$http', 'APIConfig', function($http, APICo
     if(typeof(object.producer) != Number)
         object.producer = object.producer.id;
 
-      var promise = $http.update(APIConfig.url + "projects/" + id + "/" , object).then(function(response) {
+    if(typeof(object.observer) != Number)
+        object.observer = object.observer.id;
+
+    delete(object.image)
+      var promise = $http.patch(APIConfig.url + "projects/" + id + "/" , object).then(function(response) {
           return response.data;
       });
 
