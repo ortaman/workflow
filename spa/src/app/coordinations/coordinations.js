@@ -71,18 +71,30 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
       'Cumplida':'terminar',
     }
 
-    var response = confirm("¿Está seguro que quiere "+ actionType[type]+" esta accion?");
-    if(response == true){
-      action.promise = type
-      ActionCreateService.update(action.id,action).then(
-        function (response) {
-          $scope.getClients($scope.clientStatus, 'promise');
-        },
-        function (errors) {
-          console.log(errors);
-        }
-      )
-    }
+    var confirm = $mdDialog.confirm()
+        .title("¿Está seguro que quiere "+ actionType[type]+" esta accion?")
+        .ok('Sí')
+        .cancel('No');
+
+    $mdDialog.show(confirm).then(function() {
+        action.promise = type
+        ActionCreateService.update(action.id,action).then(
+          function (response) {
+            $scope.getClients($scope.clientStatus, 'promise');
+            $mdDialog.alert()
+               .clickOutsideToClose(true)
+               .title('La accion ha sido '+ type)
+               .ok('Ok')
+
+          },
+          function (errors) {
+            console.log(errors);
+          }
+        )
+    }, function() {
+    });
+
+
   }
 
   $scope.makeProducerAction = function(action,type){
@@ -91,9 +103,12 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
       'Satisfactoria':'satisfactoria',
       'Insatisfactoria':'insatisfactoria',
     }
+    var confirm = $mdDialog.confirm()
+        .title("¿Está seguro que quiere calificar esta acción como "+ actionType[type]+" ?")
+        .ok('Sí')
+        .cancel('No');
 
-    var response = confirm("¿Está seguro que quiere calificar esta cción como "+ actionType[type]+" ?");
-    if(response == true){
+    $mdDialog.show(confirm).then(function() {
       action.status = type
       action.promise = 'Calificada'
       ActionCreateService.update(action.id,action).then(
@@ -104,28 +119,15 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
           console.log(errors);
         }
       )
-    }
+    }, function() {
+    });
+
+
+
+
   }
 
-  $scope.makeClientAction = function(action,type){
-    var actionType = {
-      'Aceptada':'aceptar',
-      'Cumplida':'terminar',
-    }
 
-    var response = confirm("¿Está seguro que quiere "+ actionType[type]+" esta accion?");
-    if(response == true){
-      action.promise = type
-      ActionCreateService.update(action.id,action).then(
-        function (response) {
-          $scope.getClients($scope.clientStatus, 'promise');
-        },
-        function (errors) {
-          console.log(errors);
-        }
-      )
-    }
-  }
 
 
 
