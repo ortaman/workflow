@@ -30,5 +30,6 @@ if(window.location.hash === '#_=_') window.location.hash = '#!';
 app.config(function (angularPromiseButtonsProvider)
 {
   angularPromiseButtonsProvider.extendConfig({
-    spinnerTpl: '<i class="fa fa-circle-o-notch fa-spin"></i>',
-  });})
+     spinnerTpl: '<i  style="display: none;" class=" btn-spinner fa fa-circle-o-notch fa-spin"></i>',
+  });
+})
