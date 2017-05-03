@@ -44,8 +44,8 @@
                                     <i class="icon-note"></i> Agregar reporte </a>
                             </li>
 
-                            <li class="divider"> </li>
-                            <li ng-click="closeProject()">
+                            <li class="divider" ng-if="project.promise != accomplishedStatus"> </li>
+                            <li ng-click="closeProject()" ng-if="project.promise != accomplishedStatus">
                                 <a >
                                     <i class="icon-layers"></i> Cerrar proyecto</a>
                             </li>
@@ -106,7 +106,7 @@
                                             <p class="mt-body-description">{{ project.toDo }} .</p>
                                         </div>
                                         <div class="mt-body-actions-icons">
-                                            <div class="btn-group btn-group btn-group-justified">
+                                            <div ng-if="project.promise != accomplishedStatus" class="btn-group btn-group btn-group-justified">
                                                 <div class="btn"
                                                     ng-class="getColor('Preparación')">
                                                     <span class="mt-icon font-blue">
@@ -127,6 +127,13 @@
                                                     <span class="mt-icon font-blue">
                                                         <i class="icon-question"></i>
                                                     </span> Evaluación </div>
+                                            </div>
+                                            <div ng-if="project.promise == accomplishedStatus" class="btn-group btn-group btn-group-justified">
+                                                <div class="btn bg-info green-status">
+                                                    <span class="mt-icon font-blue">
+                                                        <i class="fa fa-check"></i>
+                                                    </span> Cumplido </div>
+
                                             </div>
                                         </div>
                                     </div>
