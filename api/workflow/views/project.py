@@ -82,6 +82,12 @@ class ProjectList(APIView, APIMixin):
             if 'phase' in query.keys():
                 queryset = queryset.filter(phase=query.get('phase'))
 
+            elif 'client_id' in query.keys():
+                queryset = queryset.filter(client_id=query.get('client_id'))
+
+            elif 'producer_id' in query.keys():
+                queryset = queryset.filter(producer_id=query.get('producer_id'))
+
             data = self.get_pagination(queryset, page, self.paginate_by)
 
         return Response(data)

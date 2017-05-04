@@ -23,7 +23,6 @@ app.controller('ProjectListController', [
 			function(response) {
 				console.log('ProjectList', response);
 				for (var i=0; i < response.results.length; i++) {
-				 response.results[i].image = APIConfig.baseUrl + response.results[i].image;
 				 response.results[i].color = $scope.getColor(response.results[i]);
 				}
 
