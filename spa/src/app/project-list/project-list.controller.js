@@ -43,12 +43,11 @@ app.controller('ProjectListController', [
 	}
 
 	$scope.getColor = function (project) {
-			console.log(project);
 			if(moment(project.report_at).isBefore(moment()) && project.report == 0)
-				return 'yellow-status-opacity'
+				return 'red-status-opacity'
 
 			if(moment(project.report_at).isAfter(moment()) && project.report == 0)
-				return 'red-status-opacity'
+				return 'yellow-status-opacity'
 
 		return 'green-status-opacity'
 	}

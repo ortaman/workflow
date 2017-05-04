@@ -196,10 +196,10 @@ app.controller('ProjectDetailController', [
 	$scope.getColor = function(phase){
 			if($scope.project.phase == phase){
 				if(moment($scope.project.report_at).isBefore(moment()) && !$scope.report)
-					return 'bg-info yellow-status'
+					return 'bg-info red-status'
 
 				if(moment($scope.project.report_at).isAfter(moment()) && !$scope.report)
-					return 'bg-info red-status'
+					return 'bg-info yellow-status'
 
 			return 'bg-info green-status'
 		}
