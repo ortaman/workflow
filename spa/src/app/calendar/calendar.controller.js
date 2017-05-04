@@ -124,12 +124,12 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
   }
 
   var getColor = function (action, value, type){
-    if(type == "actions")
-        if(action['progress'] != '100' && moment(action['report_at']).isAfter(moment()))
-          return 'red'
-        if(action['progress'] == '0' && moment(action['report_at']).isBefore(moment()))
-          return 'yellow'
+    if(moment(action['report_at']).isBefore(moment()) && action['report'] == 0)
+      return 'red-status'
 
-    return 'green';
+    if(moment(action['report_at']).isAfter(moment()) && action['report'] == 0)
+      return 'yellow-status'
+
+    return 'green-status';
   }
 }]);

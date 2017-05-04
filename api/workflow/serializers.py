@@ -49,7 +49,6 @@ class ProjectListSerializer(serializers.ModelSerializer):
     report = serializers.SerializerMethodField()
 
     def get_report(self, obj):
-        from workflow.models import Report
         reports = Report.objects.filter(project_id = obj.id)
         try:
             return reports[0].progress
@@ -97,12 +96,21 @@ class ActionListSerializer(serializers.ModelSerializer):
     producer = UserSerializer()
     client = UserSerializer()
     project = ProjectGetSerializer()
+    report = serializers.SerializerMethodField()
+
+    def get_report(self, obj):
+        reports = Report.objects.filter(action_id = obj.id)
+        try:
+            return reports[0].progress
+        except IndexError as e:
+            return 0
+
 
     class Meta:
         model  = Action
         fields = (
             'id', 'name', 'producer', 'client', 'project', 'toDo',
-            'begin_at', 'accomplish_at', 'report_at')
+            'begin_at', 'accomplish_at', 'report_at', 'report')
 
 
 class ActionUserSerializer(serializers.ModelSerializer):

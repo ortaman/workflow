@@ -40,7 +40,7 @@ app.controller('ProjectCreateController', [
   		$scope.submmitPromise = ProjectCreateService.create(project).then(
   			function(response) {
   				console.log('ProjectCreate', response);
-  				$state.go('projectList');
+  				$state.go('projectDetail', {'id':response.id});
   			},
   			function(errorResponse) {
           console.log('errorResponse', errorResponse);
