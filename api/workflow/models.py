@@ -41,7 +41,7 @@ class Project(models.Model):
     kind = models.CharField(choices=TYPES, max_length=8, default='estandar', verbose_name='Tipos de proyecto')
     phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de proyecto')
     status = models.CharField(choices=STATUS, max_length=30, default='Abierta', verbose_name='Estado')
-    promise = models.CharField(choices=PROMISE, max_length=11, default='created', verbose_name='Promesa')
+    promise = models.CharField(choices=PROMISE, max_length=11, default='Creada', verbose_name='Promesa')
 
     # action roles
     client = models.ForeignKey(User, related_name='client_project', verbose_name='Cliente')

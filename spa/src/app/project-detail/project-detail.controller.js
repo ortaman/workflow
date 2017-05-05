@@ -100,7 +100,6 @@ app.controller('ProjectDetailController', [
   };
 
 
-
 	$scope.producerPageChanged = function(page, list) {
 	  	var query = {
 	  		"page": page,
@@ -110,11 +109,7 @@ app.controller('ProjectDetailController', [
 
 		ProducerGetListService.getList(query).then(
 			function(response) {
-
-
-
 				$scope[list] = response;
-
 			},
 			function(errorResponse) {
 				$scope.status = errorResponse.statusText || 'Request failed';
@@ -170,6 +165,7 @@ app.controller('ProjectDetailController', [
 			project.promise = $scope.accomplishedStatus;
 			ProjectCreateService.update($scope.project.id,project).then(
 				function (response) {
+					$scope.project.promise = response.promise
 					$mdDialog.show(
 						$mdDialog.alert()
 							 .clickOutsideToClose(true)
@@ -200,10 +196,10 @@ app.controller('ProjectDetailController', [
 	$scope.getColor = function(phase){
 			if($scope.project.phase == phase){
 				if(moment($scope.project.report_at).isBefore(moment()) && !$scope.report)
-					return 'bg-info yellow-status'
+					return 'bg-info red-status'
 
 				if(moment($scope.project.report_at).isAfter(moment()) && !$scope.report)
-					return 'bg-info red-status'
+					return 'bg-info yellow-status'
 
 			return 'bg-info green-status'
 		}

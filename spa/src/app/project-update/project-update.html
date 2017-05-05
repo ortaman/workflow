@@ -116,9 +116,9 @@
                             <div class="col-md-4">
                               <md-input-container class="md-block" >
                                 <label> Tipo </label>
-                                <md-select 
-                                  name="kind" 
-                                  ng-model="project.kind" 
+                                <md-select
+                                  name="kind"
+                                  ng-model="project.kind"
                                   required>
                                   <md-option value="Estándar"> Estándar </md-option>
                                   <md-option value="Piloto"> Piloto </md-option>
@@ -208,7 +208,7 @@
                           </div>
                           <!--row-->
                         </div>
-                        
+
                         <h4 class="form-section"> Fechas Compromisos </h4>
                         <!--row-->
                         <div class="row">
@@ -471,13 +471,16 @@
 
 
                         <div class="row">
-                          <div class="col-md-12">
+                          <div class="col-md-3">
                             <input name="file" fileread='project.image' type="file" required/>
                               <div ng-show="projectForm.file.$touched || submitted">
                                 <div class="error" ng-show="projectForm.file.$error.required">
                                   Campo requerido.
                                 </div>
                               </div>
+                          </div>
+                          <div class="col-md-4">
+
                           </div>
                         </div>
 

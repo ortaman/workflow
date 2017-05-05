@@ -53,6 +53,8 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 				console.log('ProjectList', response);
 				for (var i=0; i < response.results.length; i++) {
 				 response.results[i].image = APIConfig.baseUrl + response.results[i].image;
+         response.results[i].color = $scope.getColor(response.results[i]);
+
 				}
 
 				$scope.projects = response
@@ -76,4 +78,14 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
     }
   }
 
+  $scope.getColor = function (project) {
+			console.log(project);
+			if(moment(project.report_at).isBefore(moment()) && project.report == 0)
+				return 'red-status-opacity'
+
+			if(moment(project.report_at).isAfter(moment()) && project.report == 0)
+				return 'yellow-status-opacity'
+
+		return 'green-status-opacity'
+	}
 }]);

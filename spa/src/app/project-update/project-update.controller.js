@@ -1,7 +1,7 @@
 
 app.controller('ProjectUpdateController', [
-  '$scope', '$state', 'ProjectGetService', 'ProjectUpdateService',
-  function($scope, $state, ProjectGetService, ProjectUpdateService) {
+  '$scope', '$state', 'ProjectGetService', 'ProjectUpdateService','APIConfig',
+  function($scope, $state, ProjectGetService, ProjectUpdateService, APIConfig) {
     $scope.submitted = false;
     $scope.project = {};
 
@@ -33,7 +33,7 @@ app.controller('ProjectUpdateController', [
             })
 
           });
-
+          response.image = APIConfig.baseUrl + response.image;
           $scope.project = response;
         },
         function(errorResponse) {
