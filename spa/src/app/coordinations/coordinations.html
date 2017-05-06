@@ -54,7 +54,8 @@
                         <div class="portlet-title tabbable-line">
                             <div class="caption">
                                 <i class="icon-bubbles font-dark hide"></i>
-                                <span class="caption-subject font-dark bold uppercase">Mis proyectos (lo que debo)</span>
+                                <span class="caption-subject font-dark bold uppercase">Mis proyectos (lo que me deben)</span>
+                                
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
@@ -131,7 +132,8 @@
                         <div class="portlet-title tabbable-line">
                             <div class="caption">
                                 <i class=" icon-social-twitter font-dark hide"></i>
-                                <span class="caption-subject font-dark bold uppercase">Mis proyectos (lo que me deben)</span>
+                                <span class="caption-subject font-dark bold uppercase">Mis proyectos (lo que debo)</span>
+
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
@@ -163,12 +165,12 @@
                                               <img  style="height:45px; width:45px " ng-src="{{ project.producer.photo }}" /> </div>
 
                                             <div class="mt-comment-body" >
-                                                <div uib-tooltip="Click para ver la descripción" class="mt-comment-info" ng-click="openModal(project)">
+                                                <div  class="mt-comment-info" ng-click="openModal(project)">
                                                     <span class="mt-comment-author">{{ project.producer.second_surname}}</span>
                                                     <span class="mt-comment-date">{{ project.begin_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
-                                                <div uib-tooltip="Click para ver la descripción"  class="mt-comment-text" ng-click="openModal(project)"> {{ project.name }} </div>
-                                                <div uib-tooltip="Click para ver la descripción"  class="mt-comment-details">
+                                                <div   class="mt-comment-text" ng-click="openModal(project)"> {{ project.name }} </div>
+                                                <div   class="mt-comment-details">
                                                     <span   class="mt-comment-status mt-comment-status-pending"> {{ project.project.name }}</span>
                                                     <ul class="mt-comment-actions">
                                                       <div class="mt-action-buttons ">
