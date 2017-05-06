@@ -31,6 +31,7 @@ class Project(models.Model):
         ('Reportada', 'Reportada'),
         ('Cumplida', 'Cumplida'),
         ('Incumplida', 'Incumplida'),
+        ('Calificada', 'Calificada'),
 
         ('Negociando', 'Negociando'),
         ('No aceptada', 'No aceptada'),

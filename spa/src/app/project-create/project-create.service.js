@@ -20,7 +20,7 @@ app.service("ProjectCreateService", ['$http', 'APIConfig', function($http, APICo
     if(typeof(object.producer) != Number)
         object.producer = object.producer.id;
 
-    if(typeof(object.observer) != Number)
+    if(object.observer && typeof(object.observer) != Number)
         object.observer = object.observer.id;
 
     delete(object.image)

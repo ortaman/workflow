@@ -1,6 +1,7 @@
 
-app.controller('CoordinationsController', ['$scope','ActionListService','UserService','ActionCreateService','$mdDialog','APIConfig','ProjectListService',
-  function($scope, ActionListService, UserService, ActionCreateService, $mdDialog, APIConfig, ProjectListService) {
+app.controller('CoordinationsController', ['$scope','ActionListService','UserService','ActionCreateService','$mdDialog',
+  'APIConfig','ProjectListService','ProjectCreateService',
+  function($scope, ActionListService, UserService, ActionCreateService, $mdDialog, APIConfig, ProjectListService, ProjectCreateService) {
 
   $scope.promisesCurrentPage = 1
   $scope.ordersCurrentPage = 1
@@ -17,6 +18,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
       $scope.getClients('Creada' , 'promise');
       $scope.getProducers('Creada', 'promise' );
       $scope.getProjectsByProducer('Creada', 'promise' );
+      $scope.getProjectsByClient('Creada', 'promise' );
     }, function(error){
       console.log("error",error);
     })
@@ -52,7 +54,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $scope.producerFiltertype = typeOfFilter;
 
     $scope.producerStatus = status // status for display button according the promise
-    console.log("aaaa",$scope.producerStatus);
+    //console.log("aaaa",$scope.producerStatus);
     query.client = $scope.user; // id usuario
 
     ActionListService.getList(query).then(
@@ -71,12 +73,12 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     var query = {
       page:page
     };
-    // query[typeOfFilter] = status;
+    query[typeOfFilter] = status;
     // $scope.producerFiltertype = typeOfFilter;
     //
-    // $scope.producerStatus = status // status for display button according the promise
+    $scope.projectProducerStatus = status // status for display button according the promise
     // console.log("aaaa",$scope.producerStatus);
-    query.producer_id = $scope.user; // id usuario
+    query.producer = $scope.user; // id usuario
 
     ProjectListService.getList(query).then(
 			function(response) {
@@ -97,12 +99,12 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     var query = {
       page:page
     };
-    // query[typeOfFilter] = status;
+    query[typeOfFilter] = status;
     // $scope.producerFiltertype = typeOfFilter;
     //
-    // $scope.producerStatus = status // status for display button according the promise
+     $scope.projectClientStatus = status // status for display button according the promise
     // console.log("aaaa",$scope.producerStatus);
-    query.client_id = $scope.user; // id usuario
+    query.client = $scope.user; // id usuario
 
     ProjectListService.getList(query).then(
 			function(response) {
@@ -168,6 +170,57 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
       ActionCreateService.update(action.id,action).then(
         function (response) {
           $scope.getProducers($scope.producerStatus, 'promise');
+        },
+        function (errors) {
+          console.log(errors);
+        }
+      )
+    }, function() {
+    });
+  }
+
+  $scope.makeProducerActionProject = function(project,type){
+    console.log("tipo", type);
+    var actionType = {
+      'Satisfactoria':'satisfactorio',
+      'Insatisfactoria':'insatisfactorio',
+    }
+    var confirm = $mdDialog.confirm()
+        .title("¿Está seguro que quiere calificar este proyecto como "+ actionType[type]+" ?")
+        .ok('Sí')
+        .cancel('No');
+
+    $mdDialog.show(confirm).then(function() {
+      project.status = type
+      project.promise = 'Calificada'
+      ProjectCreateService.update(project.id,project).then(
+        function (response) {
+          $scope.getProjectsByClient($scope.producerStatus, 'status');
+        },
+        function (errors) {
+          console.log(errors);
+        }
+      )
+    }, function() {
+    });
+  }
+
+  $scope.makeActionProducerProject = function(project,type){
+    console.log("tipo", type);
+    var actionType = {
+      'Aceptada':'aceptar',
+      'Cumplida':'terminar',
+    }
+    var confirm = $mdDialog.confirm()
+        .title("¿Está seguro que quiere "+ actionType[type]+" este proyecto?")
+        .ok('Sí')
+        .cancel('No');
+
+    $mdDialog.show(confirm).then(function() {
+      project.promise = type
+      ProjectCreateService.update(project.id,project).then(
+        function (response) {
+          $scope.getProjectsByProducer($scope.projectProducerStatus, 'promise');
         },
         function (errors) {
           console.log(errors);
