@@ -28,7 +28,7 @@ class ProjectPostSerializer(serializers.ModelSerializer):
         fields = ('id','client', 'producer', 'observer', 'name', 'kind', 'phase',
             'toDo', 'satisfactions', 'preparation_at', 'negotiation_at', 'execution_at',
             'evaluation_at', 'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at',
-            'financial', 'operational', 'other1', 'other2', 'image', 'promise')
+            'financial', 'operational', 'other1', 'other2', 'image', 'promise', 'status' )
 
     read_only_fields =  ('created_at', 'updated_at','create_by',)
 
