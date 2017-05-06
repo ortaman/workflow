@@ -47,6 +47,8 @@ class ProjectGetSerializer(serializers.ModelSerializer):
 class ProjectListSerializer(serializers.ModelSerializer):
 
     report = serializers.SerializerMethodField()
+    producer = UserSerializer()
+    client = UserSerializer()
 
     def get_report(self, obj):
         reports = Report.objects.filter(project_id = obj.id)
@@ -60,7 +62,8 @@ class ProjectListSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'name', 'kind', 'phase', 'image',
             'preparation_at', 'negotiation_at', 'execution_at', 'evaluation_at',
-            'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at', 'report')
+            'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at', 'report',
+            'client', 'producer')
 
 
 class ActionPostSerializer(serializers.ModelSerializer):
