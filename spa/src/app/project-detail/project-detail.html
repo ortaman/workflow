@@ -27,7 +27,7 @@
                 </ul>
                 <div class="page-toolbar">
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Agregar al proyecto
+                        <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Opciones del proyecto
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
@@ -94,10 +94,10 @@
                                                     <img ng-src="{{project.producer.photo}}"> </div>
                                                 <div class="mt-head-user-info" style="font-weight: bold">
                                                     <span class="mt-user-name">
-                                                    {{ project.client.name }} {{ project.client.first_surname }}
+                                                    {{ project.producer.name }} {{ project.producer.first_surname }}
                                                     </span>
                                                     <span class="mt-user-time">
-                                                    <i class="icon-emoticon-smile"></i> Líder </span>
+                                                    <i class="icon-emoticon-smile"></i> {{ project.producer.position }} </span>
                                                 </div>
                                             </div>
                                         </div>

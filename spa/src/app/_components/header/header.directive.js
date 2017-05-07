@@ -30,6 +30,7 @@ app.directive('myHeader', ['URLTemplates','UserService',
 
       vm.logout = function() {
         StorageService.remove('token');
+        StorageService.remove('user');
         $state.go('login');
       }
 
