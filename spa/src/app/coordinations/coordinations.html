@@ -78,9 +78,9 @@
                         </div>
                         <div class="portlet-body">
                             <div class="tab-content">
-                                <div class="tab-pane active" id="tab_actions_pending">
-                                    <!-- BEGIN: Actions -->
+                                <div class="tab-pane active" id="tab_actions_pending" panel-loader="objeto">
 
+                                    <!-- BEGIN: Actions -->
 
                                     <div class="mt-comments">
                                         <div class="mt-comment" ng-repeat="project in projectsByProducer.results track by $index">
@@ -102,12 +102,12 @@
                                                         <li ng-if="projectProducerStatus == 'Aceptada'">
                                                             <a ng-click="makeActionProducerProject(project,'Cumplida')" >Terminar</a>
                                                         </li>
-                                                        <!-- <li>
+                                                        <li>
                                                             <a ng-click="makeAction(action,'','Negociando')" >Negociar</a>
                                                         </li>
                                                         <li>
                                                             <a ng-click="makeAction(action,'No aceptada')" >Declinar</a>
-                                                        </li> -->
+                                                        </li>
                                                     </ul>
 
                                                 </div>
@@ -115,7 +115,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="text-center">
+                                    <div class="text-center" ng-if=" projectsByProducer.results">
                                         <ul uib-pagination boundary-links="true" class="pagination-sm"
                                             previous-text="&lsaquo;" next-text="&rsaquo;"
                                             first-text="&laquo;" last-text="&raquo;"
@@ -125,6 +125,7 @@
                                             ng-change="getProjectsByProducer()">
                                         </ul>
                                     </div>
+
                                 </div>
 
                             </div>
