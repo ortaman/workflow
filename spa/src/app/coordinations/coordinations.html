@@ -60,19 +60,19 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab"  ng-click="getProjectsByProducer( 'Creada', 'promise')"> Pendientes </a>
+                                    <a  data-toggle="tab"  ng-click="getProjectsByProducer( 'Creada')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab"  ng-click="getProjectsByProducer( 'Aceptada', 'promise')"> Aceptados </a>
+                                    <a  data-toggle="tab"  ng-click="getProjectsByProducer( 'Aceptada')"> Aceptados </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab" ng-click="getProjectsByProducer( 'Cumplida', 'promise')"> Terminadas </a>
+                                    <a  data-toggle="tab" ng-click="getProjectsByProducer( 'Terminada')"> Terminadas </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab"  ng-click="getProjectsByProducer( 'Satisfactoria' , 'status')"> Satisfactoria </a>
+                                    <a  data-toggle="tab"  ng-click="getProjectsByProducer( 'Satisfactoria' )"> Satisfactoria </a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab"  ng-click="getProjectsByProducer( 'Insatisfactoria', 'status')"> Insatisfactoria </a>
+                                    <a data-toggle="tab"  ng-click="getProjectsByProducer( 'Insatisfactoria')"> Insatisfactoria </a>
                                 </li>
                             </ul>
                         </div>
@@ -100,7 +100,7 @@
                                                             <a ng-click="makeActionProducerProject(project,'Aceptada')" >Aceptar</a>
                                                         </li>
                                                         <li ng-if="projectProducerStatus == 'Aceptada'">
-                                                            <a ng-click="makeActionProducerProject(project,'Cumplida')" >Terminar</a>
+                                                            <a ng-click="makeActionProducerProject(project,'Terminada')" >Terminar</a>
                                                         </li>
                                                         <!-- <li>
                                                             <a ng-click="makeAction(action,'','Negociando')" >Negociar</a>
@@ -141,19 +141,19 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab" ng-click="getProjectsByClient('Creada', 'promise')"> Pendientes </a>
+                                    <a  data-toggle="tab" ng-click="getProjectsByClient('Creada')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab" ng-click="getProjectsByClient('Aceptada', 'promise')"> Aceptados </a>
+                                    <a  data-toggle="tab" ng-click="getProjectsByClient('Aceptada')"> Aceptados </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab" ng-click="getProjectsByClient('Cumplida', 'promise')"> Terminados </a>
+                                    <a  data-toggle="tab" ng-click="getProjectsByClient('Terminada')"> Terminados </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab"  ng-click="getProjectsByClient('Satisfactoria' , 'status')"> Satisfactoria </a>
+                                    <a  data-toggle="tab"  ng-click="getProjectsByClient('Satisfactoria' )"> Satisfactoria </a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab"  ng-click="getProjectsByClient('Insatisfactoria', 'status')"> Insatisfactoria </a>
+                                    <a data-toggle="tab"  ng-click="getProjectsByClient('Insatisfactoria')"> Insatisfactoria </a>
                                 </li>
                             </ul>
                         </div>
@@ -177,8 +177,8 @@
                                                     <ul class="mt-comment-actions">
                                                       <div class="mt-action-buttons ">
                                                           <div class="btn-group btn-group-circle">
-                                                              <button ng-if="projectClientStatus == 'Cumplida'" type="button" class="btn btn-outline green btn-sm" ng-click="makeProducerActionProject(project,'Satisfactoria')" >Satisfactoria</button>
-                                                              <button ng-if="projectClientStatus == 'Cumplida'" type="button" class="btn btn-outline red btn-sm"  ng-click="makeProducerActionProject(project,'Insatisfactoria')">Insatisfactoria</button>
+                                                              <button ng-if="projectClientStatus == 'Terminada'" type="button" class="btn btn-outline green btn-sm" ng-click="makeProducerActionProject(project,'Satisfactoria')" >Satisfactoria</button>
+                                                              <button ng-if="projectClientStatus == 'Terminada'" type="button" class="btn btn-outline red btn-sm"  ng-click="makeProducerActionProject(project,'Insatisfactoria')">Insatisfactoria</button>
                                                           </div>
                                                       </div>
                                                     </ul>
@@ -266,19 +266,19 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab" ng-click="getClients('Creada', 'promise')"> Pendientes </a>
+                                    <a  data-toggle="tab" ng-click="getClients('Creada')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab" ng-click="getClients('Aceptada', 'promise')"> Aceptadas </a>
+                                    <a  data-toggle="tab" ng-click="getClients('Aceptada')"> Aceptadas </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab" ng-click="getClients('Cumplida', 'promise')"> Terminadas </a>
+                                    <a  data-toggle="tab" ng-click="getClients('Terminada')"> Terminadas </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab"  ng-click="getClients('Satisfactoria' , 'status')"> Satisfactoria </a>
+                                    <a  data-toggle="tab"  ng-click="getClients('Satisfactoria' )"> Satisfactoria </a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab"  ng-click="getClients('Insatisfactoria', 'status')"> Insatisfactoria </a>
+                                    <a data-toggle="tab"  ng-click="getClients('Insatisfactoria')"> Insatisfactoria </a>
                                 </li>
                             </ul>
                         </div>
@@ -304,7 +304,7 @@
                                                             <a ng-click="makeClientAction(action,'Aceptada')" >Aceptar</a>
                                                         </li>
                                                         <li ng-if="clientStatus == 'Aceptada'">
-                                                            <a ng-click="makeClientAction(action,'Cumplida')" >Terminar</a>
+                                                            <a ng-click="makeClientAction(action,'Terminada')" >Terminar</a>
                                                         </li>
                                                         <!-- <li>
                                                             <a ng-click="makeAction(action,'','Negociando')" >Negociar</a>
@@ -343,19 +343,19 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab"  ng-click="getProducers( 'Creada', 'promise')"> Pendientes </a>
+                                    <a  data-toggle="tab"  ng-click="getProducers( 'Creada')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab"  ng-click="getProducers( 'Aceptada', 'promise')"> Aceptados </a>
+                                    <a  data-toggle="tab"  ng-click="getProducers( 'Aceptada')"> Aceptados </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab" ng-click="getProducers( 'Cumplida', 'promise')"> Terminadas </a>
+                                    <a  data-toggle="tab" ng-click="getProducers( 'Terminada')"> Terminadas </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab"  ng-click="getProducers( 'Satisfactoria' , 'status')"> Satisfactoria </a>
+                                    <a  data-toggle="tab"  ng-click="getProducers( 'Satisfactoria' )"> Satisfactoria </a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab"  ng-click="getProducers( 'Insatisfactoria', 'status')"> Insatisfactoria </a>
+                                    <a data-toggle="tab"  ng-click="getProducers( 'Insatisfactoria')"> Insatisfactoria </a>
                                 </li>
                             </ul>
                         </div>
@@ -381,8 +381,8 @@
                                                     <ul class="mt-comment-actions">
                                                       <div class="mt-action-buttons ">
                                                           <div class="btn-group btn-group-circle">
-                                                              <button ng-if="producerStatus == 'Cumplida'" type="button" class="btn btn-outline green btn-sm" ng-click="makeProducerAction(action,'Satisfactoria')" >Satisfactoria</button>
-                                                              <button ng-if="producerStatus == 'Cumplida'" type="button" class="btn btn-outline red btn-sm"  ng-click="makeProducerAction(action,'Insatisfactoria')">Insatisfactoria</button>
+                                                              <button ng-if="producerStatus == 'Terminada'" type="button" class="btn btn-outline green btn-sm" ng-click="makeProducerAction(action,'Satisfactoria')" >Satisfactoria</button>
+                                                              <button ng-if="producerStatus == 'Terminada'" type="button" class="btn btn-outline red btn-sm"  ng-click="makeProducerAction(action,'Insatisfactoria')">Insatisfactoria</button>
                                                           </div>
                                                       </div>
                                                     </ul>

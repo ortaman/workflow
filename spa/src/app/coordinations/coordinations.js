@@ -15,10 +15,10 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
   $scope.init = function(){
     UserService.me().then(function(response){
       $scope.user = response.id
-      $scope.getClients('Creada' , 'promise');
-      $scope.getProducers('Creada', 'promise' );
-      $scope.getProjectsByProducer('Creada', 'promise' );
-      $scope.getProjectsByClient('Creada', 'promise' );
+      $scope.getClients('Creada' );
+      $scope.getProducers('Creada' );
+      $scope.getProjectsByProducer('Creada' );
+      $scope.getProjectsByClient('Creada' );
     }, function(error){
       console.error("error",error);
     })
@@ -26,10 +26,10 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
   $scope.getClients = function(status, typeOfFilter, page=1){
     var query = {
-      page:page
+      page:page,
+      status: status
     };
-    query[typeOfFilter] = status;
-    $scope.clientFiltertype = typeOfFilter;
+
 
     $scope.clientStatus = status // status for display button according the promise
     query.producer = $scope.user; // id usuario
@@ -46,12 +46,11 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     );
   }
 
-  $scope.getProducers = function(status, typeOfFilter, page=1){
+  $scope.getProducers = function(status, page=1){
     var query = {
-      page:page
+      page:page,
+      status:status
     };
-    query[typeOfFilter] = status;
-    $scope.producerFiltertype = typeOfFilter;
 
     $scope.producerStatus = status // status for display button according the promise
     query.client = $scope.user; // id usuario
@@ -68,11 +67,11 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     );
   }
 
-  $scope.getProjectsByProducer = function(status, typeOfFilter, page=1){
+  $scope.getProjectsByProducer = function(status, page=1){
     var query = {
-      page:page
+      page:page,
+      status:status
     };
-    query[typeOfFilter] = status;
 
     $scope.projectProducerStatus = status // status for display button according the promise
     query.producer = $scope.user; // id usuario
@@ -89,12 +88,11 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 		);
   }
 
-  $scope.getProjectsByClient = function(status, typeOfFilter, page=1){
+  $scope.getProjectsByClient = function(status, page=1){
     var query = {
-      page:page
+      page:page,
+      status:status
     };
-    query[typeOfFilter] = status;
-
     $scope.projectClientStatus = status // status for display button according the promise
     query.client = $scope.user; // id usuario
 
@@ -148,7 +146,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
   $scope.makeActionProducerProject = function(project,type){
     var actionType = {
       'Aceptada':'aceptar',
-      'Cumplida':'terminar',
+      'Terminada':'terminar',
     }
     var confirm = $mdDialog.confirm()
         .title("¿Está seguro que quiere "+ actionType[type]+" este proyecto?")
@@ -156,10 +154,10 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
         .cancel('No');
 
     $mdDialog.show(confirm).then(function() {
-      project.promise = type
+      project.status = type
       ProjectCreateService.update(project.id,project).then(
         function (response) {
-          $scope.getProjectsByProducer($scope.projectProducerStatus, 'promise');
+          $scope.getProjectsByProducer($scope.projectProducerStatus);
         },
         function (errors) {
           console.error(errors);
@@ -181,10 +179,9 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
     $mdDialog.show(confirm).then(function() {
       project.status = type
-      project.promise = 'Calificada'
       ProjectCreateService.update(project.id,project).then(
         function (response) {
-          $scope.getProjectsByClient($scope.producerStatus, 'status');
+          $scope.getProjectsByClient($scope.producerStatus);
         },
         function (errors) {
           console.error(errors);
@@ -206,10 +203,9 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
     $mdDialog.show(confirm).then(function() {
       action.status = type
-      action.promise = 'Calificada'
       ActionCreateService.update(action.id,action).then(
         function (response) {
-          $scope.getProducers($scope.producerStatus, 'promise');
+          $scope.getProducers($scope.producerStatus);
         },
         function (errors) {
           console.error(errors);
@@ -222,7 +218,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
   $scope.makeClientAction = function(action,type){
     var actionType = {
       'Aceptada':'aceptar',
-      'Cumplida':'terminar',
+      'Terminada':'terminar',
     }
 
     var confirm = $mdDialog.confirm()
@@ -231,10 +227,10 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
         .cancel('No');
 
     $mdDialog.show(confirm).then(function() {
-        action.promise = type
+        action.status = type
         ActionCreateService.update(action.id,action).then(
           function (response) {
-            $scope.getClients($scope.clientStatus, 'promise');
+            $scope.getClients($scope.clientStatus);
             $mdDialog.alert()
                .clickOutsideToClose(true)
                .title('La accion ha sido '+ type)
