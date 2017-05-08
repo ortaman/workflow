@@ -10,7 +10,7 @@ app.controller('ActionDetailController', [
 	$scope.producersCurrentPage = 1;
 	$scope.producersPerformanceCurrentPage = 1;
 	var actionStatus = "Abierta"
-	$scope.finishedStatus = 'Cumplida'
+	$scope.accomplishedStatus = 'Cumplida'
 
 	$scope.currentAction = {};
 	$scope.project = {};

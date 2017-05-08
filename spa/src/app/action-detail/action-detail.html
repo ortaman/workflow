@@ -26,7 +26,7 @@
                 </ul>
                 <div class="page-toolbar">
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Agregar a la acción
+                        <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Opciones de la acción
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
@@ -43,7 +43,7 @@
                                     <i class="icon-note"></i> Agregar reporte </a>
                             </li>
                             <li class="divider"> </li>
-                            <li ng-if="currentAction.promise != finishedStatus" ng-click="closeAction()">
+                            <li ng-if="currentAction.promise != accomplishedStatus" ng-click="closeAction()">
                                 <a href="">
                                     <i class="icon-layers"></i> Cerrar acción</a>
                             </li>
@@ -113,7 +113,7 @@
 
                                         </div>
                                         <div class="mt-body-actions-icons">
-                                            <div class="btn-group btn-group btn-group-justified">
+                                            <div ng-if="currentAction.promise != accomplishedStatus" class="btn-group btn-group btn-group-justified">
                                                 <div class="btn"
                                                     ng-class="getColor('Preparación')">
                                                     <span class="mt-icon font-blue">
@@ -134,6 +134,12 @@
                                                     <span class="mt-icon font-blue">
                                                         <i class="icon-question"></i>
                                                     </span> Evaluación </div>
+                                            </div>
+                                            <div ng-if="currentAction.promise == accomplishedStatus" class="btn-group btn-group btn-group-justified">
+                                                <div class="btn bg-info green-status">
+                                                    <span class="mt-icon font-blue">
+                                                        <i class="fa fa-check"></i>
+                                                    </span> Terminado </div>
                                             </div>
                                         </div>
                                     </div>
