@@ -21,13 +21,13 @@ class Project(models.Model):
 
     STATUS = (
         ('Creada', 'Creada'),
-        ('Aceptada', 'Aceptada'), 
+        ('Aceptada', 'Aceptada'),
         ('Reportada', 'Reportada'),
+
         ('Terminada', 'Terminada'),
 
         ('Satisfactoria', 'Satisfactoria'),
         ('Insatisfactoria', 'Insatisfactoria'),
-
         ('Negociando', 'Negociando'),
         ('No aceptada', 'No aceptada'),
     )
@@ -96,7 +96,7 @@ class Action(models.Model):
 
     STATUS = (
         ('Creada', 'Creada'),
-        ('Aceptada', 'Aceptada'), 
+        ('Aceptada', 'Aceptada'),
         ('Reportada', 'Reportada'),
         ('Terminada', 'Terminada'),
 
@@ -110,7 +110,7 @@ class Action(models.Model):
     project = models.ForeignKey(Project, related_name='project', verbose_name='Proyecto relacionado')
     name = models.CharField(max_length=64, verbose_name='Nombre de la acción')
     phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de la acción')
-    status = models.CharField(choices=STATUS, max_length=16, default='Abierta', verbose_name='Estado') 
+    status = models.CharField(choices=STATUS, max_length=16, default='Abierta', verbose_name='Estado')
 
     # focus project
     toDo = models.TextField(max_length=1024, verbose_name='¿Qué y como se realizará?')

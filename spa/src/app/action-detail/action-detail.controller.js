@@ -9,8 +9,8 @@ app.controller('ActionDetailController', [
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
 	$scope.producersPerformanceCurrentPage = 1;
-	var actionStatus = "Abierta"
-	$scope.finishedStatus = 'Cumplida'
+	var actionStatus = "Creada"
+	$scope.accomplishedStatus = 'Terminada'
 
 	$scope.currentAction = {};
 	$scope.project = {};
@@ -41,18 +41,18 @@ app.controller('ActionDetailController', [
 
 	$scope.closeAction = function(){
 		var confirm = $mdDialog.confirm()
-				.title('¿ Desea cerrar esta acción ?')
+				.title('¿ Desea establecer esta acción como terminada?')
 				.ok('Sí')
 				.cancel('No');
 
 		$mdDialog.show(confirm).then(function() {
-			$scope.currentAction.promise = $scope.finishedStatus
+			$scope.currentAction.status = $scope.accomplishedStatus
 			ActionCreateService.update($scope.currentAction.id,angular.copy($scope.currentAction)).then(
 				function (response) {
 					$mdDialog.show(
 						$mdDialog.alert()
 							 .clickOutsideToClose(true)
-							 .title('Se ha cerrado la acción')
+							 .title('Se ha terminado la acción')
 							 .ok('Ok')
 						 );
 				},
@@ -170,10 +170,10 @@ app.controller('ActionDetailController', [
 	$scope.getColor = function(phase){
 			if($scope.currentAction.phase == phase){
 				if(moment($scope.currentAction.report_at).isBefore(moment()) && !$scope.report)
-					return 'bg-info yellow-status'
+					return 'bg-info red-status'
 
 				if(moment($scope.currentAction.report_at).isAfter(moment()) && !$scope.report)
-					return 'bg-info red-status'
+					return 'bg-info yellow-status'
 
 			return 'bg-info green-status'
 		}

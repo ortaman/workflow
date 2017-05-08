@@ -25,7 +25,7 @@
                     </li>
                 </ul>
                 <div class="page-toolbar">
-                    <div class="btn-group pull-right">
+                    <!-- <div class="btn-group pull-right">
                         <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Acciones
                             <i class="fa fa-angle-down"></i>
                         </button>
@@ -37,7 +37,7 @@
                             </li>
 
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <!-- END PAGE BAR -->
@@ -48,6 +48,162 @@
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <!-- BEGIN DASHBOARD STATS 1-->
+            <div class="row">
+
+                <div class="col-lg-6 col-xs-12 col-sm-12">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title tabbable-line">
+                            <div class="caption">
+                                <i class=" icon-social-twitter font-dark hide"></i>
+                                <span class="caption-subject font-dark bold uppercase">Mis proyectos (lo que debo)</span>
+
+                            </div>
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a  data-toggle="tab"  ng-click="getProjectsByProducer( 'Creada')"> Pendientes </a>
+                                </li>
+                                <li>
+                                    <a  data-toggle="tab"  ng-click="getProjectsByProducer( 'Aceptada')"> Aceptados </a>
+                                </li>
+                                <li>
+                                    <a  data-toggle="tab" ng-click="getProjectsByProducer( 'Terminada')"> Terminadas </a>
+                                </li>
+                                <li>
+                                    <a  data-toggle="tab"  ng-click="getProjectsByProducer( 'Satisfactoria' )"> Satisfactoria </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab"  ng-click="getProjectsByProducer( 'Insatisfactoria')"> Insatisfactoria </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_actions_pending">
+                                    <!-- BEGIN: Actions -->
+
+
+                                    <div class="mt-comments">
+                                        <div class="mt-comment" ng-repeat="project in projectsByProducer.results track by $index">
+                                            <div class="mt-comment-img" >
+                                              <img  style="height:45px; width:45px " ng-src="{{ project.producer.photo }}" /> </div>
+
+                                            <div class="mt-comment-body" >
+                                                <div  class="mt-comment-info">
+                                                    <span class="mt-comment-author">{{ (project.producer.name + ' ' + project.producer.first_surname + ' ' + project.producer.second_surname)}}</span>
+                                                    <span class="mt-comment-date">{{ project.begin_at |  date:'dd-MMM-yyyy'}}</span>
+                                                </div>
+                                                <div   class="mt-comment-text"> {{ project.name }} </div>
+                                                <div   class="mt-comment-details">
+                                                    <span   class="mt-comment-status mt-comment-status-pending"> {{ project.project.name }}</span>
+                                                    <ul class="mt-comment-actions">
+                                                        <li ng-if="projectProducerStatus == 'Creada'">
+                                                            <a ng-click="makeActionProducerProject(project,'Aceptada')" >Aceptar</a>
+                                                        </li>
+                                                        <li ng-if="projectProducerStatus == 'Aceptada'">
+                                                            <a ng-click="makeActionProducerProject(project,'Terminada')" >Terminar</a>
+                                                        </li>
+                                                        <!-- <li>
+                                                            <a ng-click="makeAction(action,'','Negociando')" >Negociar</a>
+                                                        </li>
+                                                        <li>
+                                                            <a ng-click="makeAction(action,'No aceptada')" >Declinar</a>
+                                                        </li> -->
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <ul uib-pagination boundary-links="true" class="pagination-sm"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            first-text="&laquo;" last-text="&raquo;"
+                                            items-per-page="getProjectsByProducer.paginated_by"
+                                            total-items="getProjectsByProducer.count"
+                                            ng-model="projectsByProducerCurrentPage"
+                                            ng-change="getProjectsByProducer()">
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-12 col-sm-12">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title tabbable-line">
+                            <div class="caption">
+                                <i class="icon-bubbles font-dark hide"></i>
+                                <span class="caption-subject font-dark bold uppercase">Mis proyectos (lo que me deben)</span>
+
+                            </div>
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a  data-toggle="tab" ng-click="getProjectsByClient('Creada')"> Pendientes </a>
+                                </li>
+                                <li>
+                                    <a  data-toggle="tab" ng-click="getProjectsByClient('Aceptada')"> Aceptados </a>
+                                </li>
+                                <li>
+                                    <a  data-toggle="tab" ng-click="getProjectsByClient('Terminada')"> Terminados </a>
+                                </li>
+                                <li>
+                                    <a  data-toggle="tab"  ng-click="getProjectsByClient('Satisfactoria' )"> Satisfactoria </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab"  ng-click="getProjectsByClient('Insatisfactoria')"> Insatisfactoria </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="portlet_comments_1" >
+                                    <!-- BEGIN: Comments -->
+                                    <div class="mt-comments">
+                                        <div class="mt-comment" ng-repeat="project in projectsByClient.results track by $index">
+                                            <div class="mt-comment-img" >
+                                              <img  style="height:45px; width:45px " ng-src="{{ project.client.photo }}" /> </div>
+
+                                            <div class="mt-comment-body" >
+                                                <div class="mt-comment-info" >
+                                                    <span class="mt-comment-author">{{ (project.client.name + ' ' + project.client.first_surname + ' ' + project.client.second_surname)}}</span>
+                                                    <span class="mt-comment-date">{{ project.begin_at |  date:'dd-MMM-yyyy'}}</span>
+                                                </div>
+                                                <div class="mt-comment-text" > {{ project.name }} </div>
+                                                <div class="mt-comment-details">
+                                                    <span class="mt-comment-status mt-comment-status-pending"> {{ project.project.name }}</span>
+                                                    <ul class="mt-comment-actions">
+                                                      <div class="mt-action-buttons ">
+                                                          <div class="btn-group btn-group-circle">
+                                                              <button ng-if="projectClientStatus == 'Terminada'" type="button" class="btn btn-outline green btn-sm" ng-click="makeProducerActionProject(project,'Satisfactoria')" >Satisfactoria</button>
+                                                              <button ng-if="projectClientStatus == 'Terminada'" type="button" class="btn btn-outline red btn-sm"  ng-click="makeProducerActionProject(project,'Insatisfactoria')">Insatisfactoria</button>
+                                                          </div>
+                                                      </div>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <ul uib-pagination boundary-links="true" class="pagination-sm"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            first-text="&laquo;" last-text="&raquo;"
+                                            items-per-page="projectsByClient.paginated_by"
+                                            total-items="projectsByClient.count"
+                                            ng-model="projectsByClientCurrentPage"
+                                            ng-change="getProjectsByClient()">
+                                        </ul>
+                                    </div>
+                                    <!-- END: Comments -->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <a class="dashboard-stat dashboard-stat-v2 red" href="#">
@@ -110,19 +266,19 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab" ng-click="getClients('Creada', 'promise')"> Pendientes </a>
+                                    <a  data-toggle="tab" ng-click="getClients('Creada')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab" ng-click="getClients('Aceptada', 'promise')"> Aceptadas </a>
+                                    <a  data-toggle="tab" ng-click="getClients('Aceptada')"> Aceptadas </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab" ng-click="getClients('Cumplida', 'promise')"> Terminadas </a>
+                                    <a  data-toggle="tab" ng-click="getClients('Terminada')"> Terminadas </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab"  ng-click="getClients('Satisfactoria' , 'status')"> Satisfactoria </a>
+                                    <a  data-toggle="tab"  ng-click="getClients('Satisfactoria' )"> Satisfactoria </a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab"  ng-click="getClients('Insatisfactoria', 'status')"> Insatisfactoria </a>
+                                    <a data-toggle="tab"  ng-click="getClients('Insatisfactoria')"> Insatisfactoria </a>
                                 </li>
                             </ul>
                         </div>
@@ -137,7 +293,7 @@
 
                                             <div class="mt-comment-body" >
                                                 <div class="mt-comment-info" ng-click="openModal(action)">
-                                                    <span class="mt-comment-author">{{ action.client.second_surname}}</span>
+                                                    <span class="mt-comment-author">{{ (action.client.name + ' ' + action.client.first_surname + ' ' + action.client.second_surname)}}</span>
                                                     <span class="mt-comment-date">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
                                                 <div class="mt-comment-text" ng-click="openModal(action)"> {{ action.name }} </div>
@@ -148,7 +304,7 @@
                                                             <a ng-click="makeClientAction(action,'Aceptada')" >Aceptar</a>
                                                         </li>
                                                         <li ng-if="clientStatus == 'Aceptada'">
-                                                            <a ng-click="makeClientAction(action,'Cumplida')" >Terminar</a>
+                                                            <a ng-click="makeClientAction(action,'Terminada')" >Terminar</a>
                                                         </li>
                                                         <!-- <li>
                                                             <a ng-click="makeAction(action,'','Negociando')" >Negociar</a>
@@ -187,19 +343,19 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab"  ng-click="getProducers( 'Creada', 'promise')"> Pendientes </a>
+                                    <a  data-toggle="tab"  ng-click="getProducers( 'Creada')"> Pendientes </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab"  ng-click="getProducers( 'Aceptada', 'promise')"> Aceptados </a>
+                                    <a  data-toggle="tab"  ng-click="getProducers( 'Aceptada')"> Aceptados </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab" ng-click="getProducers( 'Cumplida', 'promise')"> Terminadas </a>
+                                    <a  data-toggle="tab" ng-click="getProducers( 'Terminada')"> Terminadas </a>
                                 </li>
                                 <li>
-                                    <a  data-toggle="tab"  ng-click="getProducers( 'Satisfactoria' , 'status')"> Satisfactoria </a>
+                                    <a  data-toggle="tab"  ng-click="getProducers( 'Satisfactoria' )"> Satisfactoria </a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab"  ng-click="getProducers( 'Insatisfactoria', 'status')"> Insatisfactoria </a>
+                                    <a data-toggle="tab"  ng-click="getProducers( 'Insatisfactoria')"> Insatisfactoria </a>
                                 </li>
                             </ul>
                         </div>
@@ -216,7 +372,7 @@
 
                                             <div class="mt-comment-body" >
                                                 <div uib-tooltip="Click para ver la descripción" class="mt-comment-info" ng-click="openModal(action)">
-                                                    <span class="mt-comment-author">{{ action.producer.second_surname}}</span>
+                                                    <span class="mt-comment-author">{{ (action.producer.name + ' ' + action.producer.first_surname + ' ' + action.producer.second_surname)}}</span>
                                                     <span class="mt-comment-date">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
                                                 <div uib-tooltip="Click para ver la descripción"  class="mt-comment-text" ng-click="openModal(action)"> {{ action.name }} </div>
@@ -225,8 +381,8 @@
                                                     <ul class="mt-comment-actions">
                                                       <div class="mt-action-buttons ">
                                                           <div class="btn-group btn-group-circle">
-                                                              <button ng-if="producerStatus == 'Cumplida'" type="button" class="btn btn-outline green btn-sm" ng-click="makeProducerAction(action,'Satisfactoria')" >Satisfactoria</button>
-                                                              <button ng-if="producerStatus == 'Cumplida'" type="button" class="btn btn-outline red btn-sm"  ng-click="makeProducerAction(action,'Insatisfactoria')">Insatisfactoria</button>
+                                                              <button ng-if="producerStatus == 'Terminada'" type="button" class="btn btn-outline green btn-sm" ng-click="makeProducerAction(action,'Satisfactoria')" >Satisfactoria</button>
+                                                              <button ng-if="producerStatus == 'Terminada'" type="button" class="btn btn-outline red btn-sm"  ng-click="makeProducerAction(action,'Insatisfactoria')">Insatisfactoria</button>
                                                           </div>
                                                       </div>
                                                     </ul>

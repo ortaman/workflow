@@ -1,6 +1,6 @@
 
 app.controller('LoginController', [
-  '$scope','$state', '$http', '$window', 'AuthService', 'StorageService', 
+  '$scope','$state', '$http', '$window', 'AuthService', 'StorageService',
   function($scope, $state, $http, $window, AuthService, StorageService) {
 
     $scope.showAlert = false;
@@ -9,8 +9,10 @@ app.controller('LoginController', [
 
       AuthService.login(data)
         .then(function(response) {
-          
+
           StorageService.set('token',response.data.token);
+          $http.defaults.headers.common.Authorization = 'Token ' + StorageService.get('token');
+
           $state.go('coordinations');
 
         },function(errorResponse) {

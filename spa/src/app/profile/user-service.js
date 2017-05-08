@@ -24,16 +24,20 @@ app.service('UserService', function($http, APIConfig,$q, StorageService) {
         var results = undefined;
         var deferred = $q.defer();
         URL = APIConfig.url + 'myuser/';
+        console.log("pidio user");
+        if(StorageService.get('user')){
+          results = JSON.parse(StorageService.get('user'));
+          console.log("local user",results);
 
-        if(StorageService.get('users1')){
-          results = JSON.parse(StorageService.get('users1'));
           deferred.resolve(results);
         }else{
           $http.get(URL)
             .then(function(result) {
               results = result.data;
               results.photo =  APIConfig.baseUrl+ results.photo
-              StorageService.set('users1',JSON.stringify(results))
+              StorageService.set('user',JSON.stringify(results))
+              console.log("srver user",results);
+
               deferred.resolve(results);
             }, function(error) {
               results = error;
