@@ -10,9 +10,9 @@ app.controller('ProjectDetailController', [
 	$scope.producers = [];
 	$scope.producersPerformance = [];
 	$scope.timelines = []
-	$scope.accomplishedStatus = 'Cumplida'
+	$scope.accomplishedStatus = 'Terminada'
 
-	var queryStatus = "Abierta";
+	var queryStatus = "Creada";
 	var dateFields = {
       'accomplish_at':'Fecha de cumplimiento',
       'report_at':'Fecha de reporte',
@@ -156,20 +156,20 @@ app.controller('ProjectDetailController', [
 
 	$scope.closeProject = function(){
 		var confirm = $mdDialog.confirm()
-				.title('¿ Desea cerrar este proyecto ?')
+				.title('¿ Desea establecer  este proyecto  como terminado?')
 				.ok('Sí')
 				.cancel('No');
 
 		$mdDialog.show(confirm).then(function() {
 			var project = angular.copy($scope.project);
-			project.promise = $scope.accomplishedStatus;
+			project.status = $scope.accomplishedStatus;
 			ProjectCreateService.update($scope.project.id,project).then(
 				function (response) {
-					$scope.project.promise = response.promise
+					$scope.project.status = response.status
 					$mdDialog.show(
 						$mdDialog.alert()
 							 .clickOutsideToClose(true)
-							 .title('Se ha cerrado el proyecto')
+							 .title('Se ha terminado el proyecto')
 							 .ok('Ok')
 						 );
 				},

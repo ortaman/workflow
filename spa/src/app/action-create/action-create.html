@@ -143,38 +143,13 @@
 
                             <div class="col-md-4">
                               <md-input-container class="md-block" >
-                                <label> Promesa </label>
-                                <md-select name="promise"
-                                           ng-init="action.promise='Creada'"
-                                           ng-model="action.promise"
-                                           ng-disabled="true">
-                                     <md-option value="Creada"> Creada </md-option>
-                                     <md-option value="Aceptada"> Aceptada </md-option>
-                                     <md-option value="Reportada"> Reportada </md-option>
-                                     <md-option value="Cumplida"> Cumplida </md-option>
-                                     <md-option value="Incumplida"> Incumplida </md-option>
-                                     <md-option value="Negociando"> Negociando </md-option>
-                                     <md-option value="No aceptada"> No aceptada </md-option>
-                                </md-select>
-
-                                <div ng-show="actionForm.promise.$touched || submitted">
-                                   <div class="error"  style="margin-top: 0em"
-                                        ng-show="actionForm.promise.$error.required">
-                                     Campo requerido.
-                                   </div>
-                                 </div>
-                                </md-input-container>
-                            </div>
-
-                            <div class="col-md-4">
-                              <md-input-container class="md-block" >
                                 <label> Estado </label>
                                 <md-select name="status"
-                                           ng-init="action.status='Abierta'"
+                                           ng-init="action.status='Creada'"
                                            ng-model="action.status"
                                            required
                                            disabled>
-                                  <md-option value="Abierta"> Abierta </md-option>
+                                  <md-option value="Creada"> Creada </md-option>
                                   <md-option value="Cerrada satisfactoriamente"> Cerrada satisfactoriamente </md-option>
                                   <md-option value="Cerrada insatisfactoriamente"> Cerrada insatisfactoriamente </md-option>
                                 </md-select>
