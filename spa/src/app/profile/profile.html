@@ -236,8 +236,8 @@
                                     <div class="col-md-4" ng-repeat="project in chunkArray($index)">
                                         <div class="mt-widget-4">
                                             <div class="mt-img-container">
-                                                <img src="../../assets/metronics/pages/img/background/5.jpg" /> </div>
-                                            <div class="mt-container bg-red-opacity">
+                                                <img ng-src="{{ project.image }}" /> </div>
+                                            <div class="mt-container" ng-class="project.color">
                                                 <div class="mt-head-title"> {{project.name}} </div>
                                                 <div class="mt-body-icons">
                                                     <a href="bitacora.html">
