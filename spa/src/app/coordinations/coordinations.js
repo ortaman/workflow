@@ -1,6 +1,7 @@
 
-app.controller('CoordinationsController', ['$scope','ActionListService','UserService','ActionCreateService','$mdDialog','APIConfig',
-  function($scope, ActionListService, UserService, ActionCreateService, $mdDialog, APIConfig) {
+app.controller('CoordinationsController', ['$scope','ActionListService','UserService','ActionCreateService','$mdDialog',
+  'APIConfig','ProjectListService','ProjectCreateService',
+  function($scope, ActionListService, UserService, ActionCreateService, $mdDialog, APIConfig, ProjectListService, ProjectCreateService) {
 
   $scope.promisesCurrentPage = 1
   $scope.ordersCurrentPage = 1
@@ -10,11 +11,14 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
   $scope.promises = [];
   $scope.user;
+
   $scope.init = function(){
     UserService.me().then(function(response){
       $scope.user = response.id
       $scope.getClients('Creada' , 'promise');
       $scope.getProducers('Creada', 'promise' );
+      $scope.getProjectsByProducer('Creada', 'promise' );
+      $scope.getProjectsByClient('Creada', 'promise' );
     }, function(error){
       console.log("error",error);
     })
@@ -50,7 +54,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $scope.producerFiltertype = typeOfFilter;
 
     $scope.producerStatus = status // status for display button according the promise
-    console.log("aaaa",$scope.producerStatus);
+    //console.log("aaaa",$scope.producerStatus);
     query.client = $scope.user; // id usuario
 
     ActionListService.getList(query).then(
@@ -63,6 +67,58 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
         $scope.errors = errorResponse.data;
       }
     );
+  }
+
+  $scope.getProjectsByProducer = function(status, typeOfFilter, page=1){
+    var query = {
+      page:page
+    };
+    query[typeOfFilter] = status;
+    // $scope.producerFiltertype = typeOfFilter;
+    //
+    $scope.projectProducerStatus = status // status for display button according the promise
+    // console.log("aaaa",$scope.producerStatus);
+    query.producer = $scope.user; // id usuario
+
+    ProjectListService.getList(query).then(
+			function(response) {
+				console.log('ProjectList', response);
+
+
+				$scope.projectsByProducer = response
+			},
+			function(errorResponse) {
+				console.log('errorResponse', errorResponse);
+				$scope.status = errorResponse.statusText || 'Request failed';
+				$scope.errors = errorResponse.data;
+			}
+		);
+  }
+
+  $scope.getProjectsByClient = function(status, typeOfFilter, page=1){
+    var query = {
+      page:page
+    };
+    query[typeOfFilter] = status;
+    // $scope.producerFiltertype = typeOfFilter;
+    //
+     $scope.projectClientStatus = status // status for display button according the promise
+    // console.log("aaaa",$scope.producerStatus);
+    query.client = $scope.user; // id usuario
+
+    ProjectListService.getList(query).then(
+			function(response) {
+				console.log('ProjectList', response);
+
+
+				$scope.projectsByClient = response
+			},
+			function(errorResponse) {
+				console.log('errorResponse', errorResponse);
+				$scope.status = errorResponse.statusText || 'Request failed';
+				$scope.errors = errorResponse.data;
+			}
+		);
   }
 
   $scope.makeClientAction = function(action,type){
@@ -121,15 +177,58 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
       )
     }, function() {
     });
-
-
-
-
   }
 
+  $scope.makeProducerActionProject = function(project,type){
+    console.log("tipo", type);
+    var actionType = {
+      'Satisfactoria':'satisfactorio',
+      'Insatisfactoria':'insatisfactorio',
+    }
+    var confirm = $mdDialog.confirm()
+        .title("¿Está seguro que quiere calificar este proyecto como "+ actionType[type]+" ?")
+        .ok('Sí')
+        .cancel('No');
 
+    $mdDialog.show(confirm).then(function() {
+      project.status = type
+      project.promise = 'Calificada'
+      ProjectCreateService.update(project.id,project).then(
+        function (response) {
+          $scope.getProjectsByClient($scope.producerStatus, 'status');
+        },
+        function (errors) {
+          console.log(errors);
+        }
+      )
+    }, function() {
+    });
+  }
 
+  $scope.makeActionProducerProject = function(project,type){
+    console.log("tipo", type);
+    var actionType = {
+      'Aceptada':'aceptar',
+      'Cumplida':'terminar',
+    }
+    var confirm = $mdDialog.confirm()
+        .title("¿Está seguro que quiere "+ actionType[type]+" este proyecto?")
+        .ok('Sí')
+        .cancel('No');
 
+    $mdDialog.show(confirm).then(function() {
+      project.promise = type
+      ProjectCreateService.update(project.id,project).then(
+        function (response) {
+          $scope.getProjectsByProducer($scope.projectProducerStatus, 'promise');
+        },
+        function (errors) {
+          console.log(errors);
+        }
+      )
+    }, function() {
+    });
+  }
 
 
 	$scope.openModal = function(action) {

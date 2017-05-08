@@ -23,10 +23,16 @@ class Project(models.Model):
         ('Creada', 'Creada'),
         ('Aceptada', 'Aceptada'), 
         ('Reportada', 'Reportada'),
+<<<<<<< coodinations
+        ('Cumplida', 'Cumplida'),
+        ('Incumplida', 'Incumplida'),
+        ('Calificada', 'Calificada'),
+=======
         ('Terminada', 'Terminada'),
 
         ('Satisfactoria', 'Satisfactoria'),
         ('Insatisfactoria', 'Insatisfactoria'),
+>>>>>>> develop
 
         ('Negociando', 'Negociando'),
         ('No aceptada', 'No aceptada'),

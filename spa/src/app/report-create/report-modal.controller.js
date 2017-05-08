@@ -24,10 +24,15 @@ app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateSer
       UserService.me().then(function(response){
         $ctrl.report.create_by = response.id
 
-        ReportCreateService.create($ctrl.report).then(
+        $ctrl.submmitPromise = ReportCreateService.create($ctrl.report).then(
           function (response) {
             $mdDialog.hide();
-
+            $mdDialog.show(
+  						$mdDialog.alert()
+  							 .clickOutsideToClose(true)
+  							 .title('Reporte  ha sido añadido')
+  							 .ok('Ok')
+  						 );
             console.log("response", response);
           },
           function (errorResponse) {

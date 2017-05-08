@@ -170,10 +170,10 @@ app.controller('ActionDetailController', [
 	$scope.getColor = function(phase){
 			if($scope.currentAction.phase == phase){
 				if(moment($scope.currentAction.report_at).isBefore(moment()) && !$scope.report)
-					return 'bg-info yellow-status'
+					return 'bg-info red-status'
 
 				if(moment($scope.currentAction.report_at).isAfter(moment()) && !$scope.report)
-					return 'bg-info red-status'
+					return 'bg-info yellow-status'
 
 			return 'bg-info green-status'
 		}

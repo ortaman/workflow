@@ -22,7 +22,7 @@ app.controller('ActionCreateController', [
         case 'Ejecución':
             $scope.maxDate = new Date($scope.project.ejecution_at);
             $scope.minDate = new Date($scope.project.negotiation_at);
-            break;          
+            break;
         default:
             $scope.maxDate = new Date($scope.project.evaluation_at);
             $scope.minDate = new Date($scope.project.ejecution_at);
@@ -51,7 +51,7 @@ app.controller('ActionCreateController', [
     if($scope.actionId)
       action.parent_action = $scope.actionId;
 
-    ActionCreateService.create(action).then(
+    $scope.submmitPromise = ActionCreateService.create(action).then(
       function (response) {
         if($scope.actionId)
           $state.go('actionDetail', {id:$scope.actionId})
