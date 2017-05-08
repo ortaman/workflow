@@ -70,13 +70,13 @@ class ActionPostSerializer(serializers.ModelSerializer):
         model  = Action
         fields = (
             'id', 'project', 'name', 'phase',
-            'status', 'promise',
+            'status',
             'client', 'producer', 'observer',
             'toDo', 'satisfactions',
             'begin_at', 'accomplish_at', 'report_at',
             'financial', 'operational', 'other1', 'other2', 'parent_action')
 
-    read_only_fields =  ('created_at', 'updated_at','create_by', 'promise')
+    read_only_fields =  ('created_at', 'updated_at','create_by', 'status')
 
 
 class ActionGetSerializer(serializers.ModelSerializer):
