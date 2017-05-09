@@ -76,7 +76,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $scope.projectProducerStatus = status // status for display button according the promise
     query.producer = $scope.user; // id usuario
 
-    ProjectListService.getList(query).then(
+    $scope.objeto = ProjectListService.getList(query).then(
 			function(response) {
 				$scope.projectsByProducer = response
 			},

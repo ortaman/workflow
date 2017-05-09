@@ -24,10 +24,8 @@ app.service('UserService', function($http, APIConfig,$q, StorageService) {
         var results = undefined;
         var deferred = $q.defer();
         URL = APIConfig.url + 'myuser/';
-        console.log("pidio user");
         if(StorageService.get('user')){
           results = JSON.parse(StorageService.get('user'));
-          console.log("local user",results);
 
           deferred.resolve(results);
         }else{
@@ -36,7 +34,6 @@ app.service('UserService', function($http, APIConfig,$q, StorageService) {
               results = result.data;
               results.photo =  APIConfig.baseUrl+ results.photo
               StorageService.set('user',JSON.stringify(results))
-              console.log("srver user",results);
 
               deferred.resolve(results);
             }, function(error) {
