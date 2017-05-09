@@ -179,8 +179,23 @@ app.controller('ProjectDetailController', [
 			)
 		}, function() {
 		});
+	}
 
+	$scope.openActionDetailModal = function(action) {
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'CoordinationsModalController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/project-detail/action-detail.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 locals:{
+			 currentAction: action
+		 }
+		}).finally(function() {
 
+    });
 	}
 
 	//template interaction functions

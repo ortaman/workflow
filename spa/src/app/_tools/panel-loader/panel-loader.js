@@ -9,8 +9,6 @@ app.directive("panelLoader", ['$compile',function ($compile,$scope) {
 
             scope.$watch('panelLoader', function (val) {
               element.append($compile(template)(scope));
-              
-              console.log( val, "pasa" );
 
                 scope.panelLoader.then(function functionName() {
                     element = angular.element(element)
