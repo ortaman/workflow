@@ -89,6 +89,20 @@ class ProjectList(APIView, APIMixin):
                         status=query.get('status'),
                     )
 
+            elif 'client' in query.keys() and 'promise' in query.keys():
+                    queryset = queryset.filter(
+                        client_id=query.get('client'),
+                        promise=query.get('promise'),
+                    )
+            # Search project by producer and promise status.
+            elif 'producer' in query.keys() and 'promise' in query.keys():
+
+                queryset = queryset.filter(
+                    producer_id=query.get('producer'),
+                    promise=query.get('promise'),
+                )
+
+
 
             elif 'producer' in query.keys() and 'status' in query.keys():
 

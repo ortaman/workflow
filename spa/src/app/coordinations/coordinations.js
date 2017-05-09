@@ -68,6 +68,8 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
   }
 
   $scope.getProjectsByProducer = function(status, page=1){
+    $scope.projectsByProducer = []
+
     var query = {
       page:page,
       status:status
