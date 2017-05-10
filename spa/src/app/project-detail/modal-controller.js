@@ -1,18 +1,23 @@
 
-app.controller('CoordinationsModalController', ['$scope','$mdDialog','currentAction','ActionListService',
-  function($scope,$mdDialog, currentAction, ActionListService) {
-    console.log(currentAction);
+app.controller('CoordinationsModalController', ['$scope','$mdDialog','currentAction','ActionListService','ActionGetService',
+  function($scope,$mdDialog, currentAction, ActionListService, ActionGetService) {
+
     var $ctrl = this;
-    $ctrl.currentAction = currentAction;
+    $ctrl.action = currentAction;
     $ctrl.actionCurrentPage = 1
     var actionStatus = "Abierta"
+    $ctrl.accomplishedStatus = 'Terminada'
 
+
+    $ctrl.init = function () {
+      $ctrl.getAction();
+      $ctrl.actionPageChanged()
+    }
     $ctrl.actionPageChanged = function(status) {
-      console.log("kkkkk");
   		actionStatus = status||actionStatus;
 
        	var query = {
-  			"parent_action_id": $ctrl.currentAction.id,
+  			"parent_action_id": currentAction,
   			"page": $ctrl.actionCurrentPage,
   			"status": actionStatus,
   		};
@@ -30,5 +35,22 @@ app.controller('CoordinationsModalController', ['$scope','$mdDialog','currentAct
 
     };
 
-    $ctrl.actionPageChanged()
+    $ctrl.getAction = function () {
+      ActionGetService.getById($ctrl.action).then(
+        function(response) {
+          $ctrl.action = response;
+        },
+        function(errorResponse) {
+            console.log('errorResponse', errorResponse);
+            $ctrl.status = errorResponse.statusText || 'Request failed';
+            $ctrl.errors = errorResponse.data;
+        }
+      );
+    }
+
+    $ctrl.getColor = function(phase){
+        if($ctrl.action.phase == phase){
+          return $ctrl.action.color+ "-status"
+      }
+    }
 }]);

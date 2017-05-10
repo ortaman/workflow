@@ -2,8 +2,19 @@
 app.service("ActionGetService", ['$http', 'APIConfig', function($http, APIConfig) {
 
     this.getById = function(id) {
+
+        var getColor = function (action) {
+            if(moment(action.report_at).isBefore(moment()) && action.report == 0)
+              return 'red'
+
+            if(moment(action.report_at).isAfter(moment()) && action.report == 0)
+              return 'yellow'
+
+          return 'green'
+        }
+        
         var promise = $http.get(APIConfig.url + "actions/" + id + "/").then(function(response) {
-            
+
             var transformFields = [
                 'accomplish_at',
                 'expire_at',
@@ -19,6 +30,8 @@ app.service("ActionGetService", ['$http', 'APIConfig', function($http, APIConfig
                     }
                 })
             });
+
+            response.data.color = getColor(response.data);
 
             response.data.producer.photo = APIConfig.baseUrl + response.data.producer.photo;
     				response.data.project.image = APIConfig.baseUrl + response.data.project.image;

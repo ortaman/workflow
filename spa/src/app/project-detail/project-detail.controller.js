@@ -191,7 +191,7 @@ app.controller('ProjectDetailController', [
 		 parent: angular.element(document.body),
 		 clickOutsideToClose:true,
 		 locals:{
-			 currentAction: action
+			 currentAction: action.id
 		 }
 		}).finally(function() {
 
@@ -208,17 +208,6 @@ app.controller('ProjectDetailController', [
 			return $scope.producers.producers.slice(index*3, (index*3)+3);
 	}
 
-	$scope.getColor = function(phase){
-			if($scope.project.phase == phase){
-				if(moment($scope.project.report_at).isBefore(moment()) && !$scope.report)
-					return 'bg-info red-status'
-
-				if(moment($scope.project.report_at).isAfter(moment()) && !$scope.report)
-					return 'bg-info yellow-status'
-
-			return 'bg-info green-status'
-		}
-	}
 
 	var transformActions = function(results){
 		//private functions
