@@ -276,7 +276,7 @@
                                             <div class="col1 ">
                                                 <div class="cont ">
                                                     <div class="cont-col1 ">
-                                                        <div class="label label-sm label-danger " ui-sref="actionDetail({id:action.id})">
+                                                        <div class="label label-sm label-danger " ng-click="openActionDetailModal(action)">
                                                             <i class="icon-layers "></i>
                                                         </div>
                                                     </div>
@@ -290,7 +290,7 @@
                                                 </div>
                                             </div>
                                             <div class="col2">
-                                                <a ng-show="hoverEdit" ng-click="openActionDetailModal(action)" class="label label-sm label-danger"> Editar acción
+                                                <a ng-show="hoverEdit"  ui-sref="actionUpdate({id:action.id})"class="label label-sm label-danger"> Editar acción
                                                 </a>
                                             </div>
                                         </li>

@@ -154,7 +154,7 @@
                                             <div class="mt-comment-body" >
                                                 <div  class="mt-comment-info" ui-sref="projectDetail({id:project.id})" >
                                                     <span class="mt-comment-author">{{ (project.producer.name + ' ' + project.producer.first_surname + ' ' + project.producer.second_surname)}}</span>
-                                                    <span class="mt-comment-date">{{ project.begin_at |  date:'dd-MMM-yyyy'}}</span>
+                                                    <span class="mt-comment-date " ng-class="getColor(project)">{{ project.begin_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
                                                 <div   class="mt-comment-text" ui-sref="projectDetail({id:project.id})" > {{ project.name }} </div>
                                                 <div   class="mt-comment-details">
@@ -234,7 +234,7 @@
                                             <div class="mt-comment-body" >
                                                 <div class="mt-comment-info" ui-sref="projectDetail({id:project.id})" >
                                                     <span class="mt-comment-author">{{ (project.client.name + ' ' + project.client.first_surname + ' ' + project.client.second_surname)}}</span>
-                                                    <span class="mt-comment-date">{{ project.begin_at |  date:'dd-MMM-yyyy'}}</span>
+                                                    <span class="mt-comment-date"  ng-class="getColor(project)">{{ project.begin_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
                                                 <div class="mt-comment-text" ui-sref="projectDetail({id:project.id})" > {{ project.name }} </div>
                                                 <div class="mt-comment-details">
@@ -308,7 +308,7 @@
                                             <div class="mt-comment-body" >
                                                 <div class="mt-comment-info" ui-sref="actionDetail({id:action.id})">
                                                     <span class="mt-comment-author">{{ (action.client.name + ' ' + action.client.first_surname + ' ' + action.client.second_surname)}}</span>
-                                                    <span class="mt-comment-date">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
+                                                    <span class="mt-comment-date"  ng-class="getColor(action)" >{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
                                                 <div class="mt-comment-text" ui-sref="actionDetail({id:action.id})"> {{ action.name }} </div>
                                                 <div class="mt-comment-details">
@@ -387,7 +387,7 @@
                                             <div class="mt-comment-body" >
                                                 <div uib-tooltip="Click para ver la descripción" class="mt-comment-info" ui-sref="actionDetail({id:action.id})" >
                                                     <span class="mt-comment-author">{{ (action.producer.name + ' ' + action.producer.first_surname + ' ' + action.producer.second_surname)}}</span>
-                                                    <span class="mt-comment-date">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
+                                                    <span class="mt-comment-date"  ng-class="getColor(action)">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
                                                 <div uib-tooltip="Click para ver la descripción"  class="mt-comment-text" ui-sref="actionDetail({id:action.id})" > {{ action.name }} </div>
                                                 <div uib-tooltip="Click para ver la descripción"  class="mt-comment-details">
