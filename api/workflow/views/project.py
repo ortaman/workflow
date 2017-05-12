@@ -84,10 +84,10 @@ class ProjectList(APIView, APIMixin):
 
             # Search project by client and  status.
             elif 'client' in query.keys() and 'status' in query.keys():
-                    queryset = queryset.filter(
-                        client_id=query.get('client'),
-                        status=query.get('status'),
-                    )
+                queryset = queryset.filter(
+                    client_id=query.get('client'),
+                    status=query.get('status'),
+                )
 
 
             elif 'producer' in query.keys() and 'status' in query.keys():

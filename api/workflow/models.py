@@ -141,7 +141,7 @@ class Action(models.Model):
 
     created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
-    create_by = models.ForeignKey(User, related_name='action_create_by', verbose_name='Creado por')
+    created_by = models.ForeignKey(User, related_name='action_create_by', verbose_name='Creado por')
 
     class Meta:
         verbose_name = ("Acción")

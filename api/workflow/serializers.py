@@ -63,7 +63,7 @@ class ProjectListSerializer(serializers.ModelSerializer):
             'id', 'name', 'kind', 'phase', 'image',
             'preparation_at', 'negotiation_at', 'execution_at', 'evaluation_at',
             'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at', 'report',
-            'client', 'producer')
+            'client', 'producer', 'status')
 
 
 class ActionPostSerializer(serializers.ModelSerializer):

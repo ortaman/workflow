@@ -142,3 +142,37 @@ class ActionList(APIView, APIMixin):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ActionStadisctic(APIView, APIMixin):
+    """
+    """
+    permission_classes = (IsAuthenticated,)
+
+    # Initial mixin variables (model and serializer_list)
+    model = Action
+
+    def get(self, request, format=None):
+
+        user_id = request.user.id
+        queryset = self.model.objects.all()
+        
+        q1 = Q(client_id = user_id)
+        q2 = (Q(status = 'Creada') | Q(status = 'Abierta') | Q(status = 'Reportada'))
+        q3 = Q(status = 'Terminada')
+        q4 = Q(status = 'Satisfactoria')  
+        q5 = Q(status = 'Insatisfactoria')
+        q7 = Q(producer_id=user_id)
+
+        data = {
+            'open_promises': queryset.filter(q1, q2).count(),
+            'finished_promises': queryset.filter(q1, q3).count(),
+            'fulfilled_promises':  queryset.filter(q1, q4).count(),
+            'unfulfilled_promises': queryset.filter(q1, q5).count(),
+            'open_order': queryset.filter(q7, q2).count(),
+            'finished_order': queryset.filter(q7, q3).count(),
+            'fulfilled_order': queryset.filter(q7, q4).count(),
+            'unfulfilled_order': queryset.filter(q7, q5).count(),
+        }
+
+        return Response(data)
