@@ -43,7 +43,7 @@ gulp.task('compile-less', function() {
     .pipe(less())
     // .pipe(cssminify())
     .pipe(gulp.dest('src/assets'))
-    .pipe(gulp.dest("../api/_static/spa/assets"))   // Build in the django _static folder
+    // .pipe(gulp.dest("../api/_static/spa/assets"))   // Build in the django _static folder
     .pipe(connect.reload());
 
     return compile;
@@ -71,7 +71,7 @@ gulp.task('compile-js', function() {
     .pipe(concat('app.js'))
     //.pipe(uglify())
     .pipe(gulp.dest('src/assets'))
-    .pipe(gulp.dest("../api/_static/spa/assets"))   // Build in the django _static folder
+    // .pipe(gulp.dest("../api/_static/spa/assets"))   // Build in the django _static folder
     .pipe(connect.reload())
 
   return compile;
@@ -112,7 +112,7 @@ gulp.task('js-vendor', function () {
     //.pipe(uglify())
     .pipe(concat('vendors.js'))
     .pipe(gulp.dest("src/assets"))
-    .pipe(gulp.dest("../api/_static/spa/assets"))   // Build in the django _static folder
+    // .pipe(gulp.dest("../api/_static/spa/assets"))   // Build in the django _static folder
 
 });
 
@@ -126,14 +126,14 @@ gulp.task('css-vendor',function(){
        ])
       .pipe(concat('vendors.css'))
       .pipe(gulp.dest("src/assets"))
-      .pipe(gulp.dest("../api/_static/spa/assets"))   // Build in the django _static folder
+      // .pipe(gulp.dest("../api/_static/spa/assets"))   // Build in the django _static folder
 });
 
 
 gulp.task('html-minify', function() {
   return gulp.src(['src/app/**/*.html'])
     .pipe(htmlmin({collapseWhitespace: true}))
-    .pipe(gulp.dest("../api/_static/app"))   // Build in the django _static folder
+    // .pipe(gulp.dest("../api/_static/app"))   // Build in the django _static folder
 });
 
 
