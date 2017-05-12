@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-lg" ng-init="vm.init()">
   <div class="modal-header text-center">
     <h3 class="modal-title" id="modal-title">Detalle de accion </h3>
   </div>
@@ -14,8 +14,8 @@
                                 Detalle de acción
                             </span>
                         </div>
-                        <div class="btn-group pull-right" ng-if="report">
-                          <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" ng-click="openReportDetailModal()"> Ver reporte
+                        <div class="btn-group pull-right" ng-if="vm.report">
+                          <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" ng-click="vm.openReportDetailModal()"> Ver reporte
                           </button>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                             <div class="col-md-12">
                                 <div class="mt-widget-2">
                                     <div class="mt-head"
-                                        style="background-image: url({{vm.currentAction.project.image}})">
+                                        style="background-image: url({{vm.action.project.image}})">
                                         <div class="mt-head-label">
                                             <button type="button" class="btn btn-success">
                                                 Marketing
@@ -32,25 +32,25 @@
                                         </div>
                                         <div class="mt-head-user">
                                             <div class="mt-head-user-img">
-                                                <img ng-src="{{vm.currentAction.producer.photo}}"> </div>
+                                                <img ng-src="{{vm.action.producer.photo}}"> </div>
                                             <div class="mt-head-user-info" style="font-weight: bold">
                                                 <span class="mt-user-name">
-                                                {{ vm.currentAction.client.name }} {{ vm.currentAction.client.first_surname }}
+                                                {{ vm.action.client.name }} {{ vm.action.client.first_surname }}
                                                 </span>
                                                 <span class="mt-user-time">
-                                                <i class="icon-emoticon-smile"></i> {{vm.currentAction.client.position}} </span>
+                                                <i class="icon-emoticon-smile"></i> {{vm.action.client.position}} </span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mt-body margin-top-5">
                                         <div class="row">
                                           <div class="col-md-6">
-                                            <h3 class="mt-body-title"> {{ vm.currentAction.name }} </h3>
-                                            <p class="mt-body-description">{{ vm.currentAction.toDo }} .</p>
+                                            <h3 class="mt-body-title"> {{ vm.action.name }} </h3>
+                                            <p class="mt-body-description">{{ vm.action.toDo }} .</p>
                                           </div>
                                           <div class="col-md-6">
                                             <h3 class="mt-body-title">Proyecto </h3>
-                                            <p class="mt-body-description">{{ vm.currentAction.project.name }} .</p>
+                                            <p class="mt-body-description">{{ vm.action.project.name }} .</p>
                                           </div>
                                         </div>
 
@@ -58,28 +58,35 @@
 
                                     </div>
                                     <div class="mt-body-actions-icons">
-                                        <div class="btn-group btn-group btn-group-justified">
-                                            <div class="btn"
-                                                ng-class="{'bg-info': vm.currentAction.phase == 'preparacion'}">
-                                                <span class="mt-icon font-blue">
-                                                    <i class="fa fa-lightbulb-o"></i>
-                                                </span> Preparación </div>
-                                            <div class="btn"
-                                                ng-class="{'bg-info': vm.currentAction.phase == 'negociacion'}">
-                                                <span class="mt-icon font-blue">
-                                                    <i class="fa fa-check-circle-o"></i>
-                                                </span> Negociación </div>
-                                            <div class="btn"
-                                                ng-class="{'bg-info': vm.currentAction.phase == 'ejecucion'}">
-                                                <span class="mt-icon font-blue">
-                                                    <i class="icon-layers"></i>
-                                                </span> Ejecución </div>
-                                            <div class="btn"
-                                                ng-class="{'bg-info': vm.currentAction.phase == 'evaluacion'}">
-                                                <span class="mt-icon font-blue">
-                                                    <i class="icon-question"></i>
-                                                </span> Evaluación </div>
-                                        </div>
+                                      <div ng-if="vm.action.status != accomplishedStatus" class="btn-group btn-group btn-group-justified">
+                                          <div class="btn"
+                                              ng-class="vm.getColor('Preparación')">
+                                              <span class="mt-icon font-blue">
+                                                  <i class="fa fa-lightbulb-o"></i>
+                                              </span> Preparación </div>
+                                          <div class="btn"
+                                              ng-class="vm.getColor('Negociación')">
+                                              <span class="mt-icon font-blue">
+                                                  <i class="fa fa-check-circle-o"></i>
+                                              </span> Negociación </div>
+                                          <div class="btn"
+                                              ng-class="vm.getColor('Ejecución')">
+                                              <span class="mt-icon font-blue">
+                                                  <i class="icon-layers"></i>
+                                              </span> Ejecución </div>
+                                          <div class="btn"
+                                              ng-class="vm.getColor('Evaluación')">
+                                              <span class="mt-icon font-blue">
+                                                  <i class="icon-question"></i>
+                                              </span> Evaluación </div>
+                                      </div>
+                                      <div ng-if="vm.action.status == accomplishedStatus" class="btn-group btn-group btn-group-justified">
+                                          <div class="btn bg-info green-status">
+                                              <span class="mt-icon font-blue">
+                                                  <i class="fa fa-check"></i>
+                                              </span> Terminado </div>
+
+                                      </div>
                                     </div>
                                 </div>
                             </div>

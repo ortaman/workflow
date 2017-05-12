@@ -179,8 +179,23 @@ app.controller('ProjectDetailController', [
 			)
 		}, function() {
 		});
+	}
 
+	$scope.openActionDetailModal = function(action) {
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'CoordinationsModalController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/project-detail/action-detail.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 locals:{
+			 currentAction: action.id
+		 }
+		}).finally(function() {
 
+    });
 	}
 
 	//template interaction functions
@@ -193,17 +208,6 @@ app.controller('ProjectDetailController', [
 			return $scope.producers.producers.slice(index*3, (index*3)+3);
 	}
 
-	$scope.getColor = function(phase){
-			if($scope.project.phase == phase){
-				if(moment($scope.project.report_at).isBefore(moment()) && !$scope.report)
-					return 'bg-info red-status'
-
-				if(moment($scope.project.report_at).isAfter(moment()) && !$scope.report)
-					return 'bg-info yellow-status'
-
-			return 'bg-info green-status'
-		}
-	}
 
 	var transformActions = function(results){
 		//private functions

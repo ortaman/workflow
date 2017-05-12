@@ -51,7 +51,7 @@ class ProjectListSerializer(serializers.ModelSerializer):
     client = UserSerializer()
 
     def get_report(self, obj):
-        reports = Report.objects.filter(project_id = obj.id)
+        reports = Report.objects.filter(project_id = obj.id, action_id = None)
         try:
             return reports[0].progress
         except IndexError as e:
@@ -88,6 +88,14 @@ class ActionGetSerializer(serializers.ModelSerializer):
     client = UserSerializer()
     producer = UserSerializer()
     observer = UserSerializer()
+    report = serializers.SerializerMethodField()
+
+    def get_report(self, obj):
+        reports = Report.objects.filter(action_id = obj.id)
+        try:
+            return reports[0].progress
+        except IndexError as e:
+            return 0
 
     class Meta:
         model  = Action

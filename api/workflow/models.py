@@ -36,7 +36,7 @@ class Project(models.Model):
     name = models.CharField(max_length=64, verbose_name='Nombre')
     kind = models.CharField(choices=TYPES, max_length=8, default='estandar', verbose_name='Tipos de proyecto')
     phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de proyecto')
-    status = models.CharField(choices=STATUS, max_length=16, default='Abierta', verbose_name='Estado')
+    status = models.CharField(choices=STATUS, max_length=16, default='Creada', verbose_name='Estado')
 
     # action roles
     client = models.ForeignKey(User, related_name='client_project', verbose_name='Cliente')
@@ -110,7 +110,7 @@ class Action(models.Model):
     project = models.ForeignKey(Project, related_name='project', verbose_name='Proyecto relacionado')
     name = models.CharField(max_length=64, verbose_name='Nombre de la acción')
     phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de la acción')
-    status = models.CharField(choices=STATUS, max_length=16, default='Abierta', verbose_name='Estado')
+    status = models.CharField(choices=STATUS, max_length=16, default='Creada', verbose_name='Estado')
 
     # focus project
     toDo = models.TextField(max_length=1024, verbose_name='¿Qué y como se realizará?')

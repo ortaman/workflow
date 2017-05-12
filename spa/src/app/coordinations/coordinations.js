@@ -11,12 +11,11 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
   $scope.promises = [];
   $scope.user;
+  $scope.type = 'project',
 
   $scope.init = function(){
     UserService.me().then(function(response){
       $scope.user = response.id
-      $scope.getClients('Creada' );
-      $scope.getProducers('Creada' );
       $scope.getProjectsByProducer('Creada' );
       $scope.getProjectsByClient('Creada' );
     }, function(error){
@@ -68,6 +67,8 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
   }
 
   $scope.getProjectsByProducer = function(status, page=1){
+    $scope.projectsByProducer = []
+
     var query = {
       page:page,
       status:status
@@ -76,7 +77,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $scope.projectProducerStatus = status // status for display button according the promise
     query.producer = $scope.user; // id usuario
 
-    ProjectListService.getList(query).then(
+    $scope.objeto = ProjectListService.getList(query).then(
 			function(response) {
 				$scope.projectsByProducer = response
 			},
@@ -108,24 +109,6 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 		);
   }
 
-
-
-	$scope.openModal = function(action) {
-		$mdDialog.show({
-		 scope:$scope,
-		 preserveScope:true,
-		 controller: 'CoordinationsModalController',
-		 controllerAs: 'vm',
-		 templateUrl: '/app/coordinations/action-detail.html',
-		 parent: angular.element(document.body),
-		 clickOutsideToClose:true,
-		 locals:{
-			 currentAction: action
-		 }
-		}).finally(function() {
-
-    });
-	}
 
   $scope.producerPageChanged = function () {
     $scope.producerStatus
@@ -244,5 +227,24 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     });
   }
   ///////////////////////////////////////End Action buttons methods/////////////////////////////////////////////
+  $scope.onPromiseTypeSelect = function (type) {
+    console.log(type);
+    if(type == 'action'){
+      $scope.getClients('Creada' );
+      $scope.getProducers('Creada' );
+    }else {
+      $scope.getProjectsByProducer('Creada' );
+      $scope.getProjectsByClient('Creada' );
+    }
+  }
 
+  $scope.getColor = function (obj) {
+			if(moment(obj.report_at).isBefore(moment()) && obj.report == 0)
+				return 'red-status-text'
+
+			if(moment(obj.report_at).isAfter(moment()) && obj.report == 0)
+				return 'yellow-status-text'
+
+		return 'green-status-text'
+	}
 }]);

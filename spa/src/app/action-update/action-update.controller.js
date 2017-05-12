@@ -20,7 +20,7 @@ app.controller('ActionUpdateController', [
           case 'Ejecución':
               $scope.maxDate = new Date($scope.action.project.ejecution_at);
               $scope.minDate = new Date($scope.action.project.negotiation_at);
-              break;          
+              break;
           default:
               $scope.maxDate = new Date($scope.action.project.evaluation_at);
               $scope.minDate = new Date($scope.action.project.ejecution_at);
@@ -53,7 +53,7 @@ app.controller('ActionUpdateController', [
 
       var action = angular.copy($scope.action);
 
-  		ActionUpdateService.update($state.params.id, action).then(
+  		$scope.submmitPromise = ActionUpdateService.update($state.params.id, action).then(
   			function(response) {
           if(action.parent_action)
             $state.go('actionDetail',{id:action.parent_action});

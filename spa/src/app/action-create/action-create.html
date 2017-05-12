@@ -139,32 +139,6 @@
                           </div>
                         </div>
 
-                          <div class="row">
-
-                            <div class="col-md-4">
-                              <md-input-container class="md-block" >
-                                <label> Estado </label>
-                                <md-select name="status"
-                                           ng-init="action.status='Creada'"
-                                           ng-model="action.status"
-                                           required
-                                           disabled>
-                                  <md-option value="Creada"> Creada </md-option>
-                                  <md-option value="Cerrada satisfactoriamente"> Cerrada satisfactoriamente </md-option>
-                                  <md-option value="Cerrada insatisfactoriamente"> Cerrada insatisfactoriamente </md-option>
-                                </md-select>
-
-                                <div ng-show="actionForm.status.$touched || submitted">
-                                   <div class="error"  style="margin-top: 0em"
-                                        ng-show="actionForm.status.$error.required">
-                                     Campo requerido.
-                                   </div>
-                                 </div>
-                                </md-input-container>
-                            </div>
-                          </div>
-
-                          <br>
                           <h4 class="form-section"> Roles en la Acción </h4>
                           <div class="row">
                               <div class="col-md-4">
