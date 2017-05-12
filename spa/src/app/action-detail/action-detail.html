@@ -260,51 +260,46 @@
                                 <span class="caption-subject font-dark bold uppercase "> Acciones </span>
                             </div>
                             <ul class="nav nav-tabs ">
-                                <li class="active ">
-                                    <a  class="active" data-toggle="tab"
-                                       ng-click="actionPageChanged('Abierta')"> Abiertas </a>
-                                </li>
-                                <li>
-                                    <a  data-toggle="tab"
-                                       ng-click="actionPageChanged('Satisfactoria')"> Satisfactorias </a>
-                                </li>
-                                <li>
-                                    <a  data-toggle="tab"
-                                       ng-click="actionPageChanged('Insatisfactoria')"> Insatisfactorias </a>
-                                </li>
+                              <li class="active">
+                                  <a  data-toggle="tab"  ng-click="actionPageChanged('Creada')"> Pendientes </a>
+                              </li>
+                              <li>
+                                  <a  data-toggle="tab"  ng-click="actionPageChanged('Aceptada')"> Aceptados </a>
+                              </li>
+                              <li>
+                                  <a  data-toggle="tab" ng-click="actionPageChanged('Terminada')"> Terminadas </a>
+                              </li>
+                              <li>
+                                  <a  data-toggle="tab"  ng-click="actionPageChanged('Satisfactoria' )"> Satisfactoria </a>
+                              </li>
+                              <li>
+                                  <a data-toggle="tab"  ng-click="actionPageChanged('Insatisfactoria')"> Insatisfactoria </a>
+                              </li>
                             </ul>
                         </div>
                         <div class="portlet-body ">
                             <!--BEGIN TABS-->
                             <div class="tab-content ">
-                                <div class="tab-pane active " id="tab_1_1 ">
-                                    <div class="scroller " style="height: 320px; " data-always-visible="1 " data-rail-visible1="0 " data-handle-color="#D7DCE2 ">
-                                        <ul class="feeds ">
-                                            <li ng-repeat="action in actions.results" ng-mouseover="hoverIn(true)" ng-mouseleave="hoverIn(false)">
-                                                <div class="col1 ">
-                                                    <div class="cont ">
-                                                        <div class="cont-col1 ">
-                                                            <div class="label label-sm label-danger ">
-                                                                <i class="icon-layers " ui-sref="actionDetail({id:action.id})"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2">
-                                                            <div class="desc "> {{ action.name }} -
-                                                            {{ action.producer.first_surname }}
-                                                            {{ action.producer.second_surname }}
-                                                            {{ action.producer.name }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col2">
-                                                    <a ng-show="hoverEdit" ui-sref="actionUpdate({id:action.id})" class="label label-sm label-danger"> Editar acción
-                                                    </a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="text-center">
+                                  <div class="tab-pane active" id="tab_actions_pending" >
+
+                                      <!-- BEGIN: Actions -->
+
+                                      <div class="mt-comments">
+                                          <div class="mt-comment" ng-repeat="action in actions.results track by $index" ng-click="openActionDetailModal(action)">
+                                              <div class="mt-comment-img" >
+                                                <img  style="height:45px; width:45px " ng-src="{{ action.producer.photo }}" /> </div>
+
+                                              <div class="mt-comment-body" >
+                                                  <div  class="mt-comment-info"  >
+                                                      <span class="mt-comment-author">{{ (action.producer.name + ' ' + action.producer.first_surname + ' ' + action.producer.second_surname)}}</span>
+                                                      <span class="mt-comment-date " ng-class="action.color +'-status-text'">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
+                                                  </div>
+                                                  <div   class="mt-comment-text" > {{ action.name }} </div>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <div class="text-center" ng-if="actions.results.length > 0">
                                         <ul uib-pagination boundary-links="true" class="pagination-sm"
                                             previous-text="&lsaquo;" next-text="&rsaquo;"
                                             first-text="&laquo;" last-text="&raquo;"
@@ -313,8 +308,10 @@
                                             ng-model="actionCurrentPage"
                                             ng-change="actionPageChanged()">
                                         </ul>
-                                    </div>
-                                </div>
+                                      </div>
+
+                                  </div>
+
                             </div>
                         </div>
                     </div>

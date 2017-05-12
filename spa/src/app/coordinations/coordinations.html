@@ -67,7 +67,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="13">12</span>
+                                <span data-counter="counterup" data-value="13">{{ stadistics.open_promises}}</span>
                             </div>
                             <div class="desc"> Promesas Incumplidas </div>
                         </div>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="11"></span> 7 </div>
+                                <span data-counter="counterup" data-value="11"></span> {{ stadistics.unfulfilled_order}} </div>
                             <div class="desc"> Pedidos Incumplidos </div>
                         </div>
                     </a>
@@ -92,7 +92,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="549">10</span>
+                                <span data-counter="counterup" data-value="549">{{ stadistics.open_order}}</span>
                             </div>
                             <div class="desc"> Promesas sin Aceptar </div>
                         </div>
@@ -105,7 +105,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="18"></span>25 </div>
+                                <span data-counter="counterup" data-value="18"></span>{{ stadistics.open_order}} </div>
                             <div class="desc"> Pedidos en Ejecución </div>
                         </div>
                     </a>
@@ -147,16 +147,16 @@
                                     <!-- BEGIN: Actions -->
 
                                     <div class="mt-comments">
-                                        <div class="mt-comment" ng-repeat="project in projectsByProducer.results track by $index">
+                                        <div class="mt-comment" ng-repeat="project in projectsByProducer.results track by $index" ui-sref="projectDetail({id:project.id})" >
                                             <div class="mt-comment-img" >
                                               <img  style="height:45px; width:45px " ng-src="{{ project.producer.photo }}" /> </div>
 
                                             <div class="mt-comment-body" >
-                                                <div  class="mt-comment-info" ui-sref="projectDetail({id:project.id})" >
+                                                <div  class="mt-comment-info" >
                                                     <span class="mt-comment-author">{{ (project.producer.name + ' ' + project.producer.first_surname + ' ' + project.producer.second_surname)}}</span>
                                                     <span class="mt-comment-date " ng-class="getColor(project)">{{ project.begin_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
-                                                <div   class="mt-comment-text" ui-sref="projectDetail({id:project.id})" > {{ project.name }} </div>
+                                                <div   class="mt-comment-text" > {{ project.name }} </div>
                                                 <div   class="mt-comment-details">
                                                     <span   class="mt-comment-status mt-comment-status-pending"> {{ project.project.name }}</span>
                                                     <ul class="mt-comment-actions">
@@ -301,16 +301,16 @@
                                 <div class="tab-pane active" id="portlet_comments_1" >
                                     <!-- BEGIN: Comments -->
                                     <div class="mt-comments">
-                                        <div class="mt-comment" ng-repeat="action in promises.results track by $index">
+                                        <div class="mt-comment" ng-repeat="action in promises.results track by $index" ui-sref="actionDetail({id:action.id})">
                                             <div class="mt-comment-img" >
                                               <img  style="height:45px; width:45px " ng-src="{{ action.client.photo }}" /> </div>
 
                                             <div class="mt-comment-body" >
-                                                <div class="mt-comment-info" ui-sref="actionDetail({id:action.id})">
+                                                <div class="mt-comment-info" >
                                                     <span class="mt-comment-author">{{ (action.client.name + ' ' + action.client.first_surname + ' ' + action.client.second_surname)}}</span>
                                                     <span class="mt-comment-date"  ng-class="getColor(action)" >{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
-                                                <div class="mt-comment-text" ui-sref="actionDetail({id:action.id})"> {{ action.name }} </div>
+                                                <div class="mt-comment-text" > {{ action.name }} </div>
                                                 <div class="mt-comment-details">
                                                     <span class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
                                                     <ul class="mt-comment-actions">
@@ -380,16 +380,16 @@
 
 
                                     <div class="mt-comments">
-                                        <div class="mt-comment" ng-repeat="action in orders.results track by $index">
+                                        <div class="mt-comment" ng-repeat="action in orders.results track by $index" ui-sref="actionDetail({id:action.id})">
                                             <div class="mt-comment-img" >
                                               <img  style="height:45px; width:45px " ng-src="{{ action.producer.photo }}" /> </div>
 
                                             <div class="mt-comment-body" >
-                                                <div uib-tooltip="Click para ver la descripción" class="mt-comment-info" ui-sref="actionDetail({id:action.id})" >
+                                                <div uib-tooltip="Click para ver la descripción" class="mt-comment-info"  >
                                                     <span class="mt-comment-author">{{ (action.producer.name + ' ' + action.producer.first_surname + ' ' + action.producer.second_surname)}}</span>
                                                     <span class="mt-comment-date"  ng-class="getColor(action)">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
-                                                <div uib-tooltip="Click para ver la descripción"  class="mt-comment-text" ui-sref="actionDetail({id:action.id})" > {{ action.name }} </div>
+                                                <div uib-tooltip="Click para ver la descripción"  class="mt-comment-text"  > {{ action.name }} </div>
                                                 <div uib-tooltip="Click para ver la descripción"  class="mt-comment-details">
                                                     <span   class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
                                                     <ul class="mt-comment-actions">

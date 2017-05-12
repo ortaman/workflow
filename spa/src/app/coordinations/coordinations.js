@@ -1,7 +1,7 @@
 
 app.controller('CoordinationsController', ['$scope','ActionListService','UserService','ActionCreateService','$mdDialog',
-  'APIConfig','ProjectListService','ProjectCreateService',
-  function($scope, ActionListService, UserService, ActionCreateService, $mdDialog, APIConfig, ProjectListService, ProjectCreateService) {
+  'APIConfig','ProjectListService','ProjectCreateService' , 'StadisticsService',
+  function($scope, ActionListService, UserService, ActionCreateService, $mdDialog, APIConfig, ProjectListService, ProjectCreateService, StadisticsService) {
 
   $scope.promisesCurrentPage = 1
   $scope.ordersCurrentPage = 1
@@ -18,6 +18,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
       $scope.user = response.id
       $scope.getProjectsByProducer('Creada' );
       $scope.getProjectsByClient('Creada' );
+      $scope.getStadistics();
     }, function(error){
       console.error("error",error);
     })
@@ -247,4 +248,12 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
 		return 'green-status-text'
 	}
+  ///////////////////////////////////////stadistics/////////////////////////////////////////////
+  $scope.getStadistics = function () {
+    StadisticsService.get().then(function (response) {
+      $scope.stadistics = response;
+    },function (error) {
+      console.error(error);
+    })
+  }
 }]);
