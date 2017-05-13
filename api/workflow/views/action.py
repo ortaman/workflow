@@ -137,7 +137,7 @@ class ActionList(APIView, APIMixin):
         serializer = self.serializer_post(data=request.data)
 
         if serializer.is_valid():
-            serializer.save(create_by=request.user)
+            serializer.save(created_by=request.user)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 

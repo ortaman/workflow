@@ -30,7 +30,7 @@ class ProjectPostSerializer(serializers.ModelSerializer):
             'evaluation_at', 'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at',
             'financial', 'operational', 'other1', 'other2', 'image', 'status' )
 
-    read_only_fields =  ('created_at', 'updated_at','create_by',)
+    read_only_fields =  ('created_at', 'updated_at','created_by',)
 
 
 class ProjectGetSerializer(serializers.ModelSerializer):
@@ -78,7 +78,7 @@ class ActionPostSerializer(serializers.ModelSerializer):
             'begin_at', 'accomplish_at', 'report_at',
             'financial', 'operational', 'other1', 'other2', 'parent_action')
 
-    read_only_fields =  ('created_at', 'updated_at','create_by', 'status')
+    read_only_fields =  ('created_at', 'updated_at','created_by', 'status')
 
 
 class ActionGetSerializer(serializers.ModelSerializer):
