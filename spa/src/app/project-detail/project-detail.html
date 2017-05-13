@@ -44,8 +44,8 @@
                                     <i class="icon-note"></i> Agregar reporte </a>
                             </li>
 
-                            <li class="divider" ng-if="project.status != accomplishedStatus"> </li>
-                            <li ng-click="closeProject()" ng-if="project.status != accomplishedStatus">
+                            <li class="divider" ng-if="project.status != accomplishedStatus && project.producer.id == user.id"> </li>
+                            <li ng-click="closeProject()" ng-if="project.status != accomplishedStatus && project.producer.id == user.id">
                                 <a >
                                     <i class="icon-layers"></i> Terminar proyecto</a>
                             </li>

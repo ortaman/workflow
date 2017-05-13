@@ -1,7 +1,7 @@
 
 app.controller('ProjectDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog', 'ReportGetService','ProjectCreateService',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog, ReportGetService, ProjectCreateService) {
+	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog', 'ReportGetService','ProjectCreateService','UserService',
+	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog, ReportGetService, ProjectCreateService,UserService) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -20,6 +20,11 @@ app.controller('ProjectDetailController', [
     };
 
   	$scope.getProjectByIdInit = function() {
+			UserService.me().then(function(response){
+				$scope.user = response
+			}, function(error){
+				console.error("error",error);
+			})
 			getProject();
 			$scope.actionPageChanged()
 			$scope.producerPageChanged($scope.producersCurrentPage,'producers' );
