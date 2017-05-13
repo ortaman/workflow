@@ -37,7 +37,6 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $scope.promisesByClientPromise = ActionListService.getList(query).then(
       function(response) {
           $scope.promises = response;
-          $scope.getPhoto($scope.promises.results)
       },
       function(errorResponse) {
         $scope.status = errorResponse.statusText || 'Request failed';
@@ -58,7 +57,6 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $scope.ordersByProducerPromise = ActionListService.getList(query).then(
       function(response) {
           $scope.orders = response;
-          $scope.getPhoto($scope.orders.results)
       },
       function(errorResponse) {
         $scope.status = errorResponse.statusText || 'Request failed';
