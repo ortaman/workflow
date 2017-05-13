@@ -148,7 +148,13 @@
                         <!--row-->
                         <div class="row">
                           <div class="col-md-4">
-                            <user-search field-name="Cliente" user-id="project.client"> </user-search>
+                              <md-input-container class="md-block">
+                                <label> Cliente </label>
+                                <input
+                                  maxlength="64"
+                                  ng-model="client"
+                                  disabled></input>
+                               </md-input-container>
                           </div>
 
                           <div class="col-md-4">

@@ -1,10 +1,18 @@
 
 app.controller('ProjectCreateController', [
-  '$scope', '$state', 'ProjectCreateService',
-  function($scope, $state, ProjectCreateService) {
+  '$scope', '$state', 'ProjectCreateService','UserService',
+  function($scope, $state, ProjectCreateService, UserService) {
     $scope.submitted = false;
 
     $scope.project = {};
+
+    UserService.me().then(function(response){
+
+      $scope.project.client = response.id;
+      $scope.client = response.name + " "+ response.first_surname + " " + response.second_surname;
+    }, function(error){
+      console.error("error",error);
+    })
 
     var transformFields = [
         'preparation_at',
