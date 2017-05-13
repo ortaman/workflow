@@ -72,9 +72,9 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
 
-    create_by = models.ForeignKey(
+    created_by = models.ForeignKey(
         User,
-        related_name='project_create_by',
+        related_name='project_created_by',
         verbose_name='Creado por')
 
     class Meta:
@@ -173,4 +173,4 @@ class Report(models.Model):
     pending = models.TextField(max_length=1024, verbose_name='Pendiente')
 
     created_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación')
-    create_by = models.ForeignKey(User, related_name='report_create_by', verbose_name='Creado por')
+    created_by = models.ForeignKey(User, related_name='report_created_by', verbose_name='Creado por')
