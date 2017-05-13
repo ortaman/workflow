@@ -118,7 +118,6 @@
                                         <div class="mt-container " ng-class="project.color" >
                                             <div class="mt-head-title">
                                                 Nombre: {{ project.name }} <br>
-                                                Tipo: {{ project.clasification }} <br>
                                                 Fase: {{ project.phase }}
                                             </div>
                                             <div class="mt-body-icons">
@@ -142,7 +141,7 @@
                                                 </a-->
                                             </div>
                                             <div class="mt-footer-button">
-                                                <button type="button" class="btn btn-circle btn-info btn-sm">SYO</button>
+                                                <button type="button" class="btn btn-circle btn-info btn-sm">{{ project.kind }}</button>
                                             </div>
                                         </div>
                                     </div>
