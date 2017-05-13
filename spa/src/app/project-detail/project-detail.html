@@ -284,7 +284,7 @@
                                           <div class="mt-comment-body" >
                                               <div  class="mt-comment-info"  >
                                                   <span class="mt-comment-author">{{ (action.producer.name + ' ' + action.producer.first_surname + ' ' + action.producer.second_surname)}}</span>
-                                                  <span class="mt-comment-date " ng-class="action.color +'-status-text'">{{ action.begin_at |  date:'dd-MMM-yyyy'}}</span>
+                                                  <span class="mt-comment-date " ng-class="action.color +'-status-text'">Del {{ action.begin_at |  date:'dd-MMM-yyyy'}} al  {{ action.accomplish_at |  date:'dd-MMM-yyyy'}} </span>
                                               </div>
                                               <div   class="mt-comment-text" > {{ action.name }} </div>
                                           </div>
