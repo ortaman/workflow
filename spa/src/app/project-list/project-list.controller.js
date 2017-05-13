@@ -1,7 +1,7 @@
 
 app.controller('ProjectListController', [
-	'$scope', 'ProjectListService', 'APIConfig',
-	function($scope, ProjectListService, APIConfig) {
+	'$scope', 'ProjectListService', 'APIConfig','UserService',
+	function($scope, ProjectListService, APIConfig, UserService) {
 
 	$scope.currentPage = 1;
 	$scope.listForm = {
@@ -10,18 +10,23 @@ app.controller('ProjectListController', [
 	}
 
 	$scope.init = function () {
-		$scope.pageChanged()
+		UserService.me().then(
+			function(response){
+				$scope.user = response;
+				$scope.pageChanged()
+			}
+		)
 	}
 	$scope.pageChanged = function() {
 
 		var query = {
 			"page": $scope.currentPage,
-			"phase":$scope.listForm.phase
+			"phase":$scope.listForm.phase,
+			"client":$scope.user.id
 		};
 
 		ProjectListService.getList(query).then(
 			function(response) {
-				console.log('ProjectList', response);
 				for (var i=0; i < response.results.length; i++) {
 				 response.results[i].color = $scope.getColor(response.results[i]);
 				}
@@ -29,7 +34,7 @@ app.controller('ProjectListController', [
 				$scope.data = response
 			},
 			function(errorResponse) {
-				console.log('errorResponse', errorResponse);
+				console.error('errorResponse', errorResponse);
 				$scope.status = errorResponse.statusText || 'Request failed';
 				$scope.errors = errorResponse.data;
 			}

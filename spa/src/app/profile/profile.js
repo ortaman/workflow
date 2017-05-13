@@ -9,6 +9,9 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
   $scope.client_id = [];
   $scope.producer_id = [];
   $scope.projects = {}
+  $scope.listForm = {
+    "phase": 'Preparación'
+  }
 
 
   $scope.init = function(){
@@ -18,8 +21,6 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
         $scope.performancePageChanged($scope.clientsCurrentPage, 'client_id');
         $scope.performancePageChanged($scope.producersCurrentPage, 'producer_id');
         $scope.projectPageChanged();
-
-
       }
     )
   }
@@ -45,12 +46,12 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 
 		var query = {
 			"page": $scope.currentProjectPage,
-			"phase":'Preparación'
+			"phase": $scope.listForm.phase,
+      "client":$scope.user.id
 		};
 
 		ProjectListService.getList(query).then(
 			function(response) {
-				console.log('ProjectList', response);
 				for (var i=0; i < response.results.length; i++) {
          response.results[i].color = $scope.getColor(response.results[i]);
 
@@ -59,7 +60,7 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 				$scope.projects = response
 			},
 			function(errorResponse) {
-				console.log('errorResponse', errorResponse);
+				console.error('errorResponse', errorResponse);
 				$scope.status = errorResponse.statusText || 'Request failed';
 				$scope.errors = errorResponse.data;
 			}
@@ -78,7 +79,6 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
   }
 
   $scope.getColor = function (project) {
-			console.log(project);
 			if(moment(project.report_at).isBefore(moment()) && project.report == 0)
 				return 'red-status-opacity'
 
@@ -87,4 +87,8 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 
 		return 'green-status-opacity'
 	}
+
+  $scope.onProjectSelect = function (ite) {
+    $scope.projectPageChanged();
+  }
 }]);

@@ -64,7 +64,7 @@ app.controller('ProjectUpdateController', [
 
       });
 
-  		ProjectUpdateService.update($state.params.id, project).then(
+  		$scope.submmitPromise = ProjectUpdateService.update($state.params.id, project).then(
   			function(response) {
   				console.log('ProjectUpdate', response);
   				$state.go('projectList');

@@ -34,7 +34,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $scope.clientStatus = status // status for display button according the promise
     query.producer = $scope.user; // id usuario
 
-    ActionListService.getList(query).then(
+    $scope.promisesByClientPromise = ActionListService.getList(query).then(
       function(response) {
           $scope.promises = response;
           $scope.getPhoto($scope.promises.results)
@@ -55,7 +55,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $scope.producerStatus = status // status for display button according the promise
     query.client = $scope.user; // id usuario
 
-    ActionListService.getList(query).then(
+    $scope.ordersByProducerPromise = ActionListService.getList(query).then(
       function(response) {
           $scope.orders = response;
           $scope.getPhoto($scope.orders.results)
@@ -78,7 +78,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $scope.projectProducerStatus = status // status for display button according the promise
     query.producer = $scope.user; // id usuario
 
-    $scope.objeto = ProjectListService.getList(query).then(
+    $scope.projectsProducerPromise = ProjectListService.getList(query).then(
 			function(response) {
 				$scope.projectsByProducer = response
 			},
@@ -98,7 +98,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $scope.projectClientStatus = status // status for display button according the promise
     query.client = $scope.user; // id usuario
 
-    ProjectListService.getList(query).then(
+    $scope.projectsClientPromise = ProjectListService.getList(query).then(
 			function(response) {
 				$scope.projectsByClient = response
 			},

@@ -79,30 +79,27 @@ class ProjectList(APIView, APIMixin):
         if page is None:
             data = self.serializer_list(queryset, many=True).data
         else:
-            if 'phase' in query.keys():
-                queryset = queryset.filter(phase=query.get('phase'))
+
 
             # Search project by client and  status.
-            elif 'client' in query.keys() and 'status' in query.keys():
+            if 'client' in query.keys() and 'status' in query.keys():
                 queryset = queryset.filter(
                     client_id=query.get('client'),
                     status=query.get('status'),
                 )
 
-            elif 'client' in query.keys() and 'promise' in query.keys():
+            elif 'client' in query.keys() and 'phase' in query.keys():
                     queryset = queryset.filter(
                         client_id=query.get('client'),
-                        promise=query.get('promise'),
+                        phase=query.get('phase'),
                     )
-            # Search project by producer and promise status.
-            elif 'producer' in query.keys() and 'promise' in query.keys():
+            # Search project by producer and phase status.
+            elif 'producer' in query.keys() and 'phase' in query.keys():
 
                 queryset = queryset.filter(
                     producer_id=query.get('producer'),
-                    promise=query.get('promise'),
+                    phase=query.get('phase'),
                 )
-
-
 
             elif 'producer' in query.keys() and 'status' in query.keys():
 
@@ -110,6 +107,9 @@ class ProjectList(APIView, APIMixin):
                     producer_id=query.get('producer'),
                     status=query.get('status'),
                 )
+
+            elif 'phase' in query.keys():
+                queryset = queryset.filter(phase=query.get('phase'))
 
             data = self.get_pagination(queryset, page, self.paginate_by)
 
