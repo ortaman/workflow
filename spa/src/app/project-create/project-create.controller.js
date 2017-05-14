@@ -1,7 +1,7 @@
 
 app.controller('ProjectCreateController', [
-  '$scope', '$state', 'ProjectCreateService','UserService',
-  function($scope, $state, ProjectCreateService, UserService) {
+  '$scope', '$state', 'ProjectCreateService','UserService','Notification',
+  function($scope, $state, ProjectCreateService, UserService, Notification) {
     $scope.submitted = false;
 
     $scope.project = {};
@@ -30,8 +30,7 @@ app.controller('ProjectCreateController', [
       $scope.submitted = true;
 
       if ($scope.projectForm.$invalid) {
-        $scope.error = 'El formulario no es válido.';
-        console.log($scope.projectForm);
+        Notification.error('El formulario contiene errores');
         return;
       }
 
@@ -47,7 +46,7 @@ app.controller('ProjectCreateController', [
 
   		$scope.submmitPromise = ProjectCreateService.create(project).then(
   			function(response) {
-  				console.log('ProjectCreate', response);
+  				Notification.success('El proyecto ha sido creado satisfactoriamente');
   				$state.go('projectDetail', {'id':response.id});
   			},
   			function(errorResponse) {

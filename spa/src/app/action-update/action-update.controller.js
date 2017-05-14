@@ -1,7 +1,7 @@
 
 app.controller('ActionUpdateController', [
-  '$scope', '$state','ActionGetService', 'ActionUpdateService',
-  function($scope, $state, ActionGetService, ActionUpdateService) {
+  '$scope', '$state','ActionGetService', 'ActionUpdateService','Notification',
+  function($scope, $state, ActionGetService, ActionUpdateService, Notification) {
 
     $scope.submitted = false;
     $scope.action = {};
@@ -47,7 +47,7 @@ app.controller('ActionUpdateController', [
       $scope.submitted = true;
 
       if ($scope.actionForm.$invalid) {
-        $scope.error = 'El formulario no es válido o no ha sido modificado.';
+        Notification.error('El formulario contiene errores');
         return;
       }
 
@@ -55,6 +55,8 @@ app.controller('ActionUpdateController', [
 
   		$scope.submmitPromise = ActionUpdateService.update($state.params.id, action).then(
   			function(response) {
+          Notification.success('La acción ha sido actualizada');
+
           if(action.parent_action)
             $state.go('actionDetail',{id:action.parent_action});
           else

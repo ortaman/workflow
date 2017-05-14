@@ -8,7 +8,8 @@ var app = angular.module('myApp',
     'ngDialog',
     'ui.bootstrap',
     'ui.calendar',
-    'angularPromiseButtons'
+    'angularPromiseButtons',
+    'ui-notification'
 
     // 'myApp.actionList',
   ]

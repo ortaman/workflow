@@ -388,7 +388,7 @@
                                                     <span class="mt-comment-date"  ng-class="getColor(action)">Del {{ action.begin_at |  date:'dd-MMM-yyyy'}} al {{ action.accomplish_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
                                                 <div uib-tooltip="Click para ver la descripción" ui-sref="actionDetail({id:action.id})" class="mt-comment-text"  > {{ action.name }} </div>
-                                                <div uib-tooltip="Click para ver la descripción" ui-sref="actionDetail({id:action.id})" class="mt-comment-details">
+                                                <div uib-tooltip="Click para ver la descripción"  class="mt-comment-details">
                                                     <span   class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
                                                     <ul class="mt-comment-actions">
                                                       <div class="mt-action-buttons ">
