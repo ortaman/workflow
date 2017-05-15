@@ -51,7 +51,7 @@
                             </li>
 
                             <li class="divider" ng-if="project.client.id == user.id"> </li>
-                            <li ng-click="openCloseProjectReport()" ng-if="project.client.id == user.id">
+                            <li ng-click="closeProjectReport()" ng-if="project.client.id == user.id">
                                 <a >
                                     <i class="icon-layers"></i> Cerrar proyecto</a>
                             </li>
@@ -107,7 +107,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="mt-body margin-top-5">
+                                        <div class="mt-body ">
                                             <h3 class="mt-body-title"> {{ project.name }} </h3>
                                             <p class="mt-body-description">{{ project.toDo }} .</p>
                                         </div>

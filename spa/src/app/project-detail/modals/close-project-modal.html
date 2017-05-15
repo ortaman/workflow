@@ -1,79 +1,35 @@
 <div class="modal-dialog modal-lg">
 
   <div class="modal-header text-center">
-      <h3 class="modal-title" id="modal-title">{{ vm.reportTypeOptions.title }}</h3>
+      <h3 class="modal-title" id="modal-title">Cierre de proyecto</h3>
   </div>
-  <form novalidate name="vm.reportForm" ng-submit="vm.sendReport(report)">
+  <form novalidate name="vm.form" ng-submit="vm.closeProject(status)">
     <div class="modal-body" id="modal-body" style="padding:3%">
       <div class="row">
-        <div class="col-md-5 col-md-offset-3">
-          <md-input-container class="md-block" >
-            <label> Avance</label>
-              <md-select name="progress"
-                         ng-model="vm.report.progress"
-                         required>
-              <md-option value="25"> 25% </md-option>
-              <md-option value="50"> 50% </md-option>
-              <md-option value="75"> 75% </md-option>
-              <md-option ng-show="vm.reportTypeOptions.name == 'finish'" value="100"> 100% </md-option>
-            </md-select>
-
-            <div ng-show="vm.reportForm.progress.$touched || vm.submitted">
-               <div class="error" style="margin-top: 0em"
-                    ng-show="vm.reportForm.progress.$error.required">
-                 Campo requerido.
-               </div>
-             </div>
-            </md-input-container>
+        <div class="col-md-5 ">
+          <label>¿ El proyecto terminó satisfactoriamente ?</label>
         </div>
       </div>
       <div class="row">
-          <div class="col-md-6">
-              <md-input-container class="md-block">
-                <label> Actividades realizadas </label>
-                <textarea
-                  name="accomplished"
-                  placeholder="Describe las acciones realizadas."
-                  rows="5"
-                  maxlength="512"
-                  ng-model="vm.report.accomplished"
-                  required></textarea>
+        <div class="col-md-5 col-md-offset-1">
+          <md-radio-group ng-model="status" name ="status" ng-required="true">
 
-                  <div ng-show="vm.reportForm.accomplished.$touched || vm.submitted">
-                     <div class="error" ng-show="vm.reportForm.accomplished.$error.required">
-                       Campo requerido.
-                     </div>
-                   </div>
+            <md-radio-button value="Satisfactoria" class="md-primary">Si</md-radio-button>
+            <md-radio-button value="Insatisfactoria"> No </md-radio-button>
 
-              </md-input-container>
-          </div>
-
-          <div class="col-md-6">
-              <md-input-container class="md-block">
-                <label> Actividades pendientes </label>
-                <textarea
-                  name="pending"
-                  placeholder="Describe las acciones pendientes"
-                  rows="5"
-                  maxlength="512"
-                  ng-model="vm.report.pending"
-                  required></textarea>
-
-                <div ng-show="vm.reportForm.pending.$touched || vm.submitted">
-                    <div class="error" ng-show="vm.reportForm.pending.$error.required">
-                      Campo requerido.
-                    </div>
-                </div>
-
-              </md-input-container>
-          </div>
+          </md-radio-group>
+          <div ng-show="vm.form.status.$touched || vm.submitted">
+             <div class="error" ng-show="vm.form.status.$error.required">
+               Campo requerido.
+             </div>
+           </div>
+        </div>
+      </div>
     </div>
-
-  </div>
     <div class="modal-footer">
         <div class=" text-center" style="padding-top:1%">
           <button type="button" class="btn red" ng-click="vm.cancel()">Cancelar</button>
-          <button type="submit" promise-btn="submmitPromise"  class="btn blue">Crear</button>
+          <button type="submit" promise-btn="submmitPromise"  class="btn blue">Cerrar proyecto</button>
           <br><br>
           <div class="error">
             {{ vm.errors }}

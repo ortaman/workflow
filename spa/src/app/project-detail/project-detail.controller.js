@@ -197,13 +197,14 @@ app.controller('ProjectDetailController', [
 	}
 //////////////////////////////////end reports/////////////////////////
 
+//////////////////////////////////modals//////////////////////////////
 	$scope.openActionDetailModal = function(action) {
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,
-		 controller: 'CoordinationsModalController',
+		 controller: 'ActionViewModalController',
 		 controllerAs: 'vm',
-		 templateUrl: '/app/project-detail/modals/action-detail.html',
+		 templateUrl: '/app/project-detail/modals/action-detail-modal.html',
 		 parent: angular.element(document.body),
 		 clickOutsideToClose:true,
 		 locals:{
@@ -214,7 +215,26 @@ app.controller('ProjectDetailController', [
     });
 	}
 
-	//template interaction functions
+	$scope.closeProjectReport = function(action) {
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'CloseProjectModalController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/project-detail/modals/close-project-modal.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 locals:{
+			 project: $scope.project
+		 }
+		}).finally(function() {
+
+    });
+	}
+//////////////////////////////////end modals//////////////////////////////
+
+
+//////////////////////////////////template interaction functions//////////////////////////////////
 	$scope.hoverIn = function(show){
 		this.hoverEdit = show;
 	};
@@ -223,7 +243,7 @@ app.controller('ProjectDetailController', [
 		if($scope.producers.producers)
 			return $scope.producers.producers.slice(index*3, (index*3)+3);
 	}
-
+//////////////////////////////////end template interaction functions //////////////////////////////////
 
 	var transformActions = function(results){
 		//private functions
