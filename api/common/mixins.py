@@ -1,6 +1,8 @@
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from rest_framework import status
+from rest_framework.response import Response
 
 class APIMixin(object):
     """
@@ -50,3 +52,42 @@ class APIMixin(object):
         }
 
         return data
+
+
+    def put_vatidations(self, obj, user):
+
+        error = {}
+        open_status = ('Creada', 'Aceptada', 'Reportada', 'Terminada')
+        close_status = ('Satisfactoria', 'Insatisfactoria')
+
+        if obj.client == user:
+            if obj.status in close_status:
+                error['detail'] = 'Actualización a una promesa calificada no es permitado'
+                status = status.HTTP_405_METHOD_NOT_ALLOWED
+
+        else:
+            error['detail'] = 'Usuario no autorizado'
+            status = status.HTTP_401_UNAUTHORIZED
+
+        Response(data=error, status=status)
+
+
+    def patch_vatidations(self, obj, user):
+
+        error = {}
+        open_status = ('Creada', 'Aceptada', 'Reportada', 'Terminada')
+        close_status = ('Satisfactoria', 'Insatisfactoria')
+
+        if obj.client == user:
+            pass
+
+        if obj.producer == user:
+            if obj.status in close_status:
+                error['detail'] = 'Actualización a una promesa calificada no es permitado'
+                status = status.HTTP_405_METHOD_NOT_ALLOWED
+
+        else:
+            error['detail'] = 'Usuario no autorizado'
+            status = status.HTTP_401_UNAUTHORIZED
+
+        Response(data=error, status=status)

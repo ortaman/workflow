@@ -24,14 +24,16 @@ class ActionDetail(APIView, APIMixin):
     serializer_put = ActionPostSerializer
 
     def get(self, request, pk, format=None):
-        action = self.get_object(pk)
-        serializer = self.serializer_get(action)
+        obj = self.get_object(pk)
+        serializer = self.serializer_get(obj)
 
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        action = self.get_object(pk)
-        serializer = self.serializer_put(action, data=request.data)
+        obj = self.get_object(pk)
+        serializer = self.serializer_put(obj, data=request.data)
+
+        self.put_vatidations(obj, request.user)
 
         if serializer.is_valid():
             serializer.save()
@@ -40,8 +42,10 @@ class ActionDetail(APIView, APIMixin):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request, pk, format=None):
-        action = self.get_object(pk)
-        serializer = self.serializer_put(action, data=request.data, partial=True)
+        obj = self.get_object(pk)
+        serializer = self.serializer_put(obj, data=request.data, partial=True)
+
+        self.patch_vatidations(obj, request.user)
 
         if serializer.is_valid():
             serializer.save()
@@ -51,8 +55,8 @@ class ActionDetail(APIView, APIMixin):
 
 
     def delete(self, request, pk, format=None):
-        action = self.get_object(pk)
-        action.delete()
+        obj = self.get_object(pk)
+        obj.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
