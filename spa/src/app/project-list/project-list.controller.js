@@ -46,15 +46,8 @@ app.controller('ProjectListController', [
 		ProjectListService.getProjectStadistics().then(
 			function (response) {
 				console.log(response);
-				//$scope.stadistics = response
-
-
+				$scope.stadistics = response
 			}, function (errors) {
-				$scope.stadistics = {
-					'inTime':9,
-					'delayed':2,
-					'inRisk':23
-				}
 				console.error(errors);
 			}
 		)
