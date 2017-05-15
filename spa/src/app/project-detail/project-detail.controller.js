@@ -61,7 +61,7 @@ app.controller('ProjectDetailController', [
       function(response){
          $scope.report = response[0]
       }, function(errors){
-        console.error(errors);
+        console.err(errors);
       });
   }
 
@@ -203,7 +203,7 @@ app.controller('ProjectDetailController', [
 		 preserveScope:true,
 		 controller: 'CoordinationsModalController',
 		 controllerAs: 'vm',
-		 templateUrl: '/app/project-detail/action-detail.html',
+		 templateUrl: '/app/project-detail/modals/action-detail.html',
 		 parent: angular.element(document.body),
 		 clickOutsideToClose:true,
 		 locals:{
