@@ -130,3 +130,25 @@ class ProjectList(APIView, APIMixin):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProjectTimeStadistic(APIView):
+    """
+    """
+    permission_classes = (IsAuthenticated,)
+
+    # Initial mixin variables (model and serializer_list)
+    model = Project
+
+    def get(self, request, format=None):
+
+        user_id = request.user.id
+        queryset = self.model.objects.all()
+
+        data = {
+            'in_time': queryset.filter().count(),
+            'in_risk': queryset.filter().count(),
+            'delayed': queryset.filter().count(),
+        }
+
+        return Response(data)

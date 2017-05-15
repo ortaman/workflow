@@ -2,7 +2,7 @@
 from django.conf.urls import url
 from django.contrib import admin
 
-from workflow.views.project import ProjectList, ProjectDetail
+from workflow.views.project import ProjectList, ProjectDetail, ProjectTimeStadistic
 from workflow.views.action import ActionList, ActionDetail, ActionStadisctic
 from workflow.views.report import ReportList, ReportDetail
 
@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^reports/(?P<pk>[0-9]+)/$', ReportDetail.as_view()),
 
     url(r'^actions/stadistics$', ActionStadisctic.as_view()),
+    url(r'^proyects/stadistics/time$', ProjectTimeStadistic.as_view()),
 ]
