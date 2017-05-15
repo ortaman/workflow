@@ -1,11 +1,22 @@
 
-app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateService', 'UserService','type','$scope',
- function($mdDialog, $state, ReportCreateService, UserService, type,  $scope) {
+app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateService', 'UserService','type', 'reportType', '$scope','Notification',
+ function($mdDialog, $state, ReportCreateService, UserService, type, reportType, $scope, Notification) {
    var $ctrl = this;
+    $ctrl.reportTypeOptions = {
+      "finish":{
+        'name':'finish',
+        'title':'Reporte de término de proyecto'
+      },
+      "advance":{
+        'name':'advance',
+        'title':'Reporte de avance '
+      }
+    }
+    $ctrl.reportTypeOptions = $ctrl.reportTypeOptions[reportType];
 
     $ctrl.submitted = false;
     $ctrl.report = {
-      'progress':'0'
+      'progress':'25'
     }
 
     $ctrl.report[type] = $state.params.id;
@@ -22,27 +33,22 @@ app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateSer
       }
 
       UserService.me().then(function(response){
-        $ctrl.report.create_by = response.id
+        $ctrl.report.created_by = response.id
 
         $ctrl.submmitPromise = ReportCreateService.create($ctrl.report).then(
           function (response) {
+            Notification.success("El proyecto ha pasado a estatus de terminado")
             $mdDialog.hide();
-            $mdDialog.show(
-  						$mdDialog.alert()
-  							 .clickOutsideToClose(true)
-  							 .title('Reporte  ha sido añadido')
-  							 .ok('Ok')
-  						 );
-            console.log("response", response);
+
           },
           function (errorResponse) {
-            console.log('errorResponse', errorResponse);
+            console.error('errorResponse', errorResponse);
             $ctrl.status = errorResponse.statusText || 'Request failed';
             $ctrl.errors = errorResponse.data;
           }
         );
       }, function(error){
-        console.log("error",error);
+        console.error("error",error);
       })
     }
 

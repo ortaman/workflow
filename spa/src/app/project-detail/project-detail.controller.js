@@ -1,7 +1,9 @@
 
 app.controller('ProjectDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog', 'ReportGetService','ProjectCreateService','UserService',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog, ReportGetService, ProjectCreateService,UserService) {
+	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
+	'ReportGetService','ProjectCreateService', 'UserService',
+	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog,
+		 ReportGetService, ProjectCreateService,UserService) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -59,7 +61,7 @@ app.controller('ProjectDetailController', [
       function(response){
          $scope.report = response[0]
       }, function(errors){
-        console.log(errors);
+        console.error(errors);
       });
   }
 
@@ -124,24 +126,20 @@ app.controller('ProjectDetailController', [
   };
 
 
-	$scope.openReportModal = function() {
 
-		$mdDialog.show({
-		 scope:$scope,
-		 preserveScope:true,
-		 controller: 'ReportModalController',
-		 controllerAs: 'vm',
-		 templateUrl: '/app/report-create/add-report.html',
-		 parent: angular.element(document.body),
-		 clickOutsideToClose:true,
-		 size: 'md',
-		 locals:{
-			 type:'project'
-		 }
-		}).finally(function() {
-      	$scope.getReport()
-    });
-	}
+	$scope.getColor = function(phase){
+	 			if($scope.project.phase == phase){
+	 				if(moment($scope.project.report_at).isBefore(moment()) && !$scope.report)
+	 					return 'bg-info red-status'
+
+	 				if(moment($scope.project.report_at).isAfter(moment()) && !$scope.report)
+	 					return 'bg-info yellow-status'
+
+	 			return 'bg-info green-status'
+	 		}
+	 	}
+
+	////////////////////////////////// reports/////////////////////////
 
 	$scope.openReportDetailModal = function() {
 		$mdDialog.show({
@@ -159,43 +157,45 @@ app.controller('ProjectDetailController', [
 		})
 	}
 
-	$scope.getColor = function(phase){
-	 			if($scope.project.phase == phase){
-	 				if(moment($scope.project.report_at).isBefore(moment()) && !$scope.report)
-	 					return 'bg-info red-status'
-
-	 				if(moment($scope.project.report_at).isAfter(moment()) && !$scope.report)
-	 					return 'bg-info yellow-status'
-
-	 			return 'bg-info green-status'
-	 		}
-	 	}
-	$scope.closeProject = function(){
-		var confirm = $mdDialog.confirm()
-				.title('¿ Desea establecer  este proyecto  como terminado?')
-				.ok('Sí')
-				.cancel('No');
-
-		$mdDialog.show(confirm).then(function() {
-			var project = angular.copy($scope.project);
-			project.status = $scope.accomplishedStatus;
-			ProjectCreateService.update($scope.project.id,project).then(
-				function (response) {
-					$scope.project.status = response.status
-					$mdDialog.show(
-						$mdDialog.alert()
-							 .clickOutsideToClose(true)
-							 .title('Se ha terminado el proyecto')
-							 .ok('Ok')
-						 );
-				},
-				function (errors) {
-					console.log(errors);
-				}
-			)
-		}, function() {
-		});
+	$scope.openfinishProjectReport = function(){
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'ReportModalController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/report-create/add-report.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 size: 'md',
+		 locals:{
+			 type:'project',
+			 reportType:'finish',
+		 }
+	 }).finally(function(response) {
+      	$scope.getReport()
+    });
 	}
+
+	$scope.openAdvanceReport = function() {
+
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'ReportModalController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/report-create/add-report.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 size: 'md',
+		 locals:{
+			 type:'project',
+			 reportType:'advance',
+		 }
+		}).finally(function() {
+      	$scope.getReport()
+    });
+	}
+//////////////////////////////////end reports/////////////////////////
 
 	$scope.openActionDetailModal = function(action) {
 		$mdDialog.show({

@@ -162,9 +162,9 @@
                                                         <li ng-if="projectProducerStatus == 'Creada'">
                                                             <a ng-click="makeActionProducerProject(project,'Aceptada')" >Aceptar</a>
                                                         </li>
-                                                        <li ng-if="projectProducerStatus == 'Aceptada'">
+                                                        <!-- <li ng-if="projectProducerStatus == 'Aceptada'">
                                                             <a ng-click="makeActionProducerProject(project,'Terminada')" >Terminar</a>
-                                                        </li>
+                                                        </li> -->
                                                         <!-- <li>
                                                             <a ng-click="makeAction(action,'','Negociando')" >Negociar</a>
                                                         </li>
@@ -236,7 +236,7 @@
                                                     <span class="mt-comment-date"  ng-class="getColor(project)">Del {{ project.begin_at |  date:'dd-MMM-yyyy'}} al {{ project.accomplish_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
                                                 <div class="mt-comment-text" ui-sref="projectDetail({id:project.id})" > {{ project.name }} </div>
-                                                <div class="mt-comment-details">
+                                                <!-- <div class="mt-comment-details">
                                                     <ul class="mt-comment-actions">
                                                       <div class="mt-action-buttons ">
                                                           <div class="btn-group btn-group-circle">
@@ -245,7 +245,7 @@
                                                           </div>
                                                       </div>
                                                     </ul>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -315,9 +315,9 @@
                                                         <li ng-if="clientStatus == 'Creada'">
                                                             <a ng-click="makeClientAction(action,'Aceptada')" >Aceptar</a>
                                                         </li>
-                                                        <li ng-if="clientStatus == 'Aceptada'">
+                                                        <!-- <li ng-if="clientStatus == 'Aceptada'">
                                                             <a ng-click="makeClientAction(action,'Terminada')" >Terminar</a>
-                                                        </li>
+                                                        </li> -->
                                                         <!-- <li>
                                                             <a ng-click="makeAction(action,'','Negociando')" >Negociar</a>
                                                         </li>
@@ -390,14 +390,14 @@
                                                 <div uib-tooltip="Click para ver la descripción" ui-sref="actionDetail({id:action.id})" class="mt-comment-text"  > {{ action.name }} </div>
                                                 <div uib-tooltip="Click para ver la descripción"  class="mt-comment-details">
                                                     <span   class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
-                                                    <ul class="mt-comment-actions">
+                                                    <!-- <ul class="mt-comment-actions">
                                                       <div class="mt-action-buttons ">
                                                           <div class="btn-group btn-group-circle">
                                                               <button ng-if="producerStatus == 'Terminada'" type="button" class="btn btn-outline green btn-sm" ng-click="makeProducerAction(action,'Satisfactoria')" >Satisfactoria</button>
                                                               <button ng-if="producerStatus == 'Terminada'" type="button" class="btn btn-outline red btn-sm"  ng-click="makeProducerAction(action,'Insatisfactoria')">Insatisfactoria</button>
                                                           </div>
                                                       </div>
-                                                    </ul>
+                                                    </ul> -->
                                                 </div>
                                             </div>
                                         </div>
