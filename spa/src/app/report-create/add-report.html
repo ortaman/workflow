@@ -1,7 +1,7 @@
 <div class="modal-dialog modal-lg">
 
   <div class="modal-header text-center">
-      <h3 class="modal-title" id="modal-title">Creación de reporte</h3>
+      <h3 class="modal-title" id="modal-title">{{ vm.reportTypeOptions.title }}</h3>
   </div>
   <form novalidate name="vm.reportForm" ng-submit="vm.sendReport(report)">
     <div class="modal-body" id="modal-body" style="padding:3%">
@@ -12,11 +12,10 @@
               <md-select name="progress"
                          ng-model="vm.report.progress"
                          required>
-              <md-option value="0"> 0% </md-option>
               <md-option value="25"> 25% </md-option>
               <md-option value="50"> 50% </md-option>
               <md-option value="75"> 75% </md-option>
-              <md-option value="100"> 100% </md-option>
+              <md-option ng-show="vm.reportTypeOptions.name == 'finish'" value="100"> 100% </md-option>
             </md-select>
 
             <div ng-show="vm.reportForm.progress.$touched || vm.submitted">

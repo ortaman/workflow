@@ -13,7 +13,8 @@ app.controller('ProjectListController', [
 		UserService.me().then(
 			function(response){
 				$scope.user = response;
-				$scope.pageChanged()
+				$scope.pageChanged();
+				$scope.getProjectStadistics();
 			}
 		)
 	}
@@ -39,8 +40,18 @@ app.controller('ProjectListController', [
 				$scope.errors = errorResponse.data;
 			}
 		);
-
 	};
+
+	$scope.getProjectStadistics = function () {
+		ProjectListService.getProjectStadistics().then(
+			function (response) {
+				console.log(response);
+				$scope.stadistics = response
+			}, function (errors) {
+				console.error(errors);
+			}
+		)
+	}
 
 	$scope.onProjectSelect = function () {
 		$scope.pageChanged()

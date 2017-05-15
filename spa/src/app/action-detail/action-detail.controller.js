@@ -39,6 +39,44 @@ app.controller('ActionDetailController', [
 		);
 	}
 
+
+	//////////////////////////////////////////////  reports////////////////////////////////////////
+
+	$scope.getReport = function (){
+    var query = {
+      action_id:$state.params.id
+    }
+    ReportGetService.getList(query).then(
+      function(response){
+         $scope.report = response[0]
+      }, function(errors){
+        console.log(errors);
+      });
+  }
+	
+	$scope.openReportModal = function() {
+
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'ReportModalController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/report-create/add-report.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 size: 'md',
+		 locals:{
+			 type:'action'
+		 }
+		})
+		.finally(function() {
+			$scope.getReport()
+		});
+	}
+	////////////////////////////////////////////// end reports////////////////////////////////////////
+
+	////////////////////////////////////////////// modals////////////////////////////////////////
+
 	$scope.closeAction = function(){
 		var confirm = $mdDialog.confirm()
 				.title('¿ Desea establecer esta acción como terminada?')
@@ -62,41 +100,8 @@ app.controller('ActionDetailController', [
 			)
 		}, function() {
 		});
-
-
 	}
 
-	$scope.getReport = function (){
-    var query = {
-      action_id:$state.params.id
-    }
-    ReportGetService.getList(query).then(
-      function(response){
-         $scope.report = response[0]
-      }, function(errors){
-        console.log(errors);
-      });
-  }
-
-	$scope.openReportModal = function() {
-
-		$mdDialog.show({
-		 scope:$scope,
-		 preserveScope:true,
-		 controller: 'ReportModalController',
-		 controllerAs: 'vm',
-		 templateUrl: '/app/report-create/add-report.html',
-		 parent: angular.element(document.body),
-		 clickOutsideToClose:true,
-		 size: 'md',
-		 locals:{
-			 type:'action'
-		 }
-		})
-		.finally(function() {
-      $scope.getReport()
-    });
-	}
 
 	$scope.openReportDetailModal = function() {
 		$mdDialog.show({
@@ -114,6 +119,8 @@ app.controller('ActionDetailController', [
 		})
 
 	}
+	//////////////////////////////////////////////end modals////////////////////////////////////////
+
 	$scope.actionPageChanged = function(status) {
 		actionStatus = status||actionStatus;
 
@@ -156,7 +163,7 @@ app.controller('ActionDetailController', [
 
   };
 
-	//template interaction functions
+	//////////////////////////////////////////////template interaction functions////////////////////////////////////////
 	$scope.hoverIn = function(show){
 		this.hoverEdit = show;
 	};
@@ -178,4 +185,6 @@ app.controller('ActionDetailController', [
 			return 'bg-info green-status'
 		}
 	}
+	//////////////////////////////////////////////template interaction functions////////////////////////////////////////
+
 }]);

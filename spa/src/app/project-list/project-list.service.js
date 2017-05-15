@@ -14,4 +14,13 @@ app.service("ProjectListService", ['$http', 'APIConfig', function($http, APIConf
 	});
 	  return promise;
 	};
+
+	this.getProjectStadistics = function() {
+		var promise = $http.get(APIConfig.url + "projects/stadistics/time").then(function(response) {
+			return response.data;
+		});
+
+		return promise;
+	}
+
 }]);

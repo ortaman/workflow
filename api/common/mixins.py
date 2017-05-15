@@ -7,7 +7,7 @@ from rest_framework.response import Response
 class APIMixin(object):
     """
     Add funcionality:
-        To get object or return 404  
+        To get object or return 404
         To paginate
     """
 
@@ -47,7 +47,7 @@ class APIMixin(object):
         data = {
             'page': page,
             'paginate_by':paginate_by,
-            'count': paginator.count,  
+            'count': paginator.count,
             'results': serializer.data,
         }
 
@@ -79,7 +79,7 @@ class APIMixin(object):
         close_status = ('Satisfactoria', 'Insatisfactoria')
 
         if obj.client == user:
-            pass
+            return
 
         if obj.producer == user:
             if obj.status in close_status:

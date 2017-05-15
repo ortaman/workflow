@@ -1,5 +1,5 @@
 
-app.controller('CoordinationsModalController', ['$scope','$mdDialog','currentAction','ActionListService','ActionGetService',
+app.controller('ActionViewModalController', ['$scope','$mdDialog','currentAction','ActionListService','ActionGetService',
   function($scope,$mdDialog, currentAction, ActionListService, ActionGetService) {
 
     var $ctrl = this;
