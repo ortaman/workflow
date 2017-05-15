@@ -53,7 +53,7 @@ app.controller('ActionDetailController', [
         console.log(errors);
       });
   }
-	
+
 	$scope.openReportModal = function() {
 
 		$mdDialog.show({
@@ -73,35 +73,6 @@ app.controller('ActionDetailController', [
 			$scope.getReport()
 		});
 	}
-	////////////////////////////////////////////// end reports////////////////////////////////////////
-
-	////////////////////////////////////////////// modals////////////////////////////////////////
-
-	$scope.closeAction = function(){
-		var confirm = $mdDialog.confirm()
-				.title('¿ Desea establecer esta acción como terminada?')
-				.ok('Sí')
-				.cancel('No');
-
-		$mdDialog.show(confirm).then(function() {
-			$scope.currentAction.status = $scope.accomplishedStatus
-			ActionCreateService.update($scope.currentAction.id,angular.copy($scope.currentAction)).then(
-				function (response) {
-					$mdDialog.show(
-						$mdDialog.alert()
-							 .clickOutsideToClose(true)
-							 .title('Se ha terminado la acción')
-							 .ok('Ok')
-						 );
-				},
-				function (errors) {
-					console.log(errors);
-				}
-			)
-		}, function() {
-		});
-	}
-
 
 	$scope.openReportDetailModal = function() {
 		$mdDialog.show({
@@ -119,6 +90,30 @@ app.controller('ActionDetailController', [
 		})
 
 	}
+
+	////////////////////////////////////////////// end reports////////////////////////////////////////
+
+	////////////////////////////////////////////// modals////////////////////////////////////////
+
+	$scope.closeActiontReport = function(){
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'CloseActionModalController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/action-detail/modals/close-action-modal.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 locals:{
+			 action: $scope.currentAction
+		 }
+		}).finally(function() {
+
+    });
+	}
+
+
+
 	//////////////////////////////////////////////end modals////////////////////////////////////////
 
 	$scope.actionPageChanged = function(status) {

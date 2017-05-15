@@ -42,10 +42,16 @@
                                 <a href="" ng-click="openReportModal()">
                                     <i class="icon-note"></i> Agregar reporte </a>
                             </li>
-                            <li class="divider"> </li>
-                            <li ng-if="currentAction.status != accomplishedStatus" ng-click="closeAction()">
-                                <a href="">
+                            <li class="divider" ng-if="currentAction.producer.id == user.id"> </li>
+                            <li ng-click="openfinishActionReport()" ng-if="currentAction.producer.id == user.id">
+                                <a >
                                     <i class="icon-layers"></i> Terminar acción</a>
+                            </li>
+
+                            <li class="divider" ng-if="currentAction.client.id == user.id"> </li>
+                            <li ng-click="closeActiontReport()" ng-if="currentAction.client.id == user.id">
+                                <a >
+                                    <i class="icon-layers"></i> Cerrar acción</a>
                             </li>
                         </ul>
                     </div>
