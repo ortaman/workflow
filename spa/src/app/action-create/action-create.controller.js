@@ -1,7 +1,7 @@
 
 app.controller('ActionCreateController', [
-  '$scope', '$state', 'ProjectListService', 'ActionCreateService', 'ProjectGetService', 'ActionGetService',
-  function($scope, $state, ProjectListService, ActionCreateService, ProjectGetService, ActionGetService) {
+  '$scope', '$state', 'ProjectListService', 'ActionCreateService', 'ProjectGetService', 'ActionGetService','Notification',
+  function($scope, $state, ProjectListService, ActionCreateService, ProjectGetService, ActionGetService, Notification) {
 
   $scope.action = {};
   $scope.submitted = false;
@@ -40,7 +40,7 @@ app.controller('ActionCreateController', [
     $scope.submitted = true;
 
     if ($scope.actionForm.$invalid) {
-      $scope.error = 'El formulario no es válido.';
+      Notification.error('El formulario contiene errores');
       console.log($scope.actionForm);
       return;
     }
@@ -53,6 +53,8 @@ app.controller('ActionCreateController', [
 
     $scope.submmitPromise = ActionCreateService.create(action).then(
       function (response) {
+        Notification.success('La accion ha sido creada satisfactoriamente');
+
         if($scope.actionId)
           $state.go('actionDetail', {id:$scope.actionId})
         else

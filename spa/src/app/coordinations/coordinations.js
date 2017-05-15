@@ -1,7 +1,8 @@
 
 app.controller('CoordinationsController', ['$scope','ActionListService','UserService','ActionCreateService','$mdDialog',
-  'APIConfig','ProjectListService','ProjectCreateService' , 'StadisticsService',
-  function($scope, ActionListService, UserService, ActionCreateService, $mdDialog, APIConfig, ProjectListService, ProjectCreateService, StadisticsService) {
+  'APIConfig','ProjectListService','ProjectCreateService' , 'StadisticsService', 'Notification',
+  function($scope, ActionListService, UserService, ActionCreateService, $mdDialog, APIConfig, ProjectListService, ProjectCreateService,
+     StadisticsService, Notification) {
 
   $scope.promisesCurrentPage = 1
   $scope.ordersCurrentPage = 1
@@ -137,8 +138,13 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
     $mdDialog.show(confirm).then(function() {
       project.status = type
+      Notification.info('Espere un momento');
       ProjectCreateService.update(project.id,project).then(
         function (response) {
+          if (type == "Aceptada")
+            Notification.success('El proyecto ha pasado a proyectos aceptados');
+          else if (type == "Terminada")
+            Notification.success('El proyecto ha pasado a proyectos terminados');
           $scope.getProjectsByProducer($scope.projectProducerStatus);
         },
         function (errors) {
@@ -161,8 +167,15 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
     $mdDialog.show(confirm).then(function() {
       project.status = type
+      Notification.info('Espere un momento');
+
       ProjectCreateService.update(project.id,project).then(
         function (response) {
+          if (type == "Satisfactoria")
+            Notification.success('El proyecto ha pasado a proyectos cumplidos satisfactoriamente');
+          else if (type == "Insatisfactoria")
+            Notification.success('El proyecto ha pasado a proyectos cumplidos insatisfactoriamente');
+
           $scope.getProjectsByClient($scope.producerStatus);
         },
         function (errors) {
@@ -185,8 +198,13 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
     $mdDialog.show(confirm).then(function() {
       action.status = type
+      Notification.info('Espere un momento');
       ActionCreateService.update(action.id,action).then(
         function (response) {
+          if (type == "Satisfactoria")
+            Notification.success('La acción ha pasado a acciones cumplidas satisfactoriamente');
+          else if (type == "Insatisfactoria")
+            Notification.success('La acción ha pasado a acciones cumplidas insatisfactoriamente');
           $scope.getProducers($scope.producerStatus);
         },
         function (errors) {
@@ -210,13 +228,14 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 
     $mdDialog.show(confirm).then(function() {
         action.status = type
+        Notification.info('Espere un momento');
         ActionCreateService.update(action.id,action).then(
           function (response) {
+            if (type == "Aceptada")
+              Notification.success('La acción ha pasado a acciones aceptadas');
+            else if (type == "Terminada")
+              Notification.success('La acción ha pasado a acciones terminadas');
             $scope.getClients($scope.clientStatus);
-            $mdDialog.alert()
-               .clickOutsideToClose(true)
-               .title('La accion ha sido '+ type)
-               .ok('Ok')
           },
           function (errors) {
             console.error(errors);

@@ -1,7 +1,7 @@
 
 app.controller('ProjectUpdateController', [
-  '$scope', '$state', 'ProjectGetService', 'ProjectUpdateService','APIConfig',
-  function($scope, $state, ProjectGetService, ProjectUpdateService, APIConfig) {
+  '$scope', '$state', 'ProjectGetService', 'ProjectUpdateService','APIConfig','Notification',
+  function($scope, $state, ProjectGetService, ProjectUpdateService, APIConfig,Notification) {
     $scope.submitted = false;
     $scope.project = {};
 
@@ -48,8 +48,7 @@ app.controller('ProjectUpdateController', [
       $scope.submitted = true;
 
       if ($scope.projectForm.$invalid) {
-        $scope.error = 'El formulario no es válido.';
-        console.log($scope.projectForm);
+        Notification.error('El formulario contiene errores');
         return;
       }
 
@@ -66,7 +65,7 @@ app.controller('ProjectUpdateController', [
 
   		$scope.submmitPromise = ProjectUpdateService.update($state.params.id, project).then(
   			function(response) {
-  				console.log('ProjectUpdate', response);
+          Notification.success('El proyecto ha sido actualizado');
   				$state.go('projectList');
   			},
         function(errorResponse) {

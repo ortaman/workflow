@@ -5,7 +5,7 @@ app.controller('CoordinationsModalController', ['$scope','$mdDialog','currentAct
     var $ctrl = this;
     $ctrl.action = currentAction;
     $ctrl.actionCurrentPage = 1
-    var actionStatus = "Abierta"
+    var actionStatus = "Creada"
     $ctrl.accomplishedStatus = 'Terminada'
 
 

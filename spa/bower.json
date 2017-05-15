@@ -25,6 +25,7 @@
     "moment": "^2.18.1",
     "angular-bootstrap": "^2.5.0",
     "angular-ui-calendar": "^1.0.2",
-    "angular-promise-buttons": "^0.1.20"
+    "angular-promise-buttons": "^0.1.20",
+    "angular-ui-notification": "^0.3.6"
   }
 }
