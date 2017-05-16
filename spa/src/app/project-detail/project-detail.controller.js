@@ -172,8 +172,10 @@ app.controller('ProjectDetailController', [
 			 reportType:'finish',
 		 }
 	 }).then(function (obj) {
-	 		if(obj.created == true)
+	 		if(obj.created == true){
 				Notification.success("El proyecto ha pasado a estatus de terminado")
+					$scope.project.status = 'Terminada'
+			}
 
 	 }).finally(function(response) {
       	$scope.getReport()
@@ -195,7 +197,13 @@ app.controller('ProjectDetailController', [
 			 type:'project',
 			 reportType:'advance',
 		 }
-		}).finally(function() {
+		}).then(function (obj) {
+ 		 if(obj.created == true){
+ 			 Notification.success("Se ha reportado el avance")
+ 			 $scope.project.status = 'Reportada'
+ 		 }
+
+ 	 }).finally(function() {
       	$scope.getReport()
     });
 	}

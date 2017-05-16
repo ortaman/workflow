@@ -53,7 +53,7 @@ app.controller('ActionDetailController', [
     }
     ReportGetService.getList(query).then(
       function(response){
-         $scope.report = response[0]
+         $scope.report = response[response.length-1]
       }, function(errors){
         console.log(errors);
       });
@@ -71,10 +71,16 @@ app.controller('ActionDetailController', [
 		 clickOutsideToClose:true,
 		 size: 'md',
 		 locals:{
+			 reportType: 'advance',
 			 type:'action'
 		 }
-		})
-		.finally(function() {
+		}).then(function (obj) {
+ 		 if(obj.created == true){
+ 			 Notification.success("Se ha reportado el avance")
+ 			 $scope.currentAction.status = 'Reportada'
+ 		 }
+
+ 	 }).finally(function() {
 			$scope.getReport()
 		});
 	}
@@ -111,8 +117,10 @@ app.controller('ActionDetailController', [
 			 reportType:'finish',
 		 }
 	 }).then(function (obj) {
-		 if(obj.created == true)
+		 if(obj.created == true){
 			 Notification.success("La acción ha pasado a estatus de terminada")
+			 $scope.currentAction.status = 'Terminada'
+		 }
 
 	 }).finally(function(response) {
       	$scope.getReport()
