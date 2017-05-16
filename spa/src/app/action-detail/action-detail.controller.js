@@ -119,7 +119,7 @@ app.controller('ActionDetailController', [
 
 	////////////////////////////////////////////// modals////////////////////////////////////////
 
-	$scope.closeActiontReport = function(){
+	$scope.closeAction = function(){
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,

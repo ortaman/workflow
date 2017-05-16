@@ -1,20 +1,20 @@
 
-app.controller('CloseProjectModalController', ['$scope','$mdDialog','project','Notification', 'ProjectCreateService',
-  function($scope,$mdDialog, project, Notification, ProjectCreateService) {
+app.controller('CloseActionModalController', ['$scope','$mdDialog','action','Notification', 'ActionCreateService',
+  function($scope,$mdDialog, action, Notification, ActionCreateService) {
 
     var $ctrl = this;
-    $ctrl.project = project;
+    $ctrl.action = action;
     $ctrl.submitted = false;
 
     $ctrl.closeProject = function(status){
       $ctrl.submitted = true;
-      var project = angular.copy($ctrl.project);
-      project.status = status
+      var action = angular.copy($ctrl.action);
+      action.status = status
       if (!status) {
         Notification.success('El formulario no es válido.');
         return;
       }
-        $scope.submmitPromise = ProjectCreateService.update(project.id, project).then(
+        $scope.submmitPromise = ActionCreateService.update(action.id, action).then(
           function (response) {
             $mdDialog.hide();
             Notification.success("El proyecto ha pasado a estatus de cerrado")
