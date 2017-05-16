@@ -188,11 +188,11 @@ def change_status(sender, instance, created, **kwargs):
         if instance.action is None:
             model = Project
             obj_id = instance.project
-            count = model.objects.filter(project_id=obj_id).count()
+            count = Report.objects.filter(project_id=obj_id).count()
         else:
             model = Action
             obj_id = instance.action
-            count = model.objects.filter(action_id=obj_id).count()
+            count = Report.objects.filter(action_id=obj_id).count()
 
         if count == 1:
             obj = model.objects.get(id=obj_id)
