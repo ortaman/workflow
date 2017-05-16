@@ -51,6 +51,72 @@
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
 
+            <div class="row" >
+                <div class="col-md-10">
+                    <h1 class="page-title"> Usuarios
+                    </h1>
+                </div>
+            </div>
+            <form name="userForm">
+              <div class="row">
+                <div class="col-md-4">
+                  <md-input-container class="md-block" >
+                   <label>Nombre de usuario</label>
+                   <input
+                     name="username"
+                     maxlength="64"
+                     ng-model="user.name"
+                     ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
+                     required></input>
+
+                   <div ng-show="userForm.username.$touched || submitted">
+                     <div class="error" ng-show="userForm.username.$error.required">
+                       Campo requerido.
+                     </div>
+                     <div class="error" ng-show="userForm.username.$error.pattern">
+                       Debe contener caracteres alfanúmericos.
+                     </div>
+                   </div>
+                  </md-input-container>
+                </div>
+
+                <div class="col-md-4">
+                  <md-input-container class="md-block" >
+                   <label>Email</label>
+                   <input
+                     name="email"
+                     maxlength="64"
+                     ng-model="user.email"
+                     ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
+                     required></input>
+
+                   <div ng-show="userForm.email.$touched || submitted">
+                     <div class="error" ng-show="userForm.email.$error.required">
+                       Campo requerido.
+                     </div>
+                     <div class="error" ng-show="userForm.email.$error.pattern">
+                       Debe contener caracteres alfanúmericos.
+                     </div>
+                   </div>
+                  </md-input-container>
+                </div>
+              </div>
+            </form>
+
+
+            name = models.CharField(max_length=64, verbose_name='Nombre')
+            first_surname = models.CharField(max_length=32, verbose_name='Primer apellido')
+            second_surname = models.CharField(max_length=32, verbose_name='Segundo Apellido')
+
+            position = models.CharField(choices=POSITIONS, max_length=32, verbose_name='Posición')
+            cel_phone = models.CharField(max_length=16, verbose_name='Teléfono Móvil')
+
+            is_staff = models.BooleanField(default=False)
+            is_active = models.BooleanField(default=True)
+
+            photo = models.ImageField(upload_to='photos/', verbose_name='Foto')
+
+
         </div>
     </div>
 </div>
