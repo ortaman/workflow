@@ -2,9 +2,9 @@
 app.controller('ActionDetailController', [
 	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig',
 	'ProducerGetListService', 'ActionGetService','ReportGetService','$mdDialog',
-	'ActionCreateService', 'UserService',
+	'ActionCreateService', 'UserService', 'Notification',
 	function($scope, $state, ProjectGetService, ActionListService, APIConfig,
-		ProducerGetListService, ActionGetService, ReportGetService, $mdDialog, ActionCreateService, UserService) {
+		ProducerGetListService, ActionGetService, ReportGetService, $mdDialog, ActionCreateService, UserService, Notification) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -110,6 +110,10 @@ app.controller('ActionDetailController', [
 			 type:'action',
 			 reportType:'finish',
 		 }
+	 }).then(function (obj) {
+		 if(obj.created == true)
+			 Notification.success("La acción ha pasado a estatus de terminada")
+
 	 }).finally(function(response) {
       	$scope.getReport()
     });
