@@ -57,7 +57,7 @@
                     </h1>
                 </div>
             </div>
-            <form name="userForm">
+            <form name="userForm" ng-submit="submit(user)">
               <div class="row">
                 <div class="col-md-3">
                   <md-input-container class="md-block" >
@@ -65,7 +65,7 @@
                    <input
                      name="username"
                      maxlength="64"
-                     ng-model="user.name"
+                     ng-model="username"
                      ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                      required></input>
 
@@ -107,7 +107,7 @@
                    <input
                      name="celphone"
                      maxlength="64"
-                     ng-model="user.name"
+                     ng-model="user.cel_phone"
                      ng-pattern="/^([0-9]{0,10})$/"
                      required></input>
 
@@ -186,17 +186,39 @@
                   </md-input-container>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <md-input-container class="md-block" >
+                    <label> posición </label>
+                    <md-select
+                      name="position"
+                      ng-init="user.position='Estándar'"
+                      ng-model="user.position"
+                      required>
+                      <md-option value="Estándar"> Estándar </md-option>
+                      <md-option value="Piloto"> Piloto </md-option>
+                      <md-option value="Jardín"> Jardín </md-option>
+                    </md-select>
+
+                    <div ng-show="userForm.position.$touched || submitted">
+                       <div class="error" style="margin-top: 0em" ng-show="userForm.position.$error.required">
+                         Campo requerido.
+                       </div>
+                     </div>
+                  </md-input-container>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2 col-md-offset-5 text-center">
+                  <button type="submit"  promise-btn="submmitPromise" class="btn blue">Crear </button>
+                </div>
+              </div>
             </form>
 
 
 
 
-            position = models.CharField(choices=POSITIONS, max_length=32, verbose_name='Posición')
 
-            is_staff = models.BooleanField(default=False)
-            is_active = models.BooleanField(default=True)
-
-            photo = models.ImageField(upload_to='photos/', verbose_name='Foto')
 
 
         </div>

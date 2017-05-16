@@ -67,4 +67,11 @@ app.service('UserService', function($http, APIConfig,$q, StorageService) {
       return $q.when(results);
     };
 
+    this.create = function(object) {
+        var promise = $http.post(URL, object).then(function(response) {
+            return response;
+        });
+
+        return promise;
+    };
 });
