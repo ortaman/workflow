@@ -1,0 +1,205 @@
+<my-header> </my-header>
+<div class="page-container">
+    <my-navbar> </my-navbar>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+            <!-- BEGIN PAGE BAR -->
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a href="index.html">Inicio</a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <!--li>
+                        <a href="#">Tablero de Control</a>
+                        <i class="fa fa-circle"></i>
+                    </li-->
+                    <li>
+                        <span>Creación de usuario</span>
+                    </li>
+                </ul>
+                <!--div class="page-toolbar">
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Acciones
+                            <i class="fa fa-angle-down"></i>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="#">
+                                    <i class="icon-fire"></i> Nueva Alerta</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-pin"></i> Nueva Acción</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-user"></i> Ubicar a Alguien</a>
+                            </li>
+                            <li class="divider"> </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-layers"></i> Ver Proyectos</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div-->
+            </div>
+            <!-- END PAGE BAR -->
+            <!-- BEGIN PAGE TITLE-->
+
+            <div class="row" >
+                <div class="col-md-10">
+                    <h1 class="page-title"> Usuarios
+                    </h1>
+                </div>
+            </div>
+            <form name="userForm">
+              <div class="row">
+                <div class="col-md-3">
+                  <md-input-container class="md-block" >
+                   <label>Nombre de usuario</label>
+                   <input
+                     name="username"
+                     maxlength="64"
+                     ng-model="user.name"
+                     ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
+                     required></input>
+
+                   <div ng-show="userForm.username.$touched || submitted">
+                     <div class="error" ng-show="userForm.username.$error.required">
+                       Campo requerido.
+                     </div>
+                     <div class="error" ng-show="userForm.username.$error.pattern">
+                       Debe contener caracteres alfanúmericos.
+                     </div>
+                   </div>
+                  </md-input-container>
+                </div>
+
+                <div class="col-md-3">
+                  <md-input-container class="md-block" >
+                   <label>Email</label>
+                   <input
+                     name="email"
+                     maxlength="64"
+                     ng-model="user.email"
+                     ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
+                     required></input>
+
+                   <div ng-show="userForm.email.$touched || submitted">
+                     <div class="error" ng-show="userForm.email.$error.required">
+                       Campo requerido.
+                     </div>
+                     <div class="error" ng-show="userForm.email.$error.pattern">
+                       Debe contener caracteres alfanúmericos.
+                     </div>
+                   </div>
+                  </md-input-container>
+                </div>
+
+                <div class="col-md-3">
+                  <md-input-container class="md-block" >
+                   <label>Teléfono movil</label>
+                   <input
+                     name="celphone"
+                     maxlength="64"
+                     ng-model="user.name"
+                     ng-pattern="/^([0-9]{0,10})$/"
+                     required></input>
+
+                   <div ng-show="userForm.celphone.$touched || submitted">
+                     <div class="error" ng-show="userForm.celphone.$error.required">
+                       Campo requerido.
+                     </div>
+                     <div class="error" ng-show="userForm.celphone.$error.pattern">
+                       Debe contener caracteres alfanúmericos.
+                     </div>
+                   </div>
+                  </md-input-container>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                  <md-input-container class="md-block" >
+                   <label>Nombre </label>
+                   <input
+                     name="name"
+                     maxlength="64"
+                     ng-model="user.name"
+                     ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
+                     required></input>
+
+                   <div ng-show="userForm.name.$touched || submitted">
+                     <div class="error" ng-show="userForm.name.$error.required">
+                       Campo requerido.
+                     </div>
+                     <div class="error" ng-show="userForm.name.$error.pattern">
+                       Debe contener caracteres alfanúmericos.
+                     </div>
+                   </div>
+                  </md-input-container>
+                </div>
+                <div class="col-md-3">
+                  <md-input-container class="md-block" >
+                   <label>Apellido paterno</label>
+                   <input
+                     name="first_surname"
+                     maxlength="64"
+                     ng-model="user.first_surname"
+                     ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
+                     required></input>
+
+                   <div ng-show="userForm.first_surname.$touched || submitted">
+                     <div class="error" ng-show="userForm.first_surname.$error.required">
+                       Campo requerido.
+                     </div>
+                     <div class="error" ng-show="userForm.first_surname.$error.pattern">
+                       Debe contener caracteres alfanúmericos.
+                     </div>
+                   </div>
+                  </md-input-container>
+                </div>
+                <div class="col-md-3">
+                  <md-input-container class="md-block" >
+                   <label>Apellido materno</label>
+                   <input
+                     name="second_surname"
+                     maxlength="64"
+                     ng-model="user.second_surname"
+                     ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
+                     required></input>
+
+                   <div ng-show="userForm.second_surname.$touched || submitted">
+                     <div class="error" ng-show="userForm.second_surname.$error.required">
+                       Campo requerido.
+                     </div>
+                     <div class="error" ng-show="userForm.second_surname.$error.pattern">
+                       Debe contener caracteres alfanúmericos.
+                     </div>
+                   </div>
+                  </md-input-container>
+                </div>
+              </div>
+            </form>
+
+
+
+
+            position = models.CharField(choices=POSITIONS, max_length=32, verbose_name='Posición')
+
+            is_staff = models.BooleanField(default=False)
+            is_active = models.BooleanField(default=True)
+
+            photo = models.ImageField(upload_to='photos/', verbose_name='Foto')
+
+
+        </div>
+    </div>
+</div>
+<!-- END CONTENT -->

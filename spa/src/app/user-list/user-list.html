@@ -1,0 +1,90 @@
+<my-header> </my-header>
+<div class="page-container">
+    <my-navbar> </my-navbar>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+            <!-- BEGIN PAGE BAR -->
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a href="index.html">Inicio</a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <!--li>
+                        <a href="#">Tablero de Control</a>
+                        <i class="fa fa-circle"></i>
+                    </li-->
+                    <li>
+                        <span>Lista de usuarios</span>
+                    </li>
+                </ul>
+                <!--div class="page-toolbar">
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Acciones
+                            <i class="fa fa-angle-down"></i>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="#">
+                                    <i class="icon-fire"></i> Nueva Alerta</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-pin"></i> Nueva Acción</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-user"></i> Ubicar a Alguien</a>
+                            </li>
+                            <li class="divider"> </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-layers"></i> Ver Proyectos</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div-->
+            </div>
+            <!-- END PAGE BAR -->
+            <!-- BEGIN PAGE TITLE-->
+            <div class="row" >
+                <div class="col-md-10">
+                    <h1 class="page-title"> Usuarios
+                    </h1>
+                </div>
+                <div class="col-md-2" style="padding:1%">
+                    <button type="button" class="btn blue" ui-sref="userCreate">Crear usuario</button>
+                </div>
+            </div>
+            <div class="portlet light">
+
+              <div class="portlet-body row" ng-repeat="number in getRowNumber() track by $index">
+
+                      <div class="col-md-3" ng-repeat="user in chunkArray($index) track by $index" style="margin-bottom:1%">
+                          <!--begin: widget 1-1 -->
+
+                          <div class="mt-widget-1">
+                          
+                              <div class="mt-img">
+                                  <img class="avatar" ng-src="{{user.photo}}"
+                                       height="77" width="77"/>
+                              </div>
+                              <div class="mt-body">
+                                  <h3 class="mt-username">
+                                      {{ user.name }} {{user.first_surname}} {{ user.second_surname }}
+                                  </h3>
+                                  <p class="mt-user-title"> {{ user.position }} </p>
+                              </div>
+                          </div>
+                          <!--end: widget 1-1 -->
+
+                      </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END CONTENT -->

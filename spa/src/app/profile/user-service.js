@@ -42,8 +42,28 @@ app.service('UserService', function($http, APIConfig,$q, StorageService) {
             });
             results = deferred.promise;
         }
+      return $q.when(results);
+    };
 
 
+    this.getList = function(params) {
+        var results = undefined;
+        var deferred = $q.defer();
+        URL = APIConfig.url + 'users/';
+
+        $http.get(URL+'?'+ params)
+          .then(function(result) {
+            results = result.data;
+            angular.forEach(results.results, function(user){
+              user.photo = APIConfig.baseUrl+ user.photo
+            })
+            deferred.resolve(results);
+          }, function(error) {
+            results = error;
+            deferred.reject(error);
+          });
+
+        results = deferred.promise;
       return $q.when(results);
     };
 

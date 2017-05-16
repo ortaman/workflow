@@ -5,7 +5,7 @@ app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateSer
     $ctrl.reportTypeOptions = {
       "finish":{
         'name':'finish',
-        'title':'Reporte de término de proyecto'
+        'title':'Reporte de término '
       },
       "advance":{
         'name':'advance',
@@ -37,8 +37,7 @@ app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateSer
 
         $ctrl.submmitPromise = ReportCreateService.create($ctrl.report).then(
           function (response) {
-            Notification.success("El proyecto ha pasado a estatus de terminado")
-            $mdDialog.hide();
+            $mdDialog.hide({"created":true});
 
           },
           function (errorResponse) {

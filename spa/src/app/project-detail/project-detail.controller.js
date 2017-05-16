@@ -1,9 +1,9 @@
 
 app.controller('ProjectDetailController', [
 	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
-	'ReportGetService','ProjectCreateService', 'UserService',
+	'ReportGetService','ProjectCreateService', 'UserService', 'Notification',
 	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog,
-		 ReportGetService, ProjectCreateService,UserService) {
+		 ReportGetService, ProjectCreateService,UserService, Notification) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -59,7 +59,7 @@ app.controller('ProjectDetailController', [
     }
     ReportGetService.getList(query).then(
       function(response){
-         $scope.report = response[0]
+         $scope.report = response[response.length-1]
       }, function(errors){
         console.err(errors);
       });
@@ -171,6 +171,12 @@ app.controller('ProjectDetailController', [
 			 type:'project',
 			 reportType:'finish',
 		 }
+	 }).then(function (obj) {
+	 		if(obj.created == true){
+				Notification.success("El proyecto ha pasado a estatus de terminado")
+					$scope.project.status = 'Terminada'
+			}
+
 	 }).finally(function(response) {
       	$scope.getReport()
     });
@@ -191,7 +197,13 @@ app.controller('ProjectDetailController', [
 			 type:'project',
 			 reportType:'advance',
 		 }
-		}).finally(function() {
+		}).then(function (obj) {
+ 		 if(obj.created == true){
+ 			 Notification.success("Se ha reportado el avance")
+ 			 $scope.project.status = 'Reportada'
+ 		 }
+
+ 	 }).finally(function() {
       	$scope.getReport()
     });
 	}

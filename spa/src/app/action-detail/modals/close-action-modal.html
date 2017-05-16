@@ -1,0 +1,40 @@
+<div class="modal-dialog modal-lg">
+
+  <div class="modal-header text-center">
+      <h3 class="modal-title" id="modal-title">Cierre de acción</h3>
+  </div>
+  <form novalidate name="vm.form" ng-submit="vm.closeProject(status)">
+    <div class="modal-body" id="modal-body" style="padding:3%">
+      <div class="row">
+        <div class="col-md-5 ">
+          <label>¿ El acción terminó satisfactoriamente ?</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5 col-md-offset-1">
+          <md-radio-group ng-model="status" name ="status" ng-required="true">
+
+            <md-radio-button value="Satisfactoria" class="md-primary">Si</md-radio-button>
+            <md-radio-button value="Insatisfactoria"> No </md-radio-button>
+
+          </md-radio-group>
+          <div ng-show="vm.form.status.$touched || vm.submitted">
+             <div class="error" ng-show="vm.form.status.$error.required">
+               Campo requerido.
+             </div>
+           </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <div class=" text-center" style="padding-top:1%">
+          <button type="button" class="btn red" ng-click="vm.cancel()">Cancelar</button>
+          <button type="submit" promise-btn="submmitPromise"  class="btn blue">Cerrar acción</button>
+          <br><br>
+          <div class="error">
+            {{ vm.errors }}
+          </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -38,14 +38,20 @@
                                 <a href="" ui-sref="actionUpdate({id:currentAction.id})">
                                     <i class="icon-pin"></i> Editar accion </a>
                             </li>
-                            <li ng-if="!report">
+                            <li ng-if="currentAction.producer.id == user.id && currentAction.status == 'Creada'">
                                 <a href="" ng-click="openReportModal()">
                                     <i class="icon-note"></i> Agregar reporte </a>
                             </li>
-                            <li class="divider"> </li>
-                            <li ng-if="currentAction.status != accomplishedStatus" ng-click="closeAction()">
-                                <a href="">
+                            <li class="divider" ng-if="currentAction.producer.id == user.id  && currentAction.status =='Reportada' "> </li>
+                            <li ng-click="actionFinishReport()" ng-if="currentAction.producer.id == user.id  && currentAction.status =='Reportada' ">
+                                <a >
                                     <i class="icon-layers"></i> Terminar acción</a>
+                            </li>
+
+                            <li class="divider" ng-if="currentAction.client.id == user.id  && currentAction.status =='Terminada' "> </li>
+                            <li ng-click="closeAction()" ng-if="currentAction.client.id == user.id  && currentAction.status =='Terminada' ">
+                                <a >
+                                    <i class="icon-layers"></i> Cerrar acción</a>
                             </li>
                         </ul>
                     </div>
@@ -87,7 +93,7 @@
                                             </div>
                                             <div class="mt-head-user">
                                                 <div class="mt-head-user-img">
-                                                    <img src="{{currentAction.producer.photo}}"> </div>
+                                                    <img src="{{currentAction.client.photo}}"> </div>
                                                 <div class="mt-head-user-info" style="font-weight: bold">
                                                     <span class="mt-user-name">
                                                     {{ currentAction.client.name }} {{ currentAction.client.first_surname }}

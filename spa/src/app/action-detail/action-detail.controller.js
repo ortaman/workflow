@@ -2,9 +2,9 @@
 app.controller('ActionDetailController', [
 	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig',
 	'ProducerGetListService', 'ActionGetService','ReportGetService','$mdDialog',
-	'ActionCreateService',
+	'ActionCreateService', 'UserService', 'Notification',
 	function($scope, $state, ProjectGetService, ActionListService, APIConfig,
-		ProducerGetListService, ActionGetService, ReportGetService, $mdDialog, ActionCreateService) {
+		ProducerGetListService, ActionGetService, ReportGetService, $mdDialog, ActionCreateService, UserService, Notification) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -17,6 +17,11 @@ app.controller('ActionDetailController', [
 	$scope.producers = [];
 
   $scope.init = function() {
+		UserService.me().then(function(response){
+			$scope.user = response
+		}, function(error){
+			console.error("error",error);
+		})
 		$scope.getAction();
 		$scope.actionPageChanged()
 		$scope.producerPageChanged($scope.producersPerformanceCurrentPage, 'producers');
@@ -48,12 +53,12 @@ app.controller('ActionDetailController', [
     }
     ReportGetService.getList(query).then(
       function(response){
-         $scope.report = response[0]
+         $scope.report = response[response.length-1]
       }, function(errors){
         console.log(errors);
       });
   }
-	
+
 	$scope.openReportModal = function() {
 
 		$mdDialog.show({
@@ -66,42 +71,19 @@ app.controller('ActionDetailController', [
 		 clickOutsideToClose:true,
 		 size: 'md',
 		 locals:{
+			 reportType: 'advance',
 			 type:'action'
 		 }
-		})
-		.finally(function() {
+		}).then(function (obj) {
+ 		 if(obj.created == true){
+ 			 Notification.success("Se ha reportado el avance")
+ 			 $scope.currentAction.status = 'Reportada'
+ 		 }
+
+ 	 }).finally(function() {
 			$scope.getReport()
 		});
 	}
-	////////////////////////////////////////////// end reports////////////////////////////////////////
-
-	////////////////////////////////////////////// modals////////////////////////////////////////
-
-	$scope.closeAction = function(){
-		var confirm = $mdDialog.confirm()
-				.title('¿ Desea establecer esta acción como terminada?')
-				.ok('Sí')
-				.cancel('No');
-
-		$mdDialog.show(confirm).then(function() {
-			$scope.currentAction.status = $scope.accomplishedStatus
-			ActionCreateService.update($scope.currentAction.id,angular.copy($scope.currentAction)).then(
-				function (response) {
-					$mdDialog.show(
-						$mdDialog.alert()
-							 .clickOutsideToClose(true)
-							 .title('Se ha terminado la acción')
-							 .ok('Ok')
-						 );
-				},
-				function (errors) {
-					console.log(errors);
-				}
-			)
-		}, function() {
-		});
-	}
-
 
 	$scope.openReportDetailModal = function() {
 		$mdDialog.show({
@@ -119,6 +101,55 @@ app.controller('ActionDetailController', [
 		})
 
 	}
+
+	$scope.actionFinishReport = function(){
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'ReportModalController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/report-create/add-report.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 size: 'md',
+		 locals:{
+			 type:'action',
+			 reportType:'finish',
+		 }
+	 }).then(function (obj) {
+		 if(obj.created == true){
+			 Notification.success("La acción ha pasado a estatus de terminada")
+			 $scope.currentAction.status = 'Terminada'
+		 }
+
+	 }).finally(function(response) {
+      	$scope.getReport()
+    });
+	}
+
+	////////////////////////////////////////////// end reports////////////////////////////////////////
+
+	////////////////////////////////////////////// modals////////////////////////////////////////
+
+	$scope.closeAction = function(){
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'CloseActionModalController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/action-detail/modals/close-action-modal.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 locals:{
+			 action: $scope.currentAction
+		 }
+		}).finally(function() {
+
+    });
+	}
+
+
+
 	//////////////////////////////////////////////end modals////////////////////////////////////////
 
 	$scope.actionPageChanged = function(status) {
