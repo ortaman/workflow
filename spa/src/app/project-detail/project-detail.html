@@ -39,13 +39,13 @@
                                 <a href="#">
                                     <i class="icon-pin"></i> Nueva Alerta</a>
                             </li>
-                            <li ng-if="!report">
+                            <li ng-if="project.producer.id == user.id && project.status == 'Creada'">
                                 <a href="" ng-click="openAdvanceReport()">
                                     <i class="icon-note"></i> Agregar reporte de avance</a>
                             </li>
 
-                            <li class="divider" ng-if="project.producer.id == user.id"> </li>
-                            <li ng-click="openfinishProjectReport()" ng-if="project.producer.id == user.id">
+                            <li class="divider" ng-if="project.producer.id == user.id && project.status =='Reportada' "> </li>
+                            <li ng-click="openfinishProjectReport()" ng-if="project.producer.id == user.id && project.status =='Reportada' ">
                                 <a >
                                     <i class="icon-layers"></i> Terminar proyecto</a>
                             </li>

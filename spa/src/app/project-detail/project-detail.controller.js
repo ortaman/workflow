@@ -59,7 +59,7 @@ app.controller('ProjectDetailController', [
     }
     ReportGetService.getList(query).then(
       function(response){
-         $scope.report = response[0]
+         $scope.report = response[response.length-1]
       }, function(errors){
         console.err(errors);
       });
