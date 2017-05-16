@@ -12,7 +12,7 @@ app.service("ActionGetService", ['$http', 'APIConfig', function($http, APIConfig
 
           return 'green'
         }
-        
+
         var promise = $http.get(APIConfig.url + "actions/" + id + "/").then(function(response) {
 
             var transformFields = [
@@ -34,6 +34,7 @@ app.service("ActionGetService", ['$http', 'APIConfig', function($http, APIConfig
             response.data.color = getColor(response.data);
 
             response.data.producer.photo = APIConfig.baseUrl + response.data.producer.photo;
+            response.data.client.photo = APIConfig.baseUrl + response.data.client.photo;
     				response.data.project.image = APIConfig.baseUrl + response.data.project.image;
 
             return response.data;
