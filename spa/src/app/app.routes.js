@@ -79,6 +79,17 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
       controller: "ReportDetailController",
     })
 
+    .state('userList', {
+      url: "/userList",
+      templateUrl: "app/user-list/user-list.html",
+      controller: "UserListController",
+    })
+    .state('userCreate', {
+      url: "/userCreate",
+      templateUrl: "app/user-create/user-create.html",
+      controller: "UserCreateController",
+    })
+
   // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise("/coordinations");
 
