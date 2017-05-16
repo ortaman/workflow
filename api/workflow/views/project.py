@@ -132,6 +132,8 @@ class ProjectList(APIView, APIMixin):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+import datetime
+
 class ProjectTimeStadistic(APIView):
     """
     """
@@ -141,14 +143,32 @@ class ProjectTimeStadistic(APIView):
     model = Project
 
     def get(self, request, format=None):
+        query = request.query_params
 
         user_id = request.user.id
         queryset = self.model.objects.all()
 
+        if 'producer' in query.keys():
+            q0 = Q(producer_id=user_id)
+        else:
+            q0 = Q(client_id=user_id)
+
+
+        q1 = (Q(status='Creada') | Q(status='Aceptada'))
+        q2 = (Q(status='Creada') | Q(status='Aceptada') | Q(status='Reportada')) 
+        
+        q3 = Q(report_at__lt=datetime.date.today())   # < 
+        q4 = Q(accomplish_at__lt=datetime.date.today())
+
+        q5 = Q(report_at__gt=datetime.date.today())   # > 
+        q6 = Q(accomplish_at__gt=datetime.date.today())
+
+        q7 = q2 & q5 | Q(status='Reportada') & q6
+        
         data = {
-            'in_time': queryset.filter().count(),
-            'in_risk': queryset.filter().count(),
-            'delayed': queryset.filter().count(),
+            'in_time': queryset.filter(q0, q7).count(),
+            'in_risk': queryset.filter(q0, q1, q3).count(),
+            'delayed': queryset.filter(q0, q2, q4).count(),
         }
 
         return Response(data)
