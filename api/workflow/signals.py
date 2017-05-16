@@ -59,3 +59,14 @@ def send_action_email(sender, instance, created, **kwargs):
         recipient_list=[instance.client.email, instance.producer.email, instance.observer.email],
         fail_silently=False,
         html_message=html_message)
+
+
+'''
+def change_to_report_status(sender, instance, created, **kwargs):
+
+    if created:
+        pass
+
+    else:
+        pass
+'''
