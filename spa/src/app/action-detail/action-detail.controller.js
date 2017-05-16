@@ -2,9 +2,9 @@
 app.controller('ActionDetailController', [
 	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig',
 	'ProducerGetListService', 'ActionGetService','ReportGetService','$mdDialog',
-	'ActionCreateService',
+	'ActionCreateService', 'UserService',
 	function($scope, $state, ProjectGetService, ActionListService, APIConfig,
-		ProducerGetListService, ActionGetService, ReportGetService, $mdDialog, ActionCreateService) {
+		ProducerGetListService, ActionGetService, ReportGetService, $mdDialog, ActionCreateService, UserService) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -17,6 +17,11 @@ app.controller('ActionDetailController', [
 	$scope.producers = [];
 
   $scope.init = function() {
+		UserService.me().then(function(response){
+			$scope.user = response
+		}, function(error){
+			console.error("error",error);
+		})
 		$scope.getAction();
 		$scope.actionPageChanged()
 		$scope.producerPageChanged($scope.producersPerformanceCurrentPage, 'producers');
@@ -89,6 +94,25 @@ app.controller('ActionDetailController', [
 		 }
 		})
 
+	}
+
+	$scope.actionFinishReport = function(){
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'ReportModalController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/report-create/add-report.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 size: 'md',
+		 locals:{
+			 type:'action',
+			 reportType:'finish',
+		 }
+	 }).finally(function(response) {
+      	$scope.getReport()
+    });
 	}
 
 	////////////////////////////////////////////// end reports////////////////////////////////////////

@@ -43,7 +43,7 @@
                                     <i class="icon-note"></i> Agregar reporte </a>
                             </li>
                             <li class="divider" ng-if="currentAction.producer.id == user.id"> </li>
-                            <li ng-click="openfinishActionReport()" ng-if="currentAction.producer.id == user.id">
+                            <li ng-click="actionFinishReport()" ng-if="currentAction.producer.id == user.id">
                                 <a >
                                     <i class="icon-layers"></i> Terminar acción</a>
                             </li>
@@ -93,7 +93,7 @@
                                             </div>
                                             <div class="mt-head-user">
                                                 <div class="mt-head-user-img">
-                                                    <img src="{{currentAction.producer.photo}}"> </div>
+                                                    <img src="{{currentAction.client.photo}}"> </div>
                                                 <div class="mt-head-user-info" style="font-weight: bold">
                                                     <span class="mt-user-name">
                                                     {{ currentAction.client.name }} {{ currentAction.client.first_surname }}
