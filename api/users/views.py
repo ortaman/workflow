@@ -150,7 +150,6 @@ class ProducerList(APIView, APIMixin):
                 'unsatisfactories': Action.objects.filter(status="Insatisfactorias", producer_id=producer.id).count()
             })
 
-        import pdb; pdb.set_trace()
         return data
 
 

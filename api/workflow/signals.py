@@ -2,6 +2,8 @@
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
+# from workflow.models import Project, Action, Report
+
 
 def send_project_email(sender, instance, created, **kwargs):
     context = {
@@ -59,14 +61,3 @@ def send_action_email(sender, instance, created, **kwargs):
         recipient_list=[instance.client.email, instance.producer.email, instance.observer.email],
         fail_silently=False,
         html_message=html_message)
-
-
-'''
-def change_to_report_status(sender, instance, created, **kwargs):
-
-    if created:
-        pass
-
-    else:
-        pass
-'''
