@@ -183,24 +183,23 @@ def change_status(sender, instance, created, **kwargs):
     '''
     Change the project o report status when create the reports.
     '''
-
     if created:
         if instance.action is None:
             model = Project
-            obj_id = instance.project
-            count = Report.objects.filter(project=obj_id).count()
+            obj = instance.project
+            count = Report.objects.filter(project=obj).count()
         else:
             model = Action
-            obj_id = instance.action
-            count = Report.objects.filter(action=obj_id).count()
+            obj = instance.action.id
+            count = Report.objects.filter(action=obj).count()
 
         if count == 1:
-            obj = model.objects.get(id=obj_id.id)
+            obj = model.objects.get(id=obj.id)
             obj.status = 'Reportada'
             obj.save()
 
         elif count == 2:
-            obj = model.objects.get(id=obj_id.id)
+            obj = model.objects.get(id=obj.id)
             obj.status = 'Terminada'
             obj.save()
     else:
