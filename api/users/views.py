@@ -12,7 +12,7 @@ from workflow.serializers import ActionUserSerializer
 from common.mixins import APIMixin
 from .models import User
 from .permissions import UserIsOwnerOrReadOnly
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserPostSerializer
 
 
 
@@ -38,16 +38,20 @@ class UserViewSet(viewsets.ModelViewSet):
 
     pagination_class = MyCustomPagination
     serializer_class = UserSerializer
-    
+
     lookup_field = 'id'
     permission_classes = (IsAuthenticated, UserIsOwnerOrReadOnly)
 
 
     def create(self, request, *args, **kwargs):
-        """
-        """
-        content = {'error': 'Acceso no autorizado'}
-        return Response(content, status=status.HTTP_401_UNAUTHORIZED)
+        serializer = UserPostSerializer
+        serializer.is_valid(self)
+
+        serializer.save(self)
+
+
+        return Response(serializer_class.data, status=status.HTTP_201_CREATED);
+
 
 
     def list(self, request, *args, **kwargs):
@@ -60,14 +64,14 @@ class UserViewSet(viewsets.ModelViewSet):
 
         if 'first_surname' in query.keys():
             surname = query.get('first_surname')
-            self.queryset = self.queryset.filter(first_surname__startswith=surname) 
+            self.queryset = self.queryset.filter(first_surname__startswith=surname)
 
         return self.queryset
 
 
 class ProducerList(APIView, APIMixin):
     """
-    List all prodicer and producer stadistics 
+    List all prodicer and producer stadistics
     searching by the project or action.
     """
     permission_classes = (IsAuthenticated,)
@@ -90,7 +94,7 @@ class ProducerList(APIView, APIMixin):
             if query.get('parent_action')=='none':
                 queryset = queryset.filter(
                     project_id=query.get('project_id'),
-                    parent_action__isnull=True) 
+                    parent_action__isnull=True)
             else:
                 queryset = queryset.filter(
                     project_id=query.get('project_id'))
@@ -102,7 +106,7 @@ class ProducerList(APIView, APIMixin):
 
         queryset = queryset.distinct('producer__id')
         paginated_data = self.get_pagination(queryset, page, self.paginate_by)
-        
+
         data = {
             'count':  paginated_data['count'],
             'page': paginated_data['page'],
@@ -129,7 +133,7 @@ class ProducerList(APIView, APIMixin):
             if query.get('parent_action')=='none':
                 self.queryset = self.queryset.filter(
                     project_id=query.get('project_id'),
-                    parent_action__isnull=True) 
+                    parent_action__isnull=True)
             else:
                 self.queryset = self.queryset.filter(
                     project_id=query.get('project_id'))

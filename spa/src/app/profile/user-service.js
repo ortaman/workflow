@@ -68,6 +68,8 @@ app.service('UserService', function($http, APIConfig,$q, StorageService) {
     };
 
     this.create = function(object) {
+        URL = APIConfig.url + 'users/';
+
         var promise = $http.post(URL, object).then(function(response) {
             return response;
         });
