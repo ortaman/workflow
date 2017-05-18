@@ -1,0 +1,131 @@
+.row {
+  margin-right: 15px;
+  margin-left: -15px;
+}
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin: -0.5em 0em -2em 0em;
+}
+@media (max-width: 768px) {
+  body {
+    font-size: 10px;
+  }
+  h1 {
+    font-size: 2.1em;
+  }
+  h2 {
+    font-size: 1.8em;
+  }
+  h3 {
+    font-size: 1.5em;
+  }
+}
+@media (min-width: 768px) {
+  body {
+    font-size: 12px;
+  }
+  h1 {
+    font-size: 2.1em;
+  }
+  h2 {
+    font-size: 1.8em;
+  }
+  h3 {
+    font-size: 1.5em;
+  }
+}
+@media (min-width: 992px) {
+  body {
+    /*font-family: 'din';*/
+    font-size: 14px;
+  }
+  h1 {
+    font-size: 2.1em;
+  }
+  h2 {
+    font-size: 1.8em;
+  }
+  h3 {
+    font-size: 1.5em;
+  }
+}
+@media (min-width: 1200px) {
+  body {
+    font-size: 14px;
+  }
+  h1 {
+    font-size: 2.1em;
+  }
+  h2 {
+    font-size: 1.8em;
+  }
+  h3 {
+    font-size: 1.5em;
+  }
+}
+.is-loading .btn-spinner {
+  display: inline-block !important;
+}
+.portlet > .portlet-title > .nav-tabs {
+  float: none !important;
+}
+.portlet.light > .portlet-title > .nav-tabs > li > a {
+  padding: 12px 10px 13px !important;
+}
+.green-status-text {
+  color: rgba(0, 255, 31, 0.72) !important;
+}
+.red-status-text {
+  color: rgba(231, 80, 90, 0.76) !important;
+}
+.yellow-status-text {
+  color: rgba(243, 194, 0, 0.8) !important;
+}
+.green {
+  background-color: green;
+}
+.red {
+  background-color: red;
+}
+.yellow {
+  background-color: yellow;
+  color: black;
+}
+.green-status {
+  background-color: green!important;
+  color: white;
+}
+.red-status {
+  background-color: red!important;
+  color: white;
+}
+.yellow-status {
+  background-color: yellow!important;
+  color: black;
+}
+#login-container {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+.avatar {
+  height: 80px;
+  width: 80px;
+}
+.margin-top-5 {
+  margin-top: 5%!important;
+}
+md-radio-button .md-off,
+md-radio-button .md-on {
+  border-radius: 50%!important;
+}
+.green-status-opacity {
+  background: rgba(0, 255, 31, 0.52) !important;
+}
+.red-status-opacity {
+  background: rgba(231, 80, 90, 0.76) !important;
+}
+.yellow-status-opacity {
+  background: rgba(243, 194, 0, 0.8) !important;
+}

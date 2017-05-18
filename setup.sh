@@ -80,3 +80,9 @@ sudo npm install -g gulp
 # cd workflow/api
 # python manage.py runserver 0.0.0.0:8000
 # http://localhost:9000/
+
+
+
+#  server
+#  testing uwsgi functionality
+#  uwsgi --http :8080 --home /root/Env/workflow --chdir /root/workflow/api/ -w _api.wsgi

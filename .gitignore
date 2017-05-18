@@ -2,11 +2,6 @@
 ### Gulp generated code. ###
 api/_static/
 
-spa/src/assets/app.js
-spa/src/assets/app.css
-spa/src/assets/vendors.js
-spa/src/assets/vendors.css
-
 ### Keys in prodution. ###
 api/kroo/keys/production.py
 
