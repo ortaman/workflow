@@ -4,12 +4,16 @@ app.controller('UserListController', [ '$state', 'UserService', '$scope',
 
    $scope.users = {}
 
+///////////////////////////calling service functions ///////////////////////////
+
    UserService.getList({}).then(
      function (response) {
        $scope.users = response;
-
      }
-  )
+   )
+
+///////////////////////////end calling service functions ///////////////////////////
+
 ///////////////////////////template interaction functions ///////////////////////////
   $scope.getRowNumber = function() {
     if($scope.users.results){

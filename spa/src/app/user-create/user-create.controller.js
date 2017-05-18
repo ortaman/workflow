@@ -3,6 +3,15 @@ app.controller('UserCreateController', [ '$state', 'UserService', '$scope', 'Not
  function( $state, UserService, $scope, Notification) {
    $scope.user = {}
 
+   console.log($state);
+   if($state.params.id){
+     UserService.get($state.params.id).then(
+       function (response) {
+         console.log(response);
+         $scope.user = response;
+       }
+     )
+   }
 
    $scope.submit = function (user) {
      if(!$scope.userForm.$valid){
