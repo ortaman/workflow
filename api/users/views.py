@@ -44,15 +44,8 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
     def create(self, request, *args, **kwargs):
-        serializer = UserPostSerializer
-        serializer.is_valid(self)
-
-        serializer.save(self)
-
-
-        return Response(serializer_class.data, status=status.HTTP_201_CREATED);
-
-
+        self.serializer_class = UserPostSerializer
+        return super(UserViewSet, self).create(request, *args, **kwargs)
 
     def list(self, request, *args, **kwargs):
         return super(UserViewSet, self).list(request, *args, **kwargs)

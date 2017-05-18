@@ -57,7 +57,7 @@
                     </h1>
                 </div>
             </div>
-            <form name="userForm" ng-submit="submit(user)">
+            <form novalidate name="userForm" ng-submit="submit(user)">
               <div class="row">
                 <div class="col-md-3">
                   <md-input-container class="md-block" >
@@ -69,7 +69,7 @@
                      ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                      required></input>
 
-                   <div ng-show="userForm.username.$touched || submitted">
+                   <div ng-show="userForm.username.$touched || userForm.$submitted">
                      <div class="error" ng-show="userForm.username.$error.required">
                        Campo requerido.
                      </div>
@@ -86,10 +86,11 @@
                    <input
                      name="email"
                      maxlength="64"
+                     ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/"
                      ng-model="user.email"
                      required></input>
 
-                   <div ng-show="userForm.email.$touched || submitted">
+                   <div ng-show="userForm.email.$touched || userForm.$submitted">
                      <div class="error" ng-show="userForm.email.$error.required">
                        Campo requerido.
                      </div>
@@ -110,12 +111,12 @@
                      ng-pattern="/^([0-9]{0,10})$/"
                      required></input>
 
-                   <div ng-show="userForm.celphone.$touched || submitted">
+                   <div ng-show="userForm.celphone.$touched || userForm.$submitted">
                      <div class="error" ng-show="userForm.celphone.$error.required">
                        Campo requerido.
                      </div>
                      <div class="error" ng-show="userForm.celphone.$error.pattern">
-                       Debe contener caracteres alfanúmericos.
+                       Debe contener caracteres númericos.
                      </div>
                    </div>
                   </md-input-container>
@@ -134,7 +135,7 @@
                      ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                      required></input>
 
-                   <div ng-show="userForm.name.$touched || submitted">
+                   <div ng-show="userForm.name.$touched || userForm.$submitted">
                      <div class="error" ng-show="userForm.name.$error.required">
                        Campo requerido.
                      </div>
@@ -154,7 +155,7 @@
                      ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                      required></input>
 
-                   <div ng-show="userForm.first_surname.$touched || submitted">
+                   <div ng-show="userForm.first_surname.$touched || userForm.$submitted">
                      <div class="error" ng-show="userForm.first_surname.$error.required">
                        Campo requerido.
                      </div>
@@ -174,7 +175,7 @@
                      ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                      required></input>
 
-                   <div ng-show="userForm.second_surname.$touched || submitted">
+                   <div ng-show="userForm.second_surname.$touched || userForm.$submitted">
                      <div class="error" ng-show="userForm.second_surname.$error.required">
                        Campo requerido.
                      </div>
@@ -204,7 +205,7 @@
 
                     </md-select>
 
-                    <div ng-show="userForm.position.$touched || submitted">
+                    <div ng-show="userForm.position.$touched || userForm.$submitted">
                        <div class="error" style="margin-top: 0em" ng-show="userForm.position.$error.required">
                          Campo requerido.
                        </div>
@@ -221,7 +222,7 @@
                      ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                      required></input>
 
-                   <div ng-show="userForm.password.$touched || submitted">
+                   <div ng-show="userForm.password.$touched || userForm.$submitted">
                      <div class="error" ng-show="userForm.password.$error.required">
                        Campo requerido.
                      </div>
@@ -236,17 +237,17 @@
                   <md-input-container class="md-block" >
                    <label>Confirmar contraseña</label>
                    <input
-                     name="confirm_password"
+                     name="passwordConfirmation"
                      maxlength="64"
-                     ng-model="usesr.confirm_password"
+                     ng-model="passwordConfirmation"
                      ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                      required></input>
 
-                   <div ng-show="userForm.confirm_password.$touched || submitted">
-                     <div class="error" ng-show="userForm.confirm_password.$error.required">
+                   <div ng-show="userForm.passwordConfirmation.$touched || userForm.$submitted">
+                     <div class="error" ng-show="userForm.passwordConfirmation.$error.required">
                        Campo requerido.
                      </div>
-                     <div class="error" ng-show="userForm.confirm_password.$error.pattern">
+                     <div class="error" ng-show="userForm.passwordConfirmation.$error.pattern">
                        Debe contener caracteres alfanúmericos.
                      </div>
                    </div>

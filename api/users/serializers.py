@@ -1,5 +1,7 @@
+import base64, uuid
 
 from django.conf import settings
+from django.core.files.base import ContentFile
 
 from rest_framework import serializers
 
@@ -12,6 +14,9 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
 
     photo = serializers.SerializerMethodField('get_photo_url')
+
+    def get_photo_url(self, obj):
+        return obj.photo.url
 
     class Meta:
         model = User
