@@ -13,14 +13,14 @@ app.controller('UserListController', [ '$state', 'UserService', '$scope',
 ///////////////////////////template interaction functions ///////////////////////////
   $scope.getRowNumber = function() {
     if($scope.users.results){
-      var num = Math.round($scope.users.results.length / 4)
+      var num = Math.ceil($scope.users.results.length / 4)
       return new Array(num);
     }
   }
 
   $scope.chunkArray = function(index) {
     if($scope.users.results)
-      return $scope.users.results.slice(index*3, (index*3)+3);
+      return $scope.users.results.slice(index*4, (index*4)+4);
   }
   ///////////////////////////end  of template interaction functions ///////////////////////////
 
