@@ -17,9 +17,6 @@ app.service("ActionGetService", ['$http', 'APIConfig', function($http, APIConfig
   						return 'red';
   				}
 
-  				else if(moment(project.report_at).isBefore(moment()))
-  					return 'green';
-
   				else if(moment(project.report_at).isBefore(moment()) && project.report == 0 )
   					return 'yellow';
 

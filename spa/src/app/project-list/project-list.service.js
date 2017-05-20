@@ -15,9 +15,6 @@ app.service("ProjectListService", ['$http', 'APIConfig', function($http, APIConf
 					return 'red';
 			}
 
-			else if(moment(project.report_at).isBefore(moment()))
-				return 'green';
-
 			else if(moment(project.report_at).isBefore(moment()) && project.report == 0 )
 				return 'yellow';
 
