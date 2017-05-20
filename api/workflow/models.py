@@ -190,7 +190,7 @@ def change_status(sender, instance, created, **kwargs):
             count = Report.objects.filter(project=obj).count()
         else:
             model = Action
-            obj = instance.action.id
+            obj = instance.action
             count = Report.objects.filter(action=obj).count()
 
         if count == 1:

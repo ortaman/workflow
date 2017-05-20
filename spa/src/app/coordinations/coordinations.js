@@ -256,15 +256,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     }
   }
 
-  $scope.getColor = function (obj) {
-			if(moment(obj.report_at).isBefore(moment()) && obj.report == 0)
-				return 'red-status-text'
 
-			if(moment(obj.report_at).isAfter(moment()) && obj.report == 0)
-				return 'yellow-status-text'
-
-		return 'green-status-text'
-	}
   ///////////////////////////////////////stadistics/////////////////////////////////////////////
   $scope.getStadistics = function () {
     StadisticsService.get().then(function (response) {

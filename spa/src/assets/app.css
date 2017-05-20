@@ -64,24 +64,6 @@
     font-size: 1.5em;
   }
 }
-.is-loading .btn-spinner {
-  display: inline-block !important;
-}
-.portlet > .portlet-title > .nav-tabs {
-  float: none !important;
-}
-.portlet.light > .portlet-title > .nav-tabs > li > a {
-  padding: 12px 10px 13px !important;
-}
-.green-status-text {
-  color: rgba(0, 255, 31, 0.72) !important;
-}
-.red-status-text {
-  color: rgba(231, 80, 90, 0.76) !important;
-}
-.yellow-status-text {
-  color: rgba(243, 194, 0, 0.8) !important;
-}
 .green {
   background-color: green;
 }
@@ -103,6 +85,21 @@
 .yellow-status {
   background-color: yellow!important;
   color: black;
+}
+.portlet > .portlet-title > .nav-tabs {
+  float: none !important;
+}
+.portlet.light > .portlet-title > .nav-tabs > li > a {
+  padding: 12px 10px 13px !important;
+}
+.green-status-text {
+  color: rgba(0, 255, 31, 0.72) !important;
+}
+.red-status-text {
+  color: rgba(231, 80, 90, 0.76) !important;
+}
+.yellow-status-text {
+  color: rgba(243, 194, 0, 0.8) !important;
 }
 #login-container {
   height: 100%;
