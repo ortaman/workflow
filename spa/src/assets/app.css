@@ -64,6 +64,9 @@
     font-size: 1.5em;
   }
 }
+.is-loading .btn-spinner {
+  display: inline-block !important;
+}
 .green {
   background-color: green;
 }

@@ -65,11 +65,14 @@ class APIMixin(object):
                 error['detail'] = 'Actualización a una promesa calificada no es permitado'
                 status = status.HTTP_405_METHOD_NOT_ALLOWED
 
+                return Response(data=error, status=status)
+
+
         else:
             error['detail'] = 'Usuario no autorizado'
             status = status.HTTP_401_UNAUTHORIZED
 
-        Response(data=error, status=status)
+            return Response(data=error, status=status)
 
 
     def patch_vatidations(self, obj, user):
@@ -78,16 +81,15 @@ class APIMixin(object):
         open_status = ('Creada', 'Aceptada', 'Reportada', 'Terminada')
         close_status = ('Satisfactoria', 'Insatisfactoria')
 
-        if obj.client == user:
-            return
-
         if obj.producer == user:
             if obj.status in close_status:
                 error['detail'] = 'Actualización a una promesa calificada no es permitado'
                 status = status.HTTP_405_METHOD_NOT_ALLOWED
 
+                return Response(data=error, status=status)
+
         else:
             error['detail'] = 'Usuario no autorizado'
             status = status.HTTP_401_UNAUTHORIZED
 
-        Response(data=error, status=status)
+            return Response(data=error, status=status)

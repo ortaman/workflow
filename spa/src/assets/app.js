@@ -343,121 +343,6 @@ app.service("ActionCreateService", ['$http', 'APIConfig', function($http, APICon
 }]);
 
 
-app.controller('ActionListController', ['$scope', 'ActionListService', 'ProducerGetListService','ProjectListService',
- function($scope, ActionListService, ProducerGetListService, ProjectListService) {
-
-   $scope.producersCurrentPage = 1;
-   $scope.producers = []
-   $scope.projects = [];
-
-   $scope.init = function () {
-     $scope.producerPageChanged();
-     $scope.getProjects();
-   }
-
-  	$scope.producerPageChanged = function() {
-        var query = {
-          "page": $scope.producersCurrentPage,
-  	  		"project_id":$scope.selectedProject ,
-  	  		"parent_action": "none",
-  	  	};
-        if($scope.selectedProject){
-          ProducerGetListService.getList(query).then(
-            function(response) {
-              console.log("respue", response);
-              $scope.producers = response
-
-            },
-            function(errorResponse) {
-              $scope.status = errorResponse.statusText || 'Request failed';
-              $scope.errors = errorResponse.data;
-            }
-          );
-        }
-
-    };
-
-    $scope.onProjectSelect =  function (project) {
-      $scope.selectedProject = project;
-      $scope.producerPageChanged(project);
-
-    }
-
-    $scope.getProjects = function(){
-      var query = {}
-      ProjectListService.getList(query).then(
-        function(response) {
-           $scope.projects = response;
-        },
-        function(errorResponse) {
-          console.log('errorResponse', errorResponse);
-          $scope.status = errorResponse.statusText || 'Request failed';
-          $scope.errors = errorResponse.data;
-        }
-      );
-    }
-
-    //get
-    $scope.getPercentage = function (producer) {
-      var result = 0 ;
-      console.log(producer);
-      result = (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories)
-      result = result  == 'NaN' ? result:0;
-      return result;
-    }
-}]);
-
-
-app.service("ActionListService", ['$http', 'APIConfig', function($http, APIConfig) {
-
-	var statusList = ['Terminada', 'Satisfactoria',  'Insatisfactoria']
-
-	var getColor = function (project) {
-
-			if(moment(project.accomplish_at).isBefore(moment())){
-				angular.forEach(statusList, function(status){
-					if (project.status == status)
-						return 'green'
-				})
-
-				if(project.report == 0 ){
-					return 'red';}
-			}
-
-			else if(moment(project.report_at).isBefore(moment()))
-				return 'green';
-
-			else if(moment(project.report_at).isBefore(moment()) && project.report == 0 )
-				return 'yellow';
-
-		return 'green'
-	}
-
-	this.getList = function(object) {
-		var params = $.param(object);
-	  var promise = $http.get(APIConfig.url + "actions/?" + params).then(function(response) {
-			angular.forEach(response.data.results, function(item){
-
-				item.project.image = APIConfig.baseUrl+ item.project.image;
-				item.producer.photo = APIConfig.baseUrl+ item.producer.photo;
-				item.client.photo = APIConfig.baseUrl+ item.client.photo;
-				console.log(item);
-				item.color = getColor(item);
-			})
-
-			if(response.data.length){
-				angular.forEach(response.data, function (project) {
-					project.color = getColor(project);
-				})
-			}
-	  return response.data;
-	});
-	  return promise;
-	};
-
-}]);
-
-
 app.controller('ActionDetailController', [
 	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig',
 	'ProducerGetListService', 'ActionGetService','ReportGetService','$mdDialog',
@@ -736,56 +621,117 @@ app.service("ActionGetService", ['$http', 'APIConfig', function($http, APIConfig
 }]);
 
 
-app.service('AuthService', function($http, $q,  APIConfig) {
-  
-  var url = APIConfig.url + 'token-auth/'
+app.controller('ActionListController', ['$scope', 'ActionListService', 'ProducerGetListService','ProjectListService',
+ function($scope, ActionListService, ProducerGetListService, ProjectListService) {
 
-  this.login = function(data) {
+   $scope.producersCurrentPage = 1;
+   $scope.producers = []
+   $scope.projects = [];
 
-      var deferred = $q.defer();
+   $scope.init = function () {
+     $scope.producerPageChanged();
+     $scope.getProjects();
+   }
 
-      $http.post(url, data).then(function(response) {
-          deferred.resolve(response);
-        }, function(errorResponse) {
-          deferred.reject(errorResponse);
-        });
+  	$scope.producerPageChanged = function() {
+        var query = {
+          "page": $scope.producersCurrentPage,
+  	  		"project_id":$scope.selectedProject ,
+  	  		"parent_action": "none",
+  	  	};
+        if($scope.selectedProject){
+          ProducerGetListService.getList(query).then(
+            function(response) {
+              console.log("respue", response);
+              $scope.producers = response
 
-      var promise = deferred.promise;
-    
-    return promise
-  };
+            },
+            function(errorResponse) {
+              $scope.status = errorResponse.statusText || 'Request failed';
+              $scope.errors = errorResponse.data;
+            }
+          );
+        }
 
-});
-
-
-app.controller('LoginController', [
-  '$scope','$state', '$http', '$window', 'AuthService', 'StorageService',
-  function($scope, $state, $http, $window, AuthService, StorageService) {
-
-    $scope.showAlert = false;
-
-    $scope.loginSubmit = function(data) {
-
-      AuthService.login(data)
-        .then(function(response) {
-
-          StorageService.set('token',response.data.token);
-          $http.defaults.headers.common.Authorization = 'Token ' + StorageService.get('token');
-
-          $state.go('coordinations');
-
-        },function(errorResponse) {
-          $scope.showAlert = true;
-
-          if (errorResponse.data.non_field_errors) {
-            $scope.error = "Nombre de usuario y/o contraseña inválidos.";
-          }
-          else {
-            $scope.error = errorResponse.statusText || 'Request failed.';
-          }
-
-        });
     };
+
+    $scope.onProjectSelect =  function (project) {
+      $scope.selectedProject = project;
+      $scope.producerPageChanged(project);
+
+    }
+
+    $scope.getProjects = function(){
+      var query = {}
+      ProjectListService.getList(query).then(
+        function(response) {
+           $scope.projects = response;
+        },
+        function(errorResponse) {
+          console.log('errorResponse', errorResponse);
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+        }
+      );
+    }
+
+    //get
+    $scope.getPercentage = function (producer) {
+      var result = 0 ;
+      console.log(producer);
+      result = (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories)
+      result = result  == 'NaN' ? result:0;
+      return result;
+    }
+}]);
+
+
+app.service("ActionListService", ['$http', 'APIConfig', function($http, APIConfig) {
+
+	var statusList = ['Terminada', 'Satisfactoria',  'Insatisfactoria']
+
+	var getColor = function (project) {
+
+			if(moment(project.accomplish_at).isBefore(moment())){
+				angular.forEach(statusList, function(status){
+					if (project.status == status)
+						return 'green'
+				})
+
+				if(project.report == 0 ){
+					return 'red';}
+			}
+
+			else if(moment(project.report_at).isBefore(moment()))
+				return 'green';
+
+			else if(moment(project.report_at).isBefore(moment()) && project.report == 0 )
+				return 'yellow';
+
+		return 'green'
+	}
+
+	this.getList = function(object) {
+		var params = $.param(object);
+	  var promise = $http.get(APIConfig.url + "actions/?" + params).then(function(response) {
+			angular.forEach(response.data.results, function(item){
+
+				item.project.image = APIConfig.baseUrl+ item.project.image;
+				item.producer.photo = APIConfig.baseUrl+ item.producer.photo;
+				item.client.photo = APIConfig.baseUrl+ item.client.photo;
+				console.log(item);
+				item.color = getColor(item);
+			})
+
+			if(response.data.length){
+				angular.forEach(response.data, function (project) {
+					project.color = getColor(project);
+				})
+			}
+	  return response.data;
+	});
+	  return promise;
+	};
 
 }]);
 
@@ -1032,23 +978,6 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
 
     return action['color'] + '-status';
   }
-}]);
-
-
-app.service("ProducerGetListService", ['$http', 'APIConfig', function($http, APIConfig) {
-  this.getList = function(object) {
-    var params = $.param(object);
-
-    var promise = $http.get(APIConfig.url + "producers/?" + params).then(function(response) {
-
-			for (var i=0; i < response.data.producers.length; i++) {
-				response.data.producers[i].producer.photo = APIConfig.baseUrl + response.data.producers[i].producer.photo;
-			}
-      return response.data;
-    });
-
-    return promise;
-  };
 }]);
 
 
@@ -1321,223 +1250,74 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
 }]);
 
 
-app.controller('ProjectCreateController', [
-  '$scope', '$state', 'ProjectCreateService','UserService','Notification',
-  function($scope, $state, ProjectCreateService, UserService, Notification) {
-    $scope.submitted = false;
+app.service('AuthService', function($http, $q,  APIConfig) {
+  
+  var url = APIConfig.url + 'token-auth/'
 
-    $scope.project = {};
+  this.login = function(data) {
 
-    UserService.me().then(function(response){
+      var deferred = $q.defer();
 
-      $scope.project.client = response.id;
-      $scope.client = response.name + " "+ response.first_surname + " " + response.second_surname;
-    }, function(error){
-      console.error("error",error);
-    })
+      $http.post(url, data).then(function(response) {
+          deferred.resolve(response);
+        }, function(errorResponse) {
+          deferred.reject(errorResponse);
+        });
 
-    var transformFields = [
-        'preparation_at',
-        'negotiation_at',
-        'execution_at',
-        'evaluation_at',
+      var promise = deferred.promise;
+    
+    return promise
+  };
 
-        'accomplish_at',
-        'renegotiation_at',
-        'report_at',
-        'begin_at',
-    ];
+});
 
-    $scope.submitForm = function() {
-      $scope.submitted = true;
 
-      if ($scope.projectForm.$invalid) {
-        Notification.error('El formulario contiene errores');
-        return;
-      }
+app.controller('LoginController', [
+  '$scope','$state', '$http', '$window', 'AuthService', 'StorageService',
+  function($scope, $state, $http, $window, AuthService, StorageService) {
 
-      var project = angular.copy($scope.project);
+    $scope.showAlert = false;
 
-      angular.forEach(project, function(value, key) {
-          transformFields.forEach(function(item) {
+    $scope.loginSubmit = function(data) {
 
-          if(key == item)
-              project[key] = new moment(value).format("YYYY-MM-DD");
-          })
-      });
+      AuthService.login(data)
+        .then(function(response) {
 
-  		$scope.submmitPromise = ProjectCreateService.create(project).then(
-  			function(response) {
-  				Notification.success('El proyecto ha sido creado satisfactoriamente');
-  				$state.go('coordinations');
-  			},
-  			function(errorResponse) {
-          console.log('errorResponse', errorResponse);
-          $scope.status = errorResponse.statusText || 'Request failed';
-          $scope.errors = errorResponse.data;
-  	  	}
-  		);
+          StorageService.set('token',response.data.token);
+          $http.defaults.headers.common.Authorization = 'Token ' + StorageService.get('token');
 
-    }
+          $state.go('coordinations');
+
+        },function(errorResponse) {
+          $scope.showAlert = true;
+
+          if (errorResponse.data.non_field_errors) {
+            $scope.error = "Nombre de usuario y/o contraseña inválidos.";
+          }
+          else {
+            $scope.error = errorResponse.statusText || 'Request failed.';
+          }
+
+        });
+    };
 
 }]);
 
 
-app.service("ProjectCreateService", ['$http', 'APIConfig', function($http, APIConfig) {
-  this.create = function(object) {
-    var promise = $http.post(APIConfig.url + "projects/", object).then(function(response) {
-      return response.data;
-    });
-
-    return promise;
-  };
-
-
-  this.update = function(id, object) {
-
-    if(typeof(object.client) != Number)
-        object.client = object.client.id;
-
-    if(typeof(object.client) != Number)
-        object.client = object.client.id;
-
-    if(typeof(object.producer) != Number)
-        object.producer = object.producer.id;
-
-    if(object.observer && typeof(object.observer) != Number)
-        object.observer = object.observer.id;
-
-    delete(object.image)
-      var promise = $http.patch(APIConfig.url + "projects/" + id + "/" , object).then(function(response) {
-          return response.data;
-      });
-
-      return promise;
-  };
-}]);
-
-app.service("UserListService", ['$http', 'APIConfig', function($http, APIConfig) {
+app.service("ProducerGetListService", ['$http', 'APIConfig', function($http, APIConfig) {
   this.getList = function(object) {
     var params = $.param(object);
 
-    var promise = $http.get(APIConfig.url + "users/?" + params).then(function(response) {
+    var promise = $http.get(APIConfig.url + "producers/?" + params).then(function(response) {
+
+			for (var i=0; i < response.data.producers.length; i++) {
+				response.data.producers[i].producer.photo = APIConfig.baseUrl + response.data.producers[i].producer.photo;
+			}
       return response.data;
     });
 
     return promise;
   };
-}]);
-
-
-app.controller('ProjectListController', [
-	'$scope', 'ProjectListService', 'APIConfig','UserService',
-	function($scope, ProjectListService, APIConfig, UserService) {
-
-	$scope.currentPage = 1;
-	$scope.listForm = {
-		phase : 'Preparación',
-		level : 'time'
-	}
-
-	$scope.init = function () {
-		UserService.me().then(
-			function(response){
-				$scope.user = response;
-				$scope.pageChanged();
-				$scope.getProjectStadistics();
-			}
-		)
-	}
-	$scope.pageChanged = function() {
-
-		var query = {
-			"page": $scope.currentPage,
-			"phase":$scope.listForm.phase,
-			"client":$scope.user.id
-		};
-
-		ProjectListService.getList(query).then(
-			function(response) {
-				$scope.data = response
-			},
-			function(errorResponse) {
-				console.error('errorResponse', errorResponse);
-				$scope.status = errorResponse.statusText || 'Request failed';
-				$scope.errors = errorResponse.data;
-			}
-		);
-	};
-
-	$scope.getProjectStadistics = function () {
-		ProjectListService.getProjectStadistics().then(
-			function (response) {
-				$scope.stadistics = response
-			}, function (errors) {
-				console.error(errors);
-			}
-		)
-	}
-
-	$scope.onProjectSelect = function () {
-		$scope.pageChanged()
-	}
-
-}]);
-
-
-app.service("ProjectListService", ['$http', 'APIConfig', function($http, APIConfig) {
-
-	var statusList = ['Terminada', 'Satisfactoria',  'Insatisfactoria']
-
-	var getColor = function (project) {
-
-			if(moment(project.accomplish_at).isBefore(moment())){
-				angular.forEach(statusList, function(status){
-					if (project.status == status)
-						return 'green'
-				})
-
-				if(project.report == 0 )
-					return 'red';
-			}
-
-			else if(moment(project.report_at).isBefore(moment()))
-				return 'green';
-
-			else if(moment(project.report_at).isBefore(moment()) && project.report == 0 )
-				return 'yellow';
-
-		return 'green'
-	}
-
-	this.getList = function(object) {
-	  var params = $.param(object);
-
-	  var promise = $http.get(APIConfig.url + "projects/?" + params).then(function(response) {
-		angular.forEach(response.data.results, function(project){
-			project.image = APIConfig.baseUrl + project.image;
-			project.producer.photo = APIConfig.baseUrl + project.producer.photo;
-			project.client.photo = APIConfig.baseUrl + project.client.photo;
-			project.color = getColor(project);
-		})
-		if(response.data.length){
-			angular.forEach(response.data, function (project) {
-				project.color = getColor(project);
-			})
-		}
-	  return response.data;
-	});
-	  return promise;
-	};
-
-	this.getProjectStadistics = function() {
-		var promise = $http.get(APIConfig.url + "projects/stadistics/time").then(function(response) {
-			return response.data;
-		});
-
-		return promise;
-	}
-
 }]);
 
 
@@ -1721,36 +1501,111 @@ app.service('UserService', function($http, APIConfig,$q, StorageService) {
 });
 
 
-app.controller('ReportDetailController', ['$scope', '$mdDialog', 'report',function( $scope, $mdDialog, report) {
-  console.log("detail" , report);
-  var $ctrl = this;
+app.controller('ProjectCreateController', [
+  '$scope', '$state', 'ProjectCreateService','UserService','Notification',
+  function($scope, $state, ProjectCreateService, UserService, Notification) {
+    $scope.submitted = false;
 
-  $ctrl.report = report;
-  $ctrl.cancel = function () {
-    $mdDialog.hide();
-  };
+    $scope.project = {};
+
+    UserService.me().then(function(response){
+
+      $scope.project.client = response.id;
+      $scope.client = response.name + " "+ response.first_surname + " " + response.second_surname;
+    }, function(error){
+      console.error("error",error);
+    })
+
+    var transformFields = [
+        'preparation_at',
+        'negotiation_at',
+        'execution_at',
+        'evaluation_at',
+
+        'accomplish_at',
+        'renegotiation_at',
+        'report_at',
+        'begin_at',
+    ];
+
+    $scope.submitForm = function() {
+      $scope.submitted = true;
+
+      if ($scope.projectForm.$invalid) {
+        Notification.error('El formulario contiene errores');
+        return;
+      }
+
+      var project = angular.copy($scope.project);
+
+      angular.forEach(project, function(value, key) {
+          transformFields.forEach(function(item) {
+
+          if(key == item)
+              project[key] = new moment(value).format("YYYY-MM-DD");
+          })
+      });
+
+  		$scope.submmitPromise = ProjectCreateService.create(project).then(
+  			function(response) {
+  				Notification.success('El proyecto ha sido creado satisfactoriamente');
+  				$state.go('coordinations');
+  			},
+  			function(errorResponse) {
+          console.log('errorResponse', errorResponse);
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+  	  	}
+  		);
+
+    }
+
 }]);
 
 
-app.service("ReportGetService", ['$http', 'APIConfig', function($http, APIConfig) {
+app.service("ProjectCreateService", ['$http', 'APIConfig', function($http, APIConfig) {
+  this.create = function(object) {
+    var promise = $http.post(APIConfig.url + "projects/", object).then(function(response) {
+      return response.data;
+    });
 
-    this.getById = function(id) {
-        var promise = $http.get(APIConfig.url + "reports/" + id + "/").then(function(response) {
-            return response.data;
-        });
-
-        return promise;
-    }
-
-    this.getList = function(object) {
-  		var params = $.param(object);
-  	  var promise = $http.get(APIConfig.url + "reports/?" + params).then(function(response) {
-  	  return response.data;
-  	});
-  	  return promise;
-  	};
+    return promise;
+  };
 
 
+  this.update = function(id, object) {
+
+    if(typeof(object.client) != Number)
+        object.client = object.client.id;
+
+    if(typeof(object.client) != Number)
+        object.client = object.client.id;
+
+    if(typeof(object.producer) != Number)
+        object.producer = object.producer.id;
+
+    if(object.observer && typeof(object.observer) != Number)
+        object.observer = object.observer.id;
+
+    delete(object.image)
+      var promise = $http.patch(APIConfig.url + "projects/" + id + "/" , object).then(function(response) {
+          return response.data;
+      });
+
+      return promise;
+  };
+}]);
+
+app.service("UserListService", ['$http', 'APIConfig', function($http, APIConfig) {
+  this.getList = function(object) {
+    var params = $.param(object);
+
+    var promise = $http.get(APIConfig.url + "users/?" + params).then(function(response) {
+      return response.data;
+    });
+
+    return promise;
+  };
 }]);
 
 
@@ -2108,6 +1963,118 @@ app.service("ProjectGetService", ['$http', 'APIConfig', function($http, APIConfi
 }]);
 
 
+app.controller('ProjectListController', [
+	'$scope', 'ProjectListService', 'APIConfig','UserService',
+	function($scope, ProjectListService, APIConfig, UserService) {
+
+	$scope.currentPage = 1;
+	$scope.listForm = {
+		phase : 'Preparación',
+		level : 'time'
+	}
+
+	$scope.init = function () {
+		UserService.me().then(
+			function(response){
+				$scope.user = response;
+				$scope.pageChanged();
+				$scope.getProjectStadistics();
+			}
+		)
+	}
+	$scope.pageChanged = function() {
+
+		var query = {
+			"page": $scope.currentPage,
+			"phase":$scope.listForm.phase,
+			"client":$scope.user.id
+		};
+
+		ProjectListService.getList(query).then(
+			function(response) {
+				$scope.data = response
+			},
+			function(errorResponse) {
+				console.error('errorResponse', errorResponse);
+				$scope.status = errorResponse.statusText || 'Request failed';
+				$scope.errors = errorResponse.data;
+			}
+		);
+	};
+
+	$scope.getProjectStadistics = function () {
+		ProjectListService.getProjectStadistics().then(
+			function (response) {
+				$scope.stadistics = response
+			}, function (errors) {
+				console.error(errors);
+			}
+		)
+	}
+
+	$scope.onProjectSelect = function () {
+		$scope.pageChanged()
+	}
+
+}]);
+
+
+app.service("ProjectListService", ['$http', 'APIConfig', function($http, APIConfig) {
+
+	var statusList = ['Terminada', 'Satisfactoria',  'Insatisfactoria']
+
+	var getColor = function (project) {
+
+			if(moment(project.accomplish_at).isBefore(moment())){
+				angular.forEach(statusList, function(status){
+					if (project.status == status)
+						return 'green'
+				})
+
+				if(project.report == 0 )
+					return 'red';
+			}
+
+			else if(moment(project.report_at).isBefore(moment()))
+				return 'green';
+
+			else if(moment(project.report_at).isBefore(moment()) && project.report == 0 )
+				return 'yellow';
+
+		return 'green'
+	}
+
+	this.getList = function(object) {
+	  var params = $.param(object);
+
+	  var promise = $http.get(APIConfig.url + "projects/?" + params).then(function(response) {
+		angular.forEach(response.data.results, function(project){
+			project.image = APIConfig.baseUrl + project.image;
+			project.producer.photo = APIConfig.baseUrl + project.producer.photo;
+			project.client.photo = APIConfig.baseUrl + project.client.photo;
+			project.color = getColor(project);
+		})
+		if(response.data.length){
+			angular.forEach(response.data, function (project) {
+				project.color = getColor(project);
+			})
+		}
+	  return response.data;
+	});
+	  return promise;
+	};
+
+	this.getProjectStadistics = function() {
+		var promise = $http.get(APIConfig.url + "projects/stadistics/time").then(function(response) {
+			return response.data;
+		});
+
+		return promise;
+	}
+
+}]);
+
+
 app.controller('ProjectUpdateController', [
   '$scope', '$state', 'ProjectGetService', 'ProjectUpdateService','APIConfig','Notification',
   function($scope, $state, ProjectGetService, ProjectUpdateService, APIConfig,Notification) {
@@ -2202,19 +2169,6 @@ app.service("ProjectUpdateService", ['$http', 'APIConfig', function($http, APICo
 }]);
 
 
-app.service("StadisticsService", ['$http', 'APIConfig', function($http, APIConfig) {
-	this.get = function(object = {}) {
-	  var params = $.param(object);
-
-	  var promise = $http.get(APIConfig.url + "actions/stadistics?" + params).then(function(response) {
-
-	  return response.data;
-	});
-	  return promise;
-	};
-}]);
-
-
 app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateService', 'UserService','type', 'reportType', '$scope','Notification',
  function($mdDialog, $state, ReportCreateService, UserService, type, reportType, $scope, Notification) {
    var $ctrl = this;
@@ -2286,35 +2240,49 @@ app.service("ReportCreateService", ['$http', 'APIConfig', function($http, APICon
 }]);
 
 
-app.controller('UserListController', [ '$state', 'UserService', '$scope',
- function( $state, UserService, $scope) {
+app.controller('ReportDetailController', ['$scope', '$mdDialog', 'report',function( $scope, $mdDialog, report) {
+  console.log("detail" , report);
+  var $ctrl = this;
 
-   $scope.users = {}
+  $ctrl.report = report;
+  $ctrl.cancel = function () {
+    $mdDialog.hide();
+  };
+}]);
 
-///////////////////////////calling service functions ///////////////////////////
 
-   UserService.getList({}).then(
-     function (response) {
-       $scope.users = response;
-     }
-   )
+app.service("ReportGetService", ['$http', 'APIConfig', function($http, APIConfig) {
 
-///////////////////////////end calling service functions ///////////////////////////
+    this.getById = function(id) {
+        var promise = $http.get(APIConfig.url + "reports/" + id + "/").then(function(response) {
+            return response.data;
+        });
 
-///////////////////////////template interaction functions ///////////////////////////
-  $scope.getRowNumber = function() {
-    if($scope.users.results){
-      var num = Math.ceil($scope.users.results.length / 4)
-      return new Array(num);
+        return promise;
     }
-  }
 
-  $scope.chunkArray = function(index) {
-    if($scope.users.results)
-      return $scope.users.results.slice(index*4, (index*4)+4);
-  }
-  ///////////////////////////end  of template interaction functions ///////////////////////////
+    this.getList = function(object) {
+  		var params = $.param(object);
+  	  var promise = $http.get(APIConfig.url + "reports/?" + params).then(function(response) {
+  	  return response.data;
+  	});
+  	  return promise;
+  	};
 
+
+}]);
+
+
+app.service("StadisticsService", ['$http', 'APIConfig', function($http, APIConfig) {
+	this.get = function(object = {}) {
+	  var params = $.param(object);
+
+	  var promise = $http.get(APIConfig.url + "actions/stadistics?" + params).then(function(response) {
+
+	  return response.data;
+	});
+	  return promise;
+	};
 }]);
 
 
@@ -2366,6 +2334,65 @@ app.controller('UserCreateController', [ '$state', 'UserService', '$scope', 'Not
 }]);
 
 
+app.controller('UserListController', [ '$state', 'UserService', '$scope',
+ function( $state, UserService, $scope) {
+
+   $scope.users = {}
+
+///////////////////////////calling service functions ///////////////////////////
+
+   UserService.getList({}).then(
+     function (response) {
+       $scope.users = response;
+     }
+   )
+
+///////////////////////////end calling service functions ///////////////////////////
+
+///////////////////////////template interaction functions ///////////////////////////
+  $scope.getRowNumber = function() {
+    if($scope.users.results){
+      var num = Math.ceil($scope.users.results.length / 4)
+      return new Array(num);
+    }
+  }
+
+  $scope.chunkArray = function(index) {
+    if($scope.users.results)
+      return $scope.users.results.slice(index*4, (index*4)+4);
+  }
+  ///////////////////////////end  of template interaction functions ///////////////////////////
+
+}]);
+
+app.directive("panelLoader", ['$compile',function ($compile,$scope) {
+    return {
+       restrict: 'A',
+        scope: {
+            panelLoader: "="
+        },
+        link: function (scope, element, attributes) {
+          var template ='<div  layout="row" layout-sm="column" layout-align="space-around"><md-progress-circular md-mode="indeterminate"></md-progress-circular></div>';
+
+            scope.$watch('panelLoader', function (val) {
+              if(typeof scope.panelLoader != 'undefined'){
+                element.append($compile(template)(scope));
+
+                  scope.panelLoader.then(function functionName() {
+                      element = angular.element(element)
+                      var child = element.children().length;
+                      element.children()[child-1].remove();
+
+                  }, function () {
+                    console.log("fail");
+                  })
+              }
+            })
+        }
+    }
+}]);
+
+
 
 app.directive('myHeader', ['URLTemplates','UserService',
 
@@ -2404,6 +2431,55 @@ app.directive('myHeader', ['URLTemplates','UserService',
     }
   }
 ]);
+
+
+
+app.directive('myNavbar', ['URLTemplates',
+
+  /** @ngInject */
+  function myNavbar(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/_components/navbar/navbar.html',
+      scope: {
+          creationDate: '='
+      },
+      controller: NavbarController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    /** @ngInject */
+    function NavbarController(APIConfig) {
+      var vm = this;
+
+      // "vm.creationDate" is available by directive option "bindToController: true"
+      vm.relativeDate = moment(vm.creationDate).fromNow();
+    }
+  }
+
+]);
+
+app.directive("fileread", [function () {
+    return {
+        scope: {
+            fileread: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader();
+                reader.onload = function (loadEvent) {
+                    scope.$apply(function () {
+                        scope.fileread = loadEvent.target.result;
+                    });
+                }
+                reader.readAsDataURL(changeEvent.target.files[0]);
+            });
+        }
+    }
+}]);
 
 app.directive("jqueryDate", ['$compile',function ($compile,$scope) {
     return {
@@ -2528,55 +2604,6 @@ app.directive('timeLine', ['URLTemplates',
 
 
 
-app.directive('myNavbar', ['URLTemplates',
-
-  /** @ngInject */
-  function myNavbar(URLTemplates) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/_components/navbar/navbar.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: NavbarController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    /** @ngInject */
-    function NavbarController(APIConfig) {
-      var vm = this;
-
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
-    }
-  }
-
-]);
-
-app.directive("fileread", [function () {
-    return {
-        scope: {
-            fileread: "="
-        },
-        link: function (scope, element, attributes) {
-            element.bind("change", function (changeEvent) {
-                var reader = new FileReader();
-                reader.onload = function (loadEvent) {
-                    scope.$apply(function () {
-                        scope.fileread = loadEvent.target.result;
-                    });
-                }
-                reader.readAsDataURL(changeEvent.target.files[0]);
-            });
-        }
-    }
-}]);
-
-
-
 app.directive('userSearch', ['URLTemplates', 'UserListService', '$timeout',
 
   /** @ngInject */
@@ -2634,33 +2661,6 @@ app.directive('userSearch', ['URLTemplates', 'UserListService', '$timeout',
   }
 
 ]);
-
-app.directive("panelLoader", ['$compile',function ($compile,$scope) {
-    return {
-       restrict: 'A',
-        scope: {
-            panelLoader: "="
-        },
-        link: function (scope, element, attributes) {
-          var template ='<div  layout="row" layout-sm="column" layout-align="space-around"><md-progress-circular md-mode="indeterminate"></md-progress-circular></div>';
-
-            scope.$watch('panelLoader', function (val) {
-              if(typeof scope.panelLoader != 'undefined'){
-                element.append($compile(template)(scope));
-
-                  scope.panelLoader.then(function functionName() {
-                      element = angular.element(element)
-                      var child = element.children().length;
-                      element.children()[child-1].remove();
-
-                  }, function () {
-                    console.log("fail");
-                  })
-              }
-            })
-        }
-    }
-}]);
 
 
 app.controller('CloseActionModalController', ['$scope','$mdDialog','action','Notification', 'ActionCreateService',
