@@ -35,10 +35,7 @@
                                 <a ui-sref="actionCreate({ projectId: project.id })">
                                     <i class="icon-fire"></i> Nueva Acción </a>
                             </li>
-                            <li>
-                                <a href="#">
-                                    <i class="icon-pin"></i> Nueva Alerta</a>
-                            </li>
+            
                             <li ng-if="project.producer.id == user.id && project.status == 'Creada'">
                                 <a href="" ng-click="openAdvanceReport()">
                                     <i class="icon-note"></i> Agregar reporte de avance</a>
@@ -137,7 +134,6 @@
                                             <div  class="btn-group btn-group btn-group-justified">
                                                 <div class="btn bg-info ">
                                                     <span class="mt-icon font-blue">
-                                                        <i class="fa fa-check"></i>
                                                     </span> {{project.status}} </div>
 
                                             </div>
