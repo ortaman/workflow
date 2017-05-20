@@ -27,8 +27,13 @@ app.controller('UserCreateController', [ '$state', 'UserService', '$scope', 'Not
          function (response) {
            $state.go("userList")
          },
-         function(error){
-           console.error(error);
+         function(errors){
+           $scope.errors = errors.data
+           angular.forEach($scope.errors, function (error) {
+             angular.forEach(error, function (item) {
+               Notification.error(item)
+             })
+           })
          }
        )
      }else{
