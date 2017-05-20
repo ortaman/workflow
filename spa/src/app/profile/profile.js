@@ -52,12 +52,8 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 
 		ProjectListService.getList(query).then(
 			function(response) {
-				for (var i=0; i < response.results.length; i++) {
-         response.results[i].color = $scope.getColor(response.results[i]);
-
-				}
-
 				$scope.projects = response
+        console.log($scope.projects);
 			},
 			function(errorResponse) {
 				console.error('errorResponse', errorResponse);
@@ -74,19 +70,10 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 
   $scope.getSize = function () {
     if($scope.projects.results){
-      return new Array(Math.round($scope.projects.results.length/3));
+      return new Array(Math.ceil($scope.projects.results.length/3));
     }
   }
 
-  $scope.getColor = function (project) {
-			if(moment(project.report_at).isBefore(moment()) && project.report == 0)
-				return 'red-status-opacity'
-
-			if(moment(project.report_at).isAfter(moment()) && project.report == 0)
-				return 'yellow-status-opacity'
-
-		return 'green-status-opacity'
-	}
 
   $scope.onProjectSelect = function (ite) {
     $scope.projectPageChanged();

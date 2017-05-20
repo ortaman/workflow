@@ -61,7 +61,7 @@ app.controller('ProjectDetailController', [
   }
 
 	$scope.actionPageChanged = function(status) {
-
+			console.log("hola");
 			queryStatus = status||queryStatus;
 	  	var query = {
 	  		"page": $scope.actionsCurrentPage,
@@ -70,15 +70,17 @@ app.controller('ProjectDetailController', [
 	  		"status": queryStatus,
 	  	};
 
-		ActionListService.getList(query).then(
-			function(response) {
-				$scope.actions = response;
-			},
-			function(errorResponse) {
-				$scope.status = errorResponse.statusText || 'Request failed';
-				$scope.errors = errorResponse.data;
-			}
-		);
+			ActionListService.getList(query).then(
+				function(response) {
+					$scope.actions = response;
+					console.log(response);
+
+				},
+				function(errorResponse) {
+					$scope.status = errorResponse.statusText || 'Request failed';
+					$scope.errors = errorResponse.data;
+				}
+			);
   };
 
 	$scope.timeLineChanged = function() {
@@ -91,7 +93,6 @@ app.controller('ProjectDetailController', [
 		ActionListService.getList(query).then(
 			function(response) {
 				$scope.timelines = response;
-				console.log("original", 	$scope.timelines);
 
 			},
 			function(errorResponse) {
@@ -124,13 +125,7 @@ app.controller('ProjectDetailController', [
 
 	$scope.getColor = function(phase){
 	 			if($scope.project.phase == phase){
-	 				if(moment($scope.project.report_at).isBefore(moment()) && !$scope.report)
-	 					return 'bg-info red-status'
-
-	 				if(moment($scope.project.report_at).isAfter(moment()) && !$scope.report)
-	 					return 'bg-info yellow-status'
-
-	 			return 'bg-info green-status'
+	 				return 'bg-info '+$scope.project.color +'-status'
 	 		}
 	 	}
 

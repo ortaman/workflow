@@ -112,7 +112,7 @@
                                             <p class="mt-body-description">{{ project.toDo }} .</p>
                                         </div>
                                         <div class="mt-body-actions-icons">
-                                            <div ng-if="project.status != accomplishedStatus" class="btn-group btn-group btn-group-justified">
+                                            <div  class="btn-group btn-group btn-group-justified">
                                                 <div class="btn"
                                                     ng-class="getColor('Preparación')">
                                                     <span class="mt-icon font-blue">
@@ -134,11 +134,11 @@
                                                         <i class="icon-question"></i>
                                                     </span> Evaluación </div>
                                             </div>
-                                            <div ng-if="project.status == accomplishedStatus" class="btn-group btn-group btn-group-justified">
-                                                <div class="btn bg-info green-status">
+                                            <div  class="btn-group btn-group btn-group-justified">
+                                                <div class="btn bg-info ">
                                                     <span class="mt-icon font-blue">
                                                         <i class="fa fa-check"></i>
-                                                    </span> Terminado </div>
+                                                    </span> {{project.status}} </div>
 
                                             </div>
                                         </div>
@@ -263,6 +263,9 @@
                             </li>
                             <li>
                                 <a  data-toggle="tab"  ng-click="actionPageChanged('Aceptada')"> Aceptados </a>
+                            </li>
+                            <li>
+                                <a  data-toggle="tab"  ng-click="actionPageChanged('Reportada')"> Reportadas </a>
                             </li>
                             <li>
                                 <a  data-toggle="tab" ng-click="actionPageChanged('Terminada')"> Terminadas </a>

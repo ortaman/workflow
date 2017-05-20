@@ -119,7 +119,7 @@
 
                                         </div>
                                         <div class="mt-body-actions-icons">
-                                            <div ng-if="currentAction.status != accomplishedStatus" class="btn-group btn-group btn-group-justified">
+                                            <div  class="btn-group btn-group btn-group-justified">
                                                 <div class="btn"
                                                     ng-class="getColor('Preparación')">
                                                     <span class="mt-icon font-blue">
@@ -141,11 +141,11 @@
                                                         <i class="icon-question"></i>
                                                     </span> Evaluación </div>
                                             </div>
-                                            <div ng-if="currentAction.status == accomplishedStatus" class="btn-group btn-group btn-group-justified">
-                                                <div class="btn bg-info green-status">
+                                            <div  class="btn-group btn-group btn-group-justified">
+                                                <div class="btn bg-info ">
                                                     <span class="mt-icon font-blue">
                                                         <i class="fa fa-check"></i>
-                                                    </span> Terminado </div>
+                                                    </span> {{ currentAction.status }} </div>
                                             </div>
                                         </div>
                                     </div>

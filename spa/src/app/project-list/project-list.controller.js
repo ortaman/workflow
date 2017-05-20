@@ -28,10 +28,6 @@ app.controller('ProjectListController', [
 
 		ProjectListService.getList(query).then(
 			function(response) {
-				for (var i=0; i < response.results.length; i++) {
-				 response.results[i].color = $scope.getColor(response.results[i]);
-				}
-
 				$scope.data = response
 			},
 			function(errorResponse) {
@@ -45,7 +41,6 @@ app.controller('ProjectListController', [
 	$scope.getProjectStadistics = function () {
 		ProjectListService.getProjectStadistics().then(
 			function (response) {
-				console.log(response);
 				$scope.stadistics = response
 			}, function (errors) {
 				console.error(errors);
@@ -57,13 +52,4 @@ app.controller('ProjectListController', [
 		$scope.pageChanged()
 	}
 
-	$scope.getColor = function (project) {
-			if(moment(project.report_at).isBefore(moment()) && project.report == 0)
-				return 'red-status-opacity'
-
-			if(moment(project.report_at).isAfter(moment()) && project.report == 0)
-				return 'yellow-status-opacity'
-
-		return 'green-status-opacity'
-	}
 }]);

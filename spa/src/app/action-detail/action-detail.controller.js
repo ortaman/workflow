@@ -11,6 +11,7 @@ app.controller('ActionDetailController', [
 	$scope.producersPerformanceCurrentPage = 1;
 	var actionStatus = "Creada"
 	$scope.accomplishedStatus = 'Terminada'
+	$scope.lastStatus = ['Terminada', 'Satisfactoria',  'Insatisfactoria']
 
 	$scope.currentAction = {};
 	$scope.project = {};
@@ -207,15 +208,11 @@ app.controller('ActionDetailController', [
 
 	$scope.getColor = function(phase){
 			if($scope.currentAction.phase == phase){
-				if(moment($scope.currentAction.report_at).isBefore(moment()) && !$scope.report)
-					return 'bg-info red-status'
-
-				if(moment($scope.currentAction.report_at).isAfter(moment()) && !$scope.report)
-					return 'bg-info yellow-status'
-
-			return 'bg-info green-status'
+				return 'bg-info '+ $scope.currentAction.color +'-status'
 		}
 	}
+
+	
 	//////////////////////////////////////////////template interaction functions////////////////////////////////////////
 
 }]);

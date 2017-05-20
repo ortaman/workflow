@@ -52,6 +52,7 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
     ProjectListService.getList(query).then(
       function(response) {
          $scope.projects = response;
+         console.log(response);
       },
       function(errorResponse) {
         console.log('errorResponse', errorResponse);
@@ -84,6 +85,7 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
          item2.start = moment(array[key][key2]).toDate();
          item2.stick = true
          item2.className = getColor(value, key2, type);
+         console.log(value);
          if(type=="actions"){
            $scope.actionEvents.push(item2);
          }else {
@@ -124,12 +126,7 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
   }
 
   var getColor = function (action, value, type){
-    if(moment(action['report_at']).isBefore(moment()) && action['report'] == 0)
-      return 'red-status'
 
-    if(moment(action['report_at']).isAfter(moment()) && action['report'] == 0)
-      return 'yellow-status'
-
-    return 'green-status';
+    return action['color'] + '-status';
   }
 }]);

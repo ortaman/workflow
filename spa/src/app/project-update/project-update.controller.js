@@ -48,6 +48,7 @@ app.controller('ProjectUpdateController', [
       $scope.submitted = true;
 
       if ($scope.projectForm.$invalid) {
+        console.log($scope.projectForm);
         Notification.error('El formulario contiene errores');
         return;
       }
