@@ -35,8 +35,8 @@
                                 <a ui-sref="actionCreate({ projectId: project.id })">
                                     <i class="icon-fire"></i> Nueva Acción </a>
                             </li>
-            
-                            <li ng-if="project.producer.id == user.id && project.status == 'Creada'">
+
+                            <li ng-if="project.producer.id == user.id &&(project.status == 'Aceptada')">
                                 <a href="" ng-click="openAdvanceReport()">
                                     <i class="icon-note"></i> Agregar reporte de avance</a>
                             </li>

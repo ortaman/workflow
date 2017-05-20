@@ -38,7 +38,7 @@
                                 <a href="" ui-sref="actionUpdate({id:currentAction.id})">
                                     <i class="icon-pin"></i> Editar accion </a>
                             </li>
-                            <li ng-if="currentAction.producer.id == user.id && currentAction.status == 'Creada'">
+                            <li ng-if="currentAction.producer.id == user.id && (currentAction.status == 'Acptada')">
                                 <a href="" ng-click="openReportModal()">
                                     <i class="icon-note"></i> Agregar reporte </a>
                             </li>
