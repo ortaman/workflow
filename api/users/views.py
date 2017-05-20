@@ -47,6 +47,10 @@ class UserViewSet(viewsets.ModelViewSet):
         self.serializer_class = UserPostSerializer
         return super(UserViewSet, self).create(request, *args, **kwargs)
 
+    def update(self, request, *args, **kwargs):
+        self.serializer_class = UserPostSerializer
+        return super(UserViewSet, self).update(request, *args, **kwargs)
+
     def list(self, request, *args, **kwargs):
         return super(UserViewSet, self).list(request, *args, **kwargs)
 
