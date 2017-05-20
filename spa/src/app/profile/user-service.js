@@ -50,6 +50,7 @@ app.service('UserService', function($http, APIConfig,$q, StorageService) {
         var results = undefined;
         var deferred = $q.defer();
         URL = APIConfig.url + 'users/';
+        params = $.param(params);
 
         $http.get(URL+'?'+ params)
           .then(function(result) {

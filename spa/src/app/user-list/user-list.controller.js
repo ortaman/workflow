@@ -1,16 +1,30 @@
 
 app.controller('UserListController', [ '$state', 'UserService', '$scope',
  function( $state, UserService, $scope) {
-
+   $scope.currentPage = 1 ;
    $scope.users = {}
+   $scope.tempUserArray = {}
+
+   $scope.init = function () {
+     $scope.getUsers()
+
+   }
 
 ///////////////////////////calling service functions ///////////////////////////
-
-   UserService.getList({}).then(
-     function (response) {
-       $scope.users = response;
-     }
-   )
+  $scope.getUsers = function () {
+    var query = {
+      'page': $scope.currentPage,
+    }
+    UserService.getList(query).then(
+      function (response) {
+        console.log(response,"response");
+        $scope.tempUserArray.paginated_by = response.paginated_by;
+        $scope.tempUserArray.count = response.count;
+        console.log($scope.tempUserArray, "cuenta");
+        $scope.users = response;
+      }
+    )
+  }
 
 ///////////////////////////end calling service functions ///////////////////////////
 
@@ -23,8 +37,9 @@ app.controller('UserListController', [ '$state', 'UserService', '$scope',
   }
 
   $scope.chunkArray = function(index) {
-    if($scope.users.results)
-      return $scope.users.results.slice(index*4, (index*4)+4);
+      if($scope.users.results){
+        return $scope.users.results.slice(index*4, (index*4)+4);;
+      }
   }
   ///////////////////////////end  of template interaction functions ///////////////////////////
 
