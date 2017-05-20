@@ -85,7 +85,7 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
       controller: "UserListController",
     })
     .state('userCreate', {
-      url: "/userCreate",
+      url: "/userCreate/:id",
       templateUrl: "app/user-create/user-create.html",
       controller: "UserCreateController",
     })

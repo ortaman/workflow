@@ -47,7 +47,7 @@ app.controller('ProjectCreateController', [
   		$scope.submmitPromise = ProjectCreateService.create(project).then(
   			function(response) {
   				Notification.success('El proyecto ha sido creado satisfactoriamente');
-  				$state.go('projectDetail', {'id':response.id});
+  				$state.go('coordinations');
   			},
   			function(errorResponse) {
           console.log('errorResponse', errorResponse);

@@ -66,7 +66,7 @@ app.controller('ProjectUpdateController', [
   		$scope.submmitPromise = ProjectUpdateService.update($state.params.id, project).then(
   			function(response) {
           Notification.success('El proyecto ha sido actualizado');
-  				$state.go('projectList');
+  				$state.go('coordinations');
   			},
         function(errorResponse) {
           console.log('errorResponse', errorResponse);
