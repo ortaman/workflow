@@ -11,15 +11,10 @@ app.controller('ProjectDetailController', [
 	$scope.project = {};
 	$scope.producers = [];
 	$scope.producersPerformance = [];
-	$scope.timelines = []
 	$scope.accomplishedStatus = 'Terminada'
 
 	var queryStatus = "Creada";
-	var dateFields = {
-      'accomplish_at':'Fecha de cumplimiento',
-      'report_at':'Fecha de reporte',
-      'begin_at':'Fecha de inicio',
-    };
+
 
   	$scope.getProjectByIdInit = function() {
 			UserService.me().then(function(response){
@@ -95,9 +90,9 @@ app.controller('ProjectDetailController', [
 
 		ActionListService.getList(query).then(
 			function(response) {
-				$scope.timelines = transformActions(response);
+				$scope.timelines = response;
+				console.log("original", 	$scope.timelines);
 
-				$.getScript("/assets/metronics/global/plugins/horizontal-timeline/horizontal-timeline.js", function(){});
 			},
 			function(errorResponse) {
 				$scope.status = errorResponse.statusText || 'Request failed';

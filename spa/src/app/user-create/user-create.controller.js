@@ -3,6 +3,15 @@ app.controller('UserCreateController', [ '$state', 'UserService', '$scope', 'Not
  function( $state, UserService, $scope, Notification) {
    $scope.user = {}
 
+   console.log($state);
+   if($state.params.id){
+     UserService.get($state.params.id).then(
+       function (response) {
+         console.log(response);
+         $scope.user = response;
+       }
+     )
+   }
 
    $scope.submit = function (user) {
      if(!$scope.userForm.$valid){
@@ -12,13 +21,27 @@ app.controller('UserCreateController', [ '$state', 'UserService', '$scope', 'Not
      else if($scope.user.password != $scope.passwordConfirmation){
        Notification.error("La contraseña no coincide con la confirmación");
      }
-     $scope.submmitPromise = UserService.create(user).then(
-       function (response) {
-         $state.go("userList")
-       },
-       function(error){
-         console.error(error);
-       }
-     )
+
+     if(!$state.params.id){
+       $scope.submmitPromise = UserService.create(user).then(
+         function (response) {
+           $state.go("userList")
+         },
+         function(error){
+           console.error(error);
+         }
+       )
+     }else{
+       console.log("update");
+       $scope.submmitPromise = UserService.update(user, user.id).then(
+         function (response) {
+           $state.go("userList")
+         },
+         function(error){
+           console.error(error);
+         }
+       )
+     }
+
    }
 }]);
