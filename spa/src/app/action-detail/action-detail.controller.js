@@ -11,6 +11,7 @@ app.controller('ActionDetailController', [
 	$scope.producersPerformanceCurrentPage = 1;
 	var actionStatus = "Creada"
 	$scope.accomplishedStatus = 'Terminada'
+	$scope.lastStatus = ['Terminada', 'Satisfactoria',  'Insatisfactoria']
 
 	$scope.currentAction = {};
 	$scope.project = {};
@@ -210,6 +211,8 @@ app.controller('ActionDetailController', [
 				return 'bg-info '+ $scope.currentAction.color +'-status'
 		}
 	}
+
+	
 	//////////////////////////////////////////////template interaction functions////////////////////////////////////////
 
 }]);
