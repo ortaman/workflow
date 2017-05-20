@@ -50,7 +50,7 @@
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <div class="row" >
+            <div class="row" ng-init="init()">
                 <div class="col-md-10">
                     <h1 class="page-title"> Usuarios
                     </h1>
@@ -68,7 +68,7 @@
 
                           <div class="mt-widget-1">
                               <div class="mt-icon">
-                                  <a href="" ui-sref="userCreate({id:3})">
+                                  <a href="" ui-sref="userCreate({id:user.id})">
                                       <i class="icon-pencil"></i>
                                   </a>
                               </div>
@@ -86,6 +86,16 @@
                           <!--end: widget 1-1 -->
 
                       </div>
+              </div>
+              <div class="text-center">
+                  <ul uib-pagination boundary-links="true" class="pagination-sm"
+                      previous-text="&lsaquo;" next-text="&rsaquo;"
+                      first-text="&laquo;" last-text="&raquo;"
+                      items-per-page="tempUserArray.paginated_by"
+                      total-items="tempUserArray.count"
+                      ng-model="currentPage"
+                      ng-change="getUsers()">
+                  </ul>
               </div>
             </div>
         </div>

@@ -624,6 +624,121 @@ app.service("ActionGetService", ['$http', 'APIConfig', function($http, APIConfig
 }]);
 
 
+app.controller('ActionListController', ['$scope', 'ActionListService', 'ProducerGetListService','ProjectListService',
+ function($scope, ActionListService, ProducerGetListService, ProjectListService) {
+
+   $scope.producersCurrentPage = 1;
+   $scope.producers = []
+   $scope.projects = [];
+
+   $scope.init = function () {
+     $scope.producerPageChanged();
+     $scope.getProjects();
+   }
+
+  	$scope.producerPageChanged = function() {
+        var query = {
+          "page": $scope.producersCurrentPage,
+  	  		"project_id":$scope.selectedProject ,
+  	  		"parent_action": "none",
+  	  	};
+        if($scope.selectedProject){
+          ProducerGetListService.getList(query).then(
+            function(response) {
+              console.log("respue", response);
+              $scope.producers = response
+
+            },
+            function(errorResponse) {
+              $scope.status = errorResponse.statusText || 'Request failed';
+              $scope.errors = errorResponse.data;
+            }
+          );
+        }
+
+    };
+
+    $scope.onProjectSelect =  function (project) {
+      $scope.selectedProject = project;
+      $scope.producerPageChanged(project);
+
+    }
+
+    $scope.getProjects = function(){
+      var query = {}
+      ProjectListService.getList(query).then(
+        function(response) {
+           $scope.projects = response;
+        },
+        function(errorResponse) {
+          console.log('errorResponse', errorResponse);
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+        }
+      );
+    }
+
+    //get
+    $scope.getPercentage = function (producer) {
+      var result = 0 ;
+      console.log(producer);
+      result = (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories)
+      result = result  == 'NaN' ? result:0;
+      return result;
+    }
+}]);
+
+
+app.service("ActionListService", ['$http', 'APIConfig', function($http, APIConfig) {
+
+	var statusList = ['Terminada', 'Satisfactoria',  'Insatisfactoria']
+
+	var getColor = function (project) {
+
+			if(moment(project.accomplish_at).isBefore(moment())){
+				angular.forEach(statusList, function(status){
+					if (project.status == status)
+						return 'green'
+				})
+
+				if(project.report == 0 ){
+					return 'red';}
+			}
+
+			else if(moment(project.report_at).isBefore(moment()))
+				return 'green';
+
+			else if(moment(project.report_at).isBefore(moment()) && project.report == 0 )
+				return 'yellow';
+
+		return 'green'
+	}
+
+	this.getList = function(object) {
+		var params = $.param(object);
+	  var promise = $http.get(APIConfig.url + "actions/?" + params).then(function(response) {
+			angular.forEach(response.data.results, function(item){
+
+				item.project.image = APIConfig.baseUrl+ item.project.image;
+				item.producer.photo = APIConfig.baseUrl+ item.producer.photo;
+				item.client.photo = APIConfig.baseUrl+ item.client.photo;
+				console.log(item);
+				item.color = getColor(item);
+			})
+
+			if(response.data.length){
+				angular.forEach(response.data, function (project) {
+					project.color = getColor(project);
+				})
+			}
+	  return response.data;
+	});
+	  return promise;
+	};
+
+}]);
+
+
 app.controller('ActionUpdateController', [
   '$scope', '$state','ActionGetService', 'ActionUpdateService','Notification',
   function($scope, $state, ActionGetService, ActionUpdateService, Notification) {
@@ -866,121 +981,6 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
 
     return action['color'] + '-status';
   }
-}]);
-
-
-app.controller('ActionListController', ['$scope', 'ActionListService', 'ProducerGetListService','ProjectListService',
- function($scope, ActionListService, ProducerGetListService, ProjectListService) {
-
-   $scope.producersCurrentPage = 1;
-   $scope.producers = []
-   $scope.projects = [];
-
-   $scope.init = function () {
-     $scope.producerPageChanged();
-     $scope.getProjects();
-   }
-
-  	$scope.producerPageChanged = function() {
-        var query = {
-          "page": $scope.producersCurrentPage,
-  	  		"project_id":$scope.selectedProject ,
-  	  		"parent_action": "none",
-  	  	};
-        if($scope.selectedProject){
-          ProducerGetListService.getList(query).then(
-            function(response) {
-              console.log("respue", response);
-              $scope.producers = response
-
-            },
-            function(errorResponse) {
-              $scope.status = errorResponse.statusText || 'Request failed';
-              $scope.errors = errorResponse.data;
-            }
-          );
-        }
-
-    };
-
-    $scope.onProjectSelect =  function (project) {
-      $scope.selectedProject = project;
-      $scope.producerPageChanged(project);
-
-    }
-
-    $scope.getProjects = function(){
-      var query = {}
-      ProjectListService.getList(query).then(
-        function(response) {
-           $scope.projects = response;
-        },
-        function(errorResponse) {
-          console.log('errorResponse', errorResponse);
-          $scope.status = errorResponse.statusText || 'Request failed';
-          $scope.errors = errorResponse.data;
-        }
-      );
-    }
-
-    //get
-    $scope.getPercentage = function (producer) {
-      var result = 0 ;
-      console.log(producer);
-      result = (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories)
-      result = result  == 'NaN' ? result:0;
-      return result;
-    }
-}]);
-
-
-app.service("ActionListService", ['$http', 'APIConfig', function($http, APIConfig) {
-
-	var statusList = ['Terminada', 'Satisfactoria',  'Insatisfactoria']
-
-	var getColor = function (project) {
-
-			if(moment(project.accomplish_at).isBefore(moment())){
-				angular.forEach(statusList, function(status){
-					if (project.status == status)
-						return 'green'
-				})
-
-				if(project.report == 0 ){
-					return 'red';}
-			}
-
-			else if(moment(project.report_at).isBefore(moment()))
-				return 'green';
-
-			else if(moment(project.report_at).isBefore(moment()) && project.report == 0 )
-				return 'yellow';
-
-		return 'green'
-	}
-
-	this.getList = function(object) {
-		var params = $.param(object);
-	  var promise = $http.get(APIConfig.url + "actions/?" + params).then(function(response) {
-			angular.forEach(response.data.results, function(item){
-
-				item.project.image = APIConfig.baseUrl+ item.project.image;
-				item.producer.photo = APIConfig.baseUrl+ item.producer.photo;
-				item.client.photo = APIConfig.baseUrl+ item.client.photo;
-				console.log(item);
-				item.color = getColor(item);
-			})
-
-			if(response.data.length){
-				angular.forEach(response.data, function (project) {
-					project.color = getColor(project);
-				})
-			}
-	  return response.data;
-	});
-	  return promise;
-	};
-
 }]);
 
 
@@ -1324,6 +1324,114 @@ app.service("ProducerGetListService", ['$http', 'APIConfig', function($http, API
 }]);
 
 
+app.controller('ProjectCreateController', [
+  '$scope', '$state', 'ProjectCreateService','UserService','Notification',
+  function($scope, $state, ProjectCreateService, UserService, Notification) {
+    $scope.submitted = false;
+
+    $scope.project = {};
+
+    UserService.me().then(function(response){
+
+      $scope.project.client = response.id;
+      $scope.client = response.name + " "+ response.first_surname + " " + response.second_surname;
+    }, function(error){
+      console.error("error",error);
+    })
+
+    var transformFields = [
+        'preparation_at',
+        'negotiation_at',
+        'execution_at',
+        'evaluation_at',
+
+        'accomplish_at',
+        'renegotiation_at',
+        'report_at',
+        'begin_at',
+    ];
+
+    $scope.submitForm = function() {
+      $scope.submitted = true;
+
+      if ($scope.projectForm.$invalid) {
+        Notification.error('El formulario contiene errores');
+        return;
+      }
+
+      var project = angular.copy($scope.project);
+
+      angular.forEach(project, function(value, key) {
+          transformFields.forEach(function(item) {
+
+          if(key == item)
+              project[key] = new moment(value).format("YYYY-MM-DD");
+          })
+      });
+
+  		$scope.submmitPromise = ProjectCreateService.create(project).then(
+  			function(response) {
+  				Notification.success('El proyecto ha sido creado satisfactoriamente');
+  				$state.go('coordinations');
+  			},
+  			function(errorResponse) {
+          console.log('errorResponse', errorResponse);
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+  	  	}
+  		);
+
+    }
+
+}]);
+
+
+app.service("ProjectCreateService", ['$http', 'APIConfig', function($http, APIConfig) {
+  this.create = function(object) {
+    var promise = $http.post(APIConfig.url + "projects/", object).then(function(response) {
+      return response.data;
+    });
+
+    return promise;
+  };
+
+
+  this.update = function(id, object) {
+
+    if(typeof(object.client) != Number)
+        object.client = object.client.id;
+
+    if(typeof(object.client) != Number)
+        object.client = object.client.id;
+
+    if(typeof(object.producer) != Number)
+        object.producer = object.producer.id;
+
+    if(object.observer && typeof(object.observer) != Number)
+        object.observer = object.observer.id;
+
+    delete(object.image)
+      var promise = $http.patch(APIConfig.url + "projects/" + id + "/" , object).then(function(response) {
+          return response.data;
+      });
+
+      return promise;
+  };
+}]);
+
+app.service("UserListService", ['$http', 'APIConfig', function($http, APIConfig) {
+  this.getList = function(object) {
+    var params = $.param(object);
+
+    var promise = $http.get(APIConfig.url + "users/?" + params).then(function(response) {
+      return response.data;
+    });
+
+    return promise;
+  };
+}]);
+
+
 app.controller('ProfileController', ['$scope','ProducerGetListService','UserService','ProjectListService','APIConfig',
  function($scope, ProducerGetListService, UserService, ProjectListService, APIConfig) {
 
@@ -1457,6 +1565,7 @@ app.service('UserService', function($http, APIConfig,$q, StorageService) {
         var results = undefined;
         var deferred = $q.defer();
         URL = APIConfig.url + 'users/';
+        params = $.param(params);
 
         $http.get(URL+'?'+ params)
           .then(function(result) {
@@ -1502,114 +1611,6 @@ app.service('UserService', function($http, APIConfig,$q, StorageService) {
 
     }
 });
-
-
-app.controller('ProjectCreateController', [
-  '$scope', '$state', 'ProjectCreateService','UserService','Notification',
-  function($scope, $state, ProjectCreateService, UserService, Notification) {
-    $scope.submitted = false;
-
-    $scope.project = {};
-
-    UserService.me().then(function(response){
-
-      $scope.project.client = response.id;
-      $scope.client = response.name + " "+ response.first_surname + " " + response.second_surname;
-    }, function(error){
-      console.error("error",error);
-    })
-
-    var transformFields = [
-        'preparation_at',
-        'negotiation_at',
-        'execution_at',
-        'evaluation_at',
-
-        'accomplish_at',
-        'renegotiation_at',
-        'report_at',
-        'begin_at',
-    ];
-
-    $scope.submitForm = function() {
-      $scope.submitted = true;
-
-      if ($scope.projectForm.$invalid) {
-        Notification.error('El formulario contiene errores');
-        return;
-      }
-
-      var project = angular.copy($scope.project);
-
-      angular.forEach(project, function(value, key) {
-          transformFields.forEach(function(item) {
-
-          if(key == item)
-              project[key] = new moment(value).format("YYYY-MM-DD");
-          })
-      });
-
-  		$scope.submmitPromise = ProjectCreateService.create(project).then(
-  			function(response) {
-  				Notification.success('El proyecto ha sido creado satisfactoriamente');
-  				$state.go('coordinations');
-  			},
-  			function(errorResponse) {
-          console.log('errorResponse', errorResponse);
-          $scope.status = errorResponse.statusText || 'Request failed';
-          $scope.errors = errorResponse.data;
-  	  	}
-  		);
-
-    }
-
-}]);
-
-
-app.service("ProjectCreateService", ['$http', 'APIConfig', function($http, APIConfig) {
-  this.create = function(object) {
-    var promise = $http.post(APIConfig.url + "projects/", object).then(function(response) {
-      return response.data;
-    });
-
-    return promise;
-  };
-
-
-  this.update = function(id, object) {
-
-    if(typeof(object.client) != Number)
-        object.client = object.client.id;
-
-    if(typeof(object.client) != Number)
-        object.client = object.client.id;
-
-    if(typeof(object.producer) != Number)
-        object.producer = object.producer.id;
-
-    if(object.observer && typeof(object.observer) != Number)
-        object.observer = object.observer.id;
-
-    delete(object.image)
-      var promise = $http.patch(APIConfig.url + "projects/" + id + "/" , object).then(function(response) {
-          return response.data;
-      });
-
-      return promise;
-  };
-}]);
-
-app.service("UserListService", ['$http', 'APIConfig', function($http, APIConfig) {
-  this.getList = function(object) {
-    var params = $.param(object);
-
-    var promise = $http.get(APIConfig.url + "users/?" + params).then(function(response) {
-      return response.data;
-    });
-
-    return promise;
-  };
-}]);
 
 
 app.controller('ProjectDetailController', [
@@ -1966,6 +1967,77 @@ app.service("ProjectGetService", ['$http', 'APIConfig', function($http, APIConfi
 }]);
 
 
+app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateService', 'UserService','type', 'reportType', '$scope','Notification',
+ function($mdDialog, $state, ReportCreateService, UserService, type, reportType, $scope, Notification) {
+   var $ctrl = this;
+    $ctrl.reportTypeOptions = {
+      "finish":{
+        'name':'finish',
+        'title':'Reporte de término '
+      },
+      "advance":{
+        'name':'advance',
+        'title':'Reporte de avance '
+      }
+    }
+    $ctrl.reportTypeOptions = $ctrl.reportTypeOptions[reportType];
+
+    $ctrl.submitted = false;
+    $ctrl.report = {
+      'progress':'25'
+    }
+
+    $ctrl.report[type] = $state.params.id;
+    if(type == 'action'){
+      $ctrl.report['project'] = $scope.currentAction.project.id;
+    }
+
+    $ctrl.sendReport = function(){
+      $ctrl.submitted = true;
+
+      if ($ctrl.reportForm.$invalid) {
+        $ctrl.errors = 'El formulario no es válido.';
+        return;
+      }
+
+      UserService.me().then(function(response){
+        $ctrl.report.created_by = response.id
+
+        $ctrl.submmitPromise = ReportCreateService.create($ctrl.report).then(
+          function (response) {
+            $mdDialog.hide({"created":true});
+
+          },
+          function (errorResponse) {
+            console.error('errorResponse', errorResponse);
+            $ctrl.status = errorResponse.statusText || 'Request failed';
+            $ctrl.errors = errorResponse.data;
+          }
+        );
+      }, function(error){
+        console.error("error",error);
+      })
+    }
+
+    $ctrl.cancel = function () {
+      $mdDialog.hide();
+    };
+}]);
+
+
+app.service("ReportCreateService", ['$http', 'APIConfig', function($http, APIConfig) {
+
+    this.create = function(object) {
+        var promise = $http.post(APIConfig.url + "reports/", object).then(function(response) {
+            return response;
+        });
+
+        return promise;
+    };
+
+}]);
+
+
 app.controller('ProjectUpdateController', [
   '$scope', '$state', 'ProjectGetService', 'ProjectUpdateService','APIConfig','Notification',
   function($scope, $state, ProjectGetService, ProjectUpdateService, APIConfig,Notification) {
@@ -2173,74 +2245,49 @@ app.service("ProjectListService", ['$http', 'APIConfig', function($http, APIConf
 }]);
 
 
-app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateService', 'UserService','type', 'reportType', '$scope','Notification',
- function($mdDialog, $state, ReportCreateService, UserService, type, reportType, $scope, Notification) {
-   var $ctrl = this;
-    $ctrl.reportTypeOptions = {
-      "finish":{
-        'name':'finish',
-        'title':'Reporte de término '
-      },
-      "advance":{
-        'name':'advance',
-        'title':'Reporte de avance '
-      }
-    }
-    $ctrl.reportTypeOptions = $ctrl.reportTypeOptions[reportType];
+app.controller('ReportDetailController', ['$scope', '$mdDialog', 'report',function( $scope, $mdDialog, report) {
+  console.log("detail" , report);
+  var $ctrl = this;
 
-    $ctrl.submitted = false;
-    $ctrl.report = {
-      'progress':'25'
-    }
-
-    $ctrl.report[type] = $state.params.id;
-    if(type == 'action'){
-      $ctrl.report['project'] = $scope.currentAction.project.id;
-    }
-
-    $ctrl.sendReport = function(){
-      $ctrl.submitted = true;
-
-      if ($ctrl.reportForm.$invalid) {
-        $ctrl.errors = 'El formulario no es válido.';
-        return;
-      }
-
-      UserService.me().then(function(response){
-        $ctrl.report.created_by = response.id
-
-        $ctrl.submmitPromise = ReportCreateService.create($ctrl.report).then(
-          function (response) {
-            $mdDialog.hide({"created":true});
-
-          },
-          function (errorResponse) {
-            console.error('errorResponse', errorResponse);
-            $ctrl.status = errorResponse.statusText || 'Request failed';
-            $ctrl.errors = errorResponse.data;
-          }
-        );
-      }, function(error){
-        console.error("error",error);
-      })
-    }
-
-    $ctrl.cancel = function () {
-      $mdDialog.hide();
-    };
+  $ctrl.report = report;
+  $ctrl.cancel = function () {
+    $mdDialog.hide();
+  };
 }]);
 
 
-app.service("ReportCreateService", ['$http', 'APIConfig', function($http, APIConfig) {
+app.service("ReportGetService", ['$http', 'APIConfig', function($http, APIConfig) {
 
-    this.create = function(object) {
-        var promise = $http.post(APIConfig.url + "reports/", object).then(function(response) {
-            return response;
+    this.getById = function(id) {
+        var promise = $http.get(APIConfig.url + "reports/" + id + "/").then(function(response) {
+            return response.data;
         });
 
         return promise;
-    };
+    }
 
+    this.getList = function(object) {
+  		var params = $.param(object);
+  	  var promise = $http.get(APIConfig.url + "reports/?" + params).then(function(response) {
+  	  return response.data;
+  	});
+  	  return promise;
+  	};
+
+
+}]);
+
+
+app.service("StadisticsService", ['$http', 'APIConfig', function($http, APIConfig) {
+	this.get = function(object = {}) {
+	  var params = $.param(object);
+
+	  var promise = $http.get(APIConfig.url + "actions/stadistics?" + params).then(function(response) {
+
+	  return response.data;
+	});
+	  return promise;
+	};
 }]);
 
 
@@ -2292,64 +2339,32 @@ app.controller('UserCreateController', [ '$state', 'UserService', '$scope', 'Not
 }]);
 
 
-app.controller('ReportDetailController', ['$scope', '$mdDialog', 'report',function( $scope, $mdDialog, report) {
-  console.log("detail" , report);
-  var $ctrl = this;
-
-  $ctrl.report = report;
-  $ctrl.cancel = function () {
-    $mdDialog.hide();
-  };
-}]);
-
-
-app.service("ReportGetService", ['$http', 'APIConfig', function($http, APIConfig) {
-
-    this.getById = function(id) {
-        var promise = $http.get(APIConfig.url + "reports/" + id + "/").then(function(response) {
-            return response.data;
-        });
-
-        return promise;
-    }
-
-    this.getList = function(object) {
-  		var params = $.param(object);
-  	  var promise = $http.get(APIConfig.url + "reports/?" + params).then(function(response) {
-  	  return response.data;
-  	});
-  	  return promise;
-  	};
-
-
-}]);
-
-
-app.service("StadisticsService", ['$http', 'APIConfig', function($http, APIConfig) {
-	this.get = function(object = {}) {
-	  var params = $.param(object);
-
-	  var promise = $http.get(APIConfig.url + "actions/stadistics?" + params).then(function(response) {
-
-	  return response.data;
-	});
-	  return promise;
-	};
-}]);
-
-
 app.controller('UserListController', [ '$state', 'UserService', '$scope',
  function( $state, UserService, $scope) {
-
+   $scope.currentPage = 1 ;
    $scope.users = {}
+   $scope.tempUserArray = {}
+
+   $scope.init = function () {
+     $scope.getUsers()
+
+   }
 
 ///////////////////////////calling service functions ///////////////////////////
-
-   UserService.getList({}).then(
-     function (response) {
-       $scope.users = response;
-     }
-   )
+  $scope.getUsers = function () {
+    var query = {
+      'page': $scope.currentPage,
+    }
+    UserService.getList(query).then(
+      function (response) {
+        console.log(response,"response");
+        $scope.tempUserArray.paginated_by = response.paginated_by;
+        $scope.tempUserArray.count = response.count;
+        console.log($scope.tempUserArray, "cuenta");
+        $scope.users = response;
+      }
+    )
+  }
 
 ///////////////////////////end calling service functions ///////////////////////////
 
@@ -2362,52 +2377,13 @@ app.controller('UserListController', [ '$state', 'UserService', '$scope',
   }
 
   $scope.chunkArray = function(index) {
-    if($scope.users.results)
-      return $scope.users.results.slice(index*4, (index*4)+4);
+      if($scope.users.results){
+        return $scope.users.results.slice(index*4, (index*4)+4);;
+      }
   }
   ///////////////////////////end  of template interaction functions ///////////////////////////
 
 }]);
-
-
-
-app.directive('myHeader', ['URLTemplates','UserService',
-
-  /** @ngInject */
-  function myHeader(URLTemplates) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/_components/header/header.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: HeaderController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    /** @ngInject */
-    function HeaderController(APIConfig, $state, StorageService, UserService) {
-      var vm = this;
-      UserService.me().then(function(result){
-        vm.user = result
-      })
-
-      if (!StorageService.get('token')) {
-        $state.go('login');
-      }
-
-      vm.logout = function() {
-        StorageService.remove('token');
-        StorageService.remove('user');
-        $state.go('login');
-      }
-
-    }
-  }
-]);
 
 
 
@@ -2579,32 +2555,45 @@ app.directive('timeLine', ['URLTemplates',
 
 ]);
 
-app.directive("panelLoader", ['$compile',function ($compile,$scope) {
-    return {
-       restrict: 'A',
-        scope: {
-            panelLoader: "="
-        },
-        link: function (scope, element, attributes) {
-          var template ='<div  layout="row" layout-sm="column" layout-align="space-around"><md-progress-circular md-mode="indeterminate"></md-progress-circular></div>';
 
-            scope.$watch('panelLoader', function (val) {
-              if(typeof scope.panelLoader != 'undefined'){
-                element.append($compile(template)(scope));
 
-                  scope.panelLoader.then(function functionName() {
-                      element = angular.element(element)
-                      var child = element.children().length;
-                      element.children()[child-1].remove();
+app.directive('myHeader', ['URLTemplates','UserService',
 
-                  }, function () {
-                    console.log("fail");
-                  })
-              }
-            })
-        }
+  /** @ngInject */
+  function myHeader(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/_components/header/header.html',
+      scope: {
+          creationDate: '='
+      },
+      controller: HeaderController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    /** @ngInject */
+    function HeaderController(APIConfig, $state, StorageService, UserService) {
+      var vm = this;
+      UserService.me().then(function(result){
+        vm.user = result
+      })
+
+      if (!StorageService.get('token')) {
+        $state.go('login');
+      }
+
+      vm.logout = function() {
+        StorageService.remove('token');
+        StorageService.remove('user');
+        $state.go('login');
+      }
+
     }
-}]);
+  }
+]);
 
 
 
@@ -2665,6 +2654,33 @@ app.directive('userSearch', ['URLTemplates', 'UserListService', '$timeout',
   }
 
 ]);
+
+app.directive("panelLoader", ['$compile',function ($compile,$scope) {
+    return {
+       restrict: 'A',
+        scope: {
+            panelLoader: "="
+        },
+        link: function (scope, element, attributes) {
+          var template ='<div  layout="row" layout-sm="column" layout-align="space-around"><md-progress-circular md-mode="indeterminate"></md-progress-circular></div>';
+
+            scope.$watch('panelLoader', function (val) {
+              if(typeof scope.panelLoader != 'undefined'){
+                element.append($compile(template)(scope));
+
+                  scope.panelLoader.then(function functionName() {
+                      element = angular.element(element)
+                      var child = element.children().length;
+                      element.children()[child-1].remove();
+
+                  }, function () {
+                    console.log("fail");
+                  })
+              }
+            })
+        }
+    }
+}]);
 
 
 app.controller('CloseActionModalController', ['$scope','$mdDialog','action','Notification', 'ActionCreateService',
