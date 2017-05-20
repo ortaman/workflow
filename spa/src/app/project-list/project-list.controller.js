@@ -23,7 +23,6 @@ app.controller('ProjectListController', [
 		var query = {
 			"page": $scope.currentPage,
 			"phase":$scope.listForm.phase,
-			"client":$scope.user.id
 		};
 
 		ProjectListService.getList(query).then(
