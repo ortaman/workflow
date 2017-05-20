@@ -187,369 +187,6 @@ app.service('StorageService', function($window) {
  
 });
 
-app.controller('ActionCreateController', [
-  '$scope', '$state', 'ProjectListService', 'ActionCreateService', 'ProjectGetService', 'ActionGetService','Notification',
-  function($scope, $state, ProjectListService, ActionCreateService, ProjectGetService, ActionGetService, Notification) {
-
-  $scope.action = {};
-  $scope.submitted = false;
-  $scope.projectId = $state.params.projectId.toString();
-  $scope.actionId = $state.params.actionId.toString();
-
-  $scope.updateDates = function() {
-
-    switch($scope.action.phase) {
-        case 'Preparación':
-            $scope.minDate = new Date($scope.project.begin_at);
-            $scope.maxDate = new Date($scope.project.preparation_at);
-            break;
-        case 'Negociación':
-            $scope.maxDate = new Date($scope.project.negotiation_at);
-            $scope.minDate = new Date($scope.project.preparation_at);
-            break;
-        case 'Ejecución':
-            $scope.maxDate = new Date($scope.project.ejecution_at);
-            $scope.minDate = new Date($scope.project.negotiation_at);
-            break;
-        default:
-            $scope.maxDate = new Date($scope.project.evaluation_at);
-            $scope.minDate = new Date($scope.project.ejecution_at);
-    }
-
-  };
-
-  $scope.init = function() {
-    $scope.getProject();
-    if($scope.actionId)
-      $scope.getParentAction($scope.actionId);
-  }
-
-  $scope.submit = function (_action) {
-    $scope.submitted = true;
-
-    if ($scope.actionForm.$invalid) {
-      Notification.error('El formulario contiene errores');
-      console.log($scope.actionForm);
-      return;
-    }
-
-    var action = angular.copy(_action);
-    action.project = $scope.projectId;
-    action.client = $scope.project.producer.id;
-    if($scope.actionId)
-      action.parent_action = $scope.actionId;
-
-    $scope.submmitPromise = ActionCreateService.create(action).then(
-      function (response) {
-        Notification.success('La accion ha sido creada satisfactoriamente');
-
-        if($scope.actionId)
-          $state.go('actionDetail', {id:$scope.actionId})
-        else
-          $state.go('projectDetail', {id:$scope.project.id})
-      },
-      function (errorResponse) {
-        console.log('errorResponse', errorResponse);
-        $scope.status = errorResponse.statusText || 'Request failed';
-        $scope.errors = errorResponse.data;
-      }
-    );
-
-  }
-
-
-  $scope.getProject = function(){
-    ProjectGetService.getById($state.params.projectId).then(
-      function(response) {
-        console.log('ProjectGet', response);
-        $scope.project = response;
-
-        $scope.action.project = $scope.project.name;
-        $scope.action.client = $scope.project.producer.name + " "+ $scope.project.producer.first_surname + " " + $scope.project.producer.second_surname;
-        $scope.action.phase = $scope.project.phase;
-        $scope.updateDates();
-      },
-      function(errorResponse) {
-        console.log('errorResponse', errorResponse);
-        $scope.status = errorResponse.statusText || 'Request failed';
-        $scope.errors = errorResponse.data;
-      }
-    );
-  }
-
-  $scope.getParentAction = function(id){
-    ActionGetService.getById(id).then(
-      function(response) {
-
-        $scope.action.parent_action = response;
-        console.log('actiontGet', $scope.action);
-
-      },
-      function(errorResponse) {
-        console.log('errorResponse', errorResponse);
-        $scope.status = errorResponse.statusText || 'Request failed';
-        $scope.errors = errorResponse.data;
-      }
-    );
-  }
-}]);
-
-
-app.service("ActionCreateService", ['$http', 'APIConfig', function($http, APIConfig) {
-
-    this.create = function(object) {
-
-        var transformFields = [
-            'begin_at',
-            'accomplish_at',
-            'report_at',
-        ];
-
-        angular.forEach(object, function(value, key) {
-            transformFields.forEach(function(item) {
-
-            if(key == item)
-                object[key] = new moment(value).format("YYYY-MM-DD");
-            })
-        });
-
-        var promise = $http.post(APIConfig.url + "actions/", object).then(function(response) {
-            return response;
-        });
-
-        return promise;
-    };
-
-
-    this.update = function(id,object) {
-      var transformFields = ['project', 'producer', 'client', 'observer'];
-      var transformDateFields = ['accomplish_at','begin_at', 'report_at'];
-
-        angular.forEach(transformFields, function(item){
-          if (object[item] && typeof object[item] != 'number')
-              object[item] = object[item].id
-        })
-        angular.forEach(transformDateFields, function(item){
-              object[item] = moment(object[item]).format('YYYY-MM-DD')
-        })
-
-        var promise = $http.patch(APIConfig.url + "actions/"+id+"/", object).then(function(response) {
-            return response;
-        });
-
-        return promise;
-    };
-
-}]);
-
-
-app.controller('ActionListController', ['$scope', 'ActionListService', 'ProducerGetListService','ProjectListService',
- function($scope, ActionListService, ProducerGetListService, ProjectListService) {
-
-   $scope.producersCurrentPage = 1;
-   $scope.producers = []
-   $scope.projects = [];
-
-   $scope.init = function () {
-     $scope.producerPageChanged();
-     $scope.getProjects();
-   }
-
-  	$scope.producerPageChanged = function() {
-        var query = {
-          "page": $scope.producersCurrentPage,
-  	  		"project_id":$scope.selectedProject ,
-  	  		"parent_action": "none",
-  	  	};
-        if($scope.selectedProject){
-          ProducerGetListService.getList(query).then(
-            function(response) {
-              console.log("respue", response);
-              $scope.producers = response
-
-            },
-            function(errorResponse) {
-              $scope.status = errorResponse.statusText || 'Request failed';
-              $scope.errors = errorResponse.data;
-            }
-          );
-        }
-
-    };
-
-    $scope.onProjectSelect =  function (project) {
-      $scope.selectedProject = project;
-      $scope.producerPageChanged(project);
-
-    }
-
-    $scope.getProjects = function(){
-      var query = {}
-      ProjectListService.getList(query).then(
-        function(response) {
-           $scope.projects = response;
-        },
-        function(errorResponse) {
-          console.log('errorResponse', errorResponse);
-          $scope.status = errorResponse.statusText || 'Request failed';
-          $scope.errors = errorResponse.data;
-        }
-      );
-    }
-
-    //get
-    $scope.getPercentage = function (producer) {
-      var result = 0 ;
-      console.log(producer);
-      result = (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories)
-      result = result  == 'NaN' ? result:0;
-      return result;
-    }
-}]);
-
-
-app.service("ActionListService", ['$http', 'APIConfig', function($http, APIConfig) {
-
-	var getColor = function (action) {
-			if(moment(action.report_at).isBefore(moment()) && action.report == 0)
-				return 'red'
-
-			if(moment(action.report_at).isAfter(moment()) && action.report == 0)
-				return 'yellow'
-
-		return 'green'
-	}
-
-	this.getList = function(object) {
-		var params = $.param(object);
-	  var promise = $http.get(APIConfig.url + "actions/?" + params).then(function(response) {
-			angular.forEach(response.data.results, function(item){
-
-				item.project.image = APIConfig.baseUrl+ item.project.image;
-				item.producer.photo = APIConfig.baseUrl+ item.producer.photo;
-				item.client.photo = APIConfig.baseUrl+ item.client.photo;
-				item.color = getColor(item);
-			})
-	  return response.data;
-	});
-	  return promise;
-	};
-
-}]);
-
-
-app.controller('ActionUpdateController', [
-  '$scope', '$state','ActionGetService', 'ActionUpdateService','Notification',
-  function($scope, $state, ActionGetService, ActionUpdateService, Notification) {
-
-    $scope.submitted = false;
-    $scope.action = {};
-
-    $scope.updateLimitDates = function() {
-
-      switch($scope.action.phase) {
-          case 'Preparación':
-              $scope.minDate = new Date($scope.action.project.begin_at);
-              $scope.maxDate = new Date($scope.action.project.preparation_at);
-              break;
-          case 'Negociación':
-              $scope.maxDate = new Date($scope.action.project.negotiation_at);
-              $scope.minDate = new Date($scope.action.project.preparation_at);
-              break;
-          case 'Ejecución':
-              $scope.maxDate = new Date($scope.action.project.ejecution_at);
-              $scope.minDate = new Date($scope.action.project.negotiation_at);
-              break;
-          default:
-              $scope.maxDate = new Date($scope.action.project.evaluation_at);
-              $scope.minDate = new Date($scope.action.project.ejecution_at);
-      }
-
-    };
-
-    $scope.getActionByIdInit = function() {
-      ActionGetService.getById($state.params.id).then(
-        function(response) {
-          console.log('response', response);
-          $scope.action = response;
-          $scope.updateLimitDates();
-        },
-        function(errorResponse) {
-          console.log('errorResponse', errorResponse);
-          $scope.status = errorResponse.statusText || 'Request failed';
-          $scope.errors = errorResponse.data;
-        }
-      );
-    }
-
-    $scope.submit = function() {
-      $scope.submitted = true;
-
-      if ($scope.actionForm.$invalid) {
-        Notification.error('El formulario contiene errores');
-        return;
-      }
-
-      var action = angular.copy($scope.action);
-
-  		$scope.submmitPromise = ActionUpdateService.update($state.params.id, action).then(
-  			function(response) {
-          Notification.success('La acción ha sido actualizada');
-
-          if(action.parent_action)
-            $state.go('actionDetail',{id:action.parent_action});
-          else
-  				  $state.go('projectDetail',{id:action.project});
-  			},
-  			function(errorResponse) {
-          console.log('errorResponse', errorResponse);
-          $scope.status = errorResponse.statusText || 'Request failed';
-          $scope.errors = errorResponse.data;
-  	  	}
-  		);
-
-    }
-
-}]);
-
-
-app.service("ActionUpdateService", ['$http', 'APIConfig', function($http, APIConfig) {
-
-    this.update = function(id, object) {
-
-        if(typeof(object.project) != Number)
-            object.project = object.project.id;
-
-        if(typeof(object.client) != Number)
-            object.client = object.client.id;
-
-        if(object.parent_action && typeof(object.parent_action) != Number)
-            object.parent_action = object.parent_action.id;
-
-        var transformFields = [
-            'begin_at',
-            'accomplish_at',
-            'report_at',
-        ];
-
-        angular.forEach(object, function(value, key) {
-            transformFields.forEach(function(item) {
-                if(key == item)
-                    object[key] = new moment(value).format("YYYY-MM-DD");
-            })
-        });
-
-        var promise = $http.put(APIConfig.url + "actions/" + id + "/" , object).then(function(response) {
-            return response.data;
-        });
-
-        return promise;
-
-    };
-
-}]);
-
-
 app.controller('ActionDetailController', [
 	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig',
 	'ProducerGetListService', 'ActionGetService','ReportGetService','$mdDialog',
@@ -817,6 +454,369 @@ app.service("ActionGetService", ['$http', 'APIConfig', function($http, APIConfig
     }
 
 
+
+}]);
+
+
+app.controller('ActionCreateController', [
+  '$scope', '$state', 'ProjectListService', 'ActionCreateService', 'ProjectGetService', 'ActionGetService','Notification',
+  function($scope, $state, ProjectListService, ActionCreateService, ProjectGetService, ActionGetService, Notification) {
+
+  $scope.action = {};
+  $scope.submitted = false;
+  $scope.projectId = $state.params.projectId.toString();
+  $scope.actionId = $state.params.actionId.toString();
+
+  $scope.updateDates = function() {
+
+    switch($scope.action.phase) {
+        case 'Preparación':
+            $scope.minDate = new Date($scope.project.begin_at);
+            $scope.maxDate = new Date($scope.project.preparation_at);
+            break;
+        case 'Negociación':
+            $scope.maxDate = new Date($scope.project.negotiation_at);
+            $scope.minDate = new Date($scope.project.preparation_at);
+            break;
+        case 'Ejecución':
+            $scope.maxDate = new Date($scope.project.ejecution_at);
+            $scope.minDate = new Date($scope.project.negotiation_at);
+            break;
+        default:
+            $scope.maxDate = new Date($scope.project.evaluation_at);
+            $scope.minDate = new Date($scope.project.ejecution_at);
+    }
+
+  };
+
+  $scope.init = function() {
+    $scope.getProject();
+    if($scope.actionId)
+      $scope.getParentAction($scope.actionId);
+  }
+
+  $scope.submit = function (_action) {
+    $scope.submitted = true;
+
+    if ($scope.actionForm.$invalid) {
+      Notification.error('El formulario contiene errores');
+      console.log($scope.actionForm);
+      return;
+    }
+
+    var action = angular.copy(_action);
+    action.project = $scope.projectId;
+    action.client = $scope.project.producer.id;
+    if($scope.actionId)
+      action.parent_action = $scope.actionId;
+
+    $scope.submmitPromise = ActionCreateService.create(action).then(
+      function (response) {
+        Notification.success('La accion ha sido creada satisfactoriamente');
+
+        if($scope.actionId)
+          $state.go('actionDetail', {id:$scope.actionId})
+        else
+          $state.go('projectDetail', {id:$scope.project.id})
+      },
+      function (errorResponse) {
+        console.log('errorResponse', errorResponse);
+        $scope.status = errorResponse.statusText || 'Request failed';
+        $scope.errors = errorResponse.data;
+      }
+    );
+
+  }
+
+
+  $scope.getProject = function(){
+    ProjectGetService.getById($state.params.projectId).then(
+      function(response) {
+        console.log('ProjectGet', response);
+        $scope.project = response;
+
+        $scope.action.project = $scope.project.name;
+        $scope.action.client = $scope.project.producer.name + " "+ $scope.project.producer.first_surname + " " + $scope.project.producer.second_surname;
+        $scope.action.phase = $scope.project.phase;
+        $scope.updateDates();
+      },
+      function(errorResponse) {
+        console.log('errorResponse', errorResponse);
+        $scope.status = errorResponse.statusText || 'Request failed';
+        $scope.errors = errorResponse.data;
+      }
+    );
+  }
+
+  $scope.getParentAction = function(id){
+    ActionGetService.getById(id).then(
+      function(response) {
+
+        $scope.action.parent_action = response;
+        console.log('actiontGet', $scope.action);
+
+      },
+      function(errorResponse) {
+        console.log('errorResponse', errorResponse);
+        $scope.status = errorResponse.statusText || 'Request failed';
+        $scope.errors = errorResponse.data;
+      }
+    );
+  }
+}]);
+
+
+app.service("ActionCreateService", ['$http', 'APIConfig', function($http, APIConfig) {
+
+    this.create = function(object) {
+
+        var transformFields = [
+            'begin_at',
+            'accomplish_at',
+            'report_at',
+        ];
+
+        angular.forEach(object, function(value, key) {
+            transformFields.forEach(function(item) {
+
+            if(key == item)
+                object[key] = new moment(value).format("YYYY-MM-DD");
+            })
+        });
+
+        var promise = $http.post(APIConfig.url + "actions/", object).then(function(response) {
+            return response;
+        });
+
+        return promise;
+    };
+
+
+    this.update = function(id,object) {
+      var transformFields = ['project', 'producer', 'client', 'observer'];
+      var transformDateFields = ['accomplish_at','begin_at', 'report_at'];
+
+        angular.forEach(transformFields, function(item){
+          if (object[item] && typeof object[item] != 'number')
+              object[item] = object[item].id
+        })
+        angular.forEach(transformDateFields, function(item){
+              object[item] = moment(object[item]).format('YYYY-MM-DD')
+        })
+
+        var promise = $http.patch(APIConfig.url + "actions/"+id+"/", object).then(function(response) {
+            return response;
+        });
+
+        return promise;
+    };
+
+}]);
+
+
+app.controller('ActionUpdateController', [
+  '$scope', '$state','ActionGetService', 'ActionUpdateService','Notification',
+  function($scope, $state, ActionGetService, ActionUpdateService, Notification) {
+
+    $scope.submitted = false;
+    $scope.action = {};
+
+    $scope.updateLimitDates = function() {
+
+      switch($scope.action.phase) {
+          case 'Preparación':
+              $scope.minDate = new Date($scope.action.project.begin_at);
+              $scope.maxDate = new Date($scope.action.project.preparation_at);
+              break;
+          case 'Negociación':
+              $scope.maxDate = new Date($scope.action.project.negotiation_at);
+              $scope.minDate = new Date($scope.action.project.preparation_at);
+              break;
+          case 'Ejecución':
+              $scope.maxDate = new Date($scope.action.project.ejecution_at);
+              $scope.minDate = new Date($scope.action.project.negotiation_at);
+              break;
+          default:
+              $scope.maxDate = new Date($scope.action.project.evaluation_at);
+              $scope.minDate = new Date($scope.action.project.ejecution_at);
+      }
+
+    };
+
+    $scope.getActionByIdInit = function() {
+      ActionGetService.getById($state.params.id).then(
+        function(response) {
+          console.log('response', response);
+          $scope.action = response;
+          $scope.updateLimitDates();
+        },
+        function(errorResponse) {
+          console.log('errorResponse', errorResponse);
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+        }
+      );
+    }
+
+    $scope.submit = function() {
+      $scope.submitted = true;
+
+      if ($scope.actionForm.$invalid) {
+        Notification.error('El formulario contiene errores');
+        return;
+      }
+
+      var action = angular.copy($scope.action);
+
+  		$scope.submmitPromise = ActionUpdateService.update($state.params.id, action).then(
+  			function(response) {
+          Notification.success('La acción ha sido actualizada');
+
+          if(action.parent_action)
+            $state.go('actionDetail',{id:action.parent_action});
+          else
+  				  $state.go('projectDetail',{id:action.project});
+  			},
+  			function(errorResponse) {
+          console.log('errorResponse', errorResponse);
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+  	  	}
+  		);
+
+    }
+
+}]);
+
+
+app.service("ActionUpdateService", ['$http', 'APIConfig', function($http, APIConfig) {
+
+    this.update = function(id, object) {
+
+        if(typeof(object.project) != Number)
+            object.project = object.project.id;
+
+        if(typeof(object.client) != Number)
+            object.client = object.client.id;
+
+        if(object.parent_action && typeof(object.parent_action) != Number)
+            object.parent_action = object.parent_action.id;
+
+        var transformFields = [
+            'begin_at',
+            'accomplish_at',
+            'report_at',
+        ];
+
+        angular.forEach(object, function(value, key) {
+            transformFields.forEach(function(item) {
+                if(key == item)
+                    object[key] = new moment(value).format("YYYY-MM-DD");
+            })
+        });
+
+        var promise = $http.put(APIConfig.url + "actions/" + id + "/" , object).then(function(response) {
+            return response.data;
+        });
+
+        return promise;
+
+    };
+
+}]);
+
+
+app.controller('ActionListController', ['$scope', 'ActionListService', 'ProducerGetListService','ProjectListService',
+ function($scope, ActionListService, ProducerGetListService, ProjectListService) {
+
+   $scope.producersCurrentPage = 1;
+   $scope.producers = []
+   $scope.projects = [];
+
+   $scope.init = function () {
+     $scope.producerPageChanged();
+     $scope.getProjects();
+   }
+
+  	$scope.producerPageChanged = function() {
+        var query = {
+          "page": $scope.producersCurrentPage,
+  	  		"project_id":$scope.selectedProject ,
+  	  		"parent_action": "none",
+  	  	};
+        if($scope.selectedProject){
+          ProducerGetListService.getList(query).then(
+            function(response) {
+              console.log("respue", response);
+              $scope.producers = response
+
+            },
+            function(errorResponse) {
+              $scope.status = errorResponse.statusText || 'Request failed';
+              $scope.errors = errorResponse.data;
+            }
+          );
+        }
+
+    };
+
+    $scope.onProjectSelect =  function (project) {
+      $scope.selectedProject = project;
+      $scope.producerPageChanged(project);
+
+    }
+
+    $scope.getProjects = function(){
+      var query = {}
+      ProjectListService.getList(query).then(
+        function(response) {
+           $scope.projects = response;
+        },
+        function(errorResponse) {
+          console.log('errorResponse', errorResponse);
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+        }
+      );
+    }
+
+    //get
+    $scope.getPercentage = function (producer) {
+      var result = 0 ;
+      console.log(producer);
+      result = (producer.satisfactories*100)/(producer.open+ producer.unsatisfactories+ producer.satisfactories)
+      result = result  == 'NaN' ? result:0;
+      return result;
+    }
+}]);
+
+
+app.service("ActionListService", ['$http', 'APIConfig', function($http, APIConfig) {
+
+	var getColor = function (action) {
+			if(moment(action.report_at).isBefore(moment()) && action.report == 0)
+				return 'red'
+
+			if(moment(action.report_at).isAfter(moment()) && action.report == 0)
+				return 'yellow'
+
+		return 'green'
+	}
+
+	this.getList = function(object) {
+		var params = $.param(object);
+	  var promise = $http.get(APIConfig.url + "actions/?" + params).then(function(response) {
+			angular.forEach(response.data.results, function(item){
+
+				item.project.image = APIConfig.baseUrl+ item.project.image;
+				item.producer.photo = APIConfig.baseUrl+ item.producer.photo;
+				item.client.photo = APIConfig.baseUrl+ item.client.photo;
+				item.color = getColor(item);
+			})
+	  return response.data;
+	});
+	  return promise;
+	};
 
 }]);
 
@@ -1606,6 +1606,103 @@ app.service("UserListService", ['$http', 'APIConfig', function($http, APIConfig)
 }]);
 
 
+app.controller('ProjectListController', [
+	'$scope', 'ProjectListService', 'APIConfig','UserService',
+	function($scope, ProjectListService, APIConfig, UserService) {
+
+	$scope.currentPage = 1;
+	$scope.listForm = {
+		phase : 'Preparación',
+		level : 'time'
+	}
+
+	$scope.init = function () {
+		UserService.me().then(
+			function(response){
+				$scope.user = response;
+				$scope.pageChanged();
+				$scope.getProjectStadistics();
+			}
+		)
+	}
+	$scope.pageChanged = function() {
+
+		var query = {
+			"page": $scope.currentPage,
+			"phase":$scope.listForm.phase,
+			"client":$scope.user.id
+		};
+
+		ProjectListService.getList(query).then(
+			function(response) {
+				for (var i=0; i < response.results.length; i++) {
+				 response.results[i].color = $scope.getColor(response.results[i]);
+				}
+
+				$scope.data = response
+			},
+			function(errorResponse) {
+				console.error('errorResponse', errorResponse);
+				$scope.status = errorResponse.statusText || 'Request failed';
+				$scope.errors = errorResponse.data;
+			}
+		);
+	};
+
+	$scope.getProjectStadistics = function () {
+		ProjectListService.getProjectStadistics().then(
+			function (response) {
+				console.log(response);
+				$scope.stadistics = response
+			}, function (errors) {
+				console.error(errors);
+			}
+		)
+	}
+
+	$scope.onProjectSelect = function () {
+		$scope.pageChanged()
+	}
+
+	$scope.getColor = function (project) {
+			if(moment(project.report_at).isBefore(moment()) && project.report == 0)
+				return 'red-status-opacity'
+
+			if(moment(project.report_at).isAfter(moment()) && project.report == 0)
+				return 'yellow-status-opacity'
+
+		return 'green-status-opacity'
+	}
+}]);
+
+
+app.service("ProjectListService", ['$http', 'APIConfig', function($http, APIConfig) {
+	this.getList = function(object) {
+	  var params = $.param(object);
+
+	  var promise = $http.get(APIConfig.url + "projects/?" + params).then(function(response) {
+		angular.forEach(response.data.results, function(project){
+			project.image = APIConfig.baseUrl + project.image;
+			project.producer.photo = APIConfig.baseUrl + project.producer.photo;
+			project.client.photo = APIConfig.baseUrl + project.client.photo;
+		})
+
+	  return response.data;
+	});
+	  return promise;
+	};
+
+	this.getProjectStadistics = function() {
+		var promise = $http.get(APIConfig.url + "projects/stadistics/time").then(function(response) {
+			return response.data;
+		});
+
+		return promise;
+	}
+
+}]);
+
+
 app.controller('ProjectDetailController', [
 	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
 	'ReportGetService','ProjectCreateService', 'UserService', 'Notification',
@@ -1940,103 +2037,6 @@ app.service("ProjectGetService", ['$http', 'APIConfig', function($http, APIConfi
 }]);
 
 
-app.controller('ProjectListController', [
-	'$scope', 'ProjectListService', 'APIConfig','UserService',
-	function($scope, ProjectListService, APIConfig, UserService) {
-
-	$scope.currentPage = 1;
-	$scope.listForm = {
-		phase : 'Preparación',
-		level : 'time'
-	}
-
-	$scope.init = function () {
-		UserService.me().then(
-			function(response){
-				$scope.user = response;
-				$scope.pageChanged();
-				$scope.getProjectStadistics();
-			}
-		)
-	}
-	$scope.pageChanged = function() {
-
-		var query = {
-			"page": $scope.currentPage,
-			"phase":$scope.listForm.phase,
-			"client":$scope.user.id
-		};
-
-		ProjectListService.getList(query).then(
-			function(response) {
-				for (var i=0; i < response.results.length; i++) {
-				 response.results[i].color = $scope.getColor(response.results[i]);
-				}
-
-				$scope.data = response
-			},
-			function(errorResponse) {
-				console.error('errorResponse', errorResponse);
-				$scope.status = errorResponse.statusText || 'Request failed';
-				$scope.errors = errorResponse.data;
-			}
-		);
-	};
-
-	$scope.getProjectStadistics = function () {
-		ProjectListService.getProjectStadistics().then(
-			function (response) {
-				console.log(response);
-				$scope.stadistics = response
-			}, function (errors) {
-				console.error(errors);
-			}
-		)
-	}
-
-	$scope.onProjectSelect = function () {
-		$scope.pageChanged()
-	}
-
-	$scope.getColor = function (project) {
-			if(moment(project.report_at).isBefore(moment()) && project.report == 0)
-				return 'red-status-opacity'
-
-			if(moment(project.report_at).isAfter(moment()) && project.report == 0)
-				return 'yellow-status-opacity'
-
-		return 'green-status-opacity'
-	}
-}]);
-
-
-app.service("ProjectListService", ['$http', 'APIConfig', function($http, APIConfig) {
-	this.getList = function(object) {
-	  var params = $.param(object);
-
-	  var promise = $http.get(APIConfig.url + "projects/?" + params).then(function(response) {
-		angular.forEach(response.data.results, function(project){
-			project.image = APIConfig.baseUrl + project.image;
-			project.producer.photo = APIConfig.baseUrl + project.producer.photo;
-			project.client.photo = APIConfig.baseUrl + project.client.photo;
-		})
-
-	  return response.data;
-	});
-	  return promise;
-	};
-
-	this.getProjectStadistics = function() {
-		var promise = $http.get(APIConfig.url + "projects/stadistics/time").then(function(response) {
-			return response.data;
-		});
-
-		return promise;
-	}
-
-}]);
-
-
 app.controller('ProjectUpdateController', [
   '$scope', '$state', 'ProjectGetService', 'ProjectUpdateService','APIConfig','Notification',
   function($scope, $state, ProjectGetService, ProjectUpdateService, APIConfig,Notification) {
@@ -2327,6 +2327,158 @@ app.controller('UserListController', [ '$state', 'UserService', '$scope',
 
 }]);
 
+app.directive("panelLoader", ['$compile',function ($compile,$scope) {
+    return {
+       restrict: 'A',
+        scope: {
+            panelLoader: "="
+        },
+        link: function (scope, element, attributes) {
+          var template ='<div  layout="row" layout-sm="column" layout-align="space-around"><md-progress-circular md-mode="indeterminate"></md-progress-circular></div>';
+
+            scope.$watch('panelLoader', function (val) {
+              if(typeof scope.panelLoader != 'undefined'){
+                element.append($compile(template)(scope));
+
+                  scope.panelLoader.then(function functionName() {
+                      element = angular.element(element)
+                      var child = element.children().length;
+                      element.children()[child-1].remove();
+
+                  }, function () {
+                    console.log("fail");
+                  })
+              }
+            })
+        }
+    }
+}]);
+
+
+app.controller('CloseActionModalController', ['$scope','$mdDialog','action','Notification', 'ActionCreateService',
+  function($scope,$mdDialog, action, Notification, ActionCreateService) {
+
+    var $ctrl = this;
+    $ctrl.action = action;
+    $ctrl.submitted = false;
+
+    $ctrl.closeProject = function(status){
+      $ctrl.submitted = true;
+      var action = angular.copy($ctrl.action);
+      action.status = status
+      if (!status) {
+        Notification.success('El formulario no es válido.');
+        return;
+      }
+        $scope.submmitPromise = ActionCreateService.update(action.id, action).then(
+          function (response) {
+            $mdDialog.hide();
+            Notification.success("El proyecto ha pasado a estatus de cerrado")
+
+          },
+          function (errorResponse) {
+            console.error('errorResponse', errorResponse);
+            $ctrl.status = errorResponse.statusText || 'Request failed';
+            $ctrl.errors = errorResponse.data;
+          }
+        );
+
+    }
+
+    $ctrl.cancel = function () {
+      $mdDialog.hide();
+    };
+}]);
+
+
+
+app.directive('myNavbar', ['URLTemplates',
+
+  /** @ngInject */
+  function myNavbar(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/_components/navbar/navbar.html',
+      scope: {
+          creationDate: '='
+      },
+      controller: NavbarController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    /** @ngInject */
+    function NavbarController(APIConfig) {
+      var vm = this;
+
+      // "vm.creationDate" is available by directive option "bindToController: true"
+      vm.relativeDate = moment(vm.creationDate).fromNow();
+    }
+  }
+
+]);
+
+app.directive("fileread", [function () {
+    return {
+        scope: {
+            fileread: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader();
+                reader.onload = function (loadEvent) {
+                    scope.$apply(function () {
+                        scope.fileread = loadEvent.target.result;
+                    });
+                }
+                reader.readAsDataURL(changeEvent.target.files[0]);
+            });
+        }
+    }
+}]);
+
+
+
+app.directive('myHeader', ['URLTemplates','UserService',
+
+  /** @ngInject */
+  function myHeader(URLTemplates) {
+    var directive = {
+      restrict: 'E',
+      templateUrl: URLTemplates + 'app/_components/header/header.html',
+      scope: {
+          creationDate: '='
+      },
+      controller: HeaderController,
+      controllerAs: 'vm',
+      bindToController: true
+    };
+
+    return directive;
+
+    /** @ngInject */
+    function HeaderController(APIConfig, $state, StorageService, UserService) {
+      var vm = this;
+      UserService.me().then(function(result){
+        vm.user = result
+      })
+
+      if (!StorageService.get('token')) {
+        $state.go('login');
+      }
+
+      vm.logout = function() {
+        StorageService.remove('token');
+        StorageService.remove('user');
+        $state.go('login');
+      }
+
+    }
+  }
+]);
+
 app.directive("jqueryDate", ['$compile',function ($compile,$scope) {
     return {
         scope: {
@@ -2450,95 +2602,6 @@ app.directive('timeLine', ['URLTemplates',
 
 
 
-app.directive('myHeader', ['URLTemplates','UserService',
-
-  /** @ngInject */
-  function myHeader(URLTemplates) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/_components/header/header.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: HeaderController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    /** @ngInject */
-    function HeaderController(APIConfig, $state, StorageService, UserService) {
-      var vm = this;
-      UserService.me().then(function(result){
-        vm.user = result
-      })
-
-      if (!StorageService.get('token')) {
-        $state.go('login');
-      }
-
-      vm.logout = function() {
-        StorageService.remove('token');
-        StorageService.remove('user');
-        $state.go('login');
-      }
-
-    }
-  }
-]);
-
-
-
-app.directive('myNavbar', ['URLTemplates',
-
-  /** @ngInject */
-  function myNavbar(URLTemplates) {
-    var directive = {
-      restrict: 'E',
-      templateUrl: URLTemplates + 'app/_components/navbar/navbar.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: NavbarController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
-
-    /** @ngInject */
-    function NavbarController(APIConfig) {
-      var vm = this;
-
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
-    }
-  }
-
-]);
-
-app.directive("fileread", [function () {
-    return {
-        scope: {
-            fileread: "="
-        },
-        link: function (scope, element, attributes) {
-            element.bind("change", function (changeEvent) {
-                var reader = new FileReader();
-                reader.onload = function (loadEvent) {
-                    scope.$apply(function () {
-                        scope.fileread = loadEvent.target.result;
-                    });
-                }
-                reader.readAsDataURL(changeEvent.target.files[0]);
-            });
-        }
-    }
-}]);
-
-
-
 app.directive('userSearch', ['URLTemplates', 'UserListService', '$timeout',
 
   /** @ngInject */
@@ -2596,69 +2659,6 @@ app.directive('userSearch', ['URLTemplates', 'UserListService', '$timeout',
   }
 
 ]);
-
-app.directive("panelLoader", ['$compile',function ($compile,$scope) {
-    return {
-       restrict: 'A',
-        scope: {
-            panelLoader: "="
-        },
-        link: function (scope, element, attributes) {
-          var template ='<div  layout="row" layout-sm="column" layout-align="space-around"><md-progress-circular md-mode="indeterminate"></md-progress-circular></div>';
-
-            scope.$watch('panelLoader', function (val) {
-              if(typeof scope.panelLoader != 'undefined'){
-                element.append($compile(template)(scope));
-
-                  scope.panelLoader.then(function functionName() {
-                      element = angular.element(element)
-                      var child = element.children().length;
-                      element.children()[child-1].remove();
-
-                  }, function () {
-                    console.log("fail");
-                  })
-              }
-            })
-        }
-    }
-}]);
-
-
-app.controller('CloseActionModalController', ['$scope','$mdDialog','action','Notification', 'ActionCreateService',
-  function($scope,$mdDialog, action, Notification, ActionCreateService) {
-
-    var $ctrl = this;
-    $ctrl.action = action;
-    $ctrl.submitted = false;
-
-    $ctrl.closeProject = function(status){
-      $ctrl.submitted = true;
-      var action = angular.copy($ctrl.action);
-      action.status = status
-      if (!status) {
-        Notification.success('El formulario no es válido.');
-        return;
-      }
-        $scope.submmitPromise = ActionCreateService.update(action.id, action).then(
-          function (response) {
-            $mdDialog.hide();
-            Notification.success("El proyecto ha pasado a estatus de cerrado")
-
-          },
-          function (errorResponse) {
-            console.error('errorResponse', errorResponse);
-            $ctrl.status = errorResponse.statusText || 'Request failed';
-            $ctrl.errors = errorResponse.data;
-          }
-        );
-
-    }
-
-    $ctrl.cancel = function () {
-      $mdDialog.hide();
-    };
-}]);
 
 
 app.controller('ActionViewModalController', ['$scope','$mdDialog','currentAction','ActionListService','ActionGetService',
