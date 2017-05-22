@@ -78,11 +78,10 @@ app.controller('ActionDetailController', [
 		}).then(function (obj) {
  		 if(obj.created == true){
  			 Notification.success("Se ha reportado el avance")
- 			 //$scope.currentAction.status = 'Reportada'
+ 			 $state.reload()
  		 }
 
  	 }).finally(function() {
-			$scope.getReport()
 		});
 	}
 
@@ -120,11 +119,10 @@ app.controller('ActionDetailController', [
 	 }).then(function (obj) {
 		 if(obj.created == true){
 			 Notification.success("La acción ha pasado a estatus de terminada")
-			 $scope.currentAction.status = 'Terminada'
+			 $state.reload()
 		 }
 
 	 }).finally(function(response) {
-      	$scope.getReport()
     });
 	}
 

@@ -164,11 +164,10 @@ app.controller('ProjectDetailController', [
 	 }).then(function (obj) {
 	 		if(obj.created == true){
 				Notification.success("El proyecto ha pasado a estatus de terminado")
-					$scope.project.status = 'Terminada'
+				$state.reload()
 			}
 
 	 }).finally(function(response) {
-      	$scope.getReport()
     });
 	}
 
@@ -190,11 +189,10 @@ app.controller('ProjectDetailController', [
 		}).then(function (obj) {
  		 if(obj.created == true){
  			 Notification.success("Se ha reportado el avance")
- 			 //$scope.project.status = 'Reportada'
+			 $state.reload()
  		 }
 
  	 }).finally(function() {
-      	$scope.getReport()
     });
 	}
 //////////////////////////////////end reports/////////////////////////
