@@ -148,11 +148,12 @@ class ProjectTimeStadistic(APIView):
         user_id = request.user.id
         queryset = self.model.objects.all()
 
+        '''
         if 'producer' in query.keys():
             q0 = Q(producer_id=user_id)
         else:
             q0 = Q(client_id=user_id)
-
+        '''
 
         q1 = (Q(status='Creada') | Q(status='Aceptada'))
         q2 = (Q(status='Creada') | Q(status='Aceptada') | Q(status='Reportada')) 
@@ -166,9 +167,9 @@ class ProjectTimeStadistic(APIView):
         q7 = q2 & q5 | Q(status='Reportada') & q6
         
         data = {
-            'in_time': queryset.filter(q0, q7).count(),
-            'in_risk': queryset.filter(q0, q1, q3).count(),
-            'delayed': queryset.filter(q0, q2, q4).count(),
+            'in_time': queryset.filter(q7).count(),
+            'in_risk': queryset.filter(q1, q3, q6).count(),
+            'delayed': queryset.filter(q2, q4).count(),
         }
 
         return Response(data)
