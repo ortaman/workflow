@@ -32,7 +32,7 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
       'execution_at':'Fecha de ejecución',
       'evaluation_at':'Fecha de evaluación',
 
-      'accomplish_at':'Fecha de cumplimiento',
+      'accomplish_at':'Fecha de ejecución',
       'expire_at':'Fecha de expiración',
       'renegotiation_at':'Fecha de renegociación',
       'report_at':'Fecha de reporte',
@@ -40,7 +40,7 @@ app.controller('CalendarController', ['$scope','$compile','ProjectListService', 
   };
 
   var actionDateFields = {
-      'accomplish_at':'Fecha de cumplimiento',
+      'accomplish_at':'Fecha de ejecución',
       'report_at':'Fecha de reporte',
       'begin_at':'Fecha de inicio',
     };

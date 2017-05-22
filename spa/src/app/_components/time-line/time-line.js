@@ -22,7 +22,7 @@ app.directive('timeLine', ['URLTemplates',
       var vm = this;
 
       var dateFields = {
-          'accomplish_at':'Fecha de cumplimiento',
+          'accomplish_at':'Fecha de ejecución',
           'report_at':'Fecha de reporte',
           'begin_at':'Fecha de inicio',
         };
@@ -96,7 +96,7 @@ app.directive('timeLine', ['URLTemplates',
           console.log("una", vm.timeLine);
             vm.timeLine = transformActions(vm.timeLine)
             $.getScript("/assets/metronics/global/plugins/horizontal-timeline/horizontal-timeline.js", function(){});
-            
+
             time();
         }
 
