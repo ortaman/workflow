@@ -15,9 +15,17 @@ app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateSer
     $ctrl.reportTypeOptions = $ctrl.reportTypeOptions[reportType];
 
     $ctrl.submitted = false;
-    $ctrl.report = {
-      'progress':'25'
+
+    if($ctrl.reportTypeOptions.name =="advance"){
+      $ctrl.report = {
+        'progress':'25'
+      }
+    }else {
+      $ctrl.report = {
+        'progress':'100'
+      }
     }
+
 
     $ctrl.report[type] = $state.params.id;
     if(type == 'action'){

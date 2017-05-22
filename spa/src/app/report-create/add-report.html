@@ -12,9 +12,9 @@
               <md-select name="progress"
                          ng-model="vm.report.progress"
                          required>
-              <md-option value="25"> 25% </md-option>
-              <md-option value="50"> 50% </md-option>
-              <md-option value="75"> 75% </md-option>
+              <md-option ng-show="vm.reportTypeOptions.name != 'finish'" value="25"> 25% </md-option>
+              <md-option ng-show="vm.reportTypeOptions.name != 'finish'" value="50"> 50% </md-option>
+              <md-option ng-show="vm.reportTypeOptions.name != 'finish'" value="75"> 75% </md-option>
               <md-option ng-show="vm.reportTypeOptions.name == 'finish'" value="100"> 100% </md-option>
             </md-select>
 
