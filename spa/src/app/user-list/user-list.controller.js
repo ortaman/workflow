@@ -7,7 +7,11 @@ app.controller('UserListController', [ '$state', 'UserService', '$scope',
 
    $scope.init = function () {
      $scope.getUsers()
-
+     UserService.me().then(function(response){
+       $scope.myUser = response;
+     }, function(error){
+       console.error("error",error);
+     })
    }
 
 ///////////////////////////calling service functions ///////////////////////////

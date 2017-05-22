@@ -56,7 +56,7 @@
                     </h1>
                 </div>
                 <div class="col-md-2 text-right" style="padding:1%">
-                    <button type="button" class="btn blue" ui-sref="userCreate">Crear usuario</button>
+                    <button type="button" class="btn blue" ui-sref="userCreate" ng-if="myUser.position == 'Administrador'" >Crear usuario</button>
                 </div>
             </div>
             <div class="portlet light">
@@ -67,8 +67,8 @@
                           <!--begin: widget 1-1 -->
 
                           <div class="mt-widget-1">
-                              <div class="mt-icon">
-                                  <a href="" ui-sref="userCreate({id:user.id})">
+                              <div class="mt-icon" >
+                                  <a href="" ui-sref="userCreate({id:user.id})" ng-if="user.id == myUser.id">
                                       <i class="icon-pencil"></i>
                                   </a>
                               </div>
