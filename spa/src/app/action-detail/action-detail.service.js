@@ -3,25 +3,21 @@ app.service("ActionGetService", ['$http', 'APIConfig', function($http, APIConfig
 
     this.getById = function(id) {
 
-      var statusList = ['Terminada', 'Satisfactoria',  'Insatisfactoria']
-
       var getColor = function (project) {
 
-  				if(moment(project.accomplish_at).isBefore(moment())){
-  					angular.forEach(statusList, function(status){
-  						if (project.status == status)
-  							return 'green'
-  					})
+          if(moment(project.accomplish_at).isBefore(moment())){
+              if (!project.advance_report_at)
+                return 'red'
 
-  					if(project.report == 0 )
-  						return 'red';
-  				}
+              if(moment(project.advance_report_at).isAfter(project.accomplish_at))
+                return 'yellow';
+          }
 
-  				else if(moment(project.report_at).isBefore(moment()) && project.report == 0 )
-  					return 'yellow';
+          else if(moment(project.report_at).isBefore(moment()) && !project.advance_report_at )
+            return 'yellow';
 
-  			return 'green'
-  		}
+        return 'green'
+      }
 
         var promise = $http.get(APIConfig.url + "actions/" + id + "/").then(function(response) {
 

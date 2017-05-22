@@ -36,13 +36,13 @@
                                     <i class="icon-fire"></i> Nueva Acción </a>
                             </li>
 
-                            <li ng-if="project.producer.id == user.id &&(project.status == 'Aceptada')">
+                            <li ng-if="project.producer.id == user.id && !project.advance_report_at ">
                                 <a href="" ng-click="openAdvanceReport()">
                                     <i class="icon-note"></i> Agregar reporte de avance</a>
                             </li>
 
-                            <li class="divider" ng-if="project.producer.id == user.id && project.status =='Reportada' "> </li>
-                            <li ng-click="openfinishProjectReport()" ng-if="project.producer.id == user.id && project.status =='Reportada' ">
+                            <li class="divider" ng-if="project.producer.id == user.id && project.advance_report_at "> </li>
+                            <li ng-click="openfinishProjectReport()" ng-if="project.producer.id == user.id && project.advance_report_at ">
                                 <a >
                                     <i class="icon-layers"></i> Terminar proyecto</a>
                             </li>
@@ -259,9 +259,6 @@
                             </li>
                             <li>
                                 <a  data-toggle="tab"  ng-click="actionPageChanged('Aceptada')"> Aceptados </a>
-                            </li>
-                            <li>
-                                <a  data-toggle="tab"  ng-click="actionPageChanged('Reportada')"> Reportadas </a>
                             </li>
                             <li>
                                 <a  data-toggle="tab" ng-click="actionPageChanged('Terminada')"> Terminadas </a>

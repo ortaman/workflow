@@ -78,7 +78,7 @@ app.controller('ActionDetailController', [
 		}).then(function (obj) {
  		 if(obj.created == true){
  			 Notification.success("Se ha reportado el avance")
- 			 $scope.currentAction.status = 'Reportada'
+ 			 //$scope.currentAction.status = 'Reportada'
  		 }
 
  	 }).finally(function() {
@@ -212,7 +212,7 @@ app.controller('ActionDetailController', [
 		}
 	}
 
-	
+
 	//////////////////////////////////////////////template interaction functions////////////////////////////////////////
 
 }]);

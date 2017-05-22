@@ -24,7 +24,6 @@ class Project(models.Model):
     STATUS = (
         ('Creada', 'Creada'),
         ('Aceptada', 'Aceptada'),
-        ('Reportada', 'Reportada'),
 
         ('Terminada', 'Terminada'),
 
@@ -63,6 +62,9 @@ class Project(models.Model):
 
     report_at = models.DateField(auto_now=False, verbose_name='Fecha de reporte de Avance')
 
+    advance_report_at = models.DateTimeField(auto_now=False, null = True, blank = True,  verbose_name='Fecha de creación de reporte de Avance')
+    ejecution_report_at = models.DateTimeField(auto_now=False, null = True, blank = True,  verbose_name='Fecha de creación de reporte de Ejecución')
+
     # indicators
     financial = models.CharField(max_length=64, verbose_name='Financieros')
     operational = models.CharField(max_length=64, verbose_name='Operacionales')
@@ -99,7 +101,6 @@ class Action(models.Model):
     STATUS = (
         ('Creada', 'Creada'),
         ('Aceptada', 'Aceptada'),
-        ('Reportada', 'Reportada'),
         ('Terminada', 'Terminada'),
 
         ('Satisfactoria', 'Satisfactoria'),
@@ -127,6 +128,9 @@ class Action(models.Model):
     begin_at = models.DateField(auto_now=False, verbose_name='Fecha de inicio')
     accomplish_at = models.DateField(auto_now=False, verbose_name='Fecha de cumplimiento')
     report_at = models.DateField(auto_now=False, verbose_name='Fecha de reporte de Avance')
+
+    advance_report_at = models.DateTimeField(auto_now=False, null = True, blank = True,  verbose_name='Fecha de creación de reporte de Avance')
+    ejecution_report_at = models.DateTimeField(auto_now=False, null = True, blank = True,  verbose_name='Fecha de creación de reporte de Ejecución')
 
     # indicators
     financial = models.CharField(max_length=64, verbose_name='Financieros')
@@ -195,11 +199,12 @@ def change_status(sender, instance, created, **kwargs):
 
         if count == 1:
             obj = model.objects.get(id=obj.id)
-            obj.status = 'Reportada'
+            obj.advance_report_at = instance.created_at
             obj.save()
 
         elif count == 2:
             obj = model.objects.get(id=obj.id)
+            obj.ejecution_report_at = instance.created_at
             obj.status = 'Terminada'
             obj.save()
     else:

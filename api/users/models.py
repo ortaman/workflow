@@ -17,6 +17,7 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
         ('Gerente Regional de Ventas', 'Gerente Regional de Ventas'),
         ('Gerente Distrital', 'Gerente Distrital'),
         ('Coordinador', 'Coordinador'),
+        ('Administrador', 'Administrador'),
     )
 
     username = models.CharField(max_length=128, unique=True)

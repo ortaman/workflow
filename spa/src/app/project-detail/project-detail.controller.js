@@ -190,7 +190,7 @@ app.controller('ProjectDetailController', [
 		}).then(function (obj) {
  		 if(obj.created == true){
  			 Notification.success("Se ha reportado el avance")
- 			 $scope.project.status = 'Reportada'
+ 			 //$scope.project.status = 'Reportada'
  		 }
 
  	 }).finally(function() {
