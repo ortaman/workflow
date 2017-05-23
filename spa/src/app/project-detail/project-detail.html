@@ -31,18 +31,18 @@
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
-                            <li>
+                            <li ng-if="project.producer.id == user.id && project.status == 'Aceptada'">
                                 <a ui-sref="actionCreate({ projectId: project.id })">
                                     <i class="icon-fire"></i> Nueva Acción </a>
                             </li>
 
-                            <li ng-if="project.producer.id == user.id && !project.advance_report_at ">
+                            <li ng-if="project.producer.id == user.id && !project.advance_report_at && project.status == 'Aceptada'">
                                 <a href="" ng-click="openAdvanceReport()">
                                     <i class="icon-note"></i> Agregar reporte de avance</a>
                             </li>
 
-                            <li class="divider" ng-if="project.producer.id == user.id && project.advance_report_at "> </li>
-                            <li ng-click="openfinishProjectReport()" ng-if="project.producer.id == user.id && project.advance_report_at ">
+                            <li class="divider" ng-if="project.producer.id == user.id && project.advance_report_at && !project.ejecution_report_at "> </li>
+                            <li ng-click="openfinishProjectReport()" ng-if="project.producer.id == user.id && project.advance_report_at && !project.ejecution_report_at ">
                                 <a >
                                     <i class="icon-layers"></i> Terminar proyecto</a>
                             </li>
@@ -255,7 +255,7 @@
                         </div>
                         <ul class="nav nav-tabs">
                             <li class="active">
-                                <a  data-toggle="tab"  ng-click="actionPageChanged('Creada')"> Pendientes </a>
+                                <a  data-toggle="tab"  ng-click="actionPageChanged('Pendiente')"> Pendientes </a>
                             </li>
                             <li>
                                 <a  data-toggle="tab"  ng-click="actionPageChanged('Aceptada')"> Aceptados </a>

@@ -9,7 +9,7 @@ app.controller('ActionDetailController', [
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
 	$scope.producersPerformanceCurrentPage = 1;
-	var actionStatus = "Creada"
+	var actionStatus = "Pendiente"
 	$scope.accomplishedStatus = 'Ejecutada'
 	$scope.lastStatus = ['Ejecutada', 'Satisfactoria',  'Insatisfactoria']
 

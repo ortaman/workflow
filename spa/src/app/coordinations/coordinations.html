@@ -124,7 +124,7 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab"  ng-click="getProjectsByProducer( 'Creada')"> Pendientes </a>
+                                    <a  data-toggle="tab"  ng-click="getProjectsByProducer( 'Pendiente')"> Pendientes </a>
                                 </li>
                                 <li>
                                     <a  data-toggle="tab"  ng-click="getProjectsByProducer( 'Aceptada')"> Aceptados </a>
@@ -162,7 +162,7 @@
                                                 <div   class="mt-comment-text" ui-sref="projectDetail({id:project.id})" > {{ project.name }} </div>
                                                 <div   class="mt-comment-details">
                                                     <ul class="mt-comment-actions">
-                                                        <li ng-if="projectProducerStatus == 'Creada'">
+                                                        <li ng-if="projectProducerStatus == 'Pendiente'">
                                                             <a ng-click="makeActionProducerProject(project,'Aceptada')" >Aceptar</a>
                                                         </li>
                                                         <!-- <li ng-if="projectProducerStatus == 'Aceptada'">
@@ -208,7 +208,7 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab" ng-click="getProjectsByClient('Creada')"> Pendientes </a>
+                                    <a  data-toggle="tab" ng-click="getProjectsByClient('Pendiente')"> Pendientes </a>
                                 </li>
                                 <li>
                                     <a  data-toggle="tab" ng-click="getProjectsByClient('Aceptada')"> Aceptados </a>
@@ -284,7 +284,7 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab" ng-click="getClients('Creada')"> Pendientes </a>
+                                    <a  data-toggle="tab" ng-click="getClients('Pendiente')"> Pendientes </a>
                                 </li>
                                 <li>
                                     <a  data-toggle="tab" ng-click="getClients('Aceptada')"> Aceptadas </a>
@@ -321,7 +321,7 @@
                                                 <div class="mt-comment-details">
                                                     <span class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
                                                     <ul class="mt-comment-actions">
-                                                        <li ng-if="clientStatus == 'Creada'">
+                                                        <li ng-if="clientStatus == 'Pendiente'">
                                                             <a ng-click="makeClientAction(action,'Aceptada')" >Aceptar</a>
                                                         </li>
                                                         <!-- <li ng-if="clientStatus == 'Aceptada'">
@@ -364,7 +364,7 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a  data-toggle="tab"  ng-click="getProducers( 'Creada')"> Pendientes </a>
+                                    <a  data-toggle="tab"  ng-click="getProducers( 'Pendiente')"> Pendientes </a>
                                 </li>
                                 <li>
                                     <a  data-toggle="tab"  ng-click="getProducers( 'Aceptada')"> Aceptadas </a>

@@ -17,8 +17,8 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
   $scope.init = function(){
     UserService.me().then(function(response){
       $scope.user = response.id
-      $scope.getProjectsByProducer('Creada' );
-      $scope.getProjectsByClient('Creada' );
+      $scope.getProjectsByProducer('Pendiente' );
+      $scope.getProjectsByClient('Pendiente' );
       $scope.getStadistics();
     }, function(error){
       console.error("error",error);
@@ -248,11 +248,11 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
   $scope.onPromiseTypeSelect = function (type) {
     console.log(type);
     if(type == 'action'){
-      $scope.getClients('Creada' );
-      $scope.getProducers('Creada' );
+      $scope.getClients('Pendiente' );
+      $scope.getProducers('Pendiente' );
     }else {
-      $scope.getProjectsByProducer('Creada' );
-      $scope.getProjectsByClient('Creada' );
+      $scope.getProjectsByProducer('Pendiente' );
+      $scope.getProjectsByClient('Pendiente' );
     }
   }
 
