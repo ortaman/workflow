@@ -6,7 +6,7 @@ app.controller('ActionViewModalController', ['$scope','$mdDialog','currentAction
     $ctrl.action = currentAction;
     $ctrl.actionCurrentPage = 1
     var actionStatus = "Creada"
-    $ctrl.accomplishedStatus = 'Terminada'
+    $ctrl.accomplishedStatus = 'Ejecutada'
 
 
     $ctrl.init = function () {

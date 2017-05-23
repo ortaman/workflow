@@ -48,8 +48,8 @@
                                     <i class="icon-layers"></i> Terminar acción</a>
                             </li>
 
-                            <li class="divider" ng-if="currentAction.client.id == user.id  && currentAction.status =='Terminada' "> </li>
-                            <li ng-click="closeAction()" ng-if="currentAction.client.id == user.id  && currentAction.status =='Terminada' ">
+                            <li class="divider" ng-if="currentAction.client.id == user.id  && currentAction.status =='Ejecutada' "> </li>
+                            <li ng-click="closeAction()" ng-if="currentAction.client.id == user.id  && currentAction.status =='Ejecutada' ">
                                 <a >
                                     <i class="icon-layers"></i> Cerrar acción</a>
                             </li>
@@ -272,7 +272,7 @@
                                   <a  data-toggle="tab"  ng-click="actionPageChanged('Aceptada')"> Aceptados </a>
                               </li>
                               <li>
-                                  <a  data-toggle="tab" ng-click="actionPageChanged('Terminada')"> Terminadas </a>
+                                  <a  data-toggle="tab" ng-click="actionPageChanged('Ejecutada')"> Ejecutadas </a>
                               </li>
                               <li>
                                   <a  data-toggle="tab"  ng-click="actionPageChanged('Satisfactoria' )"> Satisfactoria </a>

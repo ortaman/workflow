@@ -129,7 +129,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
   $scope.makeActionProducerProject = function(project,type){
     var actionType = {
       'Aceptada':'aceptar',
-      'Terminada':'terminar',
+      'Ejecutada':'terminar',
     }
     var confirm = $mdDialog.confirm()
         .title("¿Está seguro que quiere "+ actionType[type]+" este proyecto?")
@@ -143,7 +143,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
         function (response) {
           if (type == "Aceptada")
             Notification.success('El proyecto ha pasado a proyectos aceptados');
-          else if (type == "Terminada")
+          else if (type == "Ejecutada")
             Notification.success('El proyecto ha pasado a proyectos terminados');
           $scope.getProjectsByProducer($scope.projectProducerStatus);
         },
@@ -218,7 +218,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
   $scope.makeClientAction = function(action,type){
     var actionType = {
       'Aceptada':'aceptar',
-      'Terminada':'terminar',
+      'Ejecutada':'terminar',
     }
 
     var confirm = $mdDialog.confirm()
@@ -233,8 +233,8 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
           function (response) {
             if (type == "Aceptada")
               Notification.success('La acción ha pasado a acciones aceptadas');
-            else if (type == "Terminada")
-              Notification.success('La acción ha pasado a acciones terminadas');
+            else if (type == "Ejecutada")
+              Notification.success('La acción ha pasado a acciones ejecutadas');
             $scope.getClients($scope.clientStatus);
           },
           function (errors) {

@@ -10,8 +10,8 @@ app.controller('ActionDetailController', [
 	$scope.producersCurrentPage = 1;
 	$scope.producersPerformanceCurrentPage = 1;
 	var actionStatus = "Creada"
-	$scope.accomplishedStatus = 'Terminada'
-	$scope.lastStatus = ['Terminada', 'Satisfactoria',  'Insatisfactoria']
+	$scope.accomplishedStatus = 'Ejecutada'
+	$scope.lastStatus = ['Ejecutada', 'Satisfactoria',  'Insatisfactoria']
 
 	$scope.currentAction = {};
 	$scope.project = {};
@@ -118,7 +118,7 @@ app.controller('ActionDetailController', [
 		 }
 	 }).then(function (obj) {
 		 if(obj.created == true){
-			 Notification.success("La acción ha pasado a estatus de terminada")
+			 Notification.success("La acción ha pasado a estatus de ejecutada")
 			 $state.reload()
 		 }
 

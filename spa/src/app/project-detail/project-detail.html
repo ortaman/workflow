@@ -47,8 +47,8 @@
                                     <i class="icon-layers"></i> Terminar proyecto</a>
                             </li>
 
-                            <li class="divider" ng-if="project.client.id == user.id  && project.status =='Terminada'"> </li>
-                            <li ng-click="closeProjectReport()" ng-if="project.client.id == user.id  && project.status =='Terminada'">
+                            <li class="divider" ng-if="project.client.id == user.id  && project.status =='Ejecutada'"> </li>
+                            <li ng-click="closeProjectReport()" ng-if="project.client.id == user.id  && project.status =='Ejecutada'">
                                 <a >
                                     <i class="icon-layers"></i> Cerrar proyecto</a>
                             </li>
@@ -261,7 +261,7 @@
                                 <a  data-toggle="tab"  ng-click="actionPageChanged('Aceptada')"> Aceptados </a>
                             </li>
                             <li>
-                                <a  data-toggle="tab" ng-click="actionPageChanged('Terminada')"> Ejecutadas </a>
+                                <a  data-toggle="tab" ng-click="actionPageChanged('Ejecutada')"> Ejecutadas </a>
                             </li>
                             <li>
                                 <a  data-toggle="tab" ng-click="actionPageChanged('Vencida')"> Vencidas </a>

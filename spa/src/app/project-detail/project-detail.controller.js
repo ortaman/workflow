@@ -11,7 +11,7 @@ app.controller('ProjectDetailController', [
 	$scope.project = {};
 	$scope.producers = [];
 	$scope.producersPerformance = [];
-	$scope.accomplishedStatus = 'Terminada'
+	$scope.accomplishedStatus = 'Ejecutada'
 
 	var queryStatus = "Creada";
 
