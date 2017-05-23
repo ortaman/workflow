@@ -63,8 +63,8 @@ class Project(models.Model):
 
     report_at = models.DateField(auto_now=False, verbose_name='Fecha de reporte de avance')
 
-    advance_report_at = models.DateTimeField(null= True, verbose_name='Fecha de creación del reporte de avance')
-    ejecution_report_at = models.DateTimeField(null= True, verbose_name='Fecha de creación del reporte de ejecución')
+    advance_report_at = models.DateField(auto_now=False, null=True, blank=True, verbose_name='Fecha de creación del reporte de avance')
+    ejecution_report_at = models.DateField(auto_now=False, null=True, blank=True, verbose_name='Fecha de creación del reporte de ejecución')
 
     # indicators
     financial = models.CharField(max_length=64, null=True, blank=True, verbose_name='Financieros')
@@ -131,8 +131,8 @@ class Action(models.Model):
     accomplish_at = models.DateField(auto_now=False, verbose_name='Fecha de cumplimiento')
     report_at = models.DateField(auto_now=False, verbose_name='Fecha de reporte de Avance')
 
-    advance_report_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación del reporte de avance')
-    ejecution_report_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación del reporte de ejecución')
+    advance_report_at = models.DateField(auto_now=False, null=True, blank=True, verbose_name='Fecha de creación del reporte de avance')
+    ejecution_report_at = models.DateField(auto_now=False, null=True, blank=True, verbose_name='Fecha de creación del reporte de ejecución')
 
     # indicators
     financial = models.CharField(max_length=64, null=True, blank=True, verbose_name='Financieros')
