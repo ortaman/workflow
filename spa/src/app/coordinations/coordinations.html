@@ -69,7 +69,7 @@
                             <div class="number">
                                 <span data-counter="counterup" data-value="13">{{ stadistics.finished_promises}}</span>
                             </div>
-                            <div class="desc"> Promesas Cumplidas </div>
+                            <div class="desc"> Promesas Satisfactorias </div>
                         </div>
                     </a>
                 </div>
@@ -81,7 +81,7 @@
                         <div class="details">
                             <div class="number">
                                 <span data-counter="counterup" data-value="11"></span> {{ stadistics.unfulfilled_promises}} </div>
-                            <div class="desc"> Promesas Incumplidas </div>
+                            <div class="desc"> Promesas Vencidas </div>
                         </div>
                     </a>
                 </div>
@@ -94,7 +94,7 @@
                             <div class="number">
                                 <span data-counter="counterup" data-value="549">{{ stadistics.finished_order}}</span>
                             </div>
-                            <div class="desc"> Pedidos Cumplidos </div>
+                            <div class="desc"> Pedidos Satisfactorios </div>
                         </div>
                     </a>
                 </div>
@@ -106,7 +106,7 @@
                         <div class="details">
                             <div class="number">
                                 <span data-counter="counterup" data-value="18"></span>{{ stadistics.unfulfilled_order}} </div>
-                            <div class="desc"> Pedidos Incumplidos </div>
+                            <div class="desc"> Pedidos Vencidos </div>
                         </div>
                     </a>
                 </div>
@@ -131,6 +131,9 @@
                                 </li>
                                 <li>
                                     <a  data-toggle="tab" ng-click="getProjectsByProducer( 'Terminada')"> Ejecutados </a>
+                                </li>
+                                <li>
+                                    <a  data-toggle="tab" ng-click="getProjectsByProducer( 'Vencido')"> Vencidos </a>
                                 </li>
                                 <li>
                                     <a  data-toggle="tab"  ng-click="getProjectsByProducer( 'Satisfactoria' )"> Satisfactorios </a>
@@ -214,6 +217,9 @@
                                     <a  data-toggle="tab" ng-click="getProjectsByClient('Terminada')"> Ejecutados </a>
                                 </li>
                                 <li>
+                                    <a  data-toggle="tab" ng-click="getProjectsByClient('Vencido')"> Vencidos </a>
+                                </li>
+                                <li>
                                     <a  data-toggle="tab"  ng-click="getProjectsByClient('Satisfactoria' )"> Satisfactorios </a>
                                 </li>
                                 <li>
@@ -285,6 +291,9 @@
                                 </li>
                                 <li>
                                     <a  data-toggle="tab" ng-click="getClients('Terminada')"> Ejecutadas </a>
+                                </li>
+                                <li>
+                                    <a  data-toggle="tab" ng-click="getClients('Vencida')"> Vencidas </a>
                                 </li>
                                 <li>
                                     <a  data-toggle="tab"  ng-click="getClients('Satisfactoria' )"> Satisfactorias </a>
@@ -362,6 +371,9 @@
                                 </li>
                                 <li>
                                     <a  data-toggle="tab" ng-click="getProducers( 'Terminada')"> Ejecutadas </a>
+                                </li>
+                                <li>
+                                    <a  data-toggle="tab" ng-click="getProducers( 'Vencida')"> Vencidas </a>
                                 </li>
                                 <li>
                                     <a  data-toggle="tab"  ng-click="getProducers( 'Satisfactoria' )"> Satisfactorias </a>

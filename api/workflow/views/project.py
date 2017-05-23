@@ -155,23 +155,23 @@ class ProjectTimeStadistic(APIView):
             q0 = Q(client_id=user_id)
         '''
 
-        today_date = datetime.date.today()
-        
-        q1 = (~Q(created_by=F('advance_report_at')))
-        q2 = (~Q(created_by=F('ejecution_report_at')))
-
-        q3 = Q(report_at__lt=F('advance_report_at'))             # < 
-        q4 = Q(accomplish_at__lt=F('ejecution_report_at'))
-
-        in_risk: queryset.filter(q1, q3).count(),
-        delayed: queryset.filter(q2, q4).count(),
-
-        in_time = queryset.all().count() - (in_risk + delayed),
+        # today_date = datetime.date.today()
+        #
+        # q1 = (~Q(created_by=F('advance_report_at')))
+        # q2 = (~Q(created_by=F('ejecution_report_at')))
+        #
+        # q3 = Q(report_at__lt=F('advance_report_at'))             # <
+        # q4 = Q(accomplish_at__lt=F('ejecution_report_at'))
+        #
+        # in_risk = queryset.filter(q1, q3).count(),
+        # delayed = queryset.filter(q2, q4).count(),
+        #
+        # in_time = queryset.all().count() - (in_risk + delayed),
 
         data = {
-            'in_time': in_time,
-            'in_risk': in_risk,
-            'delayed': delayed,
+            # 'in_time': in_time,
+            # 'in_risk': in_risk,
+            # 'delayed': delayed,
         }
 
         return Response(data)
