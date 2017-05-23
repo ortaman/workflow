@@ -155,21 +155,23 @@ class ProjectTimeStadistic(APIView):
             q0 = Q(client_id=user_id)
         '''
 
-        q1 = (Q(status='Creada') | Q(status='Aceptada'))
-        q2 = (Q(status='Creada') | Q(status='Aceptada') | Q(status='Reportada')) 
+        today_date = datetime.date.today()
         
-        q3 = Q(report_at__lt=datetime.date.today())   # < 
-        q4 = Q(accomplish_at__lt=datetime.date.today())
+        q1 = (~Q(created_by=F('advance_report_at')))
+        q2 = (~Q(created_by=F('ejecution_report_at')))
 
-        q5 = Q(report_at__gt=datetime.date.today())   # > 
-        q6 = Q(accomplish_at__gt=datetime.date.today())
+        q3 = Q(report_at__lt=F('advance_report_at'))             # < 
+        q4 = Q(accomplish_at__lt=F('ejecution_report_at'))
 
-        q7 = q2 & q5 | Q(status='Reportada') & q6
-        
+        in_risk: queryset.filter(q1, q3).count(),
+        delayed: queryset.filter(q2, q4).count(),
+
+        in_time = queryset.all().count() - (in_risk + delayed),
+
         data = {
-            'in_time': queryset.filter(q7).count(),
-            'in_risk': queryset.filter(q1, q3, q6).count(),
-            'delayed': queryset.filter(q2, q4).count(),
+            'in_time': in_time,
+            'in_risk': in_risk,
+            'delayed': delayed,
         }
 
         return Response(data)

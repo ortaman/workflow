@@ -22,13 +22,14 @@ class Project(models.Model):
     )
 
     STATUS = (
-        ('Creada', 'Creada'),
+        ('Pendiente', 'Pendiente'),
         ('Aceptada', 'Aceptada'),
 
-        ('Terminada', 'Terminada'),
+        ('Ejecutada', 'Ejecutada'),
 
         ('Satisfactoria', 'Satisfactoria'),
         ('Insatisfactoria', 'Insatisfactoria'),
+
         ('Negociando', 'Negociando'),
         ('No aceptada', 'No aceptada'),
     )
@@ -37,7 +38,7 @@ class Project(models.Model):
     name = models.CharField(max_length=64, verbose_name='Nombre')
     kind = models.CharField(choices=TYPES, max_length=8, default='estandar', verbose_name='Tipos de proyecto')
     phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de proyecto')
-    status = models.CharField(choices=STATUS, max_length=16, default='Creada', verbose_name='Estado')
+    status = models.CharField(choices=STATUS, max_length=16, default='Pendiente', verbose_name='Estado')
 
     # action roles
     client = models.ForeignKey(User, related_name='client_project', verbose_name='Cliente')
@@ -60,16 +61,16 @@ class Project(models.Model):
         null=True, blank=True,
         auto_now=False, verbose_name='Fecha de regenociación')
 
-    report_at = models.DateField(auto_now=False, verbose_name='Fecha de reporte de Avance')
+    report_at = models.DateField(auto_now=False, verbose_name='Fecha de reporte de avance')
 
-    advance_report_at = models.DateTimeField(auto_now=False, null = True, blank = True,  verbose_name='Fecha de creación de reporte de Avance')
-    ejecution_report_at = models.DateTimeField(auto_now=False, null = True, blank = True,  verbose_name='Fecha de creación de reporte de Ejecución')
+    advance_report_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación del reporte de avance')
+    ejecution_report_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación del reporte de ejecución')
 
     # indicators
-    financial = models.CharField(max_length=64, verbose_name='Financieros')
-    operational = models.CharField(max_length=64, verbose_name='Operacionales')
-    other1 = models.CharField(max_length=64, verbose_name='Otros')
-    other2 = models.CharField(max_length=64, verbose_name='Otros')
+    financial = models.CharField(max_length=64, null=True, blank=True, verbose_name='Financieros')
+    operational = models.CharField(max_length=64, null=True, blank=True, verbose_name='Operacionales')
+    other1 = models.CharField(max_length=64, null=True, blank=True, verbose_name='Otros')
+    other2 = models.CharField(max_length=64, null=True, blank=True, verbose_name='Otros')
 
     image = models.ImageField(upload_to='images/', verbose_name='Imagen')
 
@@ -99,9 +100,10 @@ class Action(models.Model):
     )
 
     STATUS = (
-        ('Creada', 'Creada'),
+        ('Pendiente', 'Pendiente'),
         ('Aceptada', 'Aceptada'),
-        ('Terminada', 'Terminada'),
+        
+        ('Ejecutada', 'Ejecutada'),
 
         ('Satisfactoria', 'Satisfactoria'),
         ('Insatisfactoria', 'Insatisfactoria'),
@@ -113,7 +115,7 @@ class Action(models.Model):
     project = models.ForeignKey(Project, related_name='project', verbose_name='Proyecto relacionado')
     name = models.CharField(max_length=64, verbose_name='Nombre de la acción')
     phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de la acción')
-    status = models.CharField(choices=STATUS, max_length=16, default='Creada', verbose_name='Estado')
+    status = models.CharField(choices=STATUS, max_length=16, default='Pendiente', verbose_name='Estado')
 
     # focus project
     toDo = models.TextField(max_length=1024, verbose_name='¿Qué y como se realizará?')
@@ -129,14 +131,14 @@ class Action(models.Model):
     accomplish_at = models.DateField(auto_now=False, verbose_name='Fecha de cumplimiento')
     report_at = models.DateField(auto_now=False, verbose_name='Fecha de reporte de Avance')
 
-    advance_report_at = models.DateTimeField(auto_now=False, null = True, blank = True,  verbose_name='Fecha de creación de reporte de Avance')
-    ejecution_report_at = models.DateTimeField(auto_now=False, null = True, blank = True,  verbose_name='Fecha de creación de reporte de Ejecución')
+    advance_report_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación del reporte de avance')
+    ejecution_report_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de creación del reporte de ejecución')
 
     # indicators
-    financial = models.CharField(max_length=64, verbose_name='Financieros')
-    operational = models.CharField(max_length=64, verbose_name='Operacionales')
-    other1 = models.CharField(max_length=64, verbose_name='Otros')
-    other2 = models.CharField(max_length=64, verbose_name='Otros')
+    financial = models.CharField(max_length=64, null=True, blank=True, verbose_name='Financieros')
+    operational = models.CharField(max_length=64, null=True, blank=True, verbose_name='Operacionales')
+    other1 = models.CharField(max_length=64, null=True, blank=True, verbose_name='Otros')
+    other2 = models.CharField(max_length=64, null=True, blank=True, verbose_name='Otros')
 
     parent_action = models.ForeignKey(
         'self',
@@ -205,7 +207,7 @@ def change_status(sender, instance, created, **kwargs):
         elif count == 2:
             obj = model.objects.get(id=obj.id)
             obj.ejecution_report_at = instance.created_at
-            obj.status = 'Terminada'
+            obj.status = 'Ejecutada'
             obj.save()
     else:
         pass

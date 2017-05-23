@@ -57,7 +57,7 @@ class APIMixin(object):
     def put_vatidations(self, obj, user):
 
         error = {}
-        open_status = ('Creada', 'Aceptada', 'Reportada', 'Terminada')
+        open_status = ('Pendiente', 'Aceptada', 'Ejecutada')
         close_status = ('Satisfactoria', 'Insatisfactoria')
 
         if obj.client == user:
@@ -76,7 +76,7 @@ class APIMixin(object):
     def patch_vatidations(self, obj, user):
 
         error = {}
-        open_status = ('Creada', 'Aceptada', 'Reportada', 'Terminada')
+        open_status = ('Pendiente', 'Aceptada', 'Ejecutada')
         close_status = ('Satisfactoria', 'Insatisfactoria')
 
         if obj.producer == user:

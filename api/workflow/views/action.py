@@ -162,8 +162,8 @@ class ActionStadisctic(APIView, APIMixin):
         queryset = self.model.objects.all()
         
         q1 = Q(client_id = user_id)
-        q2 = (Q(status = 'Creada') | Q(status = 'Abierta') | Q(status = 'Reportada'))
-        q3 = Q(status = 'Terminada')
+        q2 = (Q(status = 'Pendiente') | Q(status = 'Abierta') | Q(status = 'Ejecutada'))
+        q3 = Q(status = 'Ejecutada')
         q4 = Q(status = 'Satisfactoria')  
         q5 = Q(status = 'Insatisfactoria')
         q7 = Q(producer_id=user_id)
