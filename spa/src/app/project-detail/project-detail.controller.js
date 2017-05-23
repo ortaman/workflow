@@ -13,8 +13,7 @@ app.controller('ProjectDetailController', [
 	$scope.producersPerformance = [];
 	$scope.accomplishedStatus = 'Ejecutada'
 
-	var queryStatus = "Creada";
-
+	var queryStatus = "Pendiente";
 
   	$scope.getProjectByIdInit = function() {
 			UserService.me().then(function(response){
@@ -61,7 +60,6 @@ app.controller('ProjectDetailController', [
   }
 
 	$scope.actionPageChanged = function(status) {
-			console.log("hola");
 			queryStatus = status||queryStatus;
 	  	var query = {
 	  		"page": $scope.actionsCurrentPage,
@@ -163,7 +161,7 @@ app.controller('ProjectDetailController', [
 		 }
 	 }).then(function (obj) {
 	 		if(obj.created == true){
-				Notification.success("El proyecto ha pasado a estatus de terminado")
+				Notification.success("El proyecto ha pasado a estatus de ejecutado")
 				$state.reload()
 			}
 
@@ -227,84 +225,18 @@ app.controller('ProjectDetailController', [
 		 locals:{
 			 project: $scope.project
 		 }
-		}).finally(function() {
-
+	 }).then(function() {
+			$state.reload()
     });
 	}
 //////////////////////////////////end modals//////////////////////////////
 
 
 //////////////////////////////////template interaction functions//////////////////////////////////
-	$scope.hoverIn = function(show){
-		this.hoverEdit = show;
-	};
-
 	$scope.chunkArray = function(index) {
 		if($scope.producers.producers)
 			return $scope.producers.producers.slice(index*3, (index*3)+3);
 	}
 //////////////////////////////////end template interaction functions //////////////////////////////////
 
-	var transformActions = function(results){
-		//private functions
-		function custom_sort(a, b) {
-		    return new Date(a.timeline).getTime() - new Date(b.timeline).getTime();
-		}
-
-		function arrayObjectIndexOf(myArray, searchTerm, property) {
-		    for(var i = 0, len = myArray.length; i < len; i++) {
-		        if (myArray[i][property] === searchTerm) return i;
-		    }
-		    return -1;
-		}
-
-		function UniqueArraybyId(collection, keyname) {
-              var output = [],
-                  keys = [], d  =[];
-
-              angular.forEach(collection, function(item) {
-                  var key = item[keyname];
-                  if(keys.indexOf(key) === -1) {
-                      keys.push(key);
-                      output.push(item);
-                  }
-									else{
-										var pos = arrayObjectIndexOf(output,key,'timeline');
-										output[pos].actions.push(item.actions[0])
-									}
-              });
-							angular.forEach(d, function(item){
-								var key = item[keyname];
-							})
-        return output;
-		}
-
-
-		var newArray = [];
-		angular.forEach(results, function (result) {
-			angular.forEach(dateFields, function(key, value){
-				var obj = {}
-				obj.timeline = result[value];
-				obj.actions = [];
-				result.timeline_text = key
-				obj.actions.push(angular.copy(result))
-				newArray.push(obj)
-
-			})
-		})
-
-		newArray = newArray.sort(custom_sort);
-		var newArray = UniqueArraybyId(newArray,'timeline');
-
-
-		//asign photo
-		newArray.forEach(function(item){
-			angular.forEach(item.actions, function(item2){
-				item2.producer.photo =  APIConfig.baseUrl+ angular.copy(item2.producer.photo);
-			})
-		})
-		//end of asignment
-
-		return newArray;
-	}
 }]);

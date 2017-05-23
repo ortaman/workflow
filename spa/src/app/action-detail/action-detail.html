@@ -30,20 +30,20 @@
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
-                            <li>
+                            <li ng-if="currentAction.producer.id == user.id && currentAction.status == 'Aceptada'">
                                 <a ui-sref="actionCreate({ projectId: currentAction.project.id, actionId:currentAction.id })">
                                     <i class="icon-fire"></i> Nueva Acción </a>
                             </li>
-                            <li>
+                            <li >
                                 <a href="" ui-sref="actionUpdate({id:currentAction.id})">
                                     <i class="icon-pin"></i> Editar accion </a>
                             </li>
-                            <li ng-if="currentAction.producer.id == user.id && (currentAction.status == 'Aceptada')">
+                            <li ng-if="currentAction.producer.id == user.id && !currentAction.advance_report_at && currentAction.status == 'Aceptada'">
                                 <a href="" ng-click="openReportModal()">
-                                    <i class="icon-note"></i> Agregar reporte </a>
+                                    <i class="icon-note"></i> Agregar reporte de avance </a>
                             </li>
-                            <li class="divider" ng-if="currentAction.producer.id == user.id  && currentAction.advance_report_at "> </li>
-                            <li ng-click="actionFinishReport()" ng-if="currentAction.producer.id == user.id  && currentAction.advance_report_at ">
+                            <li class="divider" ng-if="currentAction.producer.id == user.id  && currentAction.advance_report_at &&  !currentAction.ejecution_report_at "> </li>
+                            <li ng-click="actionFinishReport()" ng-if="currentAction.producer.id == user.id  && currentAction.advance_report_at &&  !currentAction.ejecution_report_at ">
                                 <a >
                                     <i class="icon-layers"></i> Terminar acción</a>
                             </li>
@@ -266,7 +266,7 @@
                             </div>
                             <ul class="nav nav-tabs ">
                               <li class="active">
-                                  <a  data-toggle="tab"  ng-click="actionPageChanged('Creada')"> Pendientes </a>
+                                  <a  data-toggle="tab"  ng-click="actionPageChanged('Pendiente')"> Pendientes </a>
                               </li>
                               <li>
                                   <a  data-toggle="tab"  ng-click="actionPageChanged('Aceptada')"> Aceptados </a>
