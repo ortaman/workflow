@@ -304,12 +304,8 @@
                                     name="financial"
                                     maxlength="64"
                                     ng-model="action.financial"
-                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
-                                    required></input>
+                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"></input>
                                   <div ng-show="actionForm.financial.$touched || submitted">
-                                    <div class="error" ng-show="actionForm.financial.$error.required">
-                                      Campo requerido.
-                                    </div>
                                     <div class="error" ng-show="actionForm.financial.$error.pattern">
                                       Debe contener espacios y caracteres alfabéticos.
                                     </div>
@@ -324,12 +320,8 @@
                                     name="operational"
                                     maxlength="64"
                                     ng-model="action.operational"
-                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
-                                    required></input>
+                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"></input>
                                   <div ng-show="actionForm.operational.$touched || submitted">
-                                    <div class="error" ng-show="actionForm.operational.$error.required">
-                                      Campo requerido.
-                                    </div>
                                     <div class="error" ng-show="actionForm.operational.$error.pattern">
                                        Debe contener espacios y caracteres alfabéticos.
                                     </div>
@@ -343,12 +335,8 @@
                                     name="other1"
                                     maxlength="64"
                                     ng-model="action.other1"
-                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
-                                    required></input>
+                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"></input>
                                   <div ng-show="actionForm.other1.$touched || submitted">
-                                    <div class="error" ng-show="actionForm.other1.$error.required">
-                                      Campo requerido.
-                                    </div>
                                     <div class="error" ng-show="actionForm.other1.$error.pattern">
                                        Debe contener espacios y caracteres alfabéticos.
                                     </div>
@@ -362,12 +350,8 @@
                                   name="other2"
                                   maxlength="64"
                                   ng-model="action.other2"
-                                  ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"
-                                  required></input>
+                                  ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"></input>
                                 <div ng-show="actionForm.other2.$touched || submitted">
-                                  <div class="error" ng-show="actionForm.other2.$error.required">
-                                    Campo requerido.
-                                  </div>
                                   <div class="error" ng-show="actionForm.other2.$error.pattern">
                                      Debe contener espacios y caracteres alfabéticos.
                                   </div>

@@ -397,8 +397,7 @@
                                     name="financial"
                                     maxlength="64"
                                     ng-model="project.financial"
-                                    ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
-                                    required></input>
+                                    ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"></input>
                                   <div ng-show="projectForm.financial.$touched || submitted">
                                     <div class="error" ng-show="projectForm.financial.$error.required">
                                       Campo requerido.
@@ -417,12 +416,8 @@
                                     name="operational"
                                     maxlength="64"
                                     ng-model="project.operational"
-                                    ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
-                                    required></input>
+                                    ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"></input>
                                   <div ng-show="projectForm.operational.$touched || submitted">
-                                    <div class="error" ng-show="projectForm.operational.$error.required">
-                                      Campo requerido.
-                                    </div>
                                     <div class="error" ng-show="projectForm.operational.$error.pattern">
                                       Debe contener caracteres alfanúmericos.
                                     </div>
@@ -436,12 +431,8 @@
                                     name="other1"
                                     maxlength="64"
                                     ng-model="project.other1"
-                                    ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
-                                    required></input>
+                                    ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"></input>
                                   <div ng-show="projectForm.other1.$touched || submitted">
-                                    <div class="error" ng-show="projectForm.other1.$error.required">
-                                      Campo requerido.
-                                    </div>
                                     <div class="error" ng-show="projectForm.other1.$error.pattern">
                                       Debe contener caracteres alfanúmericos.
                                     </div>
@@ -455,12 +446,8 @@
                                   name="other2"
                                   maxlength="64"
                                   ng-model="project.other2"
-                                  ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
-                                  required></input>
+                                  ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"></input>
                                 <div ng-show="projectForm.other2.$touched || submitted">
-                                  <div class="error" ng-show="projectForm.other2.$error.required">
-                                    Campo requerido.
-                                  </div>
                                   <div class="error" ng-show="projectForm.other2.$error.pattern">
                                     Debe contener caracteres alfanúmericos.
                                   </div>
