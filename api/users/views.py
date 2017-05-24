@@ -114,44 +114,14 @@ class ProducerList(APIView, APIMixin):
         for producer in paginated_data['results']:
             data['producers'].append({
                 'producer': producer['producer'],
-                'open': Action.objects.filter(status="Abierta", producer_id=producer['producer']['id']).count(),
+                'pending': Action.objects.filter(status="Pendiente", producer_id=producer['producer']['id']).count(),
+                'accepted': Action.objects.filter(status="Aceptada", producer_id=producer['producer']['id']).count(),
+                'ejecuted': Action.objects.filter(status="Ejecutada", producer_id=producer['producer']['id']).count(),
                 'satisfactories': Action.objects.filter(status="Satisfactoria", producer_id=producer['producer']['id']).count(),
                 'unsatisfactories': Action.objects.filter(status="Insatisfactoria", producer_id=producer['producer']['id']).count()
             })
 
         return Response(data)
-
-    def get_queryset(self):
-
-        query = self.request.query_params
-
-        if 'project_id' in query.keys():
-
-            if query.get('parent_action')=='none':
-                self.queryset = self.queryset.filter(
-                    project_id=query.get('project_id'),
-                    parent_action__isnull=True)
-            else:
-                self.queryset = self.queryset.filter(
-                    project_id=query.get('project_id'))
-
-        elif 'parent_action_id' in query.keys():
-
-            self.queryset = self.queryset.filter(
-                parent_action_id=query.get('parent_action_id'))
-
-        self.queryset = self.queryset.distinct('producer__id')
-
-        data = []
-        for producer in self.queryset:
-            data.append({
-                'producer': producer,
-                'open': Action.objects.filter(status="Abierta", producer_id=producer.id).count(),
-                'satisfactories': Action.objects.filter(status="Satisfactorias", producer_id=producer.id).count(),
-                'unsatisfactories': Action.objects.filter(status="Insatisfactorias", producer_id=producer.id).count()
-            })
-
-        return data
 
 
 class MyUser(APIView):

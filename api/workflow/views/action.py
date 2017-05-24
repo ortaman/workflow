@@ -169,14 +169,14 @@ class ActionStadisctic(APIView, APIMixin):
         q7 = Q(producer_id=user_id)
 
         data = {
-            'open_promises': queryset.filter(q1, q2).count(),
-            'finished_promises': queryset.filter(q1, q3).count(),
-            'fulfilled_promises':  queryset.filter(q1, q4).count(),
-            'unfulfilled_promises': queryset.filter(q1, q5).count(),
-            'open_order': queryset.filter(q7, q2).count(),
-            'finished_order': queryset.filter(q7, q3).count(),
-            'fulfilled_order': queryset.filter(q7, q4).count(),
-            'unfulfilled_order': queryset.filter(q7, q5).count(),
+            'pending_promises': queryset.filter(q1, q2).count(),
+            'ejecuted_promises': queryset.filter(q1, q3).count(),
+            'satisfactory_promises':  queryset.filter(q1, q4).count(),
+            'insatisfactory_promises': queryset.filter(q1, q5).count(),
+            'pending_order': queryset.filter(q7, q2).count(),
+            'ejecuted_order': queryset.filter(q7, q3).count(),
+            'satisfactory_order': queryset.filter(q7, q4).count(),
+            'insatisfactory_order': queryset.filter(q7, q5).count(),
         }
 
         return Response(data)
