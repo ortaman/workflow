@@ -1,8 +1,8 @@
 
 app.controller('CoordinationsController', ['$scope','ActionListService','UserService','ActionCreateService','$mdDialog',
-  'APIConfig','ProjectListService','ProjectCreateService' , 'StadisticsService', 'Notification',
+  'APIConfig','ProjectListService','ProjectCreateService' , 'StadisticsService', 'Notification','$state',
   function($scope, ActionListService, UserService, ActionCreateService, $mdDialog, APIConfig, ProjectListService, ProjectCreateService,
-     StadisticsService, Notification) {
+     StadisticsService, Notification, $state) {
 
   $scope.promisesCurrentPage = 1
   $scope.ordersCurrentPage = 1
@@ -141,8 +141,10 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
       Notification.info('Espere un momento');
       ProjectCreateService.update(project.id,project).then(
         function (response) {
-          if (type == "Aceptada")
+          if (type == "Aceptada"){
             Notification.success('El proyecto ha pasado a proyectos aceptados');
+            $state.go("projectDetail", {id: project.id})
+          }
           else if (type == "Ejecutada")
             Notification.success('El proyecto ha pasado a proyectos terminados');
           $scope.getProjectsByProducer($scope.projectProducerStatus);
@@ -231,8 +233,11 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
         Notification.info('Espere un momento');
         ActionCreateService.update(action.id,action).then(
           function (response) {
-            if (type == "Aceptada")
+            if (type == "Aceptada"){
               Notification.success('La acción ha pasado a acciones aceptadas');
+              $state.go("actionDetail", {id: action.id})
+
+            }
             else if (type == "Ejecutada")
               Notification.success('La acción ha pasado a acciones ejecutadas');
             $scope.getClients($scope.clientStatus);
