@@ -169,9 +169,9 @@ class ProjectTimeStadistic(APIView):
         # in_time = queryset.all().count() - (in_risk + delayed),
 
         data = {
-            # 'in_time': in_time,
-            # 'in_risk': in_risk,
-            # 'delayed': delayed,
+            'in_time': 0,
+            'in_risk': 0,
+            'delayed': 0,
         }
 
         return Response(data)
