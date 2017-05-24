@@ -75,9 +75,11 @@
                                             <tr class="uppercase">
                                                 <th colspan="2"> Realizador </th>
                                                 <th> Área </th>
-                                                <th> Abiertas </th>
+                                                <th> Pendientes </th>
+                                                <th> Aceptadas </th>
                                                 <th> Ejecutadas </th>
-                                                <th> Vencidas </th>
+                                                <th> Satisfactorias </th>
+                                                <th> Insatisfactorias </th>
                                                 <th> % de Cumplimiento </th>
 
                                             </tr>
@@ -92,7 +94,9 @@
                                             </td>
                                             <td> {{ producer.producer.position || '-' }}</td>
 
-                                            <td> {{producer.open}} </td>
+                                            <td> {{producer.pending}} </td>
+                                            <td> {{producer.accepted}} </td>
+                                            <td> {{producer.ejecuted}} </td>
                                             <td> {{ producer.satisfactories }}</td>
                                             <td> {{ producer.unsatisfactories }} </td>
                                             <td>
