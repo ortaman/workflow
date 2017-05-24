@@ -132,7 +132,7 @@ class ProjectList(APIView, APIMixin):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-import datetime
+from datetime import datetime    
 
 class ProjectTimeStadistic(APIView):
     """
@@ -149,15 +149,27 @@ class ProjectTimeStadistic(APIView):
         queryset = self.model.objects.all()
 
         in_time = 0
-        in_risk = 0
         delayed = 0
 
         for obj in queryset:
-            print (obj)
+            if datetime.now().date() <= obj.accomplish_at:
+                if datetime.now().date() <= obj.report_at:
+                    in_time += 1
+                elif obj.ejecution_report_at is not None:
+                    if obj.ejecution_report_at <= obj.report_at: 
+                        in_time += 1
+
+            # to count proyects delayed
+            if obj.ejecution_report_at is None:
+                if datetime.now().date() > obj.accomplish_at:
+                    delayed += 1
+            else:
+                if obj.ejecution_report_at > obj.accomplish_at:
+                    delayed += 1
 
         data = {
             'in_time': in_time,
-            'in_risk': in_risk,
+            'in_risk': queryset.count() - (in_time + delayed),
             'delayed': delayed,
         }
 
