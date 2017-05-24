@@ -163,6 +163,22 @@
                                 </span>
                             </div>
                         </div>
+                        <div class="portlet-body row">
+                          <div class="col-md-12">
+                            <div class="mt-widget-1">
+                                <div class="mt-img">
+                                    <img class="avatar" ng-src="{{currentAction.producer.photo}}"
+                                         height="77" width="77"/>
+                                </div>
+                                <div class="mt-body">
+                                    <h3 class="mt-username">
+                                        {{ currentAction.producer.name }} {{currentAction.producer.first_surname}} {{ currentAction.producer.second_surname }}
+                                    </h3>
+                                    <p class="mt-user-title"> {{ currentAction.producer.position }} </p>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
                         <div class="portlet-body row" ng-repeat="number in [0, 1] track by $index">
 
                                 <div class="col-md-4" ng-repeat="user in chunkArray($index) track by $index">
