@@ -225,7 +225,9 @@
                                   <thead>
                                       <tr class="uppercase ">
                                           <th colspan="2 "> Realizador </th>
+                                          <th><i class=" fa fa-clock-o "></i></th>
                                           <th><i class=" fa fa-comments-o "></i></th>
+                                          <th><i class=" fa fa-check "></i></th>
                                           <th><i class=" fa fa-thumbs-o-up "></i></th>
                                           <th><i class=" fa fa-thumbs-o-down "></i> </th>
                                           <th><i class=" fa fa-calculator "></i></th>
@@ -237,11 +239,13 @@
                                       <td>
                                           <a href="javascript:; " class="primary-link ">{{producer.producer.username}}</a>
                                       </td>
+                                      <td>{{ producer.pending}}</td>
                                       <td>{{ producer.accepted}}</td>
+                                      <td>{{ producer.ejecuted}}</td>
                                       <td>{{ producer.satisfactories }}</td>
                                       <td>{{ producer.unsatisfactories}}</td>
                                       <td>
-                                          <span class="bold theme-font ">{{ (producer.satisfactories*100)/(producer.accepted+ producer.unsatisfactories+ producer.satisfactories ) | number:2}}%</span>
+                                          <span class="bold theme-font ">{{ (producer.succesfulPercentage | number:2 ) }}%</span>
                                       </td>
                                   </tr>
                               </table>

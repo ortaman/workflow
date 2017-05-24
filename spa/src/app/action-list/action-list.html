@@ -86,7 +86,7 @@
                                         </thead>
                                         <tr ng-repeat="producer in producers.producers ">
                                             <td class="fit">
-                                                <img class="user-pic rounded" src="../../assets/metronics/pages/media/users/teambg6.jpg"> </td>
+                                                <img class="user-pic rounded" ng-src="{{ producer.producer.photo}}"> </td>
                                             <td>
                                                 <a href="javascript:;" class="primary-link">
                                                   {{ producer.producer.name }} {{producer.producer.first_surname}}
@@ -100,7 +100,7 @@
                                             <td> {{ producer.satisfactories }}</td>
                                             <td> {{ producer.unsatisfactories }} </td>
                                             <td>
-                                                <span class="bold theme-font">{{ getPercentage(producer)}}%</span>
+                                                <span class="bold theme-font">{{ (producer.succesfulPercentage |number:2 ) }}%</span>
                                             </td>
                                         </tr>
                                     </table>
