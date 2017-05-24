@@ -148,30 +148,17 @@ class ProjectTimeStadistic(APIView):
         user_id = request.user.id
         queryset = self.model.objects.all()
 
-        '''
-        if 'producer' in query.keys():
-            q0 = Q(producer_id=user_id)
-        else:
-            q0 = Q(client_id=user_id)
-        '''
+        in_time = 0
+        in_risk = 0
+        delayed = 0
 
-        # today_date = datetime.date.today()
-        #
-        # q1 = (~Q(created_by=F('advance_report_at')))
-        # q2 = (~Q(created_by=F('ejecution_report_at')))
-        #
-        # q3 = Q(report_at__lt=F('advance_report_at'))             # <
-        # q4 = Q(accomplish_at__lt=F('ejecution_report_at'))
-        #
-        # in_risk = queryset.filter(q1, q3).count(),
-        # delayed = queryset.filter(q2, q4).count(),
-        #
-        # in_time = queryset.all().count() - (in_risk + delayed),
+        for obj in queryset:
+            print (obj)
 
         data = {
-            # 'in_time': in_time,
-            # 'in_risk': in_risk,
-            # 'delayed': delayed,
+            'in_time': in_time,
+            'in_risk': in_risk,
+            'delayed': delayed,
         }
 
         return Response(data)
