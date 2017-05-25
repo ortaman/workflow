@@ -221,12 +221,18 @@ class ActionLoguedUserStadistics(APIView, APIMixin):
                 'unsatisfactories': Action.objects.filter(status="Insatisfactoria", producer_id=producer['producer']['id'], client_id=user_id).count()
             })
 
+        queryset = self.model.objects.filter(producer_id=request.user.id)
+
+        queryset = queryset.distinct('client__id')
+        paginated_data = self.get_pagination(queryset, page, self.paginate_by)
+
+        for client in paginated_data['results']:
             data['to_do'] = {
-                'pending': Action.objects.filter(status="Pendiente", producer_id=user_id, client_id=producer['producer']['id']).count(),
-                'accepted': Action.objects.filter(status="Aceptada", producer_id=user_id, client_id=producer['producer']['id']).count(),
-                'ejecuted': Action.objects.filter(status="Ejecutada", producer_id=user_id, client_id=producer['producer']['id']).count(),
-                'satisfactories': Action.objects.filter(status="Satisfactoria", producer_id=user_id, client_id=producer['producer']['id']).count(),
-                'unsatisfactories': Action.objects.filter(status="Insatisfactoria", producer_id=user_id, client_id=producer['producer']['id']).count()
+                'pending': Action.objects.filter(status="Pendiente", producer_id=user_id, client_id=client['client']['id']).count(),
+                'accepted': Action.objects.filter(status="Aceptada", producer_id=user_id, client_id=client['client']['id']).count(),
+                'ejecuted': Action.objects.filter(status="Ejecutada", producer_id=user_id, client_id=client['client']['id']).count(),
+                'satisfactories': Action.objects.filter(status="Satisfactoria", producer_id=user_id, client_id=client['client']['id']).count(),
+                'unsatisfactories': Action.objects.filter(status="Insatisfactoria", producer_id=user_id, client_id=client['client']['id']).count()
             }
 
         return Response(data)
