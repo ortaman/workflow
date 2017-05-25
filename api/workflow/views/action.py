@@ -182,7 +182,50 @@ class ActionStadisctic(APIView, APIMixin):
         return Response(data)
 
 
-class ActionLoguedUserStadistics(APIView, APIMixin):
+class ActionTodoStadistics(APIView, APIMixin):
+    """
+    List all prodicer and producer stadistics
+    searching by the project or action.
+    """
+    permission_classes = (IsAuthenticated,)
+
+    # Mixing initial variables
+    model = Action
+    serializer_list = ActionUserSerializer
+
+    paginate_by = 6
+
+    def get(self, request, format=None):
+        page = request.GET.get('page', None)
+
+        user_id = request.user.id 
+        queryset = self.model.objects.filter(producer_id=request.user.id)
+
+        queryset = queryset.distinct('client__id')
+        paginated_data = self.get_pagination(queryset, page, self.paginate_by)
+
+        data = {
+            'count':  paginated_data['count'],
+            'page': paginated_data['page'],
+            'paginate_by': paginated_data['paginate_by'],
+            'to_do': [],
+            'owe_me': []
+        }
+
+        for client in paginated_data['results']:
+            data['to_do'] = {
+                'pending': Action.objects.filter(status="Pendiente", producer_id=user_id, client_id=client['client']['id']).count(),
+                'accepted': Action.objects.filter(status="Aceptada", producer_id=user_id, client_id=client['client']['id']).count(),
+                'ejecuted': Action.objects.filter(status="Ejecutada", producer_id=user_id, client_id=client['client']['id']).count(),
+                'satisfactories': Action.objects.filter(status="Satisfactoria", producer_id=user_id, client_id=client['client']['id']).count(),
+                'unsatisfactories': Action.objects.filter(status="Insatisfactoria", producer_id=user_id, client_id=client['client']['id']).count()
+            }
+
+        return Response(data)
+
+
+
+class ActionOweMeStadistics(APIView, APIMixin):
     """
     List all prodicer and producer stadistics
     searching by the project or action.
@@ -220,19 +263,5 @@ class ActionLoguedUserStadistics(APIView, APIMixin):
                 'satisfactories': Action.objects.filter(status="Satisfactoria", producer_id=producer['producer']['id'], client_id=user_id).count(),
                 'unsatisfactories': Action.objects.filter(status="Insatisfactoria", producer_id=producer['producer']['id'], client_id=user_id).count()
             })
-
-        queryset = self.model.objects.filter(producer_id=request.user.id)
-
-        queryset = queryset.distinct('client__id')
-        paginated_data = self.get_pagination(queryset, page, self.paginate_by)
-
-        for client in paginated_data['results']:
-            data['to_do'] = {
-                'pending': Action.objects.filter(status="Pendiente", producer_id=user_id, client_id=client['client']['id']).count(),
-                'accepted': Action.objects.filter(status="Aceptada", producer_id=user_id, client_id=client['client']['id']).count(),
-                'ejecuted': Action.objects.filter(status="Ejecutada", producer_id=user_id, client_id=client['client']['id']).count(),
-                'satisfactories': Action.objects.filter(status="Satisfactoria", producer_id=user_id, client_id=client['client']['id']).count(),
-                'unsatisfactories': Action.objects.filter(status="Insatisfactoria", producer_id=user_id, client_id=client['client']['id']).count()
-            }
 
         return Response(data)
