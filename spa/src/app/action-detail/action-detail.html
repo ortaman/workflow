@@ -30,8 +30,8 @@
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
-                            <li ng-if="currentAction.producer.id == user.id && currentAction.status == 'Aceptada'">
-                                <a ui-sref="actionCreate({ projectId: currentAction.project.id, actionId:currentAction.id })">
+                            <li ng-if="currentAction.producer.id == user.id ">
+                                <a ng-click="actionCreate()">
                                     <i class="icon-fire"></i> Nueva Acción </a>
                             </li>
                             <li >

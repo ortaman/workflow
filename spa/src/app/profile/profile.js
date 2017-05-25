@@ -1,13 +1,14 @@
 
-app.controller('ProfileController', ['$scope','ProducerGetListService','UserService','ProjectListService','APIConfig',
- function($scope, ProducerGetListService, UserService, ProjectListService, APIConfig) {
+app.controller('ProfileController', ['$scope','ProducerGetListService','UserService','ProjectListService',
+'APIConfig', 'StadisticsService',
+ function($scope, ProducerGetListService, UserService, ProjectListService, APIConfig, StadisticsService) {
 
   $scope.producersCurrentPage = 1;
   $scope.clientsCurrentPage = 1;
   $scope.currentProjectPage = 1;
 
-  $scope.client_id = [];
-  $scope.producer_id = [];
+  $scope.oweme = [];
+  $scope.todo = [];
   $scope.projects = {}
   $scope.listForm = {
     "phase": 'Preparación'
@@ -18,28 +19,37 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
     UserService.me().then(
       function(response){
         $scope.user = response;
-        $scope.performancePageChanged($scope.clientsCurrentPage, 'client_id');
-        $scope.performancePageChanged($scope.producersCurrentPage, 'producer_id');
+        $scope.performancePageChanged($scope.clientsCurrentPage, 'oweme');
+        $scope.performancePageChanged($scope.producersCurrentPage, 'todo');
         $scope.projectPageChanged();
       }
     )
   }
 
   $scope.performancePageChanged = function(page, list) {
-  	var query = {
-  		"page": page,
-  	};
-    query[list] = $scope.user.id
+    if (list == 'todo') {
 
-  	ProducerGetListService.getList(query).then(
-  		function(response) {
-  			$scope[list] = response;
-  		},
-  		function(errorResponse) {
-  			$scope.status = errorResponse.statusText || 'Request failed';
-  			$scope.errors = errorResponse.data;
-  		}
-  	);
+      StadisticsService.todo().then(
+        function(response) {
+          $scope[list] = response;
+        },
+        function(errorResponse) {
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+        }
+      );
+    }else if(list =='oweme'){
+
+      StadisticsService.oweme().then(
+        function(response) {
+          $scope[list] = response;
+        },
+        function(errorResponse) {
+          $scope.status = errorResponse.statusText || 'Request failed';
+          $scope.errors = errorResponse.data;
+        }
+      );
+    }
   };
 
   $scope.projectPageChanged = function() {

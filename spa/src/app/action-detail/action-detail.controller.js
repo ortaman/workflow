@@ -208,10 +208,6 @@ app.controller('ActionDetailController', [
   };
 
 	//////////////////////////////////////////////template interaction functions////////////////////////////////////////
-	$scope.hoverIn = function(show){
-		this.hoverEdit = show;
-	};
-
 	$scope.chunkArray = function(index){
 		if($scope.producers.producers)
 			return $scope.producers.producers.slice(index*3, (index*3)+3);
@@ -227,4 +223,18 @@ app.controller('ActionDetailController', [
 
 	//////////////////////////////////////////////template interaction functions////////////////////////////////////////
 
+
+	$scope.actionCreate = function () {
+		if (!$scope.checkStatus('Aceptada')){
+			Notification.info("Debe aceptar esta acción primero")
+			return;
+		}
+		$state.go("actionCreate",{ projectId: $scope.currentAction.project.id, actionId:$scope.currentAction.id })
+	}
+
+	$scope.checkStatus =  function (status) {
+		if ($scope.currentAction.status == status)
+			return true;
+		return false;
+	}
 }]);

@@ -255,4 +255,17 @@ app.controller('ProjectDetailController', [
 	}
 //////////////////////////////////end template interaction functions //////////////////////////////////
 
+	$scope.actionCreate = function () {
+		if (!$scope.checkStatus('Aceptada')){
+			Notification.info("Debe aceptar este proyecto primero")
+			return;
+		}
+		$state.go("actionCreate",{ projectId: $scope.project.id })
+	}
+
+	$scope.checkStatus =  function (status) {
+		if ($scope.project.status == status)
+			return true;
+		return false;
+	}
 }]);
