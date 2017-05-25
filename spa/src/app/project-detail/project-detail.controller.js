@@ -146,6 +146,14 @@ app.controller('ProjectDetailController', [
 	}
 
 	$scope.openfinishProjectReport = function(){
+		if ( !$scope.project.advance_report_at ){
+			Notification.info("Debe agregar reporte de avance  primero")
+			return
+		}else if ($scope.project.ejecution_report_at ) {
+			Notification.info("No es posible agregar  otro reporte")
+			return
+		}
+
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,
@@ -170,6 +178,13 @@ app.controller('ProjectDetailController', [
 	}
 
 	$scope.openAdvanceReport = function() {
+		if ($scope.checkStatus('Pendiente')){
+			Notification.info("Debe aceptar este proyecto primero")
+			return;
+		}else if($scope.project.advance_report_at ){
+			Notification.info("No es posible agregar  otro reporte")
+			return;
+		}
 
 		$mdDialog.show({
 		 scope:$scope,
@@ -214,6 +229,14 @@ app.controller('ProjectDetailController', [
 	}
 
 	$scope.closeProjectReport = function(action) {
+		if($scope.checkStatus('Satisfactoria') || $scope.checkStatus('Insatisfactoria')){
+			Notification.info("El proyecto ya se encuentra  cerrado")
+			return
+		}else if (!$scope.checkStatus('Ejecutada')) {
+			Notification.info("No es posible cerrar el proyecto, aun no esta  ejecutado")
+			return;
+		}
+
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,
@@ -256,11 +279,18 @@ app.controller('ProjectDetailController', [
 //////////////////////////////////end template interaction functions //////////////////////////////////
 
 	$scope.actionCreate = function () {
-		if (!$scope.checkStatus('Aceptada')){
+		if ($scope.checkStatus('Pendiente')){
 			Notification.info("Debe aceptar este proyecto primero")
 			return;
 		}
-		$state.go("actionCreate",{ projectId: $scope.project.id })
+		else if($scope.checkStatus('Aceptada')) {
+			$state.go("actionCreate",{ projectId: $scope.project.id })
+			return;
+		}
+		else{
+			Notification.info("El proyecto ha sido ejecutado, no es posible agregar  otra acción")
+			return;
+		}
 	}
 
 	$scope.checkStatus =  function (status) {

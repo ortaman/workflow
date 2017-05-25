@@ -62,6 +62,14 @@ app.controller('ActionDetailController', [
 
 	$scope.openReportModal = function() {
 
+		if ($scope.checkStatus('Pendiente')){
+			Notification.info("Debe aceptar esta acción primero")
+			return;
+		}else if($scope.currentAction.advance_report_at ){
+			Notification.info("No es posible agregar  otro reporte")
+			return;
+		}
+
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,
@@ -103,6 +111,14 @@ app.controller('ActionDetailController', [
 	}
 
 	$scope.actionFinishReport = function(){
+
+		if ( !$scope.currentAction.advance_report_at ){
+			Notification.info("Debe agregar reporte de avance  primero")
+			return
+		}else if ($scope.currentAction.ejecution_report_at ) {
+			Notification.info("No es posible agregar  otro reporte")
+			return
+		}
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,
@@ -131,6 +147,15 @@ app.controller('ActionDetailController', [
 	////////////////////////////////////////////// modals////////////////////////////////////////
 
 	$scope.closeAction = function(){
+
+		if($scope.checkStatus('Satisfactoria') || $scope.checkStatus('Insatisfactoria')){
+			Notification.info("La acción ya se encuentra  cerrada")
+			return
+		}else if (!$scope.checkStatus('Ejecutada')) {
+			Notification.info("No es posible cerrar la acción, aun no esta  ejecutada")
+			return;
+		}
+
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,
@@ -223,14 +248,18 @@ app.controller('ActionDetailController', [
 
 	//////////////////////////////////////////////template interaction functions////////////////////////////////////////
 
-
-	$scope.actionCreate = function () {
-		if (!$scope.checkStatus('Aceptada')){
-			Notification.info("Debe aceptar esta acción primero")
-			return;
+		$scope.actionCreate = function () {
+			if ($scope.checkStatus('Pendiente')){
+				Notification.info("Debe aceptar esta acción primero")
+				return;
+			}
+			else if($scope.checkStatus('Aceptada')) {
+				$state.go("actionCreate",{ projectId: $scope.currentAction.project.id, actionId:$scope.currentAction.id })
+			}
+			else{
+				Notification.info("La acción ha sido ejecutada, no es posible agregar  otra acción")
+			}
 		}
-		$state.go("actionCreate",{ projectId: $scope.currentAction.project.id, actionId:$scope.currentAction.id })
-	}
 
 	$scope.checkStatus =  function (status) {
 		if ($scope.currentAction.status == status)
