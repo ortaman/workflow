@@ -53,11 +53,5 @@ app.controller('ActionListController', ['$scope', 'ActionListService', 'Producer
       );
     }
 
-    //get
-    $scope.getPercentage = function (producer) {
-      var result = 0 ;
-      result = (producer.satisfactories*100)/(producer.pending+ producer.unsatisfactories+ producer.satisfactories)
-      result = result  == 'NaN' ? 0:result;
-      return result;
-    }
+
 }]);

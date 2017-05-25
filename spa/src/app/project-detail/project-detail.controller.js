@@ -229,6 +229,22 @@ app.controller('ProjectDetailController', [
 			$state.reload()
     });
 	}
+
+	$scope.seeDatesModal = function(action) {
+		$mdDialog.show({
+		 scope:$scope,
+		 preserveScope:true,
+		 controller: 'DatesModalController',
+		 controllerAs: 'vm',
+		 templateUrl: '/app/project-detail/modals/dates-modal.html',
+		 parent: angular.element(document.body),
+		 clickOutsideToClose:true,
+		 locals:{
+			 project: $scope.project,
+			 type:'project'
+		 }
+	 })
+	}
 //////////////////////////////////end modals//////////////////////////////
 
 
