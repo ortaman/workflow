@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Action
-from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer
+from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionUserSerializer
 from common.mixins import APIMixin
 
 
@@ -178,5 +178,55 @@ class ActionStadisctic(APIView, APIMixin):
             'satisfactory_order': queryset.filter(q7, q4).count(),
             'insatisfactory_order': queryset.filter(q7, q5).count(),
         }
+
+        return Response(data)
+
+
+class ActionLoguedUserStadistics(APIView, APIMixin):
+    """
+    List all prodicer and producer stadistics
+    searching by the project or action.
+    """
+    permission_classes = (IsAuthenticated,)
+
+    # Mixing initial variables
+    model = Action
+    serializer_list = ActionUserSerializer
+
+    paginate_by = 6
+
+    def get(self, request, format=None):
+        page = request.GET.get('page', None)
+
+        user_id = request.user.id 
+        queryset = self.model.objects.filter(client_id=request.user.id)
+
+        queryset = queryset.distinct('producer__id')
+        paginated_data = self.get_pagination(queryset, page, self.paginate_by)
+
+        data = {
+            'count':  paginated_data['count'],
+            'page': paginated_data['page'],
+            'paginate_by': paginated_data['paginate_by'],
+            'to_do': [],
+            'owe_me': []
+        }
+
+        for producer in paginated_data['results']:
+            data['owe_me'].append({
+                'pending': Action.objects.filter(status="Pendiente", producer_id=producer['producer']['id'], client_id=user_id).count(),
+                'accepted': Action.objects.filter(status="Aceptada", producer_id=producer['producer']['id'], client_id=user_id).count(),
+                'ejecuted': Action.objects.filter(status="Ejecutada", producer_id=producer['producer']['id'], client_id=user_id).count(),
+                'satisfactories': Action.objects.filter(status="Satisfactoria", producer_id=producer['producer']['id'], client_id=user_id).count(),
+                'unsatisfactories': Action.objects.filter(status="Insatisfactoria", producer_id=producer['producer']['id'], client_id=user_id).count()
+            })
+
+            data['to_do'] = {
+                'pending': Action.objects.filter(status="Pendiente", producer_id=user_id, client_id=producer['producer']['id']).count(),
+                'accepted': Action.objects.filter(status="Aceptada", producer_id=user_id, client_id=producer['producer']['id']).count(),
+                'ejecuted': Action.objects.filter(status="Ejecutada", producer_id=user_id, client_id=producer['producer']['id']).count(),
+                'satisfactories': Action.objects.filter(status="Satisfactoria", producer_id=user_id, client_id=producer['producer']['id']).count(),
+                'unsatisfactories': Action.objects.filter(status="Insatisfactoria", producer_id=user_id, client_id=producer['producer']['id']).count()
+            }
 
         return Response(data)
