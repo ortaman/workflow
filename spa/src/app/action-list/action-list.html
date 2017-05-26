@@ -89,7 +89,7 @@
                                                 <img class="user-pic rounded" ng-src="{{ producer.producer.photo}}"> </td>
                                             <td>
                                                 <a href="javascript:;" class="primary-link">
-                                                  {{ producer.producer.name }} {{producer.producer.first_surname}}
+                                                  {{producer.producer.name  +' '+ producer.producer.first_surname+' '+ producer.producer.second_surname}}
                                                 </a>
                                             </td>
                                             <td> {{ producer.producer.position || '-' }}</td>
