@@ -1,9 +1,9 @@
 
 app.controller('ActionDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig',
+	'$scope', '$state', 'ProjectService', 'ActionListService', 'APIConfig',
 	'ProducerGetListService', 'ActionGetService','ReportGetService','$mdDialog',
 	'ActionCreateService', 'UserService', 'Notification',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig,
+	function($scope, $state, ProjectService, ActionListService, APIConfig,
 		ProducerGetListService, ActionGetService, ReportGetService, $mdDialog, ActionCreateService, UserService, Notification) {
 
 	$scope.actionCurrentPage = 1;

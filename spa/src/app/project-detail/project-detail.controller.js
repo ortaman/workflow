@@ -1,9 +1,9 @@
 
 app.controller('ProjectDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
-	'ReportGetService','ProjectCreateService', 'UserService', 'Notification',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog,
-		 ReportGetService, ProjectCreateService,UserService, Notification) {
+	'$scope', '$state', 'ProjectService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
+	'ReportGetService', 'UserService', 'Notification',
+	function($scope, $state, ProjectService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog,
+		 ReportGetService ,UserService, Notification) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -31,7 +31,7 @@ app.controller('ProjectDetailController', [
 
 	//Service call
 	var getProject = function() {
-		ProjectGetService.getById($state.params.id).then(
+		ProjectService.getById($state.params.id).then(
 			function(response) {
 				response.image = APIConfig.baseUrl + response.image;
 				response.producer.photo = APIConfig.baseUrl + response.producer.photo;

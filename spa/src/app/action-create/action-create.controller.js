@@ -1,7 +1,7 @@
 
 app.controller('ActionCreateController', [
-  '$scope', '$state', 'ProjectListService', 'ActionCreateService', 'ProjectGetService', 'ActionGetService','Notification',
-  function($scope, $state, ProjectListService, ActionCreateService, ProjectGetService, ActionGetService, Notification) {
+  '$scope', '$state', 'ProjectService', 'ActionCreateService', 'ActionGetService','Notification',
+  function($scope, $state, ProjectService, ActionCreateService, ActionGetService, Notification) {
 
   $scope.action = {};
   $scope.submitted = false;
@@ -71,7 +71,7 @@ app.controller('ActionCreateController', [
 
 
   $scope.getProject = function(){
-    ProjectGetService.getById($state.params.projectId).then(
+    ProjectService.getById($state.params.projectId).then(
       function(response) {
         console.log('ProjectGet', response);
         $scope.project = response;

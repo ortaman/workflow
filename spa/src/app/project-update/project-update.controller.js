@@ -1,7 +1,7 @@
 
 app.controller('ProjectUpdateController', [
-  '$scope', '$state', 'ProjectGetService', 'ProjectUpdateService','APIConfig','Notification',
-  function($scope, $state, ProjectGetService, ProjectUpdateService, APIConfig,Notification) {
+  '$scope', '$state', 'ProjectService','APIConfig','Notification',
+  function($scope, $state, ProjectService, APIConfig,Notification) {
     $scope.submitted = false;
     $scope.project = {};
 
@@ -18,7 +18,7 @@ app.controller('ProjectUpdateController', [
     ];
 
     $scope.getProjectByIdInit = function() {
-      ProjectGetService.getById($state.params.id).then(
+      ProjectService.getById($state.params.id).then(
         function(response) {
           console.log('getById', response);
 
@@ -64,7 +64,7 @@ app.controller('ProjectUpdateController', [
 
       });
 
-  		$scope.submmitPromise = ProjectUpdateService.update($state.params.id, project).then(
+  		$scope.submmitPromise = ProjectService.update($state.params.id, project).then(
   			function(response) {
           Notification.success('El proyecto ha sido actualizado');
   				$state.go('coordinations');

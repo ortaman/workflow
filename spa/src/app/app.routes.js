@@ -41,11 +41,7 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
       url: "/projectUpdate/:id/",
       templateUrl: URLTemplates + "app/project-update/project-update.html",
       controller: "ProjectUpdateController"
-      //resolve: {
-        //project: function (ProjectUpdateService) {
-          //return ProjectUpdateService.getById(1);
-        //}
-      //}
+
     })
 
     .state('actionCreate', {

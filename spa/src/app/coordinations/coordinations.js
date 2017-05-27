@@ -1,7 +1,7 @@
 
 app.controller('CoordinationsController', ['$scope','ActionListService','UserService','ActionCreateService','$mdDialog',
-  'APIConfig','ProjectListService','ProjectCreateService' , 'StadisticsService', 'Notification','$state',
-  function($scope, ActionListService, UserService, ActionCreateService, $mdDialog, APIConfig, ProjectListService, ProjectCreateService,
+  'APIConfig','ProjectService' , 'StadisticsService', 'Notification','$state',
+  function($scope, ActionListService, UserService, ActionCreateService, $mdDialog, APIConfig, ProjectService,
      StadisticsService, Notification, $state) {
 
   $scope.promisesCurrentPage = 1
@@ -77,7 +77,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $scope.projectProducerStatus = status // status for display button according the promise
     query.producer = $scope.user; // id usuario
 
-    $scope.projectsProducerPromise = ProjectListService.getList(query).then(
+    $scope.projectsProducerPromise = ProjectService.getList(query).then(
 			function(response) {
 				$scope.projectsByProducer = response
 			},
@@ -97,7 +97,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $scope.projectClientStatus = status // status for display button according the promise
     query.client = $scope.user; // id usuario
 
-    $scope.projectsClientPromise = ProjectListService.getList(query).then(
+    $scope.projectsClientPromise = ProjectService.getList(query).then(
 			function(response) {
 				$scope.projectsByClient = response
 			},
@@ -139,7 +139,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $mdDialog.show(confirm).then(function() {
       project.status = type
       Notification.info('Espere un momento');
-      ProjectCreateService.update(project.id,project).then(
+      ProjectService.patch(project.id,project).then(
         function (response) {
           if (type == "Aceptada"){
             Notification.success('El proyecto ha pasado a proyectos aceptados');
@@ -171,7 +171,7 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
       project.status = type
       Notification.info('Espere un momento');
 
-      ProjectCreateService.update(project.id,project).then(
+      ProjectService.patch(project.id,project).then(
         function (response) {
           if (type == "Satisfactoria")
             Notification.success('El proyecto ha pasado a proyectos cumplidos satisfactoriamente');
