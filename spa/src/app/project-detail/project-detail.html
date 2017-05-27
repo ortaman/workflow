@@ -302,7 +302,7 @@
                                   <!-- BEGIN: Actions -->
 
                                   <div class="mt-comments">
-                                      <div class="mt-comment" ng-repeat="action in actions.results track by $index" ng-click="openActionDetailModal(action)">
+                                      <div class="mt-comment" ng-repeat="action in actions.results track by $index" ui-sref="actionDetail({id:action.id})">
                                           <div class="mt-comment-img" >
                                             <img  style="height:45px; width:45px " ng-src="{{ action.producer.photo }}" /> </div>
 

@@ -212,22 +212,6 @@ app.controller('ProjectDetailController', [
 //////////////////////////////////end reports/////////////////////////
 
 //////////////////////////////////modals//////////////////////////////
-	$scope.openActionDetailModal = function(action) {
-		$mdDialog.show({
-		 scope:$scope,
-		 preserveScope:true,
-		 controller: 'ActionViewModalController',
-		 controllerAs: 'vm',
-		 templateUrl: '/app/project-detail/modals/action-detail-modal.html',
-		 parent: angular.element(document.body),
-		 clickOutsideToClose:true,
-		 locals:{
-			 currentAction: action.id
-		 }
-		}).finally(function() {
-
-    });
-	}
 
 	$scope.closeProjectReport = function(action) {
 		if($scope.checkStatus('Satisfactoria') || $scope.checkStatus('Insatisfactoria')){
