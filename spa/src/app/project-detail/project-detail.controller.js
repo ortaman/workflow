@@ -90,7 +90,8 @@ app.controller('ProjectDetailController', [
 
 		ActionListService.getList(query).then(
 			function(response) {
-				$scope.timelines = response;
+				$scope.timelines = angular.copy(response);
+				$scope.timelines.push($scope.project)
 
 			},
 			function(errorResponse) {
