@@ -12,6 +12,7 @@ app.controller('ActionDetailController', [
 	var actionStatus = "Pendiente"
 	$scope.accomplishedStatus = 'Ejecutada'
 	$scope.lastStatus = ['Ejecutada', 'Satisfactoria',  'Insatisfactoria']
+	$scope.phases = ['Preparación','Negociación','Ejecución','Evaluación']
 
 	$scope.currentAction = {};
 	$scope.project = {};
@@ -259,6 +260,37 @@ app.controller('ActionDetailController', [
 			else{
 				Notification.info("La acción ha sido ejecutada, no es posible agregar  otra acción")
 			}
+		}
+
+		$scope.moveTophase = function () {
+
+			if ($scope.currentAction.phase == $scope.phases[$scope.phases.length-1]){
+				Notification.info('La accion ya se encuentra en la última fase');
+				return;
+			}
+			var newPhase = $scope.phases[$scope.phases.indexOf($scope.currentAction.phase)+1];
+
+			var confirm = $mdDialog.confirm()
+					.title("¿Está seguro que quiere pasar a fase de " + newPhase)
+					.ok('Sí')
+					.cancel('No');
+
+			$mdDialog.show(confirm).then(function() {
+				Notification.info('Espere un momento');
+				var action = angular.copy($scope.currentAction);
+				action.phase = newPhase;
+				ActionCreateService.update(action.id, action).then(
+					function (response) {
+						$mdDialog.hide();
+						Notification.success("La accion ha pasado a fase de "+newPhase)
+						$state.reload()
+					},
+					function (errorResponse) {
+						console.error('errorResponse', errorResponse);
+					}
+				);
+			}, function() {
+			});
 		}
 
 	$scope.checkStatus =  function (status) {

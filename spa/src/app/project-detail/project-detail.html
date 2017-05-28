@@ -41,6 +41,11 @@
                                     <i class="icon-note"></i> Agregar reporte de avance</a>
                             </li>
 
+                            <li ng-if="project.producer.id == user.id ">
+                                <a href="" ng-click="moveTophase()">
+                                    <i class="icon-link"></i> Pasar a la siguiente fase </a>
+                            </li>
+
                             <li class="divider" ng-if="project.producer.id == user.id"> </li>
                             <li ng-click="openfinishProjectReport()" ng-if="project.producer.id == user.id ">
                                 <a >

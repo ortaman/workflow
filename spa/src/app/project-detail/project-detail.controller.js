@@ -12,6 +12,8 @@ app.controller('ProjectDetailController', [
 	$scope.producers = [];
 	$scope.producersPerformance = [];
 	$scope.accomplishedStatus = 'Ejecutada'
+	$scope.phases = ['Preparación','Negociación','Ejecución','Evaluación']
+
 
 	var queryStatus = "Pendiente";
 
@@ -276,6 +278,37 @@ app.controller('ProjectDetailController', [
 			Notification.info("El proyecto ha sido ejecutado, no es posible agregar  otra acción")
 			return;
 		}
+	}
+
+	$scope.moveTophase = function () {
+
+		if ($scope.project.phase == $scope.phases[$scope.phases.length-1]){
+			Notification.info('El proyecto ya se encuentra en la última fase');
+			return;
+		}
+		var newPhase = $scope.phases[$scope.phases.indexOf($scope.project.phase)+1];
+
+		var confirm = $mdDialog.confirm()
+				.title("¿Está seguro que quiere pasar a fase de " + newPhase)
+				.ok('Sí')
+				.cancel('No');
+
+		$mdDialog.show(confirm).then(function() {
+			Notification.info('Espere un momento');
+			var project = angular.copy($scope.project);
+			project.phase = newPhase;
+			ProjectService.patch(project.id, project).then(
+				function (response) {
+					$mdDialog.hide();
+					Notification.success("El proyecto ha pasado a fase de "+newPhase)
+					$state.reload()
+				},
+				function (errorResponse) {
+					console.error('errorResponse', errorResponse);
+				}
+			);
+		}, function() {
+		});
 	}
 
 	$scope.checkStatus =  function (status) {
