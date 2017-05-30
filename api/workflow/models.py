@@ -67,10 +67,10 @@ class Project(models.Model):
     ejecution_report_at = models.DateField(auto_now=False, null=True, blank=True, verbose_name='Fecha de creación del reporte de ejecución')
 
     # indicators
-    financial = models.CharField(max_length=64, null=True, blank=True, verbose_name='Financieros')
-    operational = models.CharField(max_length=64, null=True, blank=True, verbose_name='Operacionales')
-    other1 = models.CharField(max_length=64, null=True, blank=True, verbose_name='Otros')
-    other2 = models.CharField(max_length=64, null=True, blank=True, verbose_name='Otros')
+    financial = models.CharField(max_length=128, null=True, blank=True, verbose_name='Financieros')
+    operational = models.CharField(max_length=128, null=True, blank=True, verbose_name='Operacionales')
+    other1 = models.CharField(max_length=128, null=True, blank=True, verbose_name='Otros')
+    other2 = models.CharField(max_length=128, null=True, blank=True, verbose_name='Otros')
 
     image = models.ImageField(upload_to='images/', verbose_name='Imagen')
 
@@ -135,10 +135,10 @@ class Action(models.Model):
     ejecution_report_at = models.DateField(auto_now=False, null=True, blank=True, verbose_name='Fecha de creación del reporte de ejecución')
 
     # indicators
-    financial = models.CharField(max_length=64, null=True, blank=True, verbose_name='Financieros')
-    operational = models.CharField(max_length=64, null=True, blank=True, verbose_name='Operacionales')
-    other1 = models.CharField(max_length=64, null=True, blank=True, verbose_name='Otros')
-    other2 = models.CharField(max_length=64, null=True, blank=True, verbose_name='Otros')
+    financial = models.CharField(max_length=128, null=True, blank=True, verbose_name='Financieros')
+    operational = models.CharField(max_length=128, null=True, blank=True, verbose_name='Operacionales')
+    other1 = models.CharField(max_length=128, null=True, blank=True, verbose_name='Otros')
+    other2 = models.CharField(max_length=128, null=True, blank=True, verbose_name='Otros')
 
     parent_action = models.ForeignKey(
         'self',
