@@ -221,6 +221,8 @@
                                 md-current-view="year"
                                 md-placeholder="ingrese fecha"
                                 ng-model="project.begin_at"
+                                ng-change="beginOrAtOrAccomplishDateChanged(project.begin_at, project.accomplish_at)"
+
                                 required></md-datepicker>
 
                               <div ng-show="projectForm.begin_at.$touched || submitted">
@@ -240,6 +242,7 @@
                                 md-placeholder="ingrese fecha"
                                 md-min-date="project.begin_at"
                                 ng-disabled="project.begin_at===undefined"
+                                ng-change="beginOrAtOrAccomplishDateChanged(project.begin_at, project.accomplish_at)"
                                 ng-model="project.accomplish_at"
                                 required></md-datepicker>
 
@@ -281,6 +284,8 @@
                                     md-current-view="year"
                                     md-placeholder="ingrese fecha"
                                     md-min-date="project.accomplish_at"
+                                    md-min-date="renegotiation_min_date"
+                                    md-max-date="renegotiation_max_date"
                                     ng-disabled="project.begin_at===undefined || project.accomplish_at===undefined"
                                     ng-model="project.renegotiation_at"></md-datepicker>
 
