@@ -1,9 +1,9 @@
 
 app.controller('ActionDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig',
+	'$scope', '$state', 'ProjectService', 'ActionListService', 'APIConfig',
 	'ProducerGetListService', 'ActionGetService','ReportGetService','$mdDialog',
 	'ActionCreateService', 'UserService', 'Notification',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig,
+	function($scope, $state, ProjectService, ActionListService, APIConfig,
 		ProducerGetListService, ActionGetService, ReportGetService, $mdDialog, ActionCreateService, UserService, Notification) {
 
 	$scope.actionCurrentPage = 1;
@@ -12,6 +12,7 @@ app.controller('ActionDetailController', [
 	var actionStatus = "Pendiente"
 	$scope.accomplishedStatus = 'Ejecutada'
 	$scope.lastStatus = ['Ejecutada', 'Satisfactoria',  'Insatisfactoria']
+	$scope.phases = ['Preparación','Negociación','Ejecución','Evaluación']
 
 	$scope.currentAction = {};
 	$scope.project = {};
@@ -62,6 +63,14 @@ app.controller('ActionDetailController', [
 
 	$scope.openReportModal = function() {
 
+		if ($scope.checkStatus('Pendiente')){
+			Notification.info("Debe aceptar esta acción primero")
+			return;
+		}else if($scope.currentAction.advance_report_at ){
+			Notification.info("No es posible agregar  otro reporte")
+			return;
+		}
+
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,
@@ -103,6 +112,14 @@ app.controller('ActionDetailController', [
 	}
 
 	$scope.actionFinishReport = function(){
+
+		if ( !$scope.currentAction.advance_report_at ){
+			Notification.info("Debe agregar reporte de avance  primero")
+			return
+		}else if ($scope.currentAction.ejecution_report_at ) {
+			Notification.info("No es posible agregar  otro reporte")
+			return
+		}
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,
@@ -131,6 +148,15 @@ app.controller('ActionDetailController', [
 	////////////////////////////////////////////// modals////////////////////////////////////////
 
 	$scope.closeAction = function(){
+
+		if($scope.checkStatus('Satisfactoria') || $scope.checkStatus('Insatisfactoria')){
+			Notification.info("La acción ya se encuentra  cerrada")
+			return
+		}else if (!$scope.checkStatus('Ejecutada')) {
+			Notification.info("No es posible cerrar la acción, aun no esta  ejecutada")
+			return;
+		}
+
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,
@@ -208,10 +234,6 @@ app.controller('ActionDetailController', [
   };
 
 	//////////////////////////////////////////////template interaction functions////////////////////////////////////////
-	$scope.hoverIn = function(show){
-		this.hoverEdit = show;
-	};
-
 	$scope.chunkArray = function(index){
 		if($scope.producers.producers)
 			return $scope.producers.producers.slice(index*3, (index*3)+3);
@@ -227,4 +249,53 @@ app.controller('ActionDetailController', [
 
 	//////////////////////////////////////////////template interaction functions////////////////////////////////////////
 
+		$scope.actionCreate = function () {
+			if ($scope.checkStatus('Pendiente')){
+				Notification.info("Debe aceptar esta acción primero")
+				return;
+			}
+			else if($scope.checkStatus('Aceptada')) {
+				$state.go("actionCreate",{ projectId: $scope.currentAction.project.id, actionId:$scope.currentAction.id })
+			}
+			else{
+				Notification.info("La acción ha sido ejecutada, no es posible agregar  otra acción")
+			}
+		}
+
+		$scope.moveTophase = function () {
+
+			if ($scope.currentAction.phase == $scope.phases[$scope.phases.length-1]){
+				Notification.info('La accion ya se encuentra en la última fase');
+				return;
+			}
+			var newPhase = $scope.phases[$scope.phases.indexOf($scope.currentAction.phase)+1];
+
+			var confirm = $mdDialog.confirm()
+					.title("¿Está seguro que quiere pasar a fase de " + newPhase)
+					.ok('Sí')
+					.cancel('No');
+
+			$mdDialog.show(confirm).then(function() {
+				Notification.info('Espere un momento');
+				var action = angular.copy($scope.currentAction);
+				action.phase = newPhase;
+				ActionCreateService.update(action.id, action).then(
+					function (response) {
+						$mdDialog.hide();
+						Notification.success("La accion ha pasado a fase de "+newPhase)
+						$state.reload()
+					},
+					function (errorResponse) {
+						console.error('errorResponse', errorResponse);
+					}
+				);
+			}, function() {
+			});
+		}
+
+	$scope.checkStatus =  function (status) {
+		if ($scope.currentAction.status == status)
+			return true;
+		return false;
+	}
 }]);

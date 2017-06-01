@@ -297,14 +297,14 @@
                         <br>
                         <h4 class="form-section">Indicadores</h4>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <md-input-container class="md-block">
                                   <label> Financieros </label>
                                   <input
                                     name="financial"
                                     maxlength="64"
                                     ng-model="action.financial"
-                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"></input>
+                                    ></input>
                                   <div ng-show="actionForm.financial.$touched || submitted">
                                     <div class="error" ng-show="actionForm.financial.$error.pattern">
                                       Debe contener espacios y caracteres alfabéticos.
@@ -312,7 +312,7 @@
                                   </div>
                                  </md-input-container>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
 
                                 <md-input-container class="md-block">
                                   <label> Operacionales </label>
@@ -320,7 +320,7 @@
                                     name="operational"
                                     maxlength="64"
                                     ng-model="action.operational"
-                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"></input>
+                                    ></input>
                                   <div ng-show="actionForm.operational.$touched || submitted">
                                     <div class="error" ng-show="actionForm.operational.$error.pattern">
                                        Debe contener espacios y caracteres alfabéticos.
@@ -328,14 +328,17 @@
                                   </div>
                                  </md-input-container>
                             </div>
-                            <div class="col-md-3">
+                          </div>
+                          <div class="row">
+
+                            <div class="col-md-6">
                                 <md-input-container class="md-block">
                                   <label> Otros </label>
                                   <input
                                     name="other1"
                                     maxlength="64"
                                     ng-model="action.other1"
-                                    ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"></input>
+                                    ></input>
                                   <div ng-show="actionForm.other1.$touched || submitted">
                                     <div class="error" ng-show="actionForm.other1.$error.pattern">
                                        Debe contener espacios y caracteres alfabéticos.
@@ -343,14 +346,14 @@
                                   </div>
                                  </md-input-container>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                               <md-input-container class="md-block">
                                 <label> Otros </label>
                                 <input
                                   name="other2"
                                   maxlength="64"
                                   ng-model="action.other2"
-                                  ng-pattern="/^([a-zA-ZñáéíóúÑÁÉÍÓÚ\s]{0,64})$/"></input>
+                                  ></input>
                                 <div ng-show="actionForm.other2.$touched || submitted">
                                   <div class="error" ng-show="actionForm.other2.$error.pattern">
                                      Debe contener espacios y caracteres alfabéticos.

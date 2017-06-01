@@ -221,6 +221,8 @@
                                 md-current-view="year"
                                 md-placeholder="ingrese fecha"
                                 ng-model="project.begin_at"
+                                ng-change="beginOrAtOrAccomplishDateChanged(project.begin_at, project.accomplish_at)"
+
                                 required></md-datepicker>
 
                               <div ng-show="projectForm.begin_at.$touched || submitted">
@@ -240,6 +242,7 @@
                                 md-placeholder="ingrese fecha"
                                 md-min-date="project.begin_at"
                                 ng-disabled="project.begin_at===undefined"
+                                ng-change="beginOrAtOrAccomplishDateChanged(project.begin_at, project.accomplish_at)"
                                 ng-model="project.accomplish_at"
                                 required></md-datepicker>
 
@@ -281,6 +284,8 @@
                                     md-current-view="year"
                                     md-placeholder="ingrese fecha"
                                     md-min-date="project.accomplish_at"
+                                    md-min-date="renegotiation_min_date"
+                                    md-max-date="renegotiation_max_date"
                                     ng-disabled="project.begin_at===undefined || project.accomplish_at===undefined"
                                     ng-model="project.renegotiation_at"></md-datepicker>
 
@@ -390,14 +395,14 @@
                         <br><br>
                         <h4 class="form-section">Indicadores</h4>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <md-input-container class="md-block">
                                   <label>Financieros...</label>
                                   <input
                                     name="financial"
-                                    maxlength="64"
+                                    maxlength="128"
                                     ng-model="project.financial"
-                                    ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"></input>
+                                  ></input>
                                   <div ng-show="projectForm.financial.$touched || submitted">
                                     <div class="error" ng-show="projectForm.financial.$error.required">
                                       Campo requerido.
@@ -408,15 +413,15 @@
                                   </div>
                                  </md-input-container>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
 
                                 <md-input-container class="md-block">
                                   <label>Operacionales...</label>
                                   <input
                                     name="operational"
-                                    maxlength="64"
+                                    maxlength="128"
                                     ng-model="project.operational"
-                                    ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"></input>
+                                  ></input>
                                   <div ng-show="projectForm.operational.$touched || submitted">
                                     <div class="error" ng-show="projectForm.operational.$error.pattern">
                                       Debe contener caracteres alfanúmericos.
@@ -424,14 +429,21 @@
                                   </div>
                                  </md-input-container>
                             </div>
-                            <div class="col-md-3">
+                            <div class="">
+
+                            </div>
+
+                          </div>
+                          <div class="row">
+
+                            <div class="col-md-6">
                                 <md-input-container class="md-block">
                                   <label>Otros...</label>
                                   <input
                                     name="other1"
-                                    maxlength="64"
+                                    maxlength="128"
                                     ng-model="project.other1"
-                                    ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"></input>
+                                  ></input>
                                   <div ng-show="projectForm.other1.$touched || submitted">
                                     <div class="error" ng-show="projectForm.other1.$error.pattern">
                                       Debe contener caracteres alfanúmericos.
@@ -439,14 +451,14 @@
                                   </div>
                                  </md-input-container>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                               <md-input-container class="md-block">
                                 <label>Otros...</label>
                                 <input
                                   name="other2"
-                                  maxlength="64"
+                                  maxlength="128"
                                   ng-model="project.other2"
-                                  ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"></input>
+                                ></input>
                                 <div ng-show="projectForm.other2.$touched || submitted">
                                   <div class="error" ng-show="projectForm.other2.$error.pattern">
                                     Debe contener caracteres alfanúmericos.

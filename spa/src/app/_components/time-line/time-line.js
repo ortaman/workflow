@@ -25,6 +25,12 @@ app.directive('timeLine', ['URLTemplates',
           'accomplish_at':'Fecha de ejecución',
           'report_at':'Fecha de reporte',
           'begin_at':'Fecha de inicio',
+
+          'preparation_at' : 'Fecha de Preparación',
+          'negotiation_at' : 'Fecha de Negociación',
+          'execution_at' : 'Fecha de Ejecución',
+          'evaluation_at' : 'Fecha de Evaluación',
+
         };
 
     	var transformActions = function(results){
@@ -66,12 +72,15 @@ app.directive('timeLine', ['URLTemplates',
     		var newArray = [];
     		angular.forEach(results, function (result) {
     			angular.forEach(dateFields, function(key, value){
-    				var obj = {}
-    				obj.timeline = result[value];
-    				obj.actions = [];
-    				result.timeline_text = key
-    				obj.actions.push(angular.copy(result))
-    				newArray.push(obj)
+            if(result[value]){
+
+      				var obj = {}
+      				obj.timeline = result[value];
+      				obj.actions = [];
+      				result.timeline_text = key
+      				obj.actions.push(angular.copy(result))
+      				newArray.push(obj)
+            }
 
     			})
     		})
@@ -83,7 +92,11 @@ app.directive('timeLine', ['URLTemplates',
     		//asign photo
     		newArray.forEach(function(item){
     			angular.forEach(item.actions, function(item2){
-    				item2.producer.photo =  APIConfig.baseUrl+ angular.copy(item2.producer.photo);
+
+            if (item2.producer.photo.startsWith("api") == true) {
+             item2.producer.photo =  APIConfig.baseUrl+ angular.copy(item2.producer.photo);
+
+            }
     			})
     		})
     		//end of asignment
@@ -93,7 +106,6 @@ app.directive('timeLine', ['URLTemplates',
 
       var time = $scope.$watch( 'vm.timeLine', function () {
         if(vm.timeLine ){
-          console.log("una", vm.timeLine);
             vm.timeLine = transformActions(vm.timeLine)
             $.getScript("/assets/metronics/global/plugins/horizontal-timeline/horizontal-timeline.js", function(){});
 

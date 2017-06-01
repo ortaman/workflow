@@ -30,26 +30,29 @@
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
-                            <li ng-if="currentAction.producer.id == user.id && currentAction.status == 'Aceptada'">
-                                <a ui-sref="actionCreate({ projectId: currentAction.project.id, actionId:currentAction.id })">
+                            <li ng-if="currentAction.producer.id == user.id ">
+                                <a ng-click="actionCreate()">
                                     <i class="icon-fire"></i> Nueva Acción </a>
                             </li>
                             <li >
                                 <a href="" ui-sref="actionUpdate({id:currentAction.id})">
                                     <i class="icon-pin"></i> Editar accion </a>
                             </li>
-                            <li ng-if="currentAction.producer.id == user.id && !currentAction.advance_report_at && currentAction.status == 'Aceptada'">
+                            <li ng-if="currentAction.producer.id == user.id">
                                 <a href="" ng-click="openReportModal()">
                                     <i class="icon-note"></i> Agregar reporte de avance </a>
                             </li>
-                            <li class="divider" ng-if="currentAction.producer.id == user.id  && currentAction.advance_report_at &&  !currentAction.ejecution_report_at "> </li>
-                            <li ng-click="actionFinishReport()" ng-if="currentAction.producer.id == user.id  && currentAction.advance_report_at &&  !currentAction.ejecution_report_at ">
+                            <li ng-if="currentAction.producer.id == user.id ">
+                                <a href="" ng-click="moveTophase()">
+                                    <i class="icon-link"></i> Pasar a la siguiente fase </a>
+                            </li>
+                            <li class="divider" ng-if="currentAction.producer.id == user.id  "> </li>
+                            <li ng-click="actionFinishReport()" ng-if="currentAction.producer.id == user.id  ">
                                 <a >
                                     <i class="icon-layers"></i> Terminar acción</a>
                             </li>
 
-                            <li class="divider" ng-if="currentAction.client.id == user.id  && currentAction.status =='Ejecutada' "> </li>
-                            <li ng-click="closeAction()" ng-if="currentAction.client.id == user.id  && currentAction.status =='Ejecutada' ">
+                            <li ng-click="closeAction()" ng-if="currentAction.client.id == user.id  ">
                                 <a >
                                     <i class="icon-layers"></i> Cerrar acción</a>
                             </li>
@@ -306,7 +309,7 @@
                                       <!-- BEGIN: Actions -->
 
                                       <div class="mt-comments">
-                                          <div class="mt-comment" ng-repeat="action in actions.results track by $index" ng-click="openActionDetailModal(action)">
+                                          <div class="mt-comment" ng-repeat="action in actions.results track by $index" ui-sref="actionDetail({id:action.id})">
                                               <div class="mt-comment-img" >
                                                 <img  style="height:45px; width:45px " ng-src="{{ action.producer.photo }}" /> </div>
 

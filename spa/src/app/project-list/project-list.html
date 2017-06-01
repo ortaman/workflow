@@ -121,7 +121,7 @@
                                                 Fase: {{ project.phase }}
                                             </div>
                                             <div class="mt-body-icons">
-                                                <a ui-sref="projectUpdate({ id: project.id })"
+                                                <a ui-sref="projectUpdate({ id: project.id })" ng-if="user.id == project.client.id"
                                                    class="md-icon-button test-tooltip" aria-label="Refresh">
                                                    <md-tooltip md-direction="top"> Editar proyecto </md-tooltip>
                                                    <i class=" fa fa-edit"></i>

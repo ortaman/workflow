@@ -1,9 +1,9 @@
 
 app.controller('ProjectDetailController', [
-	'$scope', '$state', 'ProjectGetService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
-	'ReportGetService','ProjectCreateService', 'UserService', 'Notification',
-	function($scope, $state, ProjectGetService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog,
-		 ReportGetService, ProjectCreateService,UserService, Notification) {
+	'$scope', '$state', 'ProjectService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
+	'ReportGetService', 'UserService', 'Notification',
+	function($scope, $state, ProjectService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog,
+		 ReportGetService ,UserService, Notification) {
 
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
@@ -12,6 +12,8 @@ app.controller('ProjectDetailController', [
 	$scope.producers = [];
 	$scope.producersPerformance = [];
 	$scope.accomplishedStatus = 'Ejecutada'
+	$scope.phases = ['Preparación','Negociación','Ejecución','Evaluación']
+
 
 	var queryStatus = "Pendiente";
 
@@ -31,7 +33,7 @@ app.controller('ProjectDetailController', [
 
 	//Service call
 	var getProject = function() {
-		ProjectGetService.getById($state.params.id).then(
+		ProjectService.getById($state.params.id).then(
 			function(response) {
 				response.image = APIConfig.baseUrl + response.image;
 				response.producer.photo = APIConfig.baseUrl + response.producer.photo;
@@ -90,7 +92,8 @@ app.controller('ProjectDetailController', [
 
 		ActionListService.getList(query).then(
 			function(response) {
-				$scope.timelines = response;
+				$scope.timelines = angular.copy(response);
+				$scope.timelines.push($scope.project)
 
 			},
 			function(errorResponse) {
@@ -146,6 +149,14 @@ app.controller('ProjectDetailController', [
 	}
 
 	$scope.openfinishProjectReport = function(){
+		if ( !$scope.project.advance_report_at ){
+			Notification.info("Debe agregar reporte de avance  primero")
+			return
+		}else if ($scope.project.ejecution_report_at ) {
+			Notification.info("No es posible agregar  otro reporte")
+			return
+		}
+
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,
@@ -170,6 +181,13 @@ app.controller('ProjectDetailController', [
 	}
 
 	$scope.openAdvanceReport = function() {
+		if ($scope.checkStatus('Pendiente')){
+			Notification.info("Debe aceptar este proyecto primero")
+			return;
+		}else if($scope.project.advance_report_at ){
+			Notification.info("No es posible agregar  otro reporte")
+			return;
+		}
 
 		$mdDialog.show({
 		 scope:$scope,
@@ -196,24 +214,16 @@ app.controller('ProjectDetailController', [
 //////////////////////////////////end reports/////////////////////////
 
 //////////////////////////////////modals//////////////////////////////
-	$scope.openActionDetailModal = function(action) {
-		$mdDialog.show({
-		 scope:$scope,
-		 preserveScope:true,
-		 controller: 'ActionViewModalController',
-		 controllerAs: 'vm',
-		 templateUrl: '/app/project-detail/modals/action-detail-modal.html',
-		 parent: angular.element(document.body),
-		 clickOutsideToClose:true,
-		 locals:{
-			 currentAction: action.id
-		 }
-		}).finally(function() {
-
-    });
-	}
 
 	$scope.closeProjectReport = function(action) {
+		if($scope.checkStatus('Satisfactoria') || $scope.checkStatus('Insatisfactoria')){
+			Notification.info("El proyecto ya se encuentra  cerrado")
+			return
+		}else if (!$scope.checkStatus('Ejecutada')) {
+			Notification.info("No es posible cerrar el proyecto, aun no esta  ejecutado")
+			return;
+		}
+
 		$mdDialog.show({
 		 scope:$scope,
 		 preserveScope:true,
@@ -255,4 +265,55 @@ app.controller('ProjectDetailController', [
 	}
 //////////////////////////////////end template interaction functions //////////////////////////////////
 
+	$scope.actionCreate = function () {
+		if ($scope.checkStatus('Pendiente')){
+			Notification.info("Debe aceptar este proyecto primero")
+			return;
+		}
+		else if($scope.checkStatus('Aceptada')) {
+			$state.go("actionCreate",{ projectId: $scope.project.id })
+			return;
+		}
+		else{
+			Notification.info("El proyecto ha sido ejecutado, no es posible agregar  otra acción")
+			return;
+		}
+	}
+
+	$scope.moveTophase = function () {
+
+		if ($scope.project.phase == $scope.phases[$scope.phases.length-1]){
+			Notification.info('El proyecto ya se encuentra en la última fase');
+			return;
+		}
+		var newPhase = $scope.phases[$scope.phases.indexOf($scope.project.phase)+1];
+
+		var confirm = $mdDialog.confirm()
+				.title("¿Está seguro que quiere pasar a fase de " + newPhase)
+				.ok('Sí')
+				.cancel('No');
+
+		$mdDialog.show(confirm).then(function() {
+			Notification.info('Espere un momento');
+			var project = angular.copy($scope.project);
+			project.phase = newPhase;
+			ProjectService.patch(project.id, project).then(
+				function (response) {
+					$mdDialog.hide();
+					Notification.success("El proyecto ha pasado a fase de "+newPhase)
+					$state.reload()
+				},
+				function (errorResponse) {
+					console.error('errorResponse', errorResponse);
+				}
+			);
+		}, function() {
+		});
+	}
+
+	$scope.checkStatus =  function (status) {
+		if ($scope.project.status == status)
+			return true;
+		return false;
+	}
 }]);

@@ -1,7 +1,7 @@
 
 app.controller('ProjectCreateController', [
-  '$scope', '$state', 'ProjectCreateService','UserService','Notification',
-  function($scope, $state, ProjectCreateService, UserService, Notification) {
+  '$scope', '$state', 'ProjectService','UserService','Notification',
+  function($scope, $state, ProjectService, UserService, Notification) {
     $scope.submitted = false;
 
     $scope.project = {};
@@ -44,7 +44,7 @@ app.controller('ProjectCreateController', [
           })
       });
 
-  		$scope.submmitPromise = ProjectCreateService.create(project).then(
+  		$scope.submmitPromise = ProjectService.create(project).then(
   			function(response) {
   				Notification.success('El proyecto ha sido creado satisfactoriamente');
   				$state.go('coordinations');
@@ -57,5 +57,17 @@ app.controller('ProjectCreateController', [
   		);
 
     }
+
+    ////////////////////dates validations///////////////////////
+
+    $scope.beginOrAtOrAccomplishDateChanged = function (begin_at, accomplish_at) {
+      if (begin_at, accomplish_at){
+        var minDate = moment(begin_at).add(1, 'd');
+        $scope.renegotiation_min_date = minDate.toDate();
+        var maxDate = Math.ceil(moment(accomplish_at).diff(minDate, 'days')/ 2)
+        $scope.renegotiation_max_date = moment(accomplish_at).subtract(maxDate, 'd').toDate();
+      }
+    }
+    ////////////////////end dates validations///////////////////////
 
 }]);

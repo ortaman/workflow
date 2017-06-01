@@ -1,6 +1,6 @@
 
-app.controller('CloseProjectModalController', ['$scope','$mdDialog','project','Notification', 'ProjectCreateService',
-  function($scope,$mdDialog, project, Notification, ProjectCreateService) {
+app.controller('CloseProjectModalController', ['$scope','$mdDialog','project','Notification', 'ProjectService',
+  function($scope,$mdDialog, project, Notification, ProjectService) {
 
     var $ctrl = this;
     $ctrl.project = project;
@@ -14,7 +14,7 @@ app.controller('CloseProjectModalController', ['$scope','$mdDialog','project','N
         Notification.success('El formulario no es válido.');
         return;
       }
-        $scope.submmitPromise = ProjectCreateService.update(project.id, project).then(
+        $scope.submmitPromise = ProjectService.patch(project.id, project).then(
           function (response) {
             $mdDialog.hide();
             Notification.success("El proyecto ha pasado a estatus de cerrado")

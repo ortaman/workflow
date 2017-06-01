@@ -31,24 +31,28 @@
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
-                            <li ng-if="project.producer.id == user.id && project.status == 'Aceptada'">
-                                <a ui-sref="actionCreate({ projectId: project.id })">
+                            <li ng-if="project.producer.id == user.id ">
+                                <a ng-click="actionCreate()">
                                     <i class="icon-fire"></i> Nueva Acción </a>
                             </li>
 
-                            <li ng-if="project.producer.id == user.id && !project.advance_report_at && project.status == 'Aceptada'">
+                            <li ng-if="project.producer.id == user.id ">
                                 <a href="" ng-click="openAdvanceReport()">
                                     <i class="icon-note"></i> Agregar reporte de avance</a>
                             </li>
 
-                            <li class="divider" ng-if="project.producer.id == user.id && project.advance_report_at && !project.ejecution_report_at "> </li>
-                            <li ng-click="openfinishProjectReport()" ng-if="project.producer.id == user.id && project.advance_report_at && !project.ejecution_report_at ">
+                            <li ng-if="project.producer.id == user.id ">
+                                <a href="" ng-click="moveTophase()">
+                                    <i class="icon-link"></i> Pasar a la siguiente fase </a>
+                            </li>
+
+                            <li class="divider" ng-if="project.producer.id == user.id"> </li>
+                            <li ng-click="openfinishProjectReport()" ng-if="project.producer.id == user.id ">
                                 <a >
                                     <i class="icon-layers"></i> Terminar proyecto</a>
                             </li>
 
-                            <li class="divider" ng-if="project.client.id == user.id  && project.status =='Ejecutada'"> </li>
-                            <li ng-click="closeProjectReport()" ng-if="project.client.id == user.id  && project.status =='Ejecutada'">
+                            <li ng-click="closeProjectReport()" ng-if="project.client.id == user.id ">
                                 <a >
                                     <i class="icon-layers"></i> Cerrar proyecto</a>
                             </li>
@@ -237,7 +241,7 @@
                                       <td class="fit ">
                                         <img height="40" width="40" ng-src="{{producer.producer.photo}}"/>
                                       <td>
-                                          <a href="javascript:; " class="primary-link ">{{producer.producer.username}}</a>
+                                          <a href="javascript:; " class="primary-link ">{{producer.producer.name  +' '+ producer.producer.first_surname+' '+ producer.producer.second_surname}}</a>
                                       </td>
                                       <td>{{ producer.pending}}</td>
                                       <td>{{ producer.accepted}}</td>
@@ -303,7 +307,7 @@
                                   <!-- BEGIN: Actions -->
 
                                   <div class="mt-comments">
-                                      <div class="mt-comment" ng-repeat="action in actions.results track by $index" ng-click="openActionDetailModal(action)">
+                                      <div class="mt-comment" ng-repeat="action in actions.results track by $index" ui-sref="actionDetail({id:action.id})">
                                           <div class="mt-comment-img" >
                                             <img  style="height:45px; width:45px " ng-src="{{ action.producer.photo }}" /> </div>
 
