@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Action
-from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionUserSerializer
+from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionClientSerializer, ActionProducerSerializer
 from common.mixins import APIMixin
 
 
@@ -191,7 +191,7 @@ class ActionTodoStadistics(APIView, APIMixin):
 
     # Mixing initial variables
     model = Action
-    serializer_list = ActionUserSerializer
+    serializer_list = ActionProducerSerializer
 
     paginate_by = 6
 
@@ -234,7 +234,7 @@ class ActionOweMeStadistics(APIView, APIMixin):
 
     # Mixing initial variables
     model = Action
-    serializer_list = ActionUserSerializer
+    serializer_list = ActionClientSerializer
 
     paginate_by = 6
 

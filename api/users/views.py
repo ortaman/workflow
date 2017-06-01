@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 
 from workflow.models import Action
-from workflow.serializers import ActionUserSerializer
+from workflow.serializers import ActionProducerSerializer
 
 from common.mixins import APIMixin
 from .models import User
@@ -74,7 +74,7 @@ class ProducerList(APIView, APIMixin):
 
     # Mixing initial variables
     model = Action
-    serializer_list = ActionUserSerializer
+    serializer_list = ActionProducerSerializer
 
     paginate_by = 6
 
