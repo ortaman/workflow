@@ -133,7 +133,16 @@ class ActionListSerializer(serializers.ModelSerializer):
             'begin_at', 'accomplish_at', 'report_at', 'report', 'advance_report_at', 'ejecution_report_at')
 
 
-class ActionUserSerializer(serializers.ModelSerializer):
+class ActionClientSerializer(serializers.ModelSerializer):
+
+    producer = UserSerializer()
+
+    class Meta:
+        model  = Action
+        fields = ('client',)
+
+
+class ActionProducerSerializer(serializers.ModelSerializer):
 
     producer = UserSerializer()
 
