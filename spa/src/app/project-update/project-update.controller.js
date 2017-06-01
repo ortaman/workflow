@@ -81,6 +81,7 @@ app.controller('ProjectUpdateController', [
     ////////////////////dates validations///////////////////////
 
     $scope.beginOrAtOrAccomplishDateChanged = function (begin_at, accomplish_at) {
+      delete $scope.project.renegotiation_at
       if (begin_at, accomplish_at){
         var minDate = moment(begin_at).add(1, 'd');
         $scope.renegotiation_min_date = minDate.toDate();
