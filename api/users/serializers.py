@@ -8,9 +8,6 @@ from rest_framework import serializers
 from .models import User
 
 
-
-
-
 class UserSerializer(serializers.ModelSerializer):
 
     photo = serializers.SerializerMethodField('get_photo_url')
@@ -39,6 +36,7 @@ class Base64ImageField(serializers.ImageField):
             data = ContentFile(base64.b64decode(imgstr), name=id.urn[9:])
 
         return super(Base64ImageField, self).to_internal_value(data)
+
 
 class UserPostSerializer(serializers.ModelSerializer):
 
