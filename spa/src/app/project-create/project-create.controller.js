@@ -2,17 +2,24 @@
 app.controller('ProjectCreateController', [
   '$scope', '$state', 'ProjectService','UserService','Notification',
   function($scope, $state, ProjectService, UserService, Notification) {
-    $scope.submitted = false;
 
-    $scope.project = {};
+    var type  = $state.params.parentProject ? 'action' : 'project' // TODO: por definir
+    $scope.actionRelated  = true// TODO: por definir
 
-    UserService.me().then(function(response){
-
-      $scope.project.client = response.id;
-      $scope.client = response.name + " "+ response.first_surname + " " + response.second_surname;
-    }, function(error){
-      console.error("error",error);
-    })
+    $scope.titles = {
+      'project': {
+        'type':'project',
+        'create': 'Crear Proyecto',
+        'nameOf': 'Nombre del proyecto',
+        'rolesOf': 'Roles del Proyecto'
+      },
+      'action':{
+        'type':'action',
+        'create': 'Crear Acción',
+        'nameOf': 'Nombre de la acción',
+        'rolesOf': 'Roles de la acción'
+      }
+    }
 
     var transformFields = [
         'preparation_at',
@@ -25,6 +32,18 @@ app.controller('ProjectCreateController', [
         'report_at',
         'begin_at',
     ];
+
+    $scope.titles = $scope.titles[type];
+    $scope.submitted = false; // TODO: cambiar  con  bandera de form
+    $scope.project = {};
+
+    UserService.me().then(function(response){
+      $scope.project.client = response.id;
+      $scope.client = response.name + " "+ response.first_surname + " " + response.second_surname;
+    }, function(error){
+      console.error("error",error);
+    })
+
 
     $scope.submitForm = function() {
       $scope.submitted = true;

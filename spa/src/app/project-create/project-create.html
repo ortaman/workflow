@@ -21,11 +21,9 @@
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <span> Crear Proyecto </span>
+                        <span> {{ titles.create }} </span>
                     </li>
-                    <!--li>
-                        <span>Proyectos Estándar</span>
-                    </li-->
+
                 </ul>
                 <div class="page-toolbar">
                     <div class="btn-group pull-right">
@@ -56,7 +54,7 @@
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em"> Crear Proyecto </h1>
+            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em"> {{ titles.create }} </h1>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <!-- BEGIN FORM PROJECT-->
@@ -77,74 +75,81 @@
                         <!--row-->
                         <div class="row">
 
-                            <div class="col-md-4">
-                              <md-input-container class="md-block" >
-                               <label>Nombre del proyecto</label>
-                               <input
-                                 name="projectName"
-                                 maxlength="64"
-                                 ng-model="project.name"
-                                 ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
-                                 required></input>
+                          <div class="col-md-4"  ng-if = "titles.type == 'action'" >
+                            <label>Proyecto:</label><br>
+                            <label ng-if="actionRelated">Accion relacionada:</label>
+                          </div>
 
-                               <div ng-show="projectForm.projectName.$touched || submitted">
-                                 <div class="error" ng-show="projectForm.projectName.$error.required">
+
+                          <div class="col-md-4">
+                            <md-input-container class="md-block" >
+                             <label>{{ titles.nameOf }}</label>
+                             <input
+                               name="projectName"
+                               maxlength="64"
+                               ng-model="project.name"
+                               ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
+                               required></input>
+
+                             <div ng-show="projectForm.projectName.$touched || submitted">
+                               <div class="error" ng-show="projectForm.projectName.$error.required">
+                                 Campo requerido.
+                               </div>
+                               <div class="error" ng-show="projectForm.projectName.$error.pattern">
+                                 Debe contener caracteres alfanúmericos.
+                               </div>
+                             </div>
+                            </md-input-container>
+                          </div>
+
+
+                          <div  ng-if = "titles.type == 'project'" class="col-md-4">
+                            <md-input-container class="md-block" >
+                              <label> Tipo </label>
+                              <md-select
+                                name="kind"
+                                ng-init="project.kind='Estándar'"
+                                ng-model="project.kind"
+                                required>
+                                <md-option value="Estándar"> Estándar </md-option>
+                                <md-option value="Piloto"> Piloto </md-option>
+                                <md-option value="Jardín"> Jardín </md-option>
+                              </md-select>
+
+                              <div ng-show="projectForm.kind.$touched || submitted">
+                                 <div class="error" style="margin-top: 0em" ng-show="projectForm.kind.$error.required">
                                    Campo requerido.
                                  </div>
-                                 <div class="error" ng-show="projectForm.projectName.$error.pattern">
-                                   Debe contener caracteres alfanúmericos.
+                               </div>
+                            </md-input-container>
+                          </div>
+
+                          <div  class="col-md-4">
+                            <md-input-container class="md-block" >
+                              <label> Fase </label>
+                              <md-select
+                                name="phase"
+                                ng-init="project.phase='Preparación'"
+                                ng-model="project.phase"
+                                required>
+                                <md-option value="Preparación"> Preparación </md-option>
+                                <md-option value="Negociación"> Negociación </md-option>
+                                <md-option value="Ejecución"> Ejecución </md-option>
+                                <md-option value="Evaluación"> Evaluación </md-option>
+                              </md-select>
+
+                              <div ng-show="projectForm.phase.$touched || submitted">
+                                 <div class="error" style="margin-top: 0em" ng-show="projectForm.phase.$error.required">
+                                   Campo requerido.
                                  </div>
                                </div>
                               </md-input-container>
-                            </div>
-
-                            <div class="col-md-4">
-                              <md-input-container class="md-block" >
-                                <label> Tipo </label>
-                                <md-select
-                                  name="kind"
-                                  ng-init="project.kind='Estándar'"
-                                  ng-model="project.kind"
-                                  required>
-                                  <md-option value="Estándar"> Estándar </md-option>
-                                  <md-option value="Piloto"> Piloto </md-option>
-                                  <md-option value="Jardín"> Jardín </md-option>
-                                </md-select>
-
-                                <div ng-show="projectForm.kind.$touched || submitted">
-                                   <div class="error" style="margin-top: 0em" ng-show="projectForm.kind.$error.required">
-                                     Campo requerido.
-                                   </div>
-                                 </div>
-                              </md-input-container>
-                            </div>
-
-                            <div class="col-md-4">
-                              <md-input-container class="md-block" >
-                                <label> Fase </label>
-                                <md-select
-                                  name="phase"
-                                  ng-init="project.phase='Preparación'"
-                                  ng-model="project.phase"
-                                  required>
-                                  <md-option value="Preparación"> Preparación </md-option>
-                                  <md-option value="Negociación"> Negociación </md-option>
-                                  <md-option value="Ejecución"> Ejecución </md-option>
-                                  <md-option value="Evaluación"> Evaluación </md-option>
-                                </md-select>
-
-                                <div ng-show="projectForm.phase.$touched || submitted">
-                                   <div class="error" style="margin-top: 0em" ng-show="projectForm.phase.$error.required">
-                                     Campo requerido.
-                                   </div>
-                                 </div>
-                                </md-input-container>
-                            </div>
+                          </div>
 
                         </div>
                         <!--row-->
 
-                        <h4 class="form-section"> Roles del Proyecto</h4>
+                        <h4 class="form-section"> {{ titles.rolesOf }}</h4>
                         <!--row-->
                         <div class="row">
                           <div class="col-md-4">
