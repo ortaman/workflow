@@ -33,9 +33,6 @@ app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) 
     if(typeof(object.client) != Number)
         object.client = object.client.id;
 
-    if(typeof(object.client) != Number)
-        object.client = object.client.id;
-
     if(typeof(object.producer) != Number)
         object.producer = object.producer.id;
 

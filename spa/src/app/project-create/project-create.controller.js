@@ -3,9 +3,6 @@ app.controller('ProjectCreateController', [
   '$scope', '$state', 'ProjectService','UserService','Notification',
   function($scope, $state, ProjectService, UserService, Notification) {
 
-    var type  = $state.params.parentProject ? 'action' : 'project' // TODO: por definir
-    $scope.actionRelated  = true// TODO: por definir
-
     $scope.titles = {
       'project': {
         'type':'project',
@@ -33,17 +30,23 @@ app.controller('ProjectCreateController', [
         'begin_at',
     ];
 
+    $scope.actionRelated  = true// TODO: por definir
+    var type  = $state.params.parentProject ? 'action' : 'project' // TODO: por definir
     $scope.titles = $scope.titles[type];
     $scope.submitted = false; // TODO: cambiar  con  bandera de form
     $scope.project = {};
 
-    UserService.me().then(function(response){
-      $scope.project.client = response.id;
-      $scope.client = response.name + " "+ response.first_surname + " " + response.second_surname;
-    }, function(error){
-      console.error("error",error);
-    })
-
+    $scope.init = function () {
+      getProject()
+      ////TODO cambiar
+      UserService.me().then(function(response){
+        $scope.project.client = response.id;
+        $scope.client = response.name + " "+ response.first_surname + " " + response.second_surname;
+      }, function(error){
+        console.error("error",error);
+      })
+      //////////////////
+    }
 
     $scope.submitForm = function() {
       $scope.submitted = true;
@@ -77,6 +80,22 @@ app.controller('ProjectCreateController', [
 
     }
 
+    var getProject = function () {
+      if (type == 'action') {
+        ProjectService.getById($state.params.parentProject).then(
+          function (response){
+            $scope.projectParent = response;
+            $scope.project.projectParent = $scope.projectParent.id;
+            $scope.project.project = $scope.projectParent.project ? $scope.projectParent.project : $scope.projectParent.id
+            console.log($scope.project);
+          },
+          function (error) {
+            Notification.error("No existe un proyecto relacionado")
+            console.error(error);
+          }
+        )
+      }
+    }
     ////////////////////dates validations///////////////////////
 
     $scope.beginOrAtOrAccomplishDateChanged = function (begin_at, accomplish_at) {

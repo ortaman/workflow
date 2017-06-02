@@ -271,7 +271,7 @@ app.controller('ProjectDetailController', [
 			return;
 		}
 		else if($scope.checkStatus('Aceptada')) {
-			$state.go("actionCreate",{ projectId: $scope.project.id })
+			$state.go("projectCreate",{ parentProject: $scope.project.id })
 			return;
 		}
 		else{

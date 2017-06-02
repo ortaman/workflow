@@ -23,7 +23,7 @@ app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
 
 
     .state('projectCreate', {
-      url: "/projectCreate",
+      url: "/projectCreate/:parentProject",
       templateUrl: URLTemplates + "app/project-create/project-create.html",
       controller: "ProjectCreateController"
     })

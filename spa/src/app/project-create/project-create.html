@@ -54,7 +54,7 @@
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em"> {{ titles.create }} </h1>
+            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em" ng-init="init()"> {{ titles.create }} </h1>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <!-- BEGIN FORM PROJECT-->
@@ -76,8 +76,8 @@
                         <div class="row">
 
                           <div class="col-md-4"  ng-if = "titles.type == 'action'" >
-                            <label>Proyecto:</label><br>
-                            <label ng-if="actionRelated">Accion relacionada:</label>
+                            <label>Proyecto: {{ projectParent.name }}</label><br>
+                            <label ng-if="projectParent.parentProject">Accion relacionada: {{ projectParent.parentProject.name }}</label>
                           </div>
 
 
