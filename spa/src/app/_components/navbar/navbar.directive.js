@@ -1,12 +1,11 @@
 
 
-app.directive('myNavbar', ['URLTemplates',
-
+app.directive('myNavbar', [
   /** @ngInject */
-  function myNavbar(URLTemplates) {
+  function myNavbar() {
     var directive = {
       restrict: 'E',
-      templateUrl: URLTemplates + 'app/_components/navbar/navbar.html',
+      templateUrl: 'app/_components/navbar/navbar.html',
       scope: {
           creationDate: '='
       },

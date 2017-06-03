@@ -1,12 +1,12 @@
 
 
-app.directive('userSearch', ['URLTemplates', 'UserListService', '$timeout',
+app.directive('userSearch', ['UserListService', '$timeout',
 
   /** @ngInject */
-  function userSearch(URLTemplates, UserListService, $timeout) {
+  function userSearch(UserListService, $timeout) {
     var directive = {
       restrict: 'E',
-      templateUrl: URLTemplates + 'app/_components/user-search/search.html',
+      templateUrl: '_components/user-search/search.html',
       scope: {
           fieldName: '@',
           userId: '=',

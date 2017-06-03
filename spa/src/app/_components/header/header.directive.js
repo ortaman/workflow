@@ -1,12 +1,12 @@
 
 
-app.directive('myHeader', ['URLTemplates','UserService',
+app.directive('myHeader', ['UserService',
 
   /** @ngInject */
-  function myHeader(URLTemplates) {
+  function myHeader() {
     var directive = {
       restrict: 'E',
-      templateUrl: URLTemplates + 'app/_components/header/header.html',
+      templateUrl: 'app/_components/header/header.html',
       scope: {
           creationDate: '='
       },
