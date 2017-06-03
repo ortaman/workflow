@@ -68,7 +68,12 @@ app.controller('ProjectCreateController', [
 
   		$scope.submmitPromise = ProjectService.create(project).then(
   			function(response) {
-  				Notification.success('El proyecto ha sido creado satisfactoriamente');
+          if (type != 'action') {
+  				    Notification.success('La acción ha sido creado satisfactoriamente');
+          }
+          else{
+            Notification.success('El proyecto ha sido creado satisfactoriamente');
+          }
   				$state.go('coordinations');
   			},
   			function(errorResponse) {

@@ -51,6 +51,8 @@ app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) 
     var promise = $http.get(APIConfig.url + "projects/" + id + "/").then(
       function(response) {
         response.data.client.photo = APIConfig.baseUrl + response.data.client.photo;
+        response.data.producer.photo = APIConfig.baseUrl + response.data.producer.photo;
+        response.data.image = APIConfig.baseUrl + response.data.image;
         response.data.color = getColor(response.data);
       return response.data;
       }
