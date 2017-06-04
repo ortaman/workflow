@@ -31,6 +31,7 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 
       StadisticsService.todo().then(
         function(response) {
+          alert(JSON.stringify(response));
           $scope[list] = response;
         },
         function(errorResponse) {

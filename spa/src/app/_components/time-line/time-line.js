@@ -6,7 +6,7 @@ app.directive('timeLine', [
   function timeLine() {
     var directive = {
       restrict: 'E',
-      templateUrl: '_components/time-line/time-line.html',
+      templateUrl: 'app/_components/time-line/time-line.html',
       scope: {
           timeLine: '='
       },

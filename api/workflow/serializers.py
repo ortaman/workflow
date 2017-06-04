@@ -135,7 +135,7 @@ class ActionListSerializer(serializers.ModelSerializer):
 
 class ActionClientSerializer(serializers.ModelSerializer):
 
-    producer = UserSerializer()
+    client = UserSerializer()
 
     class Meta:
         model  = Action

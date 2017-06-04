@@ -47,7 +47,7 @@ app.controller('ActionCreateController', [
 
     var action = angular.copy(_action);
     action.project = $scope.projectId;
-    action.client = $scope.project.producer.id;
+
     if($scope.actionId)
       action.parent_action = $scope.actionId;
 
