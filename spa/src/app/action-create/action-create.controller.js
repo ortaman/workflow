@@ -7,6 +7,7 @@ app.controller('ActionCreateController', [
   $scope.submitted = false;
   $scope.projectId = $state.params.projectId.toString();
   $scope.actionId = $state.params.actionId.toString();
+  $scope.title = {}
 
   $scope.updateDates = function() {
 
@@ -41,7 +42,6 @@ app.controller('ActionCreateController', [
 
     if ($scope.actionForm.$invalid) {
       Notification.error('El formulario contiene errores');
-      console.log($scope.actionForm);
       return;
     }
 
@@ -73,12 +73,13 @@ app.controller('ActionCreateController', [
   $scope.getProject = function(){
     ProjectService.getById($state.params.projectId).then(
       function(response) {
-        console.log('ProjectGet', response);
         $scope.project = response;
 
         $scope.action.project = $scope.project.name;
-        $scope.action.client = $scope.project.producer.name + " "+ $scope.project.producer.first_surname + " " + $scope.project.producer.second_surname;
+        $scope.client = $scope.project.producer.name + " "+ $scope.project.producer.first_surname + " " + $scope.project.producer.second_surname;
+        $scope.action.client = $scope.project.producer.id;
         $scope.action.phase = $scope.project.phase;
+        $scope.title.addTo = $scope.project.name
         $scope.updateDates();
       },
       function(errorResponse) {
@@ -94,7 +95,9 @@ app.controller('ActionCreateController', [
       function(response) {
 
         $scope.action.parent_action = response;
-        console.log('actiontGet', $scope.action);
+        $scope.client = $scope.action.parent_action.producer.name + " "+ $scope.action.parent_action.producer.first_surname + " " + $scope.action.parent_action.producer.second_surname;
+        $scope.action.client = $scope.action.parent_action.producer.id;
+        $scope.title.addTo = $scope.action.parent_action.name
 
       },
       function(errorResponse) {

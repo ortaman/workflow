@@ -59,7 +59,7 @@
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
             <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em">
-              Agregar Acción <!--small>Subciclos de Compromisos</small-->
+              Agregar Acción a {{ title.addTo }}
             </h1>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
@@ -76,26 +76,8 @@
                     <form name="actionForm" class="horizontal-form" novalidate ng-submit="submit(action)">
                         <h4 class="form-section"> Datos Generales </h4>
                         <div class="row">
-                          <div ng-class="actionId ? 'col-md-3' : 'col-md-4'" ng-if="actionId">
-                            <md-input-container class="md-block">
-                              <label> Nombre de la acción relacionada</label>
-                              <input
-                                maxlength="64"
-                                ng-model="action.parent_action.name"
-                                disabled></input>
-                             </md-input-container>
-                          </div>
-                          <div ng-class="actionId ? 'col-md-3' : 'col-md-4'">
-                              <md-input-container class="md-block">
-                                <label> Nombre del Proyecto </label>
-                                <input
-                                  maxlength="64"
-                                  ng-model="action.project"
-                                  disabled></input>
-                               </md-input-container>
-                          </div>
 
-                          <div ng-class="actionId ? 'col-md-3' : 'col-md-4'">
+                          <div class="col-md-6">
                               <md-input-container class="md-block">
                                 <label> Nombre de la acción </label>
                                 <input
@@ -115,7 +97,7 @@
                                </md-input-container>
                           </div>
 
-                          <div ng-class="actionId ? 'col-md-3' : 'col-md-4'">
+                          <div class="col-md-6">
                             <md-input-container class="md-block" >
                               <label> Fase </label>
                               <md-select
@@ -146,7 +128,7 @@
                                     <label> Cliente </label>
                                     <input
                                       maxlength="64"
-                                      ng-model="action.client"
+                                      ng-model="client"
                                       disabled></input>
                                    </md-input-container>
                               </div>
