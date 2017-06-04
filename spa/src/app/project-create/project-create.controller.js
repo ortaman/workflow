@@ -101,6 +101,29 @@ app.controller('ProjectCreateController', [
         )
       }
     }
+
+    $scope.updateLimitDates = function() {
+
+      switch($scope.projectParent.phase) {
+          case 'Preparación':
+              $scope.minDate = new Date($scope.projectParent.project.begin_at);
+              $scope.maxDate = new Date($scope.projectParent.project.preparation_at);
+              break;
+          case 'Negociación':
+              $scope.maxDate = new Date($scope.projectParent.project.negotiation_at);
+              $scope.minDate = new Date($scope.projectParent.project.preparation_at);
+              break;
+          case 'Ejecución':
+              $scope.maxDate = new Date($scope.projectParent.project.ejecution_at);
+              $scope.minDate = new Date($scope.projectParent.project.negotiation_at);
+              break;
+          default:
+              $scope.maxDate = new Date($scope.projectParent.project.evaluation_at);
+              $scope.minDate = new Date($scope.projectParent.project.ejecution_at);
+      }
+
+    };
+
     ////////////////////dates validations///////////////////////
 
     $scope.beginOrAtOrAccomplishDateChanged = function (begin_at, accomplish_at) {
