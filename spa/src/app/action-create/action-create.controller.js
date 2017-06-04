@@ -1,7 +1,7 @@
 
 app.controller('ActionCreateController', [
-  '$scope', '$state', 'ProjectService', 'ActionCreateService', 'ActionGetService','Notification',
-  function($scope, $state, ProjectService, ActionCreateService, ActionGetService, Notification) {
+  '$scope', '$state', 'ProjectService', 'ActionGetService','Notification',
+  function($scope, $state, ProjectService, ActionGetService, Notification) {
 
   $scope.action = {};
   $scope.submitted = false;
@@ -51,21 +51,21 @@ app.controller('ActionCreateController', [
     if($scope.actionId)
       action.parent_action = $scope.actionId;
 
-    $scope.submmitPromise = ActionCreateService.create(action).then(
-      function (response) {
-        Notification.success('La accion ha sido creada satisfactoriamente');
-
-        if($scope.actionId)
-          $state.go('actionDetail', {id:$scope.actionId})
-        else
-          $state.go('projectDetail', {id:$scope.project.id})
-      },
-      function (errorResponse) {
-        console.log('errorResponse', errorResponse);
-        $scope.status = errorResponse.statusText || 'Request failed';
-        $scope.errors = errorResponse.data;
-      }
-    );
+    // $scope.submmitPromise = ActionCreateService.create(action).then(
+    //   function (response) {
+    //     Notification.success('La accion ha sido creada satisfactoriamente');
+    //
+    //     if($scope.actionId)
+    //       $state.go('actionDetail', {id:$scope.actionId})
+    //     else
+    //       $state.go('projectDetail', {id:$scope.project.id})
+    //   },
+    //   function (errorResponse) {
+    //     console.log('errorResponse', errorResponse);
+    //     $scope.status = errorResponse.statusText || 'Request failed';
+    //     $scope.errors = errorResponse.data;
+    //   }
+    // );
 
   }
 

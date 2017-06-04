@@ -1,7 +1,7 @@
 
-app.controller('CoordinationsController', ['$scope','ActionListService','UserService','ActionCreateService','$mdDialog',
+app.controller('CoordinationsController', ['$scope','ActionListService','UserService','$mdDialog',
   'APIConfig','ProjectService' , 'StadisticsService', 'Notification','$state',
-  function($scope, ActionListService, UserService, ActionCreateService, $mdDialog, APIConfig, ProjectService,
+  function($scope, ActionListService, UserService, $mdDialog, APIConfig, ProjectService,
      StadisticsService, Notification, $state) {
 
   $scope.promisesCurrentPage = 1
@@ -201,18 +201,18 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $mdDialog.show(confirm).then(function() {
       action.status = type
       Notification.info('Espere un momento');
-      ActionCreateService.update(action.id,action).then(
-        function (response) {
-          if (type == "Satisfactoria")
-            Notification.success('La acción ha pasado a acciones cumplidas satisfactoriamente');
-          else if (type == "Insatisfactoria")
-            Notification.success('La acción ha pasado a acciones cumplidas insatisfactoriamente');
-          $scope.getProducers($scope.producerStatus);
-        },
-        function (errors) {
-          console.error(errors);
-        }
-      )
+      // ActionCreateService.update(action.id,action).then(
+      //   function (response) {
+      //     if (type == "Satisfactoria")
+      //       Notification.success('La acción ha pasado a acciones cumplidas satisfactoriamente');
+      //     else if (type == "Insatisfactoria")
+      //       Notification.success('La acción ha pasado a acciones cumplidas insatisfactoriamente');
+      //     $scope.getProducers($scope.producerStatus);
+      //   },
+      //   function (errors) {
+      //     console.error(errors);
+      //   }
+      // )
     }, function() {
     });
   }
@@ -231,21 +231,21 @@ app.controller('CoordinationsController', ['$scope','ActionListService','UserSer
     $mdDialog.show(confirm).then(function() {
         action.status = type
         Notification.info('Espere un momento');
-        ActionCreateService.update(action.id,action).then(
-          function (response) {
-            if (type == "Aceptada"){
-              Notification.success('La acción ha pasado a acciones aceptadas');
-              $state.go("actionDetail", {id: action.id})
-
-            }
-            else if (type == "Ejecutada")
-              Notification.success('La acción ha pasado a acciones ejecutadas');
-            $scope.getClients($scope.clientStatus);
-          },
-          function (errors) {
-            console.error(errors);
-          }
-        )
+        // ActionCreateService.update(action.id,action).then(
+        //   function (response) {
+        //     if (type == "Aceptada"){
+        //       Notification.success('La acción ha pasado a acciones aceptadas');
+        //       $state.go("actionDetail", {id: action.id})
+        //
+        //     }
+        //     else if (type == "Ejecutada")
+        //       Notification.success('La acción ha pasado a acciones ejecutadas');
+        //     $scope.getClients($scope.clientStatus);
+        //   },
+        //   function (errors) {
+        //     console.error(errors);
+        //   }
+        // )
     }, function() {
     });
   }
