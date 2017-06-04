@@ -54,7 +54,7 @@ app.controller('ProjectDetailController', [
       function(response){
          $scope.report = response[response.length-1]
       }, function(errors){
-        console.err(errors);
+        console.error(errors);
       });
   }
 
