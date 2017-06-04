@@ -212,14 +212,14 @@ class ActionTodoStadistics(APIView, APIMixin):
         }
 
         for client in paginated_data['results']:
-            data['to_do'] = {
+            data['to_do'].append({
                 'client': client['client'],
                 'pending': Action.objects.filter(status="Pendiente", producer_id=user_id, client_id=client['client']['id']).count(),
                 'accepted': Action.objects.filter(status="Aceptada", producer_id=user_id, client_id=client['client']['id']).count(),
                 'ejecuted': Action.objects.filter(status="Ejecutada", producer_id=user_id, client_id=client['client']['id']).count(),
                 'satisfactories': Action.objects.filter(status="Satisfactoria", producer_id=user_id, client_id=client['client']['id']).count(),
                 'unsatisfactories': Action.objects.filter(status="Insatisfactoria", producer_id=user_id, client_id=client['client']['id']).count()
-            }
+            })
 
         return Response(data)
 
