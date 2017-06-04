@@ -31,7 +31,6 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 
       StadisticsService.todo().then(
         function(response) {
-          alert(JSON.stringify(response));
           $scope[list] = response;
         },
         function(errorResponse) {
@@ -64,7 +63,6 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 		ProjectService.getList(query).then(
 			function(response) {
 				$scope.projects = response
-        console.log($scope.projects);
 			},
 			function(errorResponse) {
 				console.error('errorResponse', errorResponse);
