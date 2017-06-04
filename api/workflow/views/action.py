@@ -8,7 +8,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Action
-from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionClientSerializer, ActionProducerSerializer
+from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionPutSerializer 
+from workflow.serializers import ActionClientSerializer, ActionProducerSerializer
 from common.mixins import APIMixin
 
 
