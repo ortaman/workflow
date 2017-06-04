@@ -17,7 +17,7 @@ DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'vagrantdb',
+        'NAME': 'vagrantdb1',
         'USER': 'vagrant',
         'PASSWORD': 'vagrant',
         'HOST': 'localhost',

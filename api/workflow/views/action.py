@@ -8,7 +8,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Action
-from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionClientSerializer, ActionProducerSerializer
+from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionPutSerializer 
+from workflow.serializers import ActionClientSerializer, ActionProducerSerializer
 from common.mixins import APIMixin
 
 
@@ -191,7 +192,7 @@ class ActionTodoStadistics(APIView, APIMixin):
 
     # Mixing initial variables
     model = Action
-    serializer_list = ActionProducerSerializer
+    serializer_list = ActionClientSerializer
 
     paginate_by = 6
 
@@ -209,17 +210,17 @@ class ActionTodoStadistics(APIView, APIMixin):
             'page': paginated_data['page'],
             'paginate_by': paginated_data['paginate_by'],
             'to_do': [],
-            'owe_me': []
         }
 
         for client in paginated_data['results']:
-            data['to_do'] = {
+            data['to_do'].append({
+                'client': client['client'],
                 'pending': Action.objects.filter(status="Pendiente", producer_id=user_id, client_id=client['client']['id']).count(),
                 'accepted': Action.objects.filter(status="Aceptada", producer_id=user_id, client_id=client['client']['id']).count(),
                 'ejecuted': Action.objects.filter(status="Ejecutada", producer_id=user_id, client_id=client['client']['id']).count(),
                 'satisfactories': Action.objects.filter(status="Satisfactoria", producer_id=user_id, client_id=client['client']['id']).count(),
                 'unsatisfactories': Action.objects.filter(status="Insatisfactoria", producer_id=user_id, client_id=client['client']['id']).count()
-            }
+            })
 
         return Response(data)
 
@@ -234,7 +235,7 @@ class ActionOweMeStadistics(APIView, APIMixin):
 
     # Mixing initial variables
     model = Action
-    serializer_list = ActionClientSerializer
+    serializer_list = ActionProducerSerializer
 
     paginate_by = 6
 
@@ -251,12 +252,12 @@ class ActionOweMeStadistics(APIView, APIMixin):
             'count':  paginated_data['count'],
             'page': paginated_data['page'],
             'paginate_by': paginated_data['paginate_by'],
-            'to_do': [],
             'owe_me': []
         }
 
         for producer in paginated_data['results']:
             data['owe_me'].append({
+                'producer': producer['producer'],
                 'pending': Action.objects.filter(status="Pendiente", producer_id=producer['producer']['id'], client_id=user_id).count(),
                 'accepted': Action.objects.filter(status="Aceptada", producer_id=producer['producer']['id'], client_id=user_id).count(),
                 'ejecuted': Action.objects.filter(status="Ejecutada", producer_id=producer['producer']['id'], client_id=user_id).count(),

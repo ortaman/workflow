@@ -1,12 +1,12 @@
 
 
-app.directive('timeLine', ['URLTemplates',
+app.directive('timeLine', [
 
   /** @ngInject */
-  function timeLine(URLTemplates) {
+  function timeLine() {
     var directive = {
       restrict: 'E',
-      templateUrl: URLTemplates + 'app/_components/time-line/time-line.html',
+      templateUrl: 'app/_components/time-line/time-line.html',
       scope: {
           timeLine: '='
       },

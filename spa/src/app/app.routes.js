@@ -1,62 +1,62 @@
 
 
-app.config(function($stateProvider, $urlRouterProvider, URLTemplates,
+app.config(function($stateProvider, $urlRouterProvider,
   $mdThemingProvider, $mdDateLocaleProvider) {
 
   // Now set up the states
   $stateProvider
     .state('login', {
       url: "/login",
-      templateUrl: URLTemplates + "app/login/login.html",
+      templateUrl: "app/login/login.html",
       controller: "LoginController"
     })
     .state('profile', {
       url: "/profile",
-      templateUrl: URLTemplates + "app/profile/profile.html",
+      templateUrl: "app/profile/profile.html",
       controller: "ProfileController"
     })
     .state('coordinations', {
       url: "/coordinations",
-      templateUrl: URLTemplates + "app/coordinations/coordinations.html",
+      templateUrl: "app/coordinations/coordinations.html",
       controller: "CoordinationsController"
     })
 
 
     .state('projectCreate', {
       url: "/projectCreate/:parentProject",
-      templateUrl: URLTemplates + "app/project-create/project-create.html",
+      templateUrl: "app/project-create/project-create.html",
       controller: "ProjectCreateController"
     })
     .state('projectList', {
       url: "/projectList",
-      templateUrl: URLTemplates + "app/project-list/project-list.html",
+      templateUrl: "app/project-list/project-list.html",
       controller: "ProjectListController"
     })
     .state('projectDetail', {
       url: "/projectDetail/:id/",
-      templateUrl: URLTemplates + "app/project-detail/project-detail.html",
+      templateUrl: "app/project-detail/project-detail.html",
       controller: "ProjectDetailController"
     })
     .state('projectUpdate', {
       url: "/projectUpdate/:id/",
-      templateUrl: URLTemplates + "app/project-update/project-update.html",
+      templateUrl: "app/project-update/project-update.html",
       controller: "ProjectUpdateController"
 
     })
 
     .state('actionCreate', {
       url: "/actionCreate/:projectId/:actionId/",
-      templateUrl: URLTemplates + "app/action-create/action-create.html",
+      templateUrl: "app/action-create/action-create.html",
       controller: "ActionCreateController"
     })
     .state('actionDetail', {
       url: "/actionDetail/:id/",
-      templateUrl: URLTemplates + "app/action-detail/action-detail.html",
+      templateUrl: "app/action-detail/action-detail.html",
       controller: "ActionDetailController"
     })
     .state('actionUpdate', {
       url: "/actionUpdate/:id/",
-      templateUrl: URLTemplates + "app/action-update/action-update.html",
+      templateUrl: "app/action-update/action-update.html",
       controller: "ActionUpdateController"
     })
     .state('actionList', {

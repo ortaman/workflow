@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Project
-from workflow.serializers import ProjectPostSerializer, ProjectGetSerializer, ProjectListSerializer
+from workflow.serializers import ProjectPostSerializer, ProjectGetSerializer, ProjectListSerializer, ActionPutSerializer
 from common.mixins import APIMixin
 
 
@@ -22,7 +22,7 @@ class ProjectDetail(APIView, APIMixin):
     # Mixing initial variables
     model = Project
     serializer_get = ProjectGetSerializer
-    serializer_put = ProjectPostSerializer
+    serializer_put = ActionPutSerializer
 
     def get(self, request, pk, format=None):
 
