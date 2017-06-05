@@ -27,8 +27,6 @@ app.controller('ProjectDetailController', [
 			$scope.actionPageChanged()
 			$scope.producerPageChanged($scope.producersCurrentPage,'producers' );
 			$scope.producerPageChanged($scope.producersPerformanceCurrentPage,'producersPerformance' );
-			$scope.getReport();
-
 	}
 
 	//Service call
@@ -45,17 +43,9 @@ app.controller('ProjectDetailController', [
 	}
 
 	$scope.getReport = function (){
-		// TODO: relacion one to one
-    var query = {
-      project_id: $state.params.id,
-      action_id:'None'
-    }
-    ReportGetService.getList(query).then(
-      function(response){
-         $scope.report = response[response.length-1]
-      }, function(errors){
-        console.error(errors);
-      });
+		if ($scope.project.ejecution_report || $scope.project.advance_report)
+			return true;
+		return false;
   }
 
 	$scope.actionPageChanged = function(status) {

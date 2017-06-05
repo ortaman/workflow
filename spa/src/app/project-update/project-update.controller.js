@@ -2,8 +2,25 @@
 app.controller('ProjectUpdateController', [
   '$scope', '$state', 'ProjectService','APIConfig','Notification',
   function($scope, $state, ProjectService, APIConfig,Notification) {
-    $scope.submitted = false;
-    $scope.project = {};
+    var type  =  'project';
+
+    $scope.titles = {
+      'project': {
+        'type':'project',
+        'name':  'Proyecto',
+        'update':  'Actualizar Proyecto',
+        'nameOf':  'Nombre del proyecto',
+        'roles':  'Roles del Proyecto ',
+      },
+      'action':{
+        'type':'action',
+        'name':  'Acción',
+        'update':  'Actualizar Acción',
+        'nameOf':  'Nombre de la acción',
+        'roles':  'Roles de la acción ',
+
+      }
+    }
 
     var transformFields = [
         'preparation_at',
@@ -20,7 +37,6 @@ app.controller('ProjectUpdateController', [
     $scope.getProjectByIdInit = function() {
       ProjectService.getById($state.params.id).then(
         function(response) {
-          console.log('getById', response);
 
           angular.forEach(response, function(value, key) {
               transformFields.forEach(function(item) {
@@ -33,7 +49,9 @@ app.controller('ProjectUpdateController', [
             })
 
           });
-          response.image = APIConfig.baseUrl + response.image;
+          response.image = APIConfig.baseUrl + response.image;// TODO: cambiar  imagen
+          type  = response.parent_action == null ? 'project':'action'
+          $scope.titles = $scope.titles[type];
           $scope.project = response;
         },
         function(errorResponse) {
@@ -90,4 +108,9 @@ app.controller('ProjectUpdateController', [
       }
     }
     ////////////////////end dates validations///////////////////////
+    $scope.isProject = function(){
+      if (type == 'project')
+        return true;
+      return false ;
+    }
 }]);

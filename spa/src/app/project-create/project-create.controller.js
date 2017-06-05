@@ -90,7 +90,7 @@ app.controller('ProjectCreateController', [
         ProjectService.getById($state.params.parentProject).then(
           function (response){
             $scope.projectParent = response;
-            $scope.project.projectParent = $scope.projectParent.id;
+            $scope.project.parent_action = $scope.projectParent.id;
             $scope.project.project = $scope.projectParent.project ? $scope.projectParent.project : $scope.projectParent.id
             console.log($scope.project);
           },

@@ -44,21 +44,6 @@ app.config(function($stateProvider, $urlRouterProvider,
 
     })
 
-    .state('actionCreate', {
-      url: "/actionCreate/:projectId/:actionId/",
-      templateUrl: "app/action-create/action-create.html",
-      controller: "ActionCreateController"
-    })
-    .state('actionDetail', {
-      url: "/actionDetail/:id/",
-      templateUrl: "app/action-detail/action-detail.html",
-      controller: "ActionDetailController"
-    })
-    .state('actionUpdate', {
-      url: "/actionUpdate/:id/",
-      templateUrl: "app/action-update/action-update.html",
-      controller: "ActionUpdateController"
-    })
     .state('actionList', {
       url: "/actionList",
       templateUrl: "app/action-list/action-list.html",

@@ -75,7 +75,7 @@ class ActionGetSerializer(serializers.ModelSerializer):
     producer = UserSerializer()
     observer = UserSerializer()
 
-    advance_reported = ReportGetSerializer()
+    advance_report = ReportGetSerializer()
     ejecution_report = ReportGetSerializer()
 
     project = ActionPostSerializer()

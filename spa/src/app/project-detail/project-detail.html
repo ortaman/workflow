@@ -41,6 +41,11 @@
                                     <i class="icon-note"></i> Agregar reporte de avance</a>
                             </li>
 
+                            <li ng-if="checkRole(['client'])">
+                                <a href="" ui-sref="projectUpdate({ id: project.id })">
+                                    <i class="fa fa-edit"></i> Editar</a>
+                            </li>
+
                             <li ng-if="checkRole(['producer'])">
                                 <a href="" ng-click="moveTophase()">
                                     <i class="icon-link"></i> Pasar a la siguiente fase </a>
@@ -80,7 +85,7 @@
 
 
                             </div>
-                            <div class="btn-group pull-right" ng-if="report">
+                            <div class="btn-group pull-right" ng-if="getReport()">
                               <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" ng-click="openReportDetailModal()"> Ver reporte
                               </button>
                             </div>

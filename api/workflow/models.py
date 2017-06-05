@@ -113,7 +113,7 @@ class Action(models.Model):
     updated_at = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name='Fecha de actualización')
 
     advance_report = models.OneToOneField(
-        'self',
+        Report,
         models.SET_NULL,
         blank=True,
         null=True,

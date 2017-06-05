@@ -92,7 +92,7 @@ app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) 
   };
 
 	this.getProjectStadistics = function() {
-		var promise = $http.get(APIConfig.url + "projects/stadistics/time").then(function(response) {
+		var promise = $http.get(APIConfig.url + "actions/stadistics/time").then(function(response) {
 			return response.data;
 		});
 
