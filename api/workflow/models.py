@@ -117,21 +117,21 @@ class Action(models.Model):
         models.SET_NULL,
         blank=True,
         null=True,
-        related_name='advance_reported', 
+        related_name='advance_reported',
         verbose_name='Reporte de avance')
 
     ejecution_report = models.OneToOneField(
         Report,
         blank=True,
         null=True,
-        related_name='ejecution_report', 
+        related_name='ejecution_report',
         verbose_name='Reporte de ejecución')
 
     project = models.ForeignKey(
-        Report,
+        'self',
         blank=True,
         null=True,
-        related_name='project', 
+        related_name='projectt',
         verbose_name='Proyecto relacionado')
 
     parent_action = models.ForeignKey(

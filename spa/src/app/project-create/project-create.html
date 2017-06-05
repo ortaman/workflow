@@ -54,7 +54,7 @@
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em" ng-init="init()"> {{ titles.create }} </h1>
+            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em" ng-init="init()"> {{ titles.create }} {{ projectParent.name }}</h1>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <!-- BEGIN FORM PROJECT-->
@@ -74,11 +74,6 @@
                         <h4 class="form-section"> Datos Generales </h4>
                         <!--row-->
                         <div class="row">
-
-                          <div class="col-md-4"  ng-if = "titles.type == 'action'" >
-                            <label>Proyecto: {{ projectParent.name }}</label><br>
-                            <label ng-if="projectParent.parentProject">Accion relacionada: {{ projectParent.parentProject.name }}</label>
-                          </div>
 
 
                           <div class="col-md-4">
@@ -283,7 +278,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-3"  ng-if = "titles.type == 'project'">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Renegociación </h5>
                                   <md-datepicker
@@ -307,9 +302,9 @@
                         <!--end row-->
 
                         <br><br>
-                        <h4 class="form-section"> Fechas límites de las fases Action Workflow </h4>
+                        <h4 ng-if = "titles.type == 'project'" class="form-section"> Fechas límites de las fases Action Workflow </h4>
                         <!--row-->
-                        <div class="row">
+                        <div  ng-if = "titles.type == 'project'" class="row">
 
                             <div class="col-md-3">
                                 <div flex-gt-xs>
@@ -467,7 +462,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" ng-if = "titles.type == 'project'">
                           <div class="col-md-3">
                             <input fileread='project.image' type="file"/>
                           </div>

@@ -42,7 +42,7 @@ class ReportGetSerializer(serializers.ModelSerializer):
 
 
 class ActionPostSerializer(serializers.ModelSerializer):
-    image = Base64ImageField(max_length=None, use_url=True)
+    image = Base64ImageField(max_length=None, use_url=True, required=False)
 
     class Meta:
         model  = Action

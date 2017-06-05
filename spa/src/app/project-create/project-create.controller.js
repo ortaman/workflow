@@ -12,7 +12,7 @@ app.controller('ProjectCreateController', [
       },
       'action':{
         'type':'action',
-        'create': 'Crear Acción',
+        'create': 'Agregar acción a:',
         'nameOf': 'Nombre de la acción',
         'rolesOf': 'Roles de la acción'
       }
