@@ -1,7 +1,6 @@
 
-app.controller('CoordinationsController', ['$scope','UserService','$mdDialog',
-  'APIConfig','ProjectService' , 'StadisticsService', 'Notification','$state',
-  function($scope, UserService, $mdDialog, APIConfig, ProjectService,
+app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','ProjectService' , 'StadisticsService', 'Notification','$state',
+  function($scope, UserService, $mdDialog, ProjectService,
      StadisticsService, Notification, $state) {
 
 

@@ -1,8 +1,8 @@
 
 app.controller('ProjectDetailController', [
-	'$scope', '$state', 'ProjectService', 'ActionListService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
+	'$scope', '$state', 'ProjectService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
 	'ReportGetService', 'UserService', 'Notification',
-	function($scope, $state, ProjectService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog,
+	function($scope, $state, ProjectService, APIConfig, ProducerGetListService, $uibModal,$mdDialog,
 		 ReportGetService ,UserService, Notification) {
 
    $scope.titles = {
@@ -72,7 +72,7 @@ app.controller('ProjectDetailController', [
 	  		"status": queryStatus,
 	  	};
 			//TODO cambiar servicio
-			ActionListService.getList(query).then(
+			ProjectService.getList(query).then(
 				function(response) {
 					$scope.actions = response;
 
@@ -91,7 +91,7 @@ app.controller('ProjectDetailController', [
 	      'end_date': moment($scope.project.accomplish_at).format('YYYY-MM-DD'),
 	  	};
 
-		ActionListService.getList(query).then(
+		ProjectService.getList(query).then(
 			function(response) {
 				$scope.timelines = angular.copy(response);
 				$scope.timelines.push($scope.project)

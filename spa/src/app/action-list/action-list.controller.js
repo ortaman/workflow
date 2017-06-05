@@ -1,6 +1,6 @@
 
-app.controller('ActionListController', ['$scope', 'ActionListService', 'ProducerGetListService','ProjectService',
- function($scope, ActionListService, ProducerGetListService, ProjectService) {
+app.controller('ActionListController', ['$scope', 'ProducerGetListService','ProjectService',
+ function($scope, ProducerGetListService, ProjectService) {
 
    $scope.producersCurrentPage = 1;
    $scope.producers = []

@@ -50,7 +50,7 @@
                                     <md-input-container class="md-block" >
                                       <label> Proyecto </label>
                                       <md-select name="project" ng-model="listForm.project" ng-change="onProjectSelect(listForm.project)" required>
-                                        <md-option value="{{ project.id}}" ng-repeat="project in projects"> {{project.name}} </md-option>
+                                        <md-option value="{{project.id}}" ng-repeat="project in projects"> {{project.name}} </md-option>
                                       </md-select>
                                     </md-input-container>
 
