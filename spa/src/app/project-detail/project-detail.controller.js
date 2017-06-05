@@ -5,6 +5,19 @@ app.controller('ProjectDetailController', [
 	function($scope, $state, ProjectService, ActionListService, APIConfig, ProducerGetListService, $uibModal,$mdDialog,
 		 ReportGetService ,UserService, Notification) {
 
+   $scope.titles = {
+     'project': {
+       'type':'project',
+			 'name': 'proyecto'
+     },
+     'action':{
+       'type':'action',
+			 'name': 'acción'
+     }
+   }
+
+	var type;
+
 	$scope.actionCurrentPage = 1;
 	$scope.producersCurrentPage = 1;
 	$scope.producersPerformanceCurrentPage = 1;
@@ -35,6 +48,9 @@ app.controller('ProjectDetailController', [
 			function(response) {
 				$scope.project = response;
 				$scope.timeLineChanged();
+				type  = response.parent_action == null ? 'project':'action';
+				$scope.titles = $scope.titles[type];
+
 			},
 			function(errorResponse) {
 				Notification.error("Ocurrio  un error al recuperar  información")
@@ -52,11 +68,10 @@ app.controller('ProjectDetailController', [
 			queryStatus = status||queryStatus;
 	  	var query = {
 	  		"page": $scope.actionsCurrentPage,
-	  		"project_id": $state.params.id,
-	  		"parent_action": "none",
+	  		"parent_action_id": $state.params.id,
 	  		"status": queryStatus,
 	  	};
-
+			//TODO cambiar servicio
 			ActionListService.getList(query).then(
 				function(response) {
 					$scope.actions = response;
@@ -305,5 +320,11 @@ app.controller('ProjectDetailController', [
 			})
 		}
 		return value;
+	}
+
+	$scope.isProject = function(){
+		if (type == 'project')
+			return true;
+		return false;
 	}
 }]);
