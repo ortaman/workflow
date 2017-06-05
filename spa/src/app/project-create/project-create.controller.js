@@ -137,4 +137,10 @@ app.controller('ProjectCreateController', [
     }
     ////////////////////end dates validations///////////////////////
 
+    $scope.isProject = function () {
+      if ($scope.titles.type == 'project') {
+        return true;
+      }
+      return false;
+    }
 }]);

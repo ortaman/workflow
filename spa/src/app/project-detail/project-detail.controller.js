@@ -244,7 +244,7 @@ app.controller('ProjectDetailController', [
 		 templateUrl: '/app/project-detail/modals/dates-modal.html',
 		 locals:{
 			 project: $scope.project,
-			 type:'project'
+			 type: type
 		 }
 	 }
 	 angular.extend(modalVariables, basicModal);

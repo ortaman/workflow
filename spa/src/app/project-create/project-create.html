@@ -76,7 +76,7 @@
                         <div class="row">
 
 
-                          <div class="col-md-4">
+                          <div ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
                             <md-input-container class="md-block" >
                              <label>{{ titles.nameOf }}</label>
                              <input
@@ -98,7 +98,7 @@
                           </div>
 
 
-                          <div  ng-if = "titles.type == 'project'" class="col-md-4">
+                          <div  ng-if = "isProject()" ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
                             <md-input-container class="md-block" >
                               <label> Tipo </label>
                               <md-select
@@ -119,7 +119,7 @@
                             </md-input-container>
                           </div>
 
-                          <div  class="col-md-4">
+                          <div  ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
                             <md-input-container class="md-block" >
                               <label> Fase </label>
                               <md-select
@@ -215,7 +215,7 @@
                         <!--row-->
                         <div class="row">
 
-                            <div class="col-md-3">
+                            <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Inicio </h5>
                                   <md-datepicker
@@ -234,7 +234,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
                                 <div flex-gt-xs>
                                   <h5> Fecha de ejecución </h5>
                                   <md-datepicker
@@ -256,7 +256,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Reporte de Avance </h5>
                                   <md-datepicker
@@ -278,7 +278,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3"  ng-if = "titles.type == 'project'">
+                            <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}"  ng-if = "isProject()">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Renegociación </h5>
                                   <md-datepicker
@@ -302,9 +302,9 @@
                         <!--end row-->
 
                         <br><br>
-                        <h4 ng-if = "titles.type == 'project'" class="form-section"> Fechas límites de las fases Action Workflow </h4>
+                        <h4 ng-if = "isProject()" class="form-section"> Fechas límites de las fases Action Workflow </h4>
                         <!--row-->
-                        <div  ng-if = "titles.type == 'project'" class="row">
+                        <div  ng-if = "isProject()" class="row">
 
                             <div class="col-md-3">
                                 <div flex-gt-xs>
@@ -462,7 +462,7 @@
                             </div>
                         </div>
 
-                        <div class="row" ng-if = "titles.type == 'project'">
+                        <div class="row" ng-if = "isProject()">
                           <div class="col-md-3">
                             <input fileread='project.image' accept="image/*" type="file"/>
                           </div>
