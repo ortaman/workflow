@@ -85,7 +85,6 @@ class ProjectList(APIView, APIMixin):
             data = self.serializer_list(queryset, many=True).data
         else:
 
-
             # Search project by client and  status.
             if 'client' in query.keys() and 'status' in query.keys():
                 queryset = queryset.filter(

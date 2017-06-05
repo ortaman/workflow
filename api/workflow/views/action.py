@@ -22,7 +22,7 @@ class ActionDetail(APIView, APIMixin):
     # Initial mixin variables
     model = Action
     serializer_get = ActionGetSerializer
-    serializer_put = ActionPostSerializer
+    serializer_put = ActionPutSerializer
 
     def get(self, request, pk, format=None):
         obj = self.get_object(pk)
@@ -66,10 +66,6 @@ class ActionDetail(APIView, APIMixin):
 class ActionList(APIView, APIMixin):
     """
     List all actions, or create a new action.
-    List all actions from specific project: ?project_id='id'
-    List the actions linked with the specific project: ?project_id='id'&action_isnull
-
-    List all actions from specific action: ?action_id='id'
     """
     permission_classes = (IsAuthenticated,)
 
@@ -89,6 +85,7 @@ class ActionList(APIView, APIMixin):
 
         if 'project_id' in query.keys():
 
+            # Get the actions directly linked with one project.
             if query.get('parent_action') == 'none' and 'status' in query.keys():
                 queryset = queryset.filter (
                     project_id=query.get('project_id'),
@@ -96,6 +93,7 @@ class ActionList(APIView, APIMixin):
                     status=query.get('status')
                 )
 
+            # Get the all project actions date range.
             elif 'begin_date' in query.keys() and 'end_date' in query.keys():
                 range_date = [query.get('begin_date'), query.get('end_date')]
                 q1 = Q(project__id = query.get('project_id'))
@@ -109,6 +107,7 @@ class ActionList(APIView, APIMixin):
 
                 return Response(serializer.data)
 
+            # Get the all project actions. 
             else:
                 queryset = queryset.filter(project_id=query.get('project_id'))
 
@@ -120,7 +119,7 @@ class ActionList(APIView, APIMixin):
                 status=query.get('status'),
             )
 
-        # Search actions by producer and  status.
+        # Search actions by producer and status.
         elif 'producer' in query.keys() and 'status' in query.keys():
                 queryset = queryset.filter(
                     producer_id=query.get('producer'),
