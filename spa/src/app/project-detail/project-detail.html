@@ -41,6 +41,11 @@
                                     <i class="icon-note"></i> Agregar reporte de avance</a>
                             </li>
 
+                            <li ng-if="checkRole(['client'])">
+                                <a href="" ui-sref="projectUpdate({ id: project.id })">
+                                    <i class="fa fa-edit"></i> Editar</a>
+                            </li>
+
                             <li ng-if="checkRole(['producer'])">
                                 <a href="" ng-click="moveTophase()">
                                     <i class="icon-link"></i> Pasar a la siguiente fase </a>

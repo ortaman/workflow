@@ -464,7 +464,7 @@
 
                         <div class="row" ng-if = "titles.type == 'project'">
                           <div class="col-md-3">
-                            <input fileread='project.image' type="file"/>
+                            <input fileread='project.image' accept="image/*" type="file"/>
                           </div>
                           <div class="col-md-4">
                             <img ng-if="project.image"   ng-src="{{project.image}}" alt="" width="100%" height="250px"/>

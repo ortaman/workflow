@@ -309,15 +309,15 @@
                                     <!-- BEGIN: Comments -->
                                     <div class="mt-comments">
                                         <div class="mt-comment" ng-repeat="action in promises.results track by $index" >
-                                            <div class="mt-comment-img" ui-sref="actionDetail({id:action.id})">
+                                            <div class="mt-comment-img" ui-sref="projectDetail({id:action.id})">
                                               <img  style="height:45px; width:45px " ng-src="{{ action.client.photo }}" /> </div>
 
                                             <div class="mt-comment-body" >
-                                                <div class="mt-comment-info" ui-sref="actionDetail({id:action.id})" >
+                                                <div class="mt-comment-info" ui-sref="projectDetail({id:action.id})" >
                                                     <span class="mt-comment-author">{{ (action.client.name + ' ' + action.client.first_surname + ' ' + action.client.second_surname)}}</span>
                                                     <span class="mt-comment-date"  ng-class="action.color + '-status-text'" >Del {{ action.begin_at |  date:'dd-MMM-yyyy'}} al {{ action.accomplish_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
-                                                <div class="mt-comment-text" ui-sref="actionDetail({id:action.id})"> {{ action.name }} </div>
+                                                <div class="mt-comment-text" ui-sref="projectDetail({id:action.id})"> {{ action.name }} </div>
                                                 <div class="mt-comment-details">
                                                     <span class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
                                                     <ul class="mt-comment-actions">
@@ -391,15 +391,15 @@
 
                                     <div class="mt-comments">
                                         <div class="mt-comment" ng-repeat="action in orders.results track by $index" >
-                                            <div class="mt-comment-img" ui-sref="actionDetail({id:action.id})">
+                                            <div class="mt-comment-img" ui-sref="projectDetail({id:action.id})">
                                               <img  style="height:45px; width:45px " ng-src="{{ action.producer.photo }}" /> </div>
 
                                             <div class="mt-comment-body" >
-                                                <div uib-tooltip="Click para ver la descripción" class="mt-comment-info" ui-sref="actionDetail({id:action.id})" >
+                                                <div uib-tooltip="Click para ver la descripción" class="mt-comment-info" ui-sref="projectDetail({id:action.id})" >
                                                     <span class="mt-comment-author">{{ (action.producer.name + ' ' + action.producer.first_surname + ' ' + action.producer.second_surname)}}</span>
                                                     <span class="mt-comment-date"  ng-class="action.color + '-status-text'">Del {{ action.begin_at |  date:'dd-MMM-yyyy'}} al {{ action.accomplish_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
-                                                <div uib-tooltip="Click para ver la descripción" ui-sref="actionDetail({id:action.id})" class="mt-comment-text"  > {{ action.name }} </div>
+                                                <div uib-tooltip="Click para ver la descripción" ui-sref="projectDetail({id:action.id})" class="mt-comment-text"  > {{ action.name }} </div>
                                                 <div uib-tooltip="Click para ver la descripción"  class="mt-comment-details">
                                                     <span   class="mt-comment-status mt-comment-status-pending"> {{ action.project.name }}</span>
                                                     <!-- <ul class="mt-comment-actions">
