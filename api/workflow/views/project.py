@@ -131,7 +131,7 @@ class ProjectList(APIView, APIMixin):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-from datetime import datetime    
+from datetime import datetime
 
 class ProjectTimeStadistic(APIView):
     """
@@ -155,7 +155,7 @@ class ProjectTimeStadistic(APIView):
                 if datetime.now().date() <= obj.report_at:
                     in_time += 1
                 elif obj.ejecution_report_at is not None:
-                    if obj.ejecution_report_at <= obj.report_at: 
+                    if obj.ejecution_report_at <= obj.report_at:
                         in_time += 1
 
             # to count proyects delayed

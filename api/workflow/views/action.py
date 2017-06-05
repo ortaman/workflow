@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Action
-from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionPutSerializer 
+from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionPutSerializer
 from workflow.serializers import ActionClientSerializer, ActionProducerSerializer
 from common.mixins import APIMixin
 
@@ -107,7 +107,7 @@ class ActionList(APIView, APIMixin):
 
                 return Response(serializer.data)
 
-            # Get the all project actions. 
+            # Get the all project actions.
             else:
                 queryset = queryset.filter(project_id=query.get('project_id'))
 
@@ -132,6 +132,9 @@ class ActionList(APIView, APIMixin):
                     client_id=query.get('client'),
                     status=query.get('status'),
                 )
+
+        elif 'phase' in query.keys():
+            queryset = queryset.filter(phase=query.get('phase'), project=None)
 
         data = self.get_pagination(queryset, page, self.paginate_by)
 
@@ -160,11 +163,11 @@ class ActionStadisctic(APIView, APIMixin):
 
         user_id = request.user.id
         queryset = self.model.objects.all()
-        
+
         q1 = Q(client_id = user_id)
         q2 = (Q(status = 'Pendiente') | Q(status = 'Abierta') | Q(status = 'Ejecutada'))
         q3 = Q(status = 'Ejecutada')
-        q4 = Q(status = 'Satisfactoria')  
+        q4 = Q(status = 'Satisfactoria')
         q5 = Q(status = 'Insatisfactoria')
         q7 = Q(producer_id=user_id)
 
@@ -198,7 +201,7 @@ class ActionTodoStadistics(APIView, APIMixin):
     def get(self, request, format=None):
         page = request.GET.get('page', None)
 
-        user_id = request.user.id 
+        user_id = request.user.id
         queryset = self.model.objects.filter(producer_id=request.user.id)
 
         queryset = queryset.distinct('client__id')
@@ -241,7 +244,7 @@ class ActionOweMeStadistics(APIView, APIMixin):
     def get(self, request, format=None):
         page = request.GET.get('page', None)
 
-        user_id = request.user.id 
+        user_id = request.user.id
         queryset = self.model.objects.filter(client_id=request.user.id)
 
         queryset = queryset.distinct('producer__id')
