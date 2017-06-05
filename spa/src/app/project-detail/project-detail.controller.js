@@ -8,11 +8,15 @@ app.controller('ProjectDetailController', [
    $scope.titles = {
      'project': {
        'type':'project',
-			 'name': 'proyecto'
+			 'name': 'proyecto',
+			 'theItem': 'El proyecto',
+			 'thisItem': 'este proyecto'
      },
      'action':{
        'type':'action',
-			 'name': 'acción'
+			 'name': 'acción',
+			 'theItem': 'La acción',
+			 'thisItem': 'esta acción'
      }
    }
 
@@ -50,6 +54,9 @@ app.controller('ProjectDetailController', [
 				$scope.timeLineChanged();
 				type  = response.parent_action == null ? 'project':'action';
 				$scope.titles = $scope.titles[type];
+				if (type == 'action') {
+					$scope.project.image = $scope.project.project.image;
+				}
 
 			},
 			function(errorResponse) {
@@ -169,7 +176,7 @@ app.controller('ProjectDetailController', [
 	 angular.extend(modalVariables, basicModal)
 		$mdDialog.show(modalVariables).then(function (obj) {
 	 		if(obj.created == true){
-				Notification.success("El proyecto ha pasado a estatus de ejecutado")
+				Notification.success($scope.titles['theItem'] + " ha pasado a estatus de ejecutado")
 				$state.reload()
 			}
 
@@ -179,7 +186,7 @@ app.controller('ProjectDetailController', [
 
 	$scope.openAdvanceReport = function() {
 		if ($scope.checkStatus('Pendiente')){
-			Notification.info("Debe aceptar este proyecto primero")
+			Notification.info("Debe aceptar "+ $scope.titles['thisItem']+ " primero")
 			return;
 		}else if($scope.project.advance_report_at ){
 			Notification.info("No es posible agregar  otro reporte")
@@ -211,10 +218,10 @@ app.controller('ProjectDetailController', [
 
 	$scope.closeProjectReport = function(action) {
 		if($scope.checkStatus('Satisfactoria') || $scope.checkStatus('Insatisfactoria')){
-			Notification.info("El proyecto ya se encuentra  cerrado")
+			Notification.info($scope.titles['thisItem'] + " ya se encuentra  cerrado")
 			return
 		}else if (!$scope.checkStatus('Ejecutada')) {
-			Notification.info("No es posible cerrar el proyecto, aun no esta  ejecutado")
+			Notification.info("No es posible cerrar "+ $scope.titles['thisItem'] +", aun no esta  ejecutado")
 			return;
 		}
 
@@ -260,7 +267,7 @@ app.controller('ProjectDetailController', [
 
 	$scope.actionCreate = function () {
 		if ($scope.checkStatus('Pendiente')){
-			Notification.info("Debe aceptar este proyecto primero")
+			Notification.info("Debe aceptar "+$scope.titles['theItem']+" primero")
 			return;
 		}
 		else if($scope.checkStatus('Aceptada')) {
@@ -268,7 +275,7 @@ app.controller('ProjectDetailController', [
 			return;
 		}
 		else{
-			Notification.info("El proyecto ha sido ejecutado, no es posible agregar  otra acción")
+			Notification.info($scope.titles['theItem']+" ha sido ejecutado, no es posible agregar  otra acción")
 			return;
 		}
 	}
@@ -293,7 +300,7 @@ app.controller('ProjectDetailController', [
 			ProjectService.patch(project.id, project).then(
 				function (response) {
 					$mdDialog.hide();
-					Notification.success("El proyecto ha pasado a fase de "+newPhase)
+					Notification.success($scope.titles['theItem']+" ha pasado a fase de "+newPhase)
 					$state.reload()
 				},
 				function (errorResponse) {
@@ -312,7 +319,7 @@ app.controller('ProjectDetailController', [
 
 	$scope.checkRole = function (toValidate) {
 		var value = false;
-		if ($scope.project[toValidate]) {
+		if ($scope.project.id) {
 			toValidate.forEach(function (rol) {
 				if ($scope.project[rol].id ==  $scope.user.id) {
 					value = true;

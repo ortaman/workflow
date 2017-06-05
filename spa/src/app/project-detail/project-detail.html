@@ -27,7 +27,7 @@
                 </ul>
                 <div class="page-toolbar">
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Opciones
+                        <button ng-if="checkRole(['producer', 'observer', 'client'])" type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Opciones
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">

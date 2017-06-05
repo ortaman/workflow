@@ -53,6 +53,8 @@ app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) 
         response.data.client.photo = APIConfig.baseUrl + response.data.client.photo;
         response.data.producer.photo = APIConfig.baseUrl + response.data.producer.photo;
         response.data.image = APIConfig.baseUrl + response.data.image;
+        if (response.data.project)
+          response.data.project.image = APIConfig.baseUrl + response.data.project.image;
         response.data.color = getColor(response.data);
       return response.data;
       }
