@@ -114,7 +114,9 @@
                                             </div>
                                         </div>
                                         <div class="mt-body ">
-                                            <h3 class="mt-body-title">Proyecto: {{ project.name }} </h3>
+                                            <h3 class="mt-body-title">
+                                              <span ng-if="!isProject()">Proyecto: {{ project.project.name }}</span><br><br>
+                                              <span>{{titles.nameCapitalized}}: {{ project.name }} </span><br>
                                             <p class="mt-body-description">Acciones a realizar: {{ project.toDo }} .</p><br>
                                             <p class="mt-body-description">Condiciones de satisfacción: {{ project.satisfactions }} .</p>
                                         </div>

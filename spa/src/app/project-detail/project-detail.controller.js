@@ -9,12 +9,14 @@ app.controller('ProjectDetailController', [
      'project': {
        'type':'project',
 			 'name': 'proyecto',
+			 'nameCapitalized': 'Proyecto',
 			 'theItem': 'El proyecto',
 			 'thisItem': 'este proyecto'
      },
      'action':{
        'type':'action',
 			 'name': 'acción',
+			 'nameCapitalized': 'Acción',
 			 'theItem': 'La acción',
 			 'thisItem': 'esta acción'
      }
