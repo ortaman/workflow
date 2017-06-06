@@ -101,7 +101,7 @@
                 </div>
             </div>
 
-            <div class="row" ng-if="type == 'project'">
+            <div class="row">
 
                 <div class="col-lg-6 col-xs-12 col-sm-12">
                     <div class="portlet light bordered">
@@ -170,13 +170,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="text-center" ng-if="projectsByProducer.results.length > 0">
+                                    <div class="text-center" ng-show="projectsByProducer.results.length > 0">
                                         <ul uib-pagination boundary-links="true" class="pagination-sm"
                                             previous-text="&lsaquo;" next-text="&rsaquo;"
                                             first-text="&laquo;" last-text="&raquo;"
-                                            items-per-page="getProjectsByProducer.paginated_by"
-                                            total-items="getProjectsByProducer.count"
-                                            ng-model="projectsByProducerCurrentPage"
+                                            items-per-page="projectsByProducer.paginate_by"
+                                            total-items="projectsByProducer.count"
+                                            ng-model="promisesCurrentPage"
                                             ng-change="getProjectsByProducer()">
                                         </ul>
                                     </div>
@@ -244,13 +244,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-center">
+                                    <div class="text-center" ng-show="projectsByClient.results.length > 0">
                                         <ul uib-pagination boundary-links="true" class="pagination-sm"
                                             previous-text="&lsaquo;" next-text="&rsaquo;"
                                             first-text="&laquo;" last-text="&raquo;"
-                                            items-per-page="projectsByClient.paginated_by"
+                                            items-per-page="projectsByClient.paginate_by"
                                             total-items="projectsByClient.count"
-                                            ng-model="projectsByClientCurrentPage"
+                                            ng-model="ordersCurrentPage"
                                             ng-change="getProjectsByClient()">
                                         </ul>
                                     </div>

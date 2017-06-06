@@ -3,7 +3,6 @@ app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','P
   function($scope, UserService, $mdDialog, ProjectService,
      StadisticsService, Notification, $state) {
 
-
    $scope.titles = {
      'project': {
        'name1': 'El proyecto',
@@ -23,9 +22,7 @@ app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','P
   $scope.producerFiltertype;
   $scope.clientFiltertype;
 
-  $scope.promises = [];
   $scope.user;
-  $scope.type = 'project',
 
   $scope.init = function(){
     UserService.me().then(function(response){
@@ -40,11 +37,13 @@ app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','P
 
 
 
-  $scope.getProjectsByProducer = function(status, page=1){
-    $scope.projectsByProducer = []
+  $scope.getProjectsByProducer = function(status){
+    if (status)
+      $scope.producerFiltertype = status;
+    status = status || $scope.producerFiltertype;
 
     var query = {
-      page:page,
+      page:$scope.promisesCurrentPage,
       status:status
     };
 
@@ -57,15 +56,18 @@ app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','P
 			},
 			function(errorResponse) {
 				console.error('errorResponse', errorResponse);
-				$scope.status = errorResponse.statusText || 'Request failed';
-				$scope.errors = errorResponse.data;
+        Notification.error("Error al obtener resultados");
 			}
 		);
   }
 
-  $scope.getProjectsByClient = function(status, page=1){
+  $scope.getProjectsByClient = function(status){
+    if (status)
+      $scope.clientFiltertype = status;
+    status = status || $scope.clientFiltertype;
+
     var query = {
-      page:page,
+      page:$scope.ordersCurrentPage,
       status:status
     };
     $scope.projectClientStatus = status // status for display button according the promise
@@ -77,8 +79,7 @@ app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','P
 			},
 			function(errorResponse) {
 				console.error('errorResponse', errorResponse);
-				$scope.status = errorResponse.statusText || 'Request failed';
-				$scope.errors = errorResponse.data;
+        Notification.error("Error al obtener resultados");
 			}
 		);
   }
