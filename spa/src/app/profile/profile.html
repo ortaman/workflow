@@ -138,9 +138,9 @@
                                               </thead>
                                               <tr ng-repeat="producer in todo.to_do track by $index">
                                                   <td class="fit ">
-                                                    <img height="40" width="40" ng-src="{{producer.producer.photo}}"/>
+                                                    <img height="40" width="40" ng-src="{{producer.client.photo}}"/>
                                                   <td>
-                                                      <a href="javascript:; " class="primary-link ">{{producer.producer.name  +' '+ producer.producer.first_surname+' '+ producer.producer.second_surname}}</a>
+                                                      <a href="javascript:; " class="primary-link ">{{producer.client.name  +' '+ producer.client.first_surname+' '+ producer.client.second_surname}}</a>
                                                   </td>
                                                   <td>{{ producer.pending}}</td>
                                                   <td>{{ producer.accepted}}</td>
@@ -148,7 +148,7 @@
                                                   <td>{{ producer.satisfactories }}</td>
                                                   <td>{{ producer.unsatisfactories}}</td>
                                                   <td>
-                                                      <span class="bold theme-font ">{{ (producer.succesfulPercentage | number:2 ) }}%</span>
+                                                      <span class="bold theme-font ">{{ (producer.succesfullPercentage | number:2 ) }}%</span>
                                                   </td>
                                               </tr>
                                           </table>
@@ -202,7 +202,7 @@
                                                   <td>{{ producer.satisfactories }}</td>
                                                   <td>{{ producer.unsatisfactories}}</td>
                                                   <td>
-                                                      <span class="bold theme-font ">{{ (producer.succesfulPercentage | number:2 ) }}%</span>
+                                                      <span class="bold theme-font ">{{ (producer.succesfullPercentage | number:2 ) }}%</span>
                                                   </td>
                                               </tr>
                                           </table>
