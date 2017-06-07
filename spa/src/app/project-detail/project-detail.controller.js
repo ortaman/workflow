@@ -43,9 +43,7 @@ app.controller('ProjectDetailController', [
 				console.error("error",error);
 			})
 			getProject();
-			$scope.actionPageChanged()
-			$scope.producerPageChanged($scope.producersCurrentPage,'producers' );
-			$scope.producerPageChanged($scope.producersPerformanceCurrentPage,'producersPerformance' );
+
 	}
 
 	//Service call
@@ -59,7 +57,9 @@ app.controller('ProjectDetailController', [
 				if (type == 'action') {
 					$scope.project.image = $scope.project.project.image;
 				}
-
+				$scope.actionPageChanged()
+				$scope.producerPageChanged($scope.producersCurrentPage,'producers' );
+				$scope.producerPageChanged($scope.producersPerformanceCurrentPage,'producersPerformance' );
 			},
 			function(errorResponse) {
 				Notification.error("Ocurrio  un error al recuperar  información")
@@ -117,8 +117,11 @@ app.controller('ProjectDetailController', [
 	$scope.producerPageChanged = function(page, list) {
 	  	var query = {
 	  		"page": page,
-	  		"parent_action": $state.params.id,
 	  	};
+		if ($scope.project.parent_action)
+			query.parent_action_id = $scope.project.id;
+		else
+			query.project_id = $scope.project.id;
 
 		ProducerGetListService.getList(query).then(
 			function(response) {

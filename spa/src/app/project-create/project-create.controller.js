@@ -91,7 +91,7 @@ app.controller('ProjectCreateController', [
           function (response){
             $scope.projectParent = response;
             $scope.project.parent_action = $scope.projectParent.id;
-            $scope.project.project = $scope.projectParent.project ? $scope.projectParent.project : $scope.projectParent.id
+            $scope.project.project = $scope.projectParent.project ? $scope.projectParent.project.id : $scope.projectParent.id
             console.log($scope.project);
           },
           function (error) {
