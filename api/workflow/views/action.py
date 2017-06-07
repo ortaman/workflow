@@ -139,8 +139,11 @@ class ActionList(APIView, APIMixin):
         data = self.get_pagination(queryset, page, self.paginate_by)
 
         if page is None:
-            data = self.serializer_list(queryset, many=True).data
-            
+            data = self.serializer_list(
+                queryset.filter(
+                    parent_action__isnull=True,
+                ), many=True).data
+
         return Response(data)
 
     def post(self, request, format=None):
