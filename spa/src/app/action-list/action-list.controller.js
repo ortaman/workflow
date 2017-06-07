@@ -15,7 +15,6 @@ app.controller('ActionListController', ['$scope', 'ProducerGetListService','Proj
         var query = {
           "page": $scope.producersCurrentPage,
   	  		"project_id":$scope.selectedProject ,
-  	  		"parent_action": "none",
   	  	};
         if($scope.selectedProject){
           ProducerGetListService.getList(query).then(
