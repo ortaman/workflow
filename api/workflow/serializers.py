@@ -47,6 +47,7 @@ class ActionPostSerializer(serializers.ModelSerializer):
     class Meta:
         model  = Action
         fields = (
+            'id',
             'name', 'kind', 'phase', 'status',
             'client', 'producer', 'observer',
             'toDo', 'satisfactions',
