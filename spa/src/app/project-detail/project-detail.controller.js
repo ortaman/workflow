@@ -117,8 +117,7 @@ app.controller('ProjectDetailController', [
 	$scope.producerPageChanged = function(page, list) {
 	  	var query = {
 	  		"page": page,
-	  		"project_id": $state.params.id,
-	  		"parent_action": "none",
+	  		"parent_action": $state.params.id,
 	  	};
 
 		ProducerGetListService.getList(query).then(
