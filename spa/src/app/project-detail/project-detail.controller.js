@@ -117,11 +117,9 @@ app.controller('ProjectDetailController', [
 	$scope.producerPageChanged = function(page, list) {
 	  	var query = {
 	  		"page": page,
+				'parent_action_id': $scope.project.id
 	  	};
-		if ($scope.project.parent_action)
-			query.parent_action_id = $scope.project.id;
-		else
-			query.project_id = $scope.project.id;
+
 
 		ProducerGetListService.getList(query).then(
 			function(response) {

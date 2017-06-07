@@ -91,8 +91,7 @@ app.controller('ProjectCreateController', [
           function (response){
             $scope.projectParent = response;
             $scope.project.parent_action = $scope.projectParent.id;
-            $scope.project.project = $scope.projectParent.project ? $scope.projectParent.project.id : $scope.projectParent.id
-            console.log($scope.project);
+            $scope.project.project = $scope.projectParent.parent_action == null ?  $scope.projectParent.id : $scope.projectParent.project.id;
           },
           function (error) {
             Notification.error("No existe un proyecto relacionado")
