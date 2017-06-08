@@ -37,6 +37,11 @@ app.config(function($stateProvider, $urlRouterProvider,
       templateUrl: "app/project-detail/project-detail.html",
       controller: "ProjectDetailController"
     })
+    .state('projectView', {
+      url: "/projectView/:id/",
+      templateUrl: "app/project-view/project-view.html",
+      controller: "ProjectViewController"
+    })
     .state('projectUpdate', {
       url: "/projectUpdate/:id/",
       templateUrl: "app/project-update/project-update.html",

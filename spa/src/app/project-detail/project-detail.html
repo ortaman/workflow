@@ -51,6 +51,11 @@
                                     <i class="icon-link"></i> Pasar a la siguiente fase </a>
                             </li>
 
+                            <li ng-if="checkRole(['producer'])">
+                                <a ui-sref="projectView({id:project.id})">
+                                    <i class="icon-link"></i> Ver detalles </a>
+                            </li>
+
                             <li class="divider" ng-if="project.producer.id == user.id"> </li>
                             <li ng-click="openfinishProjectReport()" ng-if="checkRole(['producer'])">
                                 <a >

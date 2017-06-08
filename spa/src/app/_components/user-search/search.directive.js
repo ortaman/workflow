@@ -11,6 +11,7 @@ app.directive('userSearch', ['UserListService', '$timeout',
           fieldName: '@',
           userId: '=',
           userInit: '=',
+          disabled: "="
       },
       controller: SearchUserController,
       controllerAs: 'vm',

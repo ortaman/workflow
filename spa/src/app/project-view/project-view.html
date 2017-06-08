@@ -59,6 +59,7 @@
                                <input
                                  name="projectName"
                                  maxlength="64"
+                                disabled
                                  ng-model="project.name"
                                  ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
                                  required></input>
@@ -77,7 +78,11 @@
                             <div ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
                               <md-input-container class="md-block" >
                                 <label> Fase </label>
-                                <md-select name="phase" ng-model="project.phase" required>
+                                <md-select
+                                  name="phase"
+                                  disabled
+                                  ng-model="project.phase"
+                                  required>
                                   <md-option value="Preparación"> Preparación </md-option>
                                   <md-option value="Negociación"> Negociación </md-option>
                                   <md-option value="Ejecución"> Ejecución </md-option>
@@ -97,6 +102,7 @@
                                 <label> Tipo </label>
                                 <md-select
                                   name="kind"
+                                  disabled
                                   ng-model="project.kind"
                                   required>
                                   <md-option value="Estándar"> Estándar </md-option>
@@ -121,9 +127,9 @@
                           <div class="col-md-4">
                             <user-search
                               field-name="Cliente"
-                              disabled="true"
                               user-id="project.client"
-                              user-init="project.client">
+                              user-init="project.client"
+                              disabled="true">
                             </user-search>
                           </div>
 
@@ -131,7 +137,8 @@
                             <user-search
                               field-name="Realizador"
                               user-id="project.producer"
-                              user-init="project.producer">
+                              user-init="project.producer"
+                              disabled="true">
                             </user-search>
                           </div>
 
@@ -139,7 +146,8 @@
                             <user-search
                               field-name="Observador"
                               user-id="project.observer"
-                              user-init="project.observer">
+                              user-init="project.observer"
+                              disabled="true">
                             </user-search>
                           </div>
                         </div>
@@ -156,6 +164,7 @@
                                   placeholder="Describe las acciones a realizar."
                                   rows="5"
                                   maxlength="512"
+                                  disabled
                                   ng-model="project.toDo"
                                   required></textarea>
 
@@ -176,7 +185,9 @@
                                   placeholder="Describe las condiciones de satisfacción"
                                   rows="5"
                                   maxlength="512"
-                                  ng-model="project.satisfactions"                                   required></textarea>
+                                  disabled
+                                  ng-model="project.satisfactions"
+                                  required></textarea>
 
                                 <div ng-show="projectForm.satisfaction.$touched || submitted">
                                     <div class="error" ng-show="projectForm.satisfaction.$error.required">
@@ -200,6 +211,7 @@
                                 name="begin_at"
                                 md-current-view="year"
                                 md-placeholder="ingrese fecha"
+                                disabled
                                 ng-model="project.begin_at"
                                 ng-change="beginOrAtOrAccomplishDateChanged(project.begin_at, project.accomplish_at)"
 
@@ -221,8 +233,8 @@
                                 md-current-view="year"
                                 md-placeholder="ingrese fecha"
                                 md-min-date="project.begin_at"
-                                ng-disabled="project.begin_at===undefined"
                                 ng-change="beginOrAtOrAccomplishDateChanged(project.begin_at, project.accomplish_at)"
+                                disabled
                                 ng-model="project.accomplish_at"
                                 required></md-datepicker>
 
@@ -243,7 +255,7 @@
                                   md-placeholder="ingrese fecha"
                                   md-max-date="project.accomplish_at"
                                   md-min-date="project.begin_at"
-                                  ng-disabled="project.begin_at===undefined || project.accomplish_at===undefined"
+                                  disabled
                                   ng-model="project.report_at"
                                   required ></md-datepicker>
 
@@ -266,7 +278,7 @@
                                     md-min-date="project.accomplish_at"
                                     md-min-date="renegotiation_min_date"
                                     md-max-date="renegotiation_max_date"
-                                    ng-disabled="project.begin_at===undefined || project.accomplish_at===undefined"
+                                    disabled
                                     ng-model="project.renegotiation_at"></md-datepicker>
 
                                     <div ng-show="projectForm.renegotiation_at.$touched || submitted">
@@ -294,8 +306,8 @@
                                     md-placeholder="ingrese fecha"
                                     md-min-date="project.begin_at"
                                     md-max-date="project.accomplish_at"
+                                    disabled
                                     ng-model="project.preparation_at"
-                                    ng-disabled="project.begin_at===undefined || project.accomplish_at===undefined"
                                     required></md-datepicker>
 
                                   <div ng-show="projectForm.preparation_at.$touched || submitted">
@@ -315,8 +327,8 @@
                                     md-placeholder="ingrese fecha"
                                     md-min-date="project.preparation_at"
                                     md-max-date="project.accomplish_at"
+                                    disabled
                                     ng-model="project.negotiation_at"
-                                    ng-disabled=" project.preparation_at===undefined"
                                     required ></md-datepicker>
 
                                   <div ng-show="projectForm.negotiation_at.$touched || submitted">
@@ -336,8 +348,8 @@
                                     md-placeholder="ingrese fecha"
                                     md-min-date="project.negotiation_at"
                                     md-max-date="project.accomplish_at"
+                                    disabled
                                     ng-model="project.execution_at"
-                                    ng-disabled=" project.negotiation_at===undefined"
                                     required ></md-datepicker>
 
                                   <div ng-show="projectForm.execution_at.$touched || submitted">
@@ -357,8 +369,8 @@
                                     md-placeholder="ingrese fecha"
                                     md-min-date="project.execution_at"
                                     md-max-date="project.accomplish_at"
+                                    disabled
                                     ng-model="project.evaluation_at"
-                                    ng-disabled=" project.negotiation_at===undefined"
                                     required></md-datepicker>
                                 </div>
 
@@ -381,6 +393,7 @@
                                   <input
                                     name="financial"
                                     maxlength="128"
+                                    disabled
                                     ng-model="project.financial"
                                   ></input>
                                   <div ng-show="projectForm.financial.$touched || submitted">
@@ -400,6 +413,7 @@
                                   <input
                                     name="operational"
                                     maxlength="128"
+                                    disabled
                                     ng-model="project.operational"
                                   ></input>
                                   <div ng-show="projectForm.operational.$touched || submitted">
@@ -422,6 +436,7 @@
                                   <input
                                     name="other1"
                                     maxlength="128"
+                                    disabled
                                     ng-model="project.other1"
                                   ></input>
                                   <div ng-show="projectForm.other1.$touched || submitted">
@@ -437,6 +452,7 @@
                                 <input
                                   name="other2"
                                   maxlength="128"
+                                  disabled
                                   ng-model="project.other2"
                                 ></input>
                                 <div ng-show="projectForm.other2.$touched || submitted">
@@ -451,25 +467,8 @@
 
                         <div class="row" ng-if="isProject()">
                           <div class="col-md-3">
-                            <input name="file" fileread='project.image' type="file" required/>
-                              <div ng-show="projectForm.file.$touched || submitted">
-                                <div class="error" ng-show="projectForm.file.$error.required">
-                                  Campo requerido.
-                                </div>
-                              </div>
-                          </div>
-                          <div class="col-md-4">
-
                           </div>
                         </div>
-
-                        <br>
-                        <div class="row">
-                          <div class="col-md-2 col-md-offset-5 text-center">
-                            <button type="submit"  promise-btn="submmitPromise" class="btn blue">Actualizar </button>
-                          </div>
-                        </div>
-
                     </form>
                 </div>
             </div>
