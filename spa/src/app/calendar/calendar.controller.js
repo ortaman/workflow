@@ -1,5 +1,6 @@
 
-app.controller('CalendarController', ['$scope','$compile','ActionService', function($scope, $compile, ActionService) {
+app.controller('CalendarController', ['$scope','$compile','ActionService', 'ProjectService',
+  function($scope, $compile, ActionService, ProjectService) {
 
   $scope.projects = {};
   $scope.actionEvents = [];
@@ -49,7 +50,7 @@ app.controller('CalendarController', ['$scope','$compile','ActionService', funct
     var query = {
     };
 
-    ActionService.getList(query).then(
+    ProjectService.getList(query).then(
       function(response) {
          $scope.projects = response;
       },

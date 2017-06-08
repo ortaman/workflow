@@ -86,11 +86,17 @@ class ProjectList(APIView, APIMixin):
 
         if page is None:
             # Retrieve all projects without paginated used on actions board combobox filter.
+            queryset = queryset.filter(
+                parent_action__isnull=True,
+            )
             data = self.serializer_list(queryset, many=True).data
         else:
             # Retrieve projects filter by phase used on project board.
             if 'phase' in query.keys():
-                queryset = queryset.filter(phase=query.get('phase'))
+                queryset = queryset.filter(
+                    phase=query.get('phase'),
+                    parent_action__isnull=True,
+                )
 
             # Retrieve thec lient and produce owner projects filter by user_id used on profile user.
             elif 'client_id' in query.keys():

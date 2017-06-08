@@ -94,7 +94,6 @@ class ProjectPatchSerializer(serializers.ModelSerializer):
 
 # CRUD action serializers
 class ActionPostSerializer(serializers.ModelSerializer):
-    image = Base64ImageField(max_length=None, use_url=True, required=False)
 
     class Meta:
         model  = Action
@@ -102,7 +101,7 @@ class ActionPostSerializer(serializers.ModelSerializer):
             'name', 'phase',
             'client', 'producer', 'observer',
             'toDo', 'satisfactions',
-            'begin_at', 'report_at', 'accomplish_at', 'renegotiation_at',
+            'begin_at', 'report_at', 'accomplish_at',
             'advance_report_at', 'ejecution_report_at',
             'financial', 'operational', 'other1', 'other2',
             'project', 'parent_action')
@@ -119,7 +118,7 @@ class ActionGetSerializer(serializers.ModelSerializer):
     advance_report = ReportGetSerializer()
     ejecution_report = ReportGetSerializer()
 
-    project = ActionPostSerializer()
+    project = ProjectGetSerializer()
 
     class Meta:
         model  = Action

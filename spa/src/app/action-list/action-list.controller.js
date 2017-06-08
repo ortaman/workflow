@@ -1,6 +1,6 @@
 
-app.controller('ActionListController', ['$scope', 'ProducerGetListService','ActionService',
- function($scope, ProducerGetListService, ActionService) {
+app.controller('ActionListController', ['$scope', 'ProducerGetListService','ActionService', 'ProjectService',
+ function($scope, ProducerGetListService, ActionService, ProjectService) {
 
    $scope.producersCurrentPage = 1;
    $scope.producers = []
@@ -40,7 +40,7 @@ app.controller('ActionListController', ['$scope', 'ProducerGetListService','Acti
 
     $scope.getProjects = function(){
       var query = {}
-      ActionService.getList(query).then(
+      ProjectService.getList(query).then(
         function(response) {
            $scope.projects = response;
         },
