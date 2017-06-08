@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Action
-from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionPutSerializer
+from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionPatchSerializer
 from workflow.serializers import ActionClientSerializer, ActionProducerSerializer
 from common.mixins import APIMixin
 
@@ -17,12 +17,12 @@ class ActionDetail(APIView, APIMixin):
     """
     Retrieve, update or delete a action instance.
     """
-    permission_classes = (IsAuthenticated,)
 
     # Initial mixin variables
     model = Action
     serializer_get = ActionGetSerializer
-    serializer_put = ActionPutSerializer
+    serializer_put = ActionPostSerializer
+    serializer_patch = ActionPatchSerializer
 
     def get(self, request, pk, format=None):
         obj = self.get_object(pk)
@@ -44,7 +44,7 @@ class ActionDetail(APIView, APIMixin):
 
     def patch(self, request, pk, format=None):
         obj = self.get_object(pk)
-        serializer = self.serializer_put(obj, data=request.data, partial=True)
+        serializer = self.serializer_patch(obj, data=request.data, partial=True)
 
         self.patch_vatidations(obj, request.user)
 

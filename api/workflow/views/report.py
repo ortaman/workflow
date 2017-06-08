@@ -5,28 +5,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Report
-from workflow.serializers import ReportPostSerializer, ReportListSerializer, ReportGetSerializer
-from common.mixins import APIMixin
+from workflow.serializers import ReportPostSerializer
 
 
-class ReportDetail(APIView, APIMixin):
-    """
-    Retrieve a report instance.
-    """
-    permission_classes = (IsAuthenticated,)
-
-    # Mixing initial variables
-    model = Report
-    serializer_get = ReportGetSerializer
-
-    def get(self, request, pk, format=None):
-        report = self.get_object(pk)
-        serializer = self.serializer_get(report)
-
-        return Response(serializer.data)
-
-
-class ReportList(APIView, APIMixin):
+class ReportList(APIView):
     """
     Create a new report.
     """
@@ -35,25 +17,6 @@ class ReportList(APIView, APIMixin):
     # Mixing initial variables
     model = Report
     serializer_post = ReportPostSerializer
-    serializer_list = ReportListSerializer
-
-
-    def get(self, request, format=None):
-        query = request.query_params
-        query_keys = query.keys()
-
-
-        if 'project_id' in query_keys:
-            queryset = self.model.objects.filter(project_id=query.get('project_id'), action_id = None)
-
-        elif 'action_id' in query_keys:
-            queryset = self.model.objects.filter(action_id=query.get('action_id'))
-
-        else:
-            queryset = []
-
-        data = self.serializer_list(queryset, many=True).data
-        return Response(data)
 
     def post(self, request, format=None):
         serializer = self.serializer_post(data=request.data)

@@ -1,4 +1,6 @@
 
+from datetime import datetime
+
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404
@@ -8,8 +10,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from workflow.models import Project
-from workflow.serializers import ProjectPostSerializer, ProjectGetSerializer, ProjectListSerializer, ActionPutSerializer
+from workflow.models import Action
+from workflow.serializers import ProjectPostSerializer, ProjectGetSerializer, ProjectListSerializer, ProjectPatchSerializer
 from common.mixins import APIMixin
 
 
@@ -20,9 +22,10 @@ class ProjectDetail(APIView, APIMixin):
     permission_classes = (IsAuthenticated,)
 
     # Mixing initial variables
-    model = Project
+    model = Action
     serializer_get = ProjectGetSerializer
-    serializer_put = ActionPutSerializer
+    serializer_put = ProjectPostSerializer
+    serializer_patch = ProjectPatchSerializer
 
     def get(self, request, pk, format=None):
 
@@ -45,7 +48,7 @@ class ProjectDetail(APIView, APIMixin):
 
     def patch(self, request, pk, format=None):
         obj = self.get_object(pk)
-        serializer = self.serializer_put(obj, data=request.data, partial=True)
+        serializer = self.serializer_patch(obj, data=request.data, partial=True)
 
         self.patch_vatidations(obj, request.user)
 
@@ -69,7 +72,7 @@ class ProjectList(APIView, APIMixin):
     permission_classes = (IsAuthenticated,)
 
     # Mixing initial variables
-    model = Project
+    model = Action
     serializer_list = ProjectListSerializer
     serializer_post = ProjectPostSerializer
 
@@ -82,38 +85,18 @@ class ProjectList(APIView, APIMixin):
         queryset = self.model.objects.all()
 
         if page is None:
+            # Retrieve all projects without paginated used on actions board combobox filter.
             data = self.serializer_list(queryset, many=True).data
         else:
-
-            # Search project by client and  status.
-            if 'client' in query.keys() and 'status' in query.keys():
-                queryset = queryset.filter(
-                    client_id=query.get('client'),
-                    status=query.get('status'),
-                )
-
-            elif 'client' in query.keys() and 'phase' in query.keys():
-                    queryset = queryset.filter(
-                        client_id=query.get('client'),
-                        phase=query.get('phase'),
-                    )
-            # Search project by producer and phase status.
-            elif 'producer' in query.keys() and 'phase' in query.keys():
-
-                queryset = queryset.filter(
-                    producer_id=query.get('producer'),
-                    phase=query.get('phase'),
-                )
-
-            elif 'producer' in query.keys() and 'status' in query.keys():
-
-                queryset = queryset.filter(
-                    producer_id=query.get('producer'),
-                    status=query.get('status'),
-                )
-
-            elif 'phase' in query.keys():
+            # Retrieve projects filter by phase used on project board.
+            if 'phase' in query.keys():
                 queryset = queryset.filter(phase=query.get('phase'))
+
+            # Retrieve thec lient and produce owner projects filter by user_id used on profile user.
+            elif 'client_id' in query.keys():
+                queryset = queryset.filter(
+                    Q(client=query.get('client_id')) | Q(producer=query.get('client_id'))
+                )
 
             data = self.get_pagination(queryset, page, self.paginate_by)
 
@@ -131,15 +114,13 @@ class ProjectList(APIView, APIMixin):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-from datetime import datetime
-
 class ProjectTimeStadistic(APIView):
     """
     """
     permission_classes = (IsAuthenticated,)
 
     # Initial mixin variables (model and serializer_list)
-    model = Project
+    model = Action
 
     def get(self, request, format=None):
         query = request.query_params
