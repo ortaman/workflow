@@ -46,6 +46,10 @@
                                 <a href="" ng-click="moveTophase()">
                                     <i class="icon-link"></i> Pasar a la siguiente fase </a>
                             </li>
+                            <li ng-if="currentAction.producer.id == user.id ">
+                                <a ui-sref="actionView({id:currentAction.id})">
+                                    <i class="icon-link"></i> Ver detalle </a>
+                            </li>
                             <li class="divider" ng-if="currentAction.producer.id == user.id  "> </li>
                             <li ng-click="actionFinishReport()" ng-if="currentAction.producer.id == user.id  ">
                                 <a >

@@ -64,6 +64,17 @@ app.config(function($stateProvider, $urlRouterProvider,
       templateUrl: "app/action-list/action-list.html",
       controller: "ActionListController",
     })
+    .state('actionView', {
+      url: "/actionView/:id",
+      templateUrl: "app/action-detail/action-view.html",
+      controller: "ActionViewController",
+    })
+    .state('projectView', {
+      url: "/projectView/:id",
+      templateUrl: "app/project-detail/project-view.html",
+      controller: "ProjectViewController",
+    })
+
     .state('calendar', {
       url: "/calendar",
       templateUrl: "app/calendar/calendar.html",
