@@ -1,4 +1,6 @@
 
+from datetime import datetime
+
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404
@@ -83,13 +85,14 @@ class ProjectList(APIView, APIMixin):
         queryset = self.model.objects.all()
 
         if page is None:
+            # Retrieve all projects without paginated used on actions board combobox filter.
             data = self.serializer_list(queryset, many=True).data
         else:
-            # Retrieve projects filter by phase used project board.
+            # Retrieve projects filter by phase used on project board.
             if 'phase' in query.keys():
                 queryset = queryset.filter(phase=query.get('phase'))
 
-            # Retrieve the client and produce projects filter by user_id.
+            # Retrieve thec lient and produce owner projects filter by user_id used on profile user.
             elif 'client_id' in query.keys():
                 queryset = queryset.filter(
                     Q(client=query.get('client_id')) | Q(producer=query.get('client_id'))
@@ -110,8 +113,6 @@ class ProjectList(APIView, APIMixin):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-from datetime import datetime
 
 class ProjectTimeStadistic(APIView):
     """
