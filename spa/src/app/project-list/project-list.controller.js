@@ -1,7 +1,7 @@
 
 app.controller('ProjectListController', [
-	'$scope', 'ProjectService', 'APIConfig','UserService',
-	function($scope, ProjectService, APIConfig, UserService) {
+	'$scope', 'ActionService', 'APIConfig','UserService',
+	function($scope, ActionService, APIConfig, UserService) {
 
 	$scope.currentPage = 1;
 	$scope.listForm = {
@@ -25,7 +25,7 @@ app.controller('ProjectListController', [
 			"phase":$scope.listForm.phase,
 		};
 
-		ProjectService.getList(query).then(
+		ActionService.getList(query).then(
 			function(response) {
 				$scope.data = response
 			},
@@ -38,7 +38,7 @@ app.controller('ProjectListController', [
 	};
 
 	$scope.getProjectStadistics = function () {
-		ProjectService.getProjectStadistics().then(
+		ActionService.getProjectStadistics().then(
 			function (response) {
 				$scope.stadistics = response
 			}, function (errors) {

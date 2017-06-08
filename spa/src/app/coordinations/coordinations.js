@@ -1,6 +1,6 @@
 
-app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','ProjectService' , 'StadisticsService', 'Notification','$state',
-  function($scope, UserService, $mdDialog, ProjectService,
+app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','ActionService' , 'StadisticsService', 'Notification','$state',
+  function($scope, UserService, $mdDialog, ActionService,
      StadisticsService, Notification, $state) {
 
    $scope.titles = {
@@ -50,7 +50,7 @@ app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','P
     $scope.projectProducerStatus = status // status for display button according the promise
     query.producer = $scope.user; // id usuario
 
-    $scope.projectsProducerPromise = ProjectService.getList(query).then(
+    $scope.projectsProducerPromise = ActionService.getList(query).then(
 			function(response) {
 				$scope.projectsByProducer = response
 			},
@@ -73,7 +73,7 @@ app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','P
     $scope.projectClientStatus = status // status for display button according the promise
     query.client = $scope.user; // id usuario
 
-    $scope.projectsClientPromise = ProjectService.getList(query).then(
+    $scope.projectsClientPromise = ActionService.getList(query).then(
 			function(response) {
 				$scope.projectsByClient = response
 			},
@@ -106,7 +106,7 @@ app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','P
     $mdDialog.show(confirm).then(function() {
       project.status = type
       Notification.info('Espere un momento');
-      ProjectService.patch(project.id,project).then(
+      ActionService.patch(project.id,project).then(
         function (response) {
           if (type == "Aceptada"){
             Notification.success($scope.titles['name1']+ 'ha pasado a '+ $scope.titles['name2']+ ' aceptados');

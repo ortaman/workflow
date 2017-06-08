@@ -1,5 +1,5 @@
 
-app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) {
+app.service("ActionService", ['$http', 'APIConfig', function($http, APIConfig) {
 
 
   var getColor = function (project) {

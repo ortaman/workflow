@@ -1,7 +1,7 @@
 
 app.controller('ProjectCreateController', [
-  '$scope', '$state', 'ProjectService','UserService','Notification',
-  function($scope, $state, ProjectService, UserService, Notification) {
+  '$scope', '$state', 'ActionService','UserService','Notification',
+  function($scope, $state, ActionService, UserService, Notification) {
 
     $scope.titles = {
       'project': {
@@ -66,7 +66,7 @@ app.controller('ProjectCreateController', [
           })
       });
 
-  		$scope.submmitPromise = ProjectService.create(project).then(
+  		$scope.submmitPromise = ActionService.create(project).then(
   			function(response) {
           if (type != 'action') {
   				    Notification.success('La acción ha sido creado satisfactoriamente');
@@ -87,7 +87,7 @@ app.controller('ProjectCreateController', [
 
     var getProject = function () {
       if (type == 'action') {
-        ProjectService.getById($state.params.parentProject).then(
+        ActionService.getById($state.params.parentProject).then(
           function (response){
             $scope.projectParent = response;
             $scope.project.parent_action = $scope.projectParent.id;

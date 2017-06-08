@@ -1,7 +1,7 @@
 
-app.controller('ProfileController', ['$scope','ProducerGetListService','UserService','ProjectService',
+app.controller('ProfileController', ['$scope','ProducerGetListService','UserService','ActionService',
 'APIConfig', 'StadisticsService',
- function($scope, ProducerGetListService, UserService, ProjectService, APIConfig, StadisticsService) {
+ function($scope, ProducerGetListService, UserService, ActionService, APIConfig, StadisticsService) {
 
   $scope.producersCurrentPage = 1;
   $scope.clientsCurrentPage = 1;
@@ -60,7 +60,7 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
       "client":$scope.user.id
 		};
 
-		ProjectService.getList(query).then(
+		ActionService.getList(query).then(
 			function(response) {
 				$scope.projects = response
 			},

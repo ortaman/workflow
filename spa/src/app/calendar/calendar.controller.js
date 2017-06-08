@@ -1,5 +1,5 @@
 
-app.controller('CalendarController', ['$scope','$compile','ProjectService', function($scope, $compile, ProjectService) {
+app.controller('CalendarController', ['$scope','$compile','ActionService', function($scope, $compile, ActionService) {
 
   $scope.projects = {};
   $scope.actionEvents = [];
@@ -49,7 +49,7 @@ app.controller('CalendarController', ['$scope','$compile','ProjectService', func
     var query = {
     };
 
-    ProjectService.getList(query).then(
+    ActionService.getList(query).then(
       function(response) {
          $scope.projects = response;
       },
@@ -100,7 +100,7 @@ app.controller('CalendarController', ['$scope','$compile','ProjectService', func
          'end_date': moment($scope.calendarCurrentDates.end_date).format('YYYY-MM-DD'),
          "project_id":project.id
        }
-       ProjectService.getList(query).then(
+       ActionService.getList(query).then(
          function(response) {
            $scope.actionEvents.splice(0,$scope.actionEvents.length);
 

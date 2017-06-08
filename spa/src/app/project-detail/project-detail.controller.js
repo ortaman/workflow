@@ -1,8 +1,8 @@
 
 app.controller('ProjectDetailController', [
-	'$scope', '$state', 'ProjectService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
+	'$scope', '$state', 'ActionService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
 	'ReportGetService', 'UserService', 'Notification',
-	function($scope, $state, ProjectService, APIConfig, ProducerGetListService, $uibModal,$mdDialog,
+	function($scope, $state, ActionService, APIConfig, ProducerGetListService, $uibModal,$mdDialog,
 		 ReportGetService ,UserService, Notification) {
 
    $scope.titles = {
@@ -48,7 +48,7 @@ app.controller('ProjectDetailController', [
 
 	//Service call
 	var getProject = function() {
-		ProjectService.getById($state.params.id).then(
+		ActionService.getById($state.params.id).then(
 			function(response) {
 				$scope.project = response;
 				$scope.timeLineChanged();
@@ -81,7 +81,7 @@ app.controller('ProjectDetailController', [
 	  		"status": queryStatus,
 	  	};
 			//TODO cambiar servicio
-			ProjectService.getList(query).then(
+			ActionService.getList(query).then(
 				function(response) {
 					$scope.actions = response;
 
@@ -100,7 +100,7 @@ app.controller('ProjectDetailController', [
 	      'end_date': moment($scope.project.accomplish_at).format('YYYY-MM-DD'),
 	  	};
 
-		ProjectService.getList(query).then(
+		ActionService.getList(query).then(
 			function(response) {
 				$scope.timelines = angular.copy(response);
 				$scope.timelines.push($scope.project)
@@ -299,7 +299,7 @@ app.controller('ProjectDetailController', [
 			Notification.info('Espere un momento');
 			var project = angular.copy($scope.project);
 			project.phase = newPhase;
-			ProjectService.patch(project.id, project).then(
+			ActionService.patch(project.id, project).then(
 				function (response) {
 					$mdDialog.hide();
 					Notification.success($scope.titles['theItem']+" ha pasado a fase de "+newPhase)
