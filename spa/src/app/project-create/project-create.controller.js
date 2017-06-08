@@ -1,8 +1,7 @@
 
 app.controller('ProjectCreateController', [
-  '$scope', '$state', 'ActionService','UserService','Notification',
-  function($scope, $state, ActionService, UserService, Notification) {
-
+  '$scope', '$state', 'ActionService', 'ProjectService', 'UserService','Notification',
+  function($scope, $state, ActionService, ProjectService , UserService, Notification) {
     $scope.titles = {
       'project': {
         'type':'project',
@@ -31,6 +30,7 @@ app.controller('ProjectCreateController', [
     ];
 
     $scope.actionRelated  = true// TODO: por definir
+    var Service = ProjectService;
     var type  = $state.params.parentProject ? 'action' : 'project' // TODO: por definir
     $scope.titles = $scope.titles[type];
     $scope.submitted = false; // TODO: cambiar  con  bandera de form
@@ -66,7 +66,7 @@ app.controller('ProjectCreateController', [
           })
       });
 
-  		$scope.submmitPromise = ActionService.create(project).then(
+  		$scope.submmitPromise = Service.create(project).then(
   			function(response) {
           if (type != 'action') {
   				    Notification.success('La acción ha sido creado satisfactoriamente');
@@ -78,8 +78,7 @@ app.controller('ProjectCreateController', [
   			},
   			function(errorResponse) {
           console.log('errorResponse', errorResponse);
-          $scope.status = errorResponse.statusText || 'Request failed';
-          $scope.errors = errorResponse.data;
+
   	  	}
   		);
 
@@ -92,6 +91,7 @@ app.controller('ProjectCreateController', [
             $scope.projectParent = response;
             $scope.project.parent_action = $scope.projectParent.id;
             $scope.project.project = $scope.projectParent.parent_action == null ?  $scope.projectParent.id : $scope.projectParent.project.id;
+            Service = ActionService;
           },
           function (error) {
             Notification.error("No existe un proyecto relacionado")

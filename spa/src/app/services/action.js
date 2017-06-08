@@ -86,6 +86,9 @@ app.service("ActionService", ['$http', 'APIConfig', function($http, APIConfig) {
 
 
   this.update = function(id, object) {
+    if(typeof(object.project) != Number)
+        object.project = object.project.id;
+
     var promise = $http.put(APIConfig.url + "actions/" + id + "/" , object).then(function(response) {
       return response.data;
     });

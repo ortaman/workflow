@@ -53,7 +53,7 @@
                         <!--row-->
                         <div class="row">
 
-                            <div class="col-md-4">
+                            <div ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
                               <md-input-container class="md-block" >
                                <label>{{ titles.nameOf }} </label>
                                <input
@@ -74,7 +74,7 @@
                               </md-input-container>
                             </div>
 
-                            <div class="col-md-4">
+                            <div ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
                               <md-input-container class="md-block" >
                                 <label> Fase </label>
                                 <md-select name="phase" ng-model="project.phase" required>
@@ -92,7 +92,7 @@
                                 </md-input-container>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-4" ng-if="isProject()">
                               <md-input-container class="md-block" >
                                 <label> Tipo </label>
                                 <md-select
@@ -192,7 +192,7 @@
                         <!--row-->
                         <div class="row">
 
-                          <div class="col-md-3">
+                          <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
                             <div flex-gt-xs>
                               <h5> Fecha de Inicio </h5>
                               <md-datepicker
@@ -212,7 +212,7 @@
                             </div>
                           </div>
 
-                          <div class="col-md-3">
+                          <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
                             <div flex-gt-xs>
                               <h5> Fecha de ejecución </h5>
                               <md-datepicker
@@ -233,7 +233,7 @@
                             </div>
                           </div>
 
-                            <div class="col-md-3">
+                            <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Reporte de Avance </h5>
                                   <md-datepicker
@@ -466,10 +466,6 @@
                         <div class="row">
                           <div class="col-md-2 col-md-offset-5 text-center">
                             <button type="submit"  promise-btn="submmitPromise" class="btn blue">Actualizar </button>
-                            <br><br>
-                            <div class="error">
-                              {{ errors.image }}
-                            </div>
                           </div>
                         </div>
 

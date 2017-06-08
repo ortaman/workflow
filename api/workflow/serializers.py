@@ -36,7 +36,7 @@ class ReportGetSerializer(serializers.ModelSerializer):
 
 # CRUD Project serializers
 class ProjectPostSerializer(serializers.ModelSerializer):
-    image = Base64ImageField(max_length=None, use_url=True, required=False)
+    image = Base64ImageField(max_length=None, use_url=True)
 
     class Meta:
         model  = Action

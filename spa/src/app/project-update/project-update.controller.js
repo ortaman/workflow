@@ -1,9 +1,9 @@
 
 app.controller('ProjectUpdateController', [
-  '$scope', '$state', 'ActionService','APIConfig','Notification',
-  function($scope, $state, ActionService, APIConfig,Notification) {
+  '$scope', '$state', 'ActionService','APIConfig','Notification', 'ProjectService',
+  function($scope, $state, ActionService, APIConfig,Notification, ProjectService) {
     var type  =  'project';
-
+    var Service = ProjectService
     $scope.titles = {
       'project': {
         'type':'project',
@@ -51,11 +51,13 @@ app.controller('ProjectUpdateController', [
           });
           response.image = APIConfig.baseUrl + response.image;// TODO: cambiar  imagen
           type  = response.parent_action == null ? 'project':'action'
+          if (!$scope.isProject())
+            Service = ActionService
           $scope.titles = $scope.titles[type];
           $scope.project = response;
         },
         function(errorResponse) {
-          console.log('errorResponse', errorResponse);
+          console.error('errorResponse', errorResponse);
           var status = errorResponse.statusText || 'Request failed';
           var errors = errorResponse.data;
         }
@@ -66,7 +68,6 @@ app.controller('ProjectUpdateController', [
       $scope.submitted = true;
 
       if ($scope.projectForm.$invalid) {
-        console.log($scope.projectForm);
         Notification.error('El formulario contiene errores');
         return;
       }
@@ -82,15 +83,19 @@ app.controller('ProjectUpdateController', [
 
       });
 
-  		$scope.submmitPromise = ActionService.update($state.params.id, project).then(
+  		$scope.submmitPromise = Service.update($state.params.id, project).then(
   			function(response) {
           Notification.success('El proyecto ha sido actualizado');
   				$state.go('coordinations');
   			},
         function(errorResponse) {
-          console.log('errorResponse', errorResponse);
-          $scope.status = errorResponse.statusText || 'Request failed';
-          $scope.errors = errorResponse.data;
+          console.error('errorResponse', errorResponse.data.image);
+          if(errorResponse.data.image){
+            errorResponse.data.image.forEach(function(error){
+              Notification.error(error);
+            })
+          }
+
         }
   		);
 
