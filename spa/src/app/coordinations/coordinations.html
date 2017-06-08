@@ -148,7 +148,8 @@
                                                     <span class="mt-comment-author">{{ (project.client.name + ' ' + project.client.first_surname + ' ' + project.client.second_surname)}}</span>
                                                     <span class="mt-comment-date " ng-class="project.color + '-status-text'">Del {{ project.begin_at |  date:'dd-MMM-yyyy'}} al {{ project.accomplish_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
-                                                <div   class="mt-comment-text" ui-sref="projectDetail({id:project.id})" > {{ project.name }} </div>
+                                                <div   ng-if="!project.parent_action" class="mt-comment-text" ui-sref="projectDetail({id:project.id})" > Proyecto: {{ project.name }} </div>
+                                                <div   ng-if="project.parent_action" class="mt-comment-text" ui-sref="projectDetail({id:project.id})" > Accíon {{ project.name }} </div>
                                                 <div   class="mt-comment-details">
                                                     <ul class="mt-comment-actions">
                                                         <li ng-if="projectProducerStatus == 'Pendiente'">
@@ -230,7 +231,8 @@
                                                     <span class="mt-comment-author">{{ (project.producer.name + ' ' + project.producer.first_surname + ' ' + project.producer.second_surname)}}</span>
                                                     <span class="mt-comment-date"  ng-class="project.color + '-status-text'">Del {{ project.begin_at |  date:'dd-MMM-yyyy'}} al {{ project.accomplish_at |  date:'dd-MMM-yyyy'}}</span>
                                                 </div>
-                                                <div class="mt-comment-text" ui-sref="projectDetail({id:project.id})" > {{ project.name }} </div>
+                                                <div ng-if="!project.parent_action" class="mt-comment-text" ui-sref="projectDetail({id:project.id})" > Proyecto: {{ project.name }} </div>
+                                                <div ng-if="project.parent_action" class="mt-comment-text" ui-sref="projectDetail({id:project.id})" > Acción: {{ project.name }} </div>
                                                 <!-- <div class="mt-comment-details">
                                                     <ul class="mt-comment-actions">
                                                       <div class="mt-action-buttons ">
