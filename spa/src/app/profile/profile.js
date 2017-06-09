@@ -54,7 +54,7 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 
 		var query = {
 			"page": $scope.currentProjectPage,
-      "client":$scope.user.id
+      "client_id":$scope.user.id
 		};
 
 		ProjectService.getList(query).then(
