@@ -10,9 +10,7 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
   $scope.oweme = [];
   $scope.todo = [];
   $scope.projects = {}
-  $scope.listForm = {
-    "phase": 'Preparación'
-  }
+
 
 
   $scope.init = function(){
@@ -56,7 +54,6 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 
 		var query = {
 			"page": $scope.currentProjectPage,
-			"phase": $scope.listForm.phase,
       "client":$scope.user.id
 		};
 
@@ -84,7 +81,5 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
   }
 
 
-  $scope.onProjectSelect = function (ite) {
-    $scope.projectPageChanged();
-  }
+
 }]);

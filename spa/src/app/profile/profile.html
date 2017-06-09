@@ -230,23 +230,7 @@
                                     <span class="caption-helper">Avance de Acciones</span>
                                 </div>
                             </div>
-                            <div class="portlet-body row">
-                              <div class="col-md-5">
-                                <form novalidate name="searchForm" >
-                                  <md-input-container class="md-block" >
-                                    <label> Fase </label>
-                                    <md-select name="phase" ng-model="listForm.phase" ng-change="onProjectSelect(listForm.phase)" required>
 
-                                      <md-option value="Preparación" >Preparación</md-option>
-                                      <md-option value="Negociación" >Negociación</md-option>
-                                      <md-option value="Ejecución" >Ejecución</md-option>
-                                      <md-option value="Evaluación" >Evaluación</md-option>
-
-                                    </md-select>
-                                  </md-input-container>
-                                </form>
-                              </div>
-                            </div>
                             <div class="portlet-body row" ng-repeat="number in getSize() track by $index">
 
                                     <div class="col-md-4" ng-repeat="project in chunkArray($index)">

@@ -101,6 +101,7 @@ class ProjectList(APIView, APIMixin):
             # Retrieve thec lient and produce owner projects filter by user_id used on profile user.
             elif 'client_id' in query.keys():
                 queryset = queryset.filter(
+                    parent_action__isnull=True,
                     Q(client=query.get('client_id')) | Q(producer=query.get('client_id'))
                 )
 
