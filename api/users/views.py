@@ -60,7 +60,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
         if 'first_surname' in query.keys():
             surname = query.get('first_surname')
-            self.queryset = self.queryset.filter(first_surname__startswith=surname)
+            self.queryset = self.queryset.filter(first_surname__istartswith=surname)
 
         return self.queryset
 
