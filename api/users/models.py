@@ -18,6 +18,21 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
         ('Gerente Distrital', 'Gerente Distrital'),
         ('Coordinador', 'Coordinador'),
         ('Administrador', 'Administrador'),
+        ('Gerente de línea sobrepeso y obesidad', 'Gerente de línea sobrepeso y obesidad'),
+        ('Gerente de instituciones', 'Gerente de instituciones'),
+        ('Coordinadora de mercadotecnia digital', 'Coordinadora de mercadotecnia digital'),
+        ('Gerente de inteligencia de mercados', 'Gerente de inteligencia de mercados'),
+        ('Gerente de mercadotecnia', 'Gerente de mercadotecnia'),
+        ('Gerente de línea salud femenina', 'Gerente de línea salud femenina'),
+        ('Gerente de línea Gastro', 'Gerente de línea Gastro'),
+        ('Coordinadora de comunicación comercial/ventas', 'Coordinadora de comunicación comercial/ventas'),
+        ('Gerente de la linea gastro', 'Gerente de la linea gastro'),
+        ('Coordinador de marca línea gastro', 'Coordinador de marca línea gastro'),
+        ('Especialista de capacitación fuerza de ventas', 'Coordinador de marca línea gastro'),
+        ('Gerente asociado línea obesidad' , 'Gerente asociado línea obesidad'),
+        ('Gerente de productividad comercial', 'Gerente de productividad comercial'),
+        ('Coordinador de marca línea salud femenina', 'Coordinador de marca línea salud femenina'),
+        ('Cuenta clave', 'Cuenta clave'),
     )
 
     username = models.CharField(max_length=128, unique=True)
@@ -27,7 +42,7 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
     first_surname = models.CharField(max_length=32, verbose_name='Primer apellido')
     second_surname = models.CharField(max_length=32, verbose_name='Segundo Apellido')
 
-    position = models.CharField(choices=POSITIONS, max_length=32, verbose_name='Posición')
+    position = models.CharField(choices=POSITIONS, max_length=132, verbose_name='Posición')
     cel_phone = models.CharField(max_length=16, verbose_name='Teléfono Móvil')
 
     is_staff = models.BooleanField(default=False)
