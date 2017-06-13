@@ -32,6 +32,7 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
         ('Gerente asociado línea obesidad' , 'Gerente asociado línea obesidad'),
         ('Gerente de productividad comercial', 'Gerente de productividad comercial'),
         ('Coordinador de marca línea salud femenina', 'Coordinador de marca línea salud femenina'),
+        ('Cuenta clave', 'Cuenta clave'),
     )
 
     username = models.CharField(max_length=128, unique=True)
@@ -41,7 +42,7 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
     first_surname = models.CharField(max_length=32, verbose_name='Primer apellido')
     second_surname = models.CharField(max_length=32, verbose_name='Segundo Apellido')
 
-    position = models.CharField(choices=POSITIONS, max_length=32, verbose_name='Posición')
+    position = models.CharField(choices=POSITIONS, max_length=132, verbose_name='Posición')
     cel_phone = models.CharField(max_length=16, verbose_name='Teléfono Móvil')
 
     is_staff = models.BooleanField(default=False)
