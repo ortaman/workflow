@@ -6,7 +6,7 @@ from django.conf import settings
 from rest_framework import serializers
 
 from users.serializers import UserSerializer
-from .models import Project, Action, Report
+from workflow.models import Action, Report
 
 
 class Base64ImageField(serializers.ImageField):
@@ -20,17 +20,37 @@ class Base64ImageField(serializers.ImageField):
         return super(Base64ImageField, self).to_internal_value(data)
 
 
+class ReportPostSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model  = Report
+        fields = '__all__'
+
+
+class ReportGetSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model  = Report
+        fields = '__all__'
+
+
+# CRUD Project serializers
 class ProjectPostSerializer(serializers.ModelSerializer):
     image = Base64ImageField(max_length=None, use_url=True)
 
     class Meta:
-        model  = Project
-        fields = ('id','client', 'producer', 'observer', 'name', 'kind', 'phase',
-            'toDo', 'satisfactions', 'preparation_at', 'negotiation_at', 'execution_at',
-            'evaluation_at', 'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at',
-            'financial', 'operational', 'other1', 'other2', 'image', 'status' )
+        model  = Action
+        fields = (
+            'name', 'kind', 'phase',
+            'client', 'producer', 'observer',
+            'toDo', 'satisfactions',
+            'preparation_at', 'negotiation_at', 'execution_at', 'evaluation_at',
+            'begin_at', 'report_at', 'accomplish_at', 'renegotiation_at',
+            'advance_report_at', 'ejecution_report_at',
+            'financial', 'operational', 'other1', 'other2',
+            'image')
 
-    read_only_fields =  ('created_at', 'updated_at','created_by',)
+    read_only_fields =  ('status', 'created_at', 'updated_at','created_by')
 
 
 class ProjectGetSerializer(serializers.ModelSerializer):
@@ -38,73 +58,67 @@ class ProjectGetSerializer(serializers.ModelSerializer):
     client = UserSerializer()
     producer = UserSerializer()
     observer = UserSerializer()
-    report = serializers.SerializerMethodField()
 
-
-    def get_report(self, obj):
-        reports = Report.objects.filter(project_id = obj.id)
-        try:
-            return ReportGetSerializer(reports[0]).data
-        except IndexError as e:
-            return 0
+    advance_report = ReportGetSerializer()
+    ejecution_report = ReportGetSerializer()
 
     class Meta:
-        model = Project
+        model  = Action
         fields = '__all__'
 
 
 class ProjectListSerializer(serializers.ModelSerializer):
 
-    report = serializers.SerializerMethodField()
-    producer = UserSerializer()
     client = UserSerializer()
-
-    def get_report(self, obj):
-        reports = Report.objects.filter(project_id = obj.id, action_id = None)
-        try:
-            return  ReportGetSerializer(reports[0]).data
-        except IndexError as e:
-            return 0
+    producer = UserSerializer()
 
     class Meta:
-        model  = Project
+        model  = Action
         fields = (
-            'id', 'name', 'kind', 'phase', 'image',
+            'id', 'name', 'kind', 'phase', 'status',
+            'client', 'producer',
             'preparation_at', 'negotiation_at', 'execution_at', 'evaluation_at',
-            'begin_at', 'accomplish_at', 'renegotiation_at', 'report_at', 'report',
-            'client', 'producer', 'status', 'advance_report_at', 'ejecution_report_at')
+            'begin_at', 'report_at', 'accomplish_at', 'renegotiation_at',
+            'image',
+            'advance_report_at', 'ejecution_report_at')
 
 
+class ProjectPatchSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model  = Action
+        fields = ('phase', 'status')
+
+    read_only_fields =  ('created_at', 'updated_at','created_by')
+
+
+# CRUD action serializers
 class ActionPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model  = Action
         fields = (
-            'id', 'project', 'name', 'phase',
-            'status',
+            'name', 'phase',
             'client', 'producer', 'observer',
             'toDo', 'satisfactions',
-            'begin_at', 'accomplish_at', 'report_at',
-            'financial', 'operational', 'other1', 'other2', 'parent_action')
+            'begin_at', 'report_at', 'accomplish_at',
+            'advance_report_at', 'ejecution_report_at',
+            'financial', 'operational', 'other1', 'other2',
+            'project', 'parent_action')
 
-    read_only_fields =  ('created_at', 'updated_at','created_by', 'status')
+    read_only_fields =  ('status', 'created_at', 'updated_at','created_by')
 
 
 class ActionGetSerializer(serializers.ModelSerializer):
 
-    project = ProjectPostSerializer()
-
     client = UserSerializer()
     producer = UserSerializer()
     observer = UserSerializer()
-    report = serializers.SerializerMethodField()
 
-    def get_report(self, obj):
-        reports = Report.objects.filter(action_id = obj.id)
-        try:
-            return ReportGetSerializer(reports[0]).data
-        except IndexError as e:
-            return 0
+    advance_report = ReportGetSerializer()
+    ejecution_report = ReportGetSerializer()
+
+    project = ProjectGetSerializer()
 
     class Meta:
         model  = Action
@@ -115,24 +129,32 @@ class ActionListSerializer(serializers.ModelSerializer):
 
     producer = UserSerializer()
     client = UserSerializer()
-    project = ProjectGetSerializer()
-    report = serializers.SerializerMethodField()
 
-    def get_report(self, obj):
-        reports = Report.objects.filter(action_id = obj.id)
-        try:
-            return ReportGetSerializer(reports[0]).data
-        except IndexError as e:
-            return 0
-
+    project = ActionGetSerializer()
+    parent_action = ActionGetSerializer()
 
     class Meta:
         model  = Action
         fields = (
-            'id', 'name', 'producer', 'client', 'project', 'toDo',
-            'begin_at', 'accomplish_at', 'report_at', 'report', 'advance_report_at', 'ejecution_report_at')
+            'id', 'name', 'kind', 'phase', 'status',
+            'client', 'producer',
+            'preparation_at', 'negotiation_at', 'execution_at', 'evaluation_at',
+            'begin_at', 'report_at', 'accomplish_at', 'renegotiation_at',
+            'image',
+            'advance_report_at', 'ejecution_report_at',
+            'project', 'parent_action')
 
 
+class ActionPatchSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model  = Action
+        fields = ('phase', 'status')
+
+    read_only_fields =  ('created_at', 'updated_at','created_by')
+
+
+# Other action serializers
 class ActionClientSerializer(serializers.ModelSerializer):
 
     client = UserSerializer()
@@ -149,24 +171,3 @@ class ActionProducerSerializer(serializers.ModelSerializer):
     class Meta:
         model  = Action
         fields = ('producer',)
-
-
-class ReportPostSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model  = Report
-        fields = '__all__'
-
-
-class ReportListSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model  = Report
-        fields = '__all__'
-
-
-class ReportGetSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model  = Report
-        fields = '__all__'

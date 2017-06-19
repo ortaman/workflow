@@ -1,9 +1,9 @@
 
 
-app.directive('userSearch', ['UserListService', '$timeout',
+app.directive('userSearch', ['UserService', '$timeout',
 
   /** @ngInject */
-  function userSearch(UserListService, $timeout) {
+  function userSearch(UserService, $timeout) {
     var directive = {
       restrict: 'E',
       templateUrl: 'app/_components/user-search/search.html',
@@ -36,7 +36,7 @@ app.directive('userSearch', ['UserListService', '$timeout',
           'first_surname':vm.searchText
         }
 
-        UserListService.getList(query).then(
+        UserService.getList(query).then(
           function(response) {
             vm.results = response.results;
           },

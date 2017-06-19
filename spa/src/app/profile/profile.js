@@ -1,7 +1,7 @@
 
-app.controller('ProfileController', ['$scope','ProducerGetListService','UserService','ProjectService',
-'APIConfig', 'StadisticsService',
- function($scope, ProducerGetListService, UserService, ProjectService, APIConfig, StadisticsService) {
+app.controller('ProfileController', ['$scope','ProducerGetListService','UserService','ActionService',
+ 'StadisticsService', 'ProjectService',
+ function($scope, ProducerGetListService, UserService, ActionService, StadisticsService, ProjectService) {
 
   $scope.producersCurrentPage = 1;
   $scope.clientsCurrentPage = 1;
@@ -10,9 +10,7 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
   $scope.oweme = [];
   $scope.todo = [];
   $scope.projects = {}
-  $scope.listForm = {
-    "phase": 'Preparación'
-  }
+
 
 
   $scope.init = function(){
@@ -56,8 +54,7 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 
 		var query = {
 			"page": $scope.currentProjectPage,
-			"phase": $scope.listForm.phase,
-      "client":$scope.user.id
+      "client_id":$scope.user.id
 		};
 
 		ProjectService.getList(query).then(
@@ -84,7 +81,5 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
   }
 
 
-  $scope.onProjectSelect = function (ite) {
-    $scope.projectPageChanged();
-  }
+
 }]);

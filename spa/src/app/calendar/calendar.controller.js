@@ -1,5 +1,6 @@
 
-app.controller('CalendarController', ['$scope','$compile','ProjectService', 'ActionListService', function($scope, $compile, ProjectService, ActionListService) {
+app.controller('CalendarController', ['$scope','$compile','ActionService', 'ProjectService',
+  function($scope, $compile, ActionService, ProjectService) {
 
   $scope.projects = {};
   $scope.actionEvents = [];
@@ -52,10 +53,9 @@ app.controller('CalendarController', ['$scope','$compile','ProjectService', 'Act
     ProjectService.getList(query).then(
       function(response) {
          $scope.projects = response;
-         console.log(response);
       },
       function(errorResponse) {
-        console.log('errorResponse', errorResponse);
+        console.error('errorResponse', errorResponse);
         $scope.status = errorResponse.statusText || 'Request failed';
         $scope.errors = errorResponse.data;
       }
@@ -85,7 +85,6 @@ app.controller('CalendarController', ['$scope','$compile','ProjectService', 'Act
          item2.start = moment(array[key][key2]).toDate();
          item2.stick = true
          item2.className = getColor(value, key2, type);
-         console.log(value);
          if(type=="actions"){
            $scope.actionEvents.push(item2);
          }else {
@@ -102,7 +101,7 @@ app.controller('CalendarController', ['$scope','$compile','ProjectService', 'Act
          'end_date': moment($scope.calendarCurrentDates.end_date).format('YYYY-MM-DD'),
          "project_id":project.id
        }
-       ActionListService.getList(query).then(
+       ActionService.getList(query).then(
          function(response) {
            $scope.actionEvents.splice(0,$scope.actionEvents.length);
 

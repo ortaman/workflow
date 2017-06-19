@@ -23,7 +23,7 @@ app.config(function($stateProvider, $urlRouterProvider,
 
 
     .state('projectCreate', {
-      url: "/projectCreate",
+      url: "/projectCreate/:parentProject",
       templateUrl: "app/project-create/project-create.html",
       controller: "ProjectCreateController"
     })
@@ -37,6 +37,11 @@ app.config(function($stateProvider, $urlRouterProvider,
       templateUrl: "app/project-detail/project-detail.html",
       controller: "ProjectDetailController"
     })
+    .state('projectView', {
+      url: "/projectView/:id/",
+      templateUrl: "app/project-view/project-view.html",
+      controller: "ProjectViewController"
+    })
     .state('projectUpdate', {
       url: "/projectUpdate/:id/",
       templateUrl: "app/project-update/project-update.html",
@@ -44,36 +49,12 @@ app.config(function($stateProvider, $urlRouterProvider,
 
     })
 
-    .state('actionCreate', {
-      url: "/actionCreate/:projectId/:actionId/",
-      templateUrl: "app/action-create/action-create.html",
-      controller: "ActionCreateController"
-    })
-    .state('actionDetail', {
-      url: "/actionDetail/:id/",
-      templateUrl: "app/action-detail/action-detail.html",
-      controller: "ActionDetailController"
-    })
-    .state('actionUpdate', {
-      url: "/actionUpdate/:id/",
-      templateUrl: "app/action-update/action-update.html",
-      controller: "ActionUpdateController"
-    })
     .state('actionList', {
       url: "/actionList",
       templateUrl: "app/action-list/action-list.html",
       controller: "ActionListController",
     })
-    .state('actionView', {
-      url: "/actionView/:id",
-      templateUrl: "app/action-detail/action-view.html",
-      controller: "ActionViewController",
-    })
-    .state('projectView', {
-      url: "/projectView/:id",
-      templateUrl: "app/project-detail/project-view.html",
-      controller: "ProjectViewController",
-    })
+
 
     .state('calendar', {
       url: "/calendar",

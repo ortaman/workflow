@@ -9,7 +9,8 @@ var app = angular.module('myApp',
     'ui.bootstrap',
     'ui.calendar',
     'angularPromiseButtons',
-    'ui-notification'
+    'ui-notification',
+    'angular-timeline'
 
     // 'myApp.actionList',
   ]
