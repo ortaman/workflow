@@ -223,7 +223,7 @@
                                     md-current-view="year"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.begin_at"
-                                    ng-change="beginOrAtOrAccomplishDateChanged(project.begin_at, project.accomplish_at)"
+                                    disabled
                                     required></md-datepicker>
 
                                   <div ng-show="projectForm.begin_at.$touched || submitted">
@@ -236,13 +236,13 @@
 
                             <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
                                 <div flex-gt-xs>
-                                  <h5> Fecha de ejecución </h5>
+                                  <h5> Fecha de Cumplimiento </h5>
                                   <md-datepicker
                                     name="accomplish_at"
                                     md-current-view="year"
                                     md-placeholder="ingrese fecha"
                                     md-min-date="project.begin_at"
-                                    ng-disabled="project.begin_at===undefined"
+                                    md-max-date="maxExecutionDate"
                                     ng-model="project.accomplish_at"
                                     ng-change="beginOrAtOrAccomplishDateChanged(project.begin_at, project.accomplish_at)"
 
@@ -263,11 +263,8 @@
                                   name="report_at"
                                   md-current-view="year"
                                   md-placeholder="ingrese fecha"
-                                  md-max-date="project.accomplish_at"
-                                  md-min-date="project.begin_at"
-                                  ng-disabled="project.begin_at===undefined || project.accomplish_at===undefined"
                                   ng-model="project.report_at"
-                                  required ></md-datepicker>
+                                  required disabled></md-datepicker>
 
                                   <div ng-show="projectForm.report_at.$touched || submitted">
                                     <div class="error" ng-show="projectForm.report_at.$error.required">
@@ -285,9 +282,7 @@
                                     name="renegotiation_at"
                                     md-current-view="year"
                                     md-placeholder="ingrese fecha"
-                                    md-min-date="renegotiation_min_date"
-                                    md-max-date="renegotiation_max_date"
-                                    ng-disabled="project.begin_at===undefined || project.accomplish_at===undefined"
+                                    disabled
                                     ng-model="project.renegotiation_at"></md-datepicker>
 
                                     <div ng-show="projectForm.renegotiation_at.$touched || submitted">
@@ -311,12 +306,9 @@
                                   <h5>Fase de Preparación</h5>
                                   <md-datepicker
                                     name="preparation_at"
-                                    md-current-view="year"
                                     md-placeholder="ingrese fecha"
-                                    md-min-date="project.begin_at"
-                                    md-max-date="project.accomplish_at"
                                     ng-model="project.preparation_at"
-                                    ng-disabled="project.begin_at===undefined || project.accomplish_at===undefined"
+                                    disabled
                                     required></md-datepicker>
 
                                   <div ng-show="projectForm.preparation_at.$touched || submitted">
@@ -332,13 +324,9 @@
                                   <h5>Fase de negociación</h5>
                                   <md-datepicker
                                     name="negotiation_at"
-                                    md-current-view="year"
                                     md-placeholder="ingrese fecha"
-                                    md-min-date="project.preparation_at"
-                                    md-max-date="project.accomplish_at"
                                     ng-model="project.negotiation_at"
-                                    ng-disabled=" project.preparation_at===undefined"
-                                    required ></md-datepicker>
+                                    disabled required ></md-datepicker>
 
                                   <div ng-show="projectForm.negotiation_at.$touched || submitted">
                                     <div class="error" ng-show="projectForm.negotiation_at.$error.required">
@@ -353,12 +341,9 @@
                                   <h5>Fase de ejecución</h5>
                                   <md-datepicker
                                     name="execution_at"
-                                    md-current-view="year"
                                     md-placeholder="ingrese fecha"
-                                    md-min-date="project.negotiation_at"
-                                    md-max-date="project.accomplish_at"
                                     ng-model="project.execution_at"
-                                    ng-disabled=" project.negotiation_at===undefined"
+                                    disabled
                                     required ></md-datepicker>
 
                                   <div ng-show="projectForm.execution_at.$touched || submitted">
@@ -374,12 +359,9 @@
                                   <h5>Fase de evaluación</h5>
                                   <md-datepicker
                                     name="evaluation_at"
-                                    md-current-view="year"
                                     md-placeholder="ingrese fecha"
-                                    md-min-date="project.execution_at"
-                                    md-max-date="project.accomplish_at"
                                     ng-model="project.evaluation_at"
-                                    ng-disabled=" project.negotiation_at===undefined"
+                                    disabled
                                     required></md-datepicker>
                                 </div>
 
