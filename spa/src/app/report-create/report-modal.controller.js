@@ -1,6 +1,6 @@
 
-app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateService', 'UserService','type', 'reportType', '$scope','Notification',
- function($mdDialog, $state, ReportCreateService, UserService, type, reportType, $scope, Notification) {
+app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportService', 'UserService', 'reportType', '$scope','Notification',
+ function($mdDialog, $state, ReportService, UserService,  reportType, $scope, Notification) {
    var $ctrl = this;
     $ctrl.reportTypeOptions = {
       "finish":{
@@ -27,11 +27,7 @@ app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateSer
     }
 
 
-    $ctrl.report[type] = $state.params.id;
-    if(type == 'action'){
-      $ctrl.report['project'] = $scope.currentAction.project.id;
-    }
-
+    $ctrl.report.action = $state.params.id;
     $ctrl.sendReport = function(){
       $ctrl.submitted = true;
 
@@ -43,15 +39,14 @@ app.controller('ReportModalController', [ '$mdDialog','$state', 'ReportCreateSer
       UserService.me().then(function(response){
         $ctrl.report.created_by = response.id
 
-        $ctrl.submmitPromise = ReportCreateService.create($ctrl.report).then(
+        $ctrl.submmitPromise = ReportService.create($ctrl.report).then(
           function (response) {
             $mdDialog.hide({"created":true});
 
           },
           function (errorResponse) {
             console.error('errorResponse', errorResponse);
-            $ctrl.status = errorResponse.statusText || 'Request failed';
-            $ctrl.errors = errorResponse.data;
+            Notification.error("Ocurrio un error")
           }
         );
       }, function(error){

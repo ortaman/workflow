@@ -1,9 +1,8 @@
 
 app.controller('ProjectDetailController', [
 	'$scope', '$state', 'ActionService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
-	'ReportGetService', 'UserService', 'Notification',
-	function($scope, $state, ActionService, APIConfig, ProducerGetListService, $uibModal,$mdDialog,
-		 ReportGetService ,UserService, Notification) {
+	 'UserService', 'Notification',
+	function($scope, $state, ActionService, APIConfig, ProducerGetListService, $uibModal,$mdDialog ,UserService, Notification) {
 
    $scope.titles = {
      'project': {
@@ -68,7 +67,7 @@ app.controller('ProjectDetailController', [
 	}
 
 	$scope.getReport = function (){
-		if ($scope.project.ejecution_report || $scope.project.advance_report)
+		if ($scope.project.ejecution_report_at || $scope.project.advance_report_at)
 			return true;
 		return false;
   }
@@ -151,7 +150,8 @@ app.controller('ProjectDetailController', [
 		 controller: 'ReportDetailController',
 		 templateUrl: '/app/report-detail/report-detail.html',
 		 locals:{
-			 report: $scope.report
+			 type: type,
+			 report: $scope.project.ejecution_report || $scope.project.advance_report
 		 }
 		}
 		angular.extend(modalVariables, {basicModal});
@@ -171,7 +171,7 @@ app.controller('ProjectDetailController', [
 		 controller: 'ReportModalController',
 		 templateUrl: '/app/report-create/add-report.html',
 		 locals:{
-			 type:'project',
+			 type: type,
 			 reportType:'finish',
 		 }
 	 }
@@ -194,12 +194,11 @@ app.controller('ProjectDetailController', [
 			Notification.info("No es posible agregar  otro reporte")
 			return;
 		}
-
+		console.log(type);
 		var modalVariables = {
 		 controller: 'ReportModalController',
 		 templateUrl: '/app/report-create/add-report.html',
 		 locals:{
-			 type:'project',
 			 reportType:'advance',
 		 }
 		}
@@ -332,8 +331,6 @@ app.controller('ProjectDetailController', [
 	}
 
 	$scope.isProject = function(){
-		if (type == 'project')
-			return true;
-		return false;
+		return type == 'project';
 	}
 }]);

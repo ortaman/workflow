@@ -29,12 +29,20 @@ app.controller('ProjectCreateController', [
         'begin_at',
     ];
 
-    $scope.actionRelated  = true// TODO: por definir
+    var phases = {
+      'Preparación': 'preparation_at',
+      'Negociación': 'negotiation_at',
+      'Ejecución': 'execution_at',
+      'Evaluación': 'evaluation_at',
+    }
+
     var Service = ProjectService;
     var type  = $state.params.parentProject ? 'action' : 'project' // TODO: por definir
     $scope.titles = $scope.titles[type];
     $scope.submitted = false; // TODO: cambiar  con  bandera de form
-    $scope.project = {};
+    $scope.project = {
+      'begin_at': moment().toDate()
+    };
 
     $scope.init = function () {
       getProject()
@@ -89,6 +97,7 @@ app.controller('ProjectCreateController', [
         ActionService.getById($state.params.parentProject).then(
           function (response){
             $scope.projectParent = response;
+            $scope.maxExecutionDate = getMaxExecutionDate();
             $scope.project.parent_action = $scope.projectParent.id;
             $scope.project.project = $scope.projectParent.parent_action == null ?  $scope.projectParent.id : $scope.projectParent.project.id;
             Service = ActionService;
@@ -101,45 +110,39 @@ app.controller('ProjectCreateController', [
       }
     }
 
-    $scope.updateLimitDates = function() {
-
-      switch($scope.projectParent.phase) {
-          case 'Preparación':
-              $scope.minDate = new Date($scope.projectParent.project.begin_at);
-              $scope.maxDate = new Date($scope.projectParent.project.preparation_at);
-              break;
-          case 'Negociación':
-              $scope.maxDate = new Date($scope.projectParent.project.negotiation_at);
-              $scope.minDate = new Date($scope.projectParent.project.preparation_at);
-              break;
-          case 'Ejecución':
-              $scope.maxDate = new Date($scope.projectParent.project.ejecution_at);
-              $scope.minDate = new Date($scope.projectParent.project.negotiation_at);
-              break;
-          default:
-              $scope.maxDate = new Date($scope.projectParent.project.evaluation_at);
-              $scope.minDate = new Date($scope.projectParent.project.ejecution_at);
-      }
-
-    };
-
     ////////////////////dates validations///////////////////////
 
     $scope.beginOrAtOrAccomplishDateChanged = function (begin_at, accomplish_at) {
-      delete $scope.project.renegotiation_at
-      if (begin_at, accomplish_at){
-        var minDate = moment(begin_at).add(1, 'd');
-        $scope.renegotiation_min_date = minDate.toDate();
-        var maxDate = Math.ceil(moment(accomplish_at).diff(minDate, 'days')/ 2)
-        $scope.renegotiation_max_date = moment(accomplish_at).subtract(maxDate, 'd').toDate();
-      }
+      // delete $scope.project.renegotiation_at
+      // if (accomplish_at){
+      //   var minDate = moment(begin_at).add(1, 'd');
+      //   $scope.renegotiation_min_date = minDate.toDate();
+      //   var maxDate = Math.ceil(moment(accomplish_at).diff(minDate, 'days')/ 2)
+      //   $scope.renegotiation_max_date = moment(accomplish_at).subtract(maxDate, 'd').toDate();
+      // }
     }
+
+    var getMaxExecutionDate = function () {
+      return moment($scope.projectParent[phases[$scope.projectParent.phase]]).toDate();
+    }
+
+    $scope.$watch('project.accomplish_at', function(item){
+      if (item) {
+        let executionDate = moment(item);
+        let beginDate = moment(angular.copy($scope.project.begin_at));
+        var daysOfDiference = Math.round(executionDate.diff(moment($scope.project.begin_at), 'days'))
+        console.log("diferencia ", daysOfDiference);
+        $scope.project.preparation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
+        $scope.project.negotiation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
+        $scope.project.evaluation_at = angular.copy(executionDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
+        $scope.project.renegotiation_at =  angular.copy(beginDate).add(Math.round(daysOfDiference * .20), 'd').toDate();
+        $scope.project.report_at = beginDate.add(Math.round(daysOfDiference * .50), 'd').toDate();
+
+      }
+    })
     ////////////////////end dates validations///////////////////////
 
     $scope.isProject = function () {
-      if ($scope.titles.type == 'project') {
-        return true;
-      }
-      return false;
+      return $scope.titles.type == 'project';
     }
 }]);
