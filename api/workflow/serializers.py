@@ -59,8 +59,8 @@ class ProjectGetSerializer(serializers.ModelSerializer):
     producer = UserSerializer()
     observer = UserSerializer()
 
-    advance_report = ReportGetSerializer()
-    ejecution_report = ReportGetSerializer()
+    #advance_report = ReportGetSerializer()
+    #ejecution_report = ReportGetSerializer()
 
     class Meta:
         model  = Action
@@ -115,8 +115,8 @@ class ActionGetSerializer(serializers.ModelSerializer):
     producer = UserSerializer()
     observer = UserSerializer()
 
-    advance_report = ReportGetSerializer()
-    ejecution_report = ReportGetSerializer()
+    #advance_report = ReportGetSerializer()
+    #ejecution_report = ReportGetSerializer()
 
     project = ProjectGetSerializer()
 

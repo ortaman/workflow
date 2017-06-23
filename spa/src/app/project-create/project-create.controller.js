@@ -123,7 +123,7 @@ app.controller('ProjectCreateController', [
     }
 
     var getMaxExecutionDate = function () {
-      return moment($scope.projectParent[$scope.phases[$scope.projectParent.phase]]).toDate();
+      return moment($scope.projectParent[phases[$scope.projectParent.phase]]).toDate();
     }
 
     $scope.$watch('project.accomplish_at', function(item){

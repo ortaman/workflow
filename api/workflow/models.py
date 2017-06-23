@@ -6,43 +6,6 @@ from django.dispatch import receiver
 from users.models import User
 
 
-class Report(models.Model):
-
-    PERCENTAJES = (
-        ('0', '0'), ('25', '25'), ('50', '50'),
-        ('75', '75'), ('100', '100'),
-    )
-
-    progress = models.CharField(choices=PERCENTAJES, max_length=3, default='0', verbose_name='Porcentaje de avance')
-
-    accomplished = models.TextField(max_length=1024, verbose_name='Relizado')
-    pending = models.TextField(max_length=1024, verbose_name='Pendiente')
-
-    created_at = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='Fecha de creación')
-    updated_at = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name='Fecha de actualización')
-
-    created_by = models.ForeignKey(User, related_name='report_created_by', verbose_name='Creado por')
-
-
-@receiver(post_save, sender=Report)
-def change_status(sender, instance, created, **kwargs):
-    '''
-    Change the project o report status when create the reports.
-    '''
-    if created:
-        obj = Action.objects.get(id=instance.project.id)
-
-        if instance.advance_report is not None:
-            obj.advance_report_at = instance.created_at
-            obj.save()
-
-        elif instance.ejecution_report is not None:
-            obj.ejecution_report_at = instance.created_at
-            obj.status = 'Ejecutada'
-            obj.save()
-    else:
-        pass
-
 
 class Action(models.Model):
 
@@ -112,21 +75,6 @@ class Action(models.Model):
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name='Fecha de actualización')
 
-    advance_report = models.OneToOneField(
-        Report,
-        models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name='advance_reported',
-        verbose_name='Reporte de avance')
-
-    ejecution_report = models.OneToOneField(
-        Report,
-        blank=True,
-        null=True,
-        related_name='ejecution_report',
-        verbose_name='Reporte de ejecución')
-
     project = models.ForeignKey(
         'self',
         blank=True,
@@ -152,3 +100,47 @@ class Action(models.Model):
 
     def __str__(self):
         return "%s" % (self.name)
+
+class Report(models.Model):
+
+    PERCENTAJES = (
+        ('0', '0'), ('25', '25'), ('50', '50'),
+        ('75', '75'), ('100', '100'),
+    )
+
+    action = models.ForeignKey(
+                Action,
+                blank=True,
+                null=True,
+                related_name='action_report',
+                verbose_name='Acción'
+             )
+
+    progress = models.CharField(choices=PERCENTAJES, max_length=3, default='0', verbose_name='Porcentaje de avance')
+
+    accomplished = models.TextField(max_length=1024, verbose_name='Relizado')
+    pending = models.TextField(max_length=1024, verbose_name='Pendiente')
+
+    created_at = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='Fecha de creación')
+    updated_at = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name='Fecha de actualización')
+
+    created_by = models.ForeignKey(User, related_name='report_created_by', verbose_name='Creado por')
+
+@receiver(post_save, sender=Report)
+def change_status(sender, instance, created, **kwargs):
+    '''
+    Change the project o report status when create the reports.
+    '''
+    if created:
+        obj = Action.objects.get(id=instance.action.id)
+
+        if obj.advance_report_at is  None:
+            obj.advance_report_at = instance.created_at
+            obj.save()
+
+        elif obj.ejecution_report_at is  None:
+            obj.ejecution_report_at = instance.created_at
+            obj.status = 'Ejecutada'
+            obj.save()
+    else:
+        pass
