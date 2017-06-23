@@ -1,5 +1,5 @@
 
-app.controller('ProjectCreateController', [
+app.controller('ActionCopyController', [
   '$scope', '$state', 'ActionService', 'ProjectService', 'UserService','Notification',
   function($scope, $state, ActionService, ProjectService , UserService, Notification) {
     $scope.titles = {
@@ -37,15 +37,14 @@ app.controller('ProjectCreateController', [
     }
 
     var Service = ProjectService;
-    var type  = $state.params.parentProject ? 'action' : 'project' // TODO: por definir
+    var type  = $state.params.action ? 'action' : 'project' // TODO: por definir
     $scope.titles = $scope.titles[type];
     $scope.submitted = false; // TODO: cambiar  con  bandera de form
     $scope.project = {
-      'begin_at': moment().toDate()
     };
 
     $scope.init = function () {
-      getProject()
+      getAction()
       ////TODO cambiar
       UserService.me().then(function(response){
         $scope.project.client = response.id;
@@ -92,15 +91,13 @@ app.controller('ProjectCreateController', [
 
     }
 
-    var getProject = function () {
+    var getAction = function () {
       if (type == 'action') {
-        ActionService.getById($state.params.parentProject).then(
+        ActionService.getById($state.params.action).then(
           function (response){
-            $scope.projectParent = response;
-            $scope.maxExecutionDate = getMaxExecutionDate();
-            $scope.project.parent_action = $scope.projectParent.id;
-            $scope.project.project = $scope.projectParent.parent_action == null ?  $scope.projectParent.id : $scope.projectParent.project.id;
-            Service = ActionService;
+            $scope.project = response;
+            console.log(response);
+            getProject($scope.project.project.id);
           },
           function (error) {
             Notification.error("No existe un proyecto relacionado")
@@ -110,6 +107,20 @@ app.controller('ProjectCreateController', [
       }
     }
 
+    var getProject = function (id) {
+      ActionService.getById(id).then(
+        function (response){
+          $scope.maxExecutionDate = getMaxExecutionDate();
+          $scope.project.parent_action = $scope.projectParent.id;
+          $scope.project.project = $scope.projectParent.parent_action == null ?  $scope.projectParent.id : $scope.projectParent.project.id;
+          Service = ActionService;
+        },
+        function (error) {
+          Notification.error("No existe un proyecto relacionado")
+          console.error(error);
+        }
+      )
+    }
     ////////////////////dates validations///////////////////////
 
     $scope.beginOrAtOrAccomplishDateChanged = function (begin_at, accomplish_at) {

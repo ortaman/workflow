@@ -131,7 +131,9 @@ app.controller('ProjectDetailController', [
   };
 
 
-
+	$scope.actionCopy = function(){
+		$state.go('actionCopy',{action:1})
+	}
 
 
 	////////////////////////////////// reports/////////////////////////

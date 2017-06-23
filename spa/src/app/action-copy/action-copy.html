@@ -1,6 +1,6 @@
 <my-header> </my-header>
 <!-- BEGIN CONTAINER -->
-<div class="page-container" ng-init="getProjectByIdInit()" ng-cloack>
+<div class="page-container">
     <!-- BEGIN SIDEBAR -->
     <my-navbar> </my-navbar>
     <!-- END SIDEBAR -->
@@ -13,26 +13,48 @@
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
-                        <a href="index.html">Inicio</a>
+                        <a ui-sref="coordinations"> Inicio </a>
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <a> {{ titles.update }} </a>
+                        <a ui-sref="projectList"> Tablero de Proyectos </a>
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                          <a ui-sref="projectDetail({id:project.id})">{{ titles.name }} {{ action.project.name }}</span></a>
+                        <span> {{ titles.create }} </span>
                     </li>
+
                 </ul>
                 <div class="page-toolbar">
                     <div class="btn-group pull-right">
-
+                        <!--button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Acciones
+                            <i class="fa fa-angle-down"></i>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="#">
+                                    <i class="icon-fire"></i> Nueva Alerta</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-pin"></i> Nueva Acción</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-user"></i> Ubicar a Alguien</a>
+                            </li>
+                            <li class="divider"> </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-layers"></i> Ver Proyectos</a>
+                            </li>
+                        </ul-->
                     </div>
                 </div>
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em"> {{ titles.update }} </h1>
+            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em" ng-init="init()"> {{ titles.create }} {{ projectParent.name }}</h1>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <!-- BEGIN FORM PROJECT-->
@@ -53,99 +75,98 @@
                         <!--row-->
                         <div class="row">
 
-                            <div ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
-                              <md-input-container class="md-block" >
-                               <label>{{ titles.nameOf }} </label>
-                               <input
-                                 name="projectName"
-                                 maxlength="64"
-                                 ng-model="project.name"
-                                 ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
-                                 required></input>
 
-                               <div ng-show="projectForm.projectName.$touched || submitted">
-                                 <div class="error" ng-show="projectForm.projectName.$error.required">
+                          <div ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
+                            <md-input-container class="md-block" >
+                             <label>{{ titles.nameOf }}</label>
+                             <input
+                               name="projectName"
+                               maxlength="64"
+                               ng-model="project.name"
+                               ng-pattern="/^([a-zA-Z0-9ñáéíóúÑÁÉÍÓÚ\s]{0,50})$/"
+                               required></input>
+
+                             <div ng-show="projectForm.projectName.$touched || submitted">
+                               <div class="error" ng-show="projectForm.projectName.$error.required">
+                                 Campo requerido.
+                               </div>
+                               <div class="error" ng-show="projectForm.projectName.$error.pattern">
+                                 Debe contener caracteres alfanúmericos.
+                               </div>
+                             </div>
+                            </md-input-container>
+                          </div>
+
+
+                          <div  ng-if = "isProject()" ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
+                            <md-input-container class="md-block" >
+                              <label> Tipo </label>
+                              <md-select
+                                name="kind"
+                                ng-init="project.kind='Estándar'"
+                                ng-model="project.kind"
+                                required>
+                                <md-option value="Estándar"> Estándar </md-option>
+                                <md-option value="Piloto"> Piloto </md-option>
+                                <md-option value="Jardín"> Jardín </md-option>
+                              </md-select>
+
+                              <div ng-show="projectForm.kind.$touched || submitted">
+                                 <div class="error" style="margin-top: 0em" ng-show="projectForm.kind.$error.required">
                                    Campo requerido.
                                  </div>
-                                 <div class="error" ng-show="projectForm.projectName.$error.pattern">
-                                   Debe contener caracteres alfanúmericos.
+                               </div>
+                            </md-input-container>
+                          </div>
+
+                          <div  ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
+                            <md-input-container class="md-block" >
+                              <label> Fase </label>
+                              <md-select
+                                name="phase"
+                                ng-init="project.phase='Preparación'"
+                                ng-model="project.phase"
+                                required>
+                                <md-option value="Preparación"> Preparación </md-option>
+                                <md-option value="Negociación"> Negociación </md-option>
+                                <md-option value="Ejecución"> Ejecución </md-option>
+                                <md-option value="Evaluación"> Evaluación </md-option>
+                              </md-select>
+
+                              <div ng-show="projectForm.phase.$touched || submitted">
+                                 <div class="error" style="margin-top: 0em" ng-show="projectForm.phase.$error.required">
+                                   Campo requerido.
                                  </div>
                                </div>
                               </md-input-container>
-                            </div>
-
-                            <div ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
-                              <md-input-container class="md-block" >
-                                <label> Fase </label>
-                                <md-select name="phase" ng-model="project.phase" required>
-                                  <md-option value="Preparación"> Preparación </md-option>
-                                  <md-option value="Negociación"> Negociación </md-option>
-                                  <md-option value="Ejecución"> Ejecución </md-option>
-                                  <md-option value="Evaluación"> Evaluación </md-option>
-                                </md-select>
-
-                                <div ng-show="projectForm.phase.$touched || submitted">
-                                   <div class="error" style="margin-top: 0em" ng-show="projectForm.phase.$error.required">
-                                     Campo requerido.
-                                   </div>
-                                 </div>
-                                </md-input-container>
-                            </div>
-
-                            <div class="col-md-4" ng-if="isProject()">
-                              <md-input-container class="md-block" >
-                                <label> Tipo </label>
-                                <md-select
-                                  name="kind"
-                                  ng-model="project.kind"
-                                  required>
-                                  <md-option value="Estándar"> Estándar </md-option>
-                                  <md-option value="Piloto"> Piloto </md-option>
-                                  <md-option value="Jardín"> Jardín </md-option>
-                                </md-select>
-
-                                <div ng-show="projectForm.kind.$touched || submitted">
-                                   <div class="error" style="margin-top: 0em" ng-show="projectForm.kind.$error.required">
-                                     Campo requerido.
-                                   </div>
-                                 </div>
-                              </md-input-container>
-                            </div>
+                          </div>
 
                         </div>
                         <!--row-->
 
-                        <h4 class="form-section"> {{ titles.roles }}</h4>
+                        <h4 class="form-section"> {{ titles.rolesOf }}</h4>
                         <!--row-->
                         <div class="row">
                           <div class="col-md-4">
-                            <user-search
-                              field-name="Cliente"
-                              disabled="true"
-                              user-id="project.client"
-                              user-init="project.client">
-                            </user-search>
+                              <md-input-container class="md-block">
+                                <label> Cliente </label>
+                                <input
+                                  maxlength="64"
+                                  ng-model="client"
+                                  disabled></input>
+                               </md-input-container>
                           </div>
 
                           <div class="col-md-4">
-                            <user-search
-                              field-name="Realizador"
-                              user-id="project.producer"
-                              user-init="project.producer">
-                            </user-search>
+                            <user-search field-name="Realizador" user-id="project.producer"> </user-search>
                           </div>
 
                           <div class="col-md-4">
-                            <user-search
-                              field-name="Observador"
-                              user-id="project.observer"
-                              user-init="project.observer">
-                            </user-search>
+                            <user-search field-name="Observador" user-id="project.observer"> </user-search>
                           </div>
                         </div>
-                        <!--/row-->
 
-                        <h4 class="form-section">¿Qué haremos? - ¿Cómo lo haremos?</h4>
+                        <h4 class="form-section"> ¿Qué haremos? - ¿Cómo lo haremos? </h4>
                         <div class="row">
                           <br><!--row-->
                           <div class="col-md-6">
@@ -186,63 +207,64 @@
 
                               </md-input-container>
                           </div>
-                          <!--row-->
+                            <!--row-->
                         </div>
+                        <!--end row-->
 
                         <h4 class="form-section"> Fechas Compromisos </h4>
                         <!--row-->
                         <div class="row">
 
-                          <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
-                            <div flex-gt-xs>
-                              <h5> Fecha de Inicio </h5>
-                              <md-datepicker
-                                name="begin_at"
-                                md-current-view="year"
-                                md-placeholder="ingrese fecha"
-                                ng-model="project.begin_at"
-                                ng-change="beginOrAtOrAccomplishDateChanged(project.begin_at, project.accomplish_at)"
+                            <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
+                                <div flex-gt-xs>
+                                  <h5> Fecha de Inicio </h5>
+                                  <md-datepicker
+                                    name="begin_at"
+                                    md-current-view="year"
+                                    md-placeholder="ingrese fecha"
+                                    ng-model="project.begin_at"
+                                    disabled
+                                    required></md-datepicker>
 
-                                required></md-datepicker>
-
-                              <div ng-show="projectForm.begin_at.$touched || submitted">
-                                <div class="error" ng-show="projectForm.begin_at.$error.required">
-                                  Campo requerido.
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
-                            <div flex-gt-xs>
-                              <h5> Fecha de ejecución </h5>
-                              <md-datepicker
-                                name="accomplish_at"
-                                md-current-view="year"
-                                md-placeholder="ingrese fecha"
-                                md-min-date="project.begin_at"
-                                ng-disabled="project.begin_at===undefined"
-                                ng-change="beginOrAtOrAccomplishDateChanged(project.begin_at, project.accomplish_at)"
-                                ng-model="project.accomplish_at"
-                                required></md-datepicker>
-
-                                <div ng-show="projectForm.accomplish_at.$touched || submitted">
-                                  <div class="error" ng-show="projectForm.accomplish_at.$error.required">
-                                    Campo requerido.
+                                  <div ng-show="projectForm.begin_at.$touched || submitted">
+                                    <div class="error" ng-show="projectForm.begin_at.$error.required">
+                                      Campo requerido.
+                                    </div>
                                   </div>
                                 </div>
                             </div>
-                          </div>
+
+                            <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
+                                <div flex-gt-xs>
+                                  <h5> Fecha de Cumplimiento </h5>
+                                  <md-datepicker
+                                    name="accomplish_at"
+                                    md-current-view="year"
+                                    md-placeholder="ingrese fecha"
+                                    md-min-date="project.begin_at"
+                                    md-max-date="maxExecutionDate"
+                                    ng-model="project.accomplish_at"
+                                    ng-change="beginOrAtOrAccomplishDateChanged(project.begin_at, project.accomplish_at)"
+
+                                    required></md-datepicker>
+
+                                    <div ng-show="projectForm.accomplish_at.$touched || submitted">
+                                      <div class="error" ng-show="projectForm.accomplish_at.$error.required">
+                                        Campo requerido.
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Reporte de Avance </h5>
                                   <md-datepicker
                                   name="report_at"
+                                  md-current-view="year"
                                   md-placeholder="ingrese fecha"
-                                  disabled
                                   ng-model="project.report_at"
-                                  required ></md-datepicker>
+                                  required disabled></md-datepicker>
 
                                   <div ng-show="projectForm.report_at.$touched || submitted">
                                     <div class="error" ng-show="projectForm.report_at.$error.required">
@@ -253,13 +275,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3" ng-if="isProject()">
+                            <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}"  ng-if = "isProject()">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Renegociación </h5>
                                   <md-datepicker
                                     name="renegotiation_at"
-                                    disabled
+                                    md-current-view="year"
                                     md-placeholder="ingrese fecha"
+                                    disabled
                                     ng-model="project.renegotiation_at"></md-datepicker>
 
                                     <div ng-show="projectForm.renegotiation_at.$touched || submitted">
@@ -274,9 +297,9 @@
                         <!--end row-->
 
                         <br><br>
-                        <h4  ng-if="isProject()" class="form-section"> Fechas límites de las fases Action Workflow </h4>
+                        <h4 ng-if = "isProject()" class="form-section"> Fechas límites de las fases Action Workflow </h4>
                         <!--row-->
-                        <div ng-if="isProject()"  class="row">
+                        <div  ng-if = "isProject()" class="row">
 
                             <div class="col-md-3">
                                 <div flex-gt-xs>
@@ -285,7 +308,8 @@
                                     name="preparation_at"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.preparation_at"
-                                    required disabled></md-datepicker>
+                                    disabled
+                                    required></md-datepicker>
 
                                   <div ng-show="projectForm.preparation_at.$touched || submitted">
                                     <div class="error" ng-show="projectForm.preparation_at.$error.required">
@@ -302,7 +326,7 @@
                                     name="negotiation_at"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.negotiation_at"
-                                    required disabled ></md-datepicker>
+                                    disabled required ></md-datepicker>
 
                                   <div ng-show="projectForm.negotiation_at.$touched || submitted">
                                     <div class="error" ng-show="projectForm.negotiation_at.$error.required">
@@ -317,10 +341,10 @@
                                   <h5>Fase de ejecución</h5>
                                   <md-datepicker
                                     name="execution_at"
-                                    md-current-view="year"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.execution_at"
-                                    required disabled></md-datepicker>
+                                    disabled
+                                    required ></md-datepicker>
 
                                   <div ng-show="projectForm.execution_at.$touched || submitted">
                                     <div class="error" ng-show="projectForm.execution_at.$error.required">
@@ -337,7 +361,8 @@
                                     name="evaluation_at"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.evaluation_at"
-                                    required disabled></md-datepicker>
+                                    disabled
+                                    required></md-datepicker>
                                 </div>
 
                                 <div ng-show="projectForm.evaluation_at.$touched || submitted">
@@ -348,23 +373,19 @@
                             </div>
 
                         </div>
-                        <!--end row-->
 
                         <br><br>
                         <h4 class="form-section">Indicadores</h4>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 ">
                                 <md-input-container class="md-block">
                                   <label>Financieros...</label>
                                   <input
                                     name="financial"
                                     maxlength="128"
                                     ng-model="project.financial"
-                                  ></input>
+                                    ></input>
                                   <div ng-show="projectForm.financial.$touched || submitted">
-                                    <div class="error" ng-show="projectForm.financial.$error.required">
-                                      Campo requerido.
-                                    </div>
                                     <div class="error" ng-show="projectForm.financial.$error.pattern">
                                       Debe contener caracteres alfanúmericos.
                                     </div>
@@ -379,16 +400,13 @@
                                     name="operational"
                                     maxlength="128"
                                     ng-model="project.operational"
-                                  ></input>
+                                    ></input>
                                   <div ng-show="projectForm.operational.$touched || submitted">
                                     <div class="error" ng-show="projectForm.operational.$error.pattern">
                                       Debe contener caracteres alfanúmericos.
                                     </div>
                                   </div>
                                  </md-input-container>
-                            </div>
-                            <div class="">
-
                             </div>
 
                           </div>
@@ -401,7 +419,7 @@
                                     name="other1"
                                     maxlength="128"
                                     ng-model="project.other1"
-                                  ></input>
+                                    ></input>
                                   <div ng-show="projectForm.other1.$touched || submitted">
                                     <div class="error" ng-show="projectForm.other1.$error.pattern">
                                       Debe contener caracteres alfanúmericos.
@@ -416,7 +434,7 @@
                                   name="other2"
                                   maxlength="128"
                                   ng-model="project.other2"
-                                ></input>
+                                  ></input>
                                 <div ng-show="projectForm.other2.$touched || submitted">
                                   <div class="error" ng-show="projectForm.other2.$error.pattern">
                                     Debe contener caracteres alfanúmericos.
@@ -426,25 +444,18 @@
                             </div>
                         </div>
 
-
-                        <div class="row" ng-if="isProject()">
+                        <div class="row" ng-if = "isProject()">
                           <div class="col-md-3">
-                            <input name="file" fileread='project.image' type="file" required/>
-                              <div ng-show="projectForm.file.$touched || submitted">
-                                <div class="error" ng-show="projectForm.file.$error.required">
-                                  Campo requerido.
-                                </div>
-                              </div>
+                            <input fileread='project.image' accept="image/*" type="file"/>
                           </div>
                           <div class="col-md-4">
-
+                            <img ng-if="project.image"   ng-src="{{project.image}}" alt="" width="100%" height="250px"/>
                           </div>
                         </div>
-
                         <br>
                         <div class="row">
                           <div class="col-md-2 col-md-offset-5 text-center">
-                            <button type="submit"  promise-btn="submmitPromise" class="btn blue">Actualizar </button>
+                            <button type="submit"  promise-btn="submmitPromise" class="btn blue">Crear </button>
                           </div>
                         </div>
 
