@@ -1,6 +1,6 @@
 
-app.controller('ActionListController', ['$scope', 'ActionListService', 'ProducerGetListService','ProjectService',
- function($scope, ActionListService, ProducerGetListService, ProjectService) {
+app.controller('ActionListController', ['$scope', 'ProducerGetListService','ActionService', 'ProjectService',
+ function($scope, ProducerGetListService, ActionService, ProjectService) {
 
    $scope.producersCurrentPage = 1;
    $scope.producers = []
@@ -15,7 +15,6 @@ app.controller('ActionListController', ['$scope', 'ActionListService', 'Producer
         var query = {
           "page": $scope.producersCurrentPage,
   	  		"project_id":$scope.selectedProject ,
-  	  		"parent_action": "none",
   	  	};
         if($scope.selectedProject){
           ProducerGetListService.getList(query).then(

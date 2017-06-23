@@ -8,7 +8,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Action
-from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionClientSerializer, ActionProducerSerializer
+from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionPatchSerializer
+from workflow.serializers import ActionClientSerializer, ActionProducerSerializer
 from common.mixins import APIMixin
 
 
@@ -16,12 +17,12 @@ class ActionDetail(APIView, APIMixin):
     """
     Retrieve, update or delete a action instance.
     """
-    permission_classes = (IsAuthenticated,)
 
     # Initial mixin variables
     model = Action
     serializer_get = ActionGetSerializer
     serializer_put = ActionPostSerializer
+    serializer_patch = ActionPatchSerializer
 
     def get(self, request, pk, format=None):
         obj = self.get_object(pk)
@@ -43,7 +44,7 @@ class ActionDetail(APIView, APIMixin):
 
     def patch(self, request, pk, format=None):
         obj = self.get_object(pk)
-        serializer = self.serializer_put(obj, data=request.data, partial=True)
+        serializer = self.serializer_patch(obj, data=request.data, partial=True)
 
         self.patch_vatidations(obj, request.user)
 
@@ -65,10 +66,6 @@ class ActionDetail(APIView, APIMixin):
 class ActionList(APIView, APIMixin):
     """
     List all actions, or create a new action.
-    List all actions from specific project: ?project_id='id'
-    List the actions linked with the specific project: ?project_id='id'&action_isnull
-
-    List all actions from specific action: ?action_id='id'
     """
     permission_classes = (IsAuthenticated,)
 
@@ -88,6 +85,7 @@ class ActionList(APIView, APIMixin):
 
         if 'project_id' in query.keys():
 
+            # Get the actions directly linked with one project.
             if query.get('parent_action') == 'none' and 'status' in query.keys():
                 queryset = queryset.filter (
                     project_id=query.get('project_id'),
@@ -95,6 +93,7 @@ class ActionList(APIView, APIMixin):
                     status=query.get('status')
                 )
 
+            # Get the all project actions date range.
             elif 'begin_date' in query.keys() and 'end_date' in query.keys():
                 range_date = [query.get('begin_date'), query.get('end_date')]
                 q1 = Q(project__id = query.get('project_id'))
@@ -108,6 +107,7 @@ class ActionList(APIView, APIMixin):
 
                 return Response(serializer.data)
 
+            # Get the all project actions.
             else:
                 queryset = queryset.filter(project_id=query.get('project_id'))
 
@@ -119,7 +119,7 @@ class ActionList(APIView, APIMixin):
                 status=query.get('status'),
             )
 
-        # Search actions by producer and  status.
+        # Search actions by producer and status.
         elif 'producer' in query.keys() and 'status' in query.keys():
                 queryset = queryset.filter(
                     producer_id=query.get('producer'),
@@ -133,7 +133,16 @@ class ActionList(APIView, APIMixin):
                     status=query.get('status'),
                 )
 
+        elif 'phase' in query.keys():
+            queryset = queryset.filter(phase=query.get('phase'), project=None)
+
         data = self.get_pagination(queryset, page, self.paginate_by)
+
+        if page is None:
+            data = self.serializer_list(
+                queryset.filter(
+                    parent_action__isnull=True,
+                ), many=True).data
 
         return Response(data)
 
@@ -160,11 +169,11 @@ class ActionStadisctic(APIView, APIMixin):
 
         user_id = request.user.id
         queryset = self.model.objects.all()
-        
+
         q1 = Q(client_id = user_id)
         q2 = (Q(status = 'Pendiente') | Q(status = 'Abierta') | Q(status = 'Ejecutada'))
         q3 = Q(status = 'Ejecutada')
-        q4 = Q(status = 'Satisfactoria')  
+        q4 = Q(status = 'Satisfactoria')
         q5 = Q(status = 'Insatisfactoria')
         q7 = Q(producer_id=user_id)
 
@@ -198,7 +207,7 @@ class ActionTodoStadistics(APIView, APIMixin):
     def get(self, request, format=None):
         page = request.GET.get('page', None)
 
-        user_id = request.user.id 
+        user_id = request.user.id
         queryset = self.model.objects.filter(producer_id=request.user.id)
 
         queryset = queryset.distinct('client__id')
@@ -241,7 +250,7 @@ class ActionOweMeStadistics(APIView, APIMixin):
     def get(self, request, format=None):
         page = request.GET.get('page', None)
 
-        user_id = request.user.id 
+        user_id = request.user.id
         queryset = self.model.objects.filter(client_id=request.user.id)
 
         queryset = queryset.distinct('producer__id')

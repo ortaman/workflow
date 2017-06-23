@@ -17,43 +17,22 @@
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <a> Actualizar Proyecto </a>
+                        <a> {{ titles.update }} </a>
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                          <a ui-sref="projectDetail({id:project.id})">Proyecto {{ action.project.name }}</span></a>
+                          <a ui-sref="projectDetail({id:project.id})">{{ titles.name }} {{ action.project.name }}</span></a>
                     </li>
                 </ul>
                 <div class="page-toolbar">
                     <div class="btn-group pull-right">
-                        <!--button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Acciones
-                            <i class="fa fa-angle-down"></i>
-                        </button>
-                        <ul class="dropdown-menu pull-right" role="menu">
-                            <li>
-                                <a href="#">
-                                    <i class="icon-fire"></i> Nueva Alerta</a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="icon-pin"></i> Nueva Acción</a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="icon-user"></i> Ubicar a Alguien</a>
-                            </li>
-                            <li class="divider"> </li>
-                            <li>
-                                <a href="#">
-                                    <i class="icon-layers"></i> Ver Proyectos</a>
-                            </li>
-                        </ul-->
+
                     </div>
                 </div>
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em"> Actualizar Proyecto </h1>
+            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em"> {{ titles.update }} </h1>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <!-- BEGIN FORM PROJECT-->
@@ -74,9 +53,9 @@
                         <!--row-->
                         <div class="row">
 
-                            <div class="col-md-4">
+                            <div ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
                               <md-input-container class="md-block" >
-                               <label>Nombre en el proyecto</label>
+                               <label>{{ titles.nameOf }} </label>
                                <input
                                  name="projectName"
                                  maxlength="64"
@@ -95,7 +74,7 @@
                               </md-input-container>
                             </div>
 
-                            <div class="col-md-4">
+                            <div ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
                               <md-input-container class="md-block" >
                                 <label> Fase </label>
                                 <md-select name="phase" ng-model="project.phase" required>
@@ -113,7 +92,7 @@
                                 </md-input-container>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-4" ng-if="isProject()">
                               <md-input-container class="md-block" >
                                 <label> Tipo </label>
                                 <md-select
@@ -136,12 +115,13 @@
                         </div>
                         <!--row-->
 
-                        <h4 class="form-section"> Roles del Proyecto </h4>
+                        <h4 class="form-section"> {{ titles.roles }}</h4>
                         <!--row-->
                         <div class="row">
                           <div class="col-md-4">
                             <user-search
                               field-name="Cliente"
+                              disabled="true"
                               user-id="project.client"
                               user-init="project.client">
                             </user-search>
@@ -213,7 +193,7 @@
                         <!--row-->
                         <div class="row">
 
-                          <div class="col-md-3">
+                          <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
                             <div flex-gt-xs>
                               <h5> Fecha de Inicio </h5>
                               <md-datepicker
@@ -233,7 +213,7 @@
                             </div>
                           </div>
 
-                          <div class="col-md-3">
+                          <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
                             <div flex-gt-xs>
                               <h5> Fecha de ejecución </h5>
                               <md-datepicker
@@ -254,7 +234,7 @@
                             </div>
                           </div>
 
-                            <div class="col-md-3">
+                            <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Reporte de Avance </h5>
                                   <md-datepicker
@@ -276,7 +256,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-3" ng-if="isProject()">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Renegociación </h5>
                                   <md-datepicker
@@ -301,9 +281,9 @@
                         <!--end row-->
 
                         <br><br>
-                        <h4 class="form-section"> Fechas límites de las fases Action Workflow </h4>
+                        <h4  ng-if="isProject()" class="form-section"> Fechas límites de las fases Action Workflow </h4>
                         <!--row-->
-                        <div class="row">
+                        <div ng-if="isProject()"  class="row">
 
                             <div class="col-md-3">
                                 <div flex-gt-xs>
@@ -469,7 +449,7 @@
                         </div>
 
 
-                        <div class="row">
+                        <div class="row" ng-if="isProject()">
                           <div class="col-md-3">
                             <input name="file" fileread='project.image' type="file" required/>
                               <div ng-show="projectForm.file.$touched || submitted">
@@ -487,10 +467,6 @@
                         <div class="row">
                           <div class="col-md-2 col-md-offset-5 text-center">
                             <button type="submit"  promise-btn="submmitPromise" class="btn blue">Actualizar </button>
-                            <br><br>
-                            <div class="error">
-                              {{ errors.image }}
-                            </div>
                           </div>
                         </div>
 

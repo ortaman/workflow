@@ -26,6 +26,7 @@
     "angular-bootstrap": "^2.5.0",
     "angular-ui-calendar": "^1.0.2",
     "angular-promise-buttons": "^0.1.20",
-    "angular-ui-notification": "^0.3.6"
+    "angular-ui-notification": "^0.3.6",
+    "angular-timeline": "^1.7.0"
   }
 }

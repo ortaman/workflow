@@ -1,4 +1,3 @@
-
 <my-header> </my-header>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
@@ -18,48 +17,53 @@
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <a ui-sref="projectList"> Tablero del Proyectos </a>
+                        <a ui-sref="projectList"> Tablero de Proyectos </a>
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <span> Bitácora del Proyecto  </span>
+                        <span> Bitácora  </span>
                     </li>
                 </ul>
                 <div class="page-toolbar">
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Opciones del proyecto
+                        <button ng-if="checkRole(['producer', 'observer', 'client'])" type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Opciones
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
-                            <li ng-if="project.producer.id == user.id ">
+                            <li ng-if="checkRole(['producer'])">
                                 <a ng-click="actionCreate()">
                                     <i class="icon-fire"></i> Nueva Acción </a>
                             </li>
 
-                            <li ng-if="project.producer.id == user.id ">
+                            <li ng-if="checkRole(['producer'])">
                                 <a href="" ng-click="openAdvanceReport()">
                                     <i class="icon-note"></i> Agregar reporte de avance</a>
                             </li>
 
-                            <li ng-if="project.producer.id == user.id ">
+                            <li ng-if="checkRole(['client'])">
+                                <a href="" ui-sref="projectUpdate({ id: project.id })">
+                                    <i class="fa fa-edit"></i> Editar</a>
+                            </li>
+
+                            <li ng-if="checkRole(['producer'])">
                                 <a href="" ng-click="moveTophase()">
                                     <i class="icon-link"></i> Pasar a la siguiente fase </a>
                             </li>
 
-                            <li ng-if="project.producer.id == user.id ">
+                            <li ng-if="checkRole(['producer'])">
                                 <a ui-sref="projectView({id:project.id})">
-                                    <i class="icon-link"></i> Ver detalle </a>
+                                    <i class="icon-link"></i> Ver detalles </a>
                             </li>
 
                             <li class="divider" ng-if="project.producer.id == user.id"> </li>
-                            <li ng-click="openfinishProjectReport()" ng-if="project.producer.id == user.id ">
+                            <li ng-click="openfinishProjectReport()" ng-if="checkRole(['producer'])">
                                 <a >
-                                    <i class="icon-layers"></i> Terminar proyecto</a>
+                                    <i class="icon-layers"></i> Terminar {{ titles.name}}</a>
                             </li>
 
-                            <li ng-click="closeProjectReport()" ng-if="project.client.id == user.id ">
+                            <li ng-click="closeProjectReport()" ng-if="checkRole(['client'])">
                                 <a >
-                                    <i class="icon-layers"></i> Cerrar proyecto</a>
+                                    <i class="icon-layers"></i> Cerrar {{ titles.name}}</a>
                             </li>
                         </ul>
                     </div>
@@ -85,7 +89,7 @@
 
 
                             </div>
-                            <div class="btn-group pull-right" ng-if="report">
+                            <div class="btn-group pull-right" ng-if="getReport()">
                               <button type="button" class="btn red btn-sm btn-outline dropdown-toggle" ng-click="openReportDetailModal()"> Ver reporte
                               </button>
                             </div>
@@ -114,7 +118,9 @@
                                             </div>
                                         </div>
                                         <div class="mt-body ">
-                                            <h3 class="mt-body-title">Proyecto: {{ project.name }} </h3>
+                                            <h3 class="mt-body-title">
+                                              <span ui-sref="projectDetail({id:project.project.id})" style="cursor:pointer;"ng-if="!isProject()">Proyecto: {{ project.project.name }}</span><br><br>
+                                              <span>{{titles.nameCapitalized}}: {{ project.name }} </span><br>
                                             <p class="mt-body-description">Acciones a realizar: {{ project.toDo }} .</p><br>
                                             <p class="mt-body-description">Condiciones de satisfacción: {{ project.satisfactions }} .</p>
                                         </div>
@@ -312,7 +318,7 @@
                                   <!-- BEGIN: Actions -->
 
                                   <div class="mt-comments">
-                                      <div class="mt-comment" ng-repeat="action in actions.results track by $index" ui-sref="actionDetail({id:action.id})">
+                                      <div class="mt-comment" ng-repeat="action in actions.results track by $index" ui-sref="projectDetail({id:action.id})">
                                           <div class="mt-comment-img" >
                                             <img  style="height:45px; width:45px " ng-src="{{ action.producer.photo }}" /> </div>
 

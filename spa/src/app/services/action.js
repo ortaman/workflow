@@ -1,5 +1,5 @@
 
-app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) {
+app.service("ActionService", ['$http', 'APIConfig', function($http, APIConfig) {
 
 
   var getColor = function (project) {
@@ -20,7 +20,7 @@ app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) 
 
 
   this.create = function(object) {
-    var promise = $http.post(APIConfig.url + "projects/", object).then(function(response) {
+    var promise = $http.post(APIConfig.url + "actions/", object).then(function(response) {
       return response.data;
     });
 
@@ -40,7 +40,7 @@ app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) 
         object.observer = object.observer.id;
 
     delete(object.image)
-      var promise = $http.patch(APIConfig.url + "projects/" + id + "/" , object).then(function(response) {
+      var promise = $http.patch(APIConfig.url + "actions/" + id + "/" , object).then(function(response) {
           return response.data;
       });
 
@@ -48,7 +48,7 @@ app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) 
   };
 
   this.getById = function(id) {
-    var promise = $http.get(APIConfig.url + "projects/" + id + "/").then(
+    var promise = $http.get(APIConfig.url + "actions/" + id + "/").then(
       function(response) {
         response.data.client.photo = APIConfig.baseUrl + response.data.client.photo;
         response.data.producer.photo = APIConfig.baseUrl + response.data.producer.photo;
@@ -67,7 +67,7 @@ app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) 
 	this.getList = function(object) {
 	  var params = $.param(object);
 
-	  var promise = $http.get(APIConfig.url + "projects/?" + params).then(function(response) {
+	  var promise = $http.get(APIConfig.url + "actions/?" + params).then(function(response) {
 		angular.forEach(response.data.results, function(project){
 			project.image = APIConfig.baseUrl + project.image;
 			project.producer.photo = APIConfig.baseUrl + project.producer.photo;
@@ -86,7 +86,10 @@ app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) 
 
 
   this.update = function(id, object) {
-    var promise = $http.put(APIConfig.url + "projects/" + id + "/" , object).then(function(response) {
+    if(typeof(object.project) != Number)
+        object.project = object.project.id;
+
+    var promise = $http.put(APIConfig.url + "actions/" + id + "/" , object).then(function(response) {
       return response.data;
     });
 
@@ -94,7 +97,7 @@ app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) 
   };
 
 	this.getProjectStadistics = function() {
-		var promise = $http.get(APIConfig.url + "projects/stadistics/time").then(function(response) {
+		var promise = $http.get(APIConfig.url + "actions/stadistics/time").then(function(response) {
 			return response.data;
 		});
 
