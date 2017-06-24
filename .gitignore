@@ -1,6 +1,6 @@
 
 ### Gulp generated code. ###
-api/_static/
+api/_static/*
 
 spa/src/assets/app.js
 spa/src/assets/app.css

@@ -62,7 +62,6 @@ class ActionDetail(APIView, APIMixin):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
 class ActionList(APIView, APIMixin):
     """
     List all actions, or create a new action.
@@ -231,7 +230,6 @@ class ActionTodoStadistics(APIView, APIMixin):
             })
 
         return Response(data)
-
 
 
 class ActionOweMeStadistics(APIView, APIMixin):

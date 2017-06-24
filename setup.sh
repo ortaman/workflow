@@ -46,7 +46,7 @@ echo 'Installing project dependencies (requirements file)'
 sudo pip3 install -r $BACKEND_PROJECT_DIRECTORY/_requirements/development.txt 
 
 echo 'Running project migration files'
-python $BACKEND_PROJECT_DIRECTORY/manage.py migrate
+python3 $BACKEND_PROJECT_DIRECTORY/manage.py migrate
 
 
 #  'NSTALLING FRONTEND DEPENDECES'

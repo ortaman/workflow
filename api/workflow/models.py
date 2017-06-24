@@ -6,7 +6,6 @@ from django.dispatch import receiver
 from users.models import User
 
 
-
 class Action(models.Model):
 
     PHASES = (
@@ -101,6 +100,7 @@ class Action(models.Model):
     def __str__(self):
         return "%s" % (self.name)
 
+
 class Report(models.Model):
 
     PERCENTAJES = (
@@ -126,6 +126,7 @@ class Report(models.Model):
 
     created_by = models.ForeignKey(User, related_name='report_created_by', verbose_name='Creado por')
 
+
 @receiver(post_save, sender=Report)
 def change_status(sender, instance, created, **kwargs):
     '''
@@ -134,11 +135,11 @@ def change_status(sender, instance, created, **kwargs):
     if created:
         obj = Action.objects.get(id=instance.action.id)
 
-        if obj.advance_report_at is  None:
+        if obj.advance_report_at is None:
             obj.advance_report_at = instance.created_at
             obj.save()
 
-        elif obj.ejecution_report_at is  None:
+        elif obj.ejecution_report_at is None:
             obj.ejecution_report_at = instance.created_at
             obj.status = 'Ejecutada'
             obj.save()
