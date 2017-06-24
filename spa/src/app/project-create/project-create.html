@@ -223,7 +223,6 @@
                                     md-current-view="year"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.begin_at"
-                                    disabled
                                     required></md-datepicker>
 
                                   <div ng-show="projectForm.begin_at.$touched || submitted">
@@ -245,7 +244,6 @@
                                     md-max-date="maxExecutionDate"
                                     ng-model="project.accomplish_at"
                                     ng-change="beginOrAtOrAccomplishDateChanged(project.begin_at, project.accomplish_at)"
-
                                     required></md-datepicker>
 
                                     <div ng-show="projectForm.accomplish_at.$touched || submitted">
@@ -264,7 +262,7 @@
                                   md-current-view="year"
                                   md-placeholder="ingrese fecha"
                                   ng-model="project.report_at"
-                                  required disabled></md-datepicker>
+                                  required></md-datepicker>
 
                                   <div ng-show="projectForm.report_at.$touched || submitted">
                                     <div class="error" ng-show="projectForm.report_at.$error.required">
@@ -282,7 +280,6 @@
                                     name="renegotiation_at"
                                     md-current-view="year"
                                     md-placeholder="ingrese fecha"
-                                    disabled
                                     ng-model="project.renegotiation_at"></md-datepicker>
 
                                     <div ng-show="projectForm.renegotiation_at.$touched || submitted">
@@ -308,7 +305,6 @@
                                     name="preparation_at"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.preparation_at"
-                                    disabled
                                     required></md-datepicker>
 
                                   <div ng-show="projectForm.preparation_at.$touched || submitted">
@@ -326,7 +322,7 @@
                                     name="negotiation_at"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.negotiation_at"
-                                    disabled required ></md-datepicker>
+                                    required ></md-datepicker>
 
                                   <div ng-show="projectForm.negotiation_at.$touched || submitted">
                                     <div class="error" ng-show="projectForm.negotiation_at.$error.required">
@@ -343,7 +339,6 @@
                                     name="execution_at"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.execution_at"
-                                    disabled
                                     required ></md-datepicker>
 
                                   <div ng-show="projectForm.execution_at.$touched || submitted">
@@ -361,7 +356,6 @@
                                     name="evaluation_at"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.evaluation_at"
-                                    disabled
                                     required></md-datepicker>
                                 </div>
 
@@ -380,11 +374,13 @@
                             <div class="col-md-6 ">
                                 <md-input-container class="md-block">
                                   <label>Financieros...</label>
-                                  <input
+                                  <textarea
                                     name="financial"
+                                    rows="2"
+                                    md-maxlength="128"
                                     maxlength="128"
-                                    ng-model="project.financial"
-                                    ></input>
+                                    ng-model="project.financial">  
+                                  </textarea>
                                   <div ng-show="projectForm.financial.$touched || submitted">
                                     <div class="error" ng-show="projectForm.financial.$error.pattern">
                                       Debe contener caracteres alfanúmericos.
@@ -396,11 +392,13 @@
 
                                 <md-input-container class="md-block">
                                   <label>Operacionales...</label>
-                                  <input
+                                  <textarea
                                     name="operational"
+                                    rows="2"
+                                    md-maxlength="128"
                                     maxlength="128"
-                                    ng-model="project.operational"
-                                    ></input>
+                                    ng-model="project.operational">
+                                    </textarea>
                                   <div ng-show="projectForm.operational.$touched || submitted">
                                     <div class="error" ng-show="projectForm.operational.$error.pattern">
                                       Debe contener caracteres alfanúmericos.
@@ -415,11 +413,13 @@
                             <div class="col-md-6">
                                 <md-input-container class="md-block">
                                   <label>Otros...</label>
-                                  <input
+                                  <textarea
                                     name="other1"
+                                    rows="2"
+                                    md-maxlength="128"
                                     maxlength="128"
-                                    ng-model="project.other1"
-                                    ></input>
+                                    ng-model="project.other1">
+                                  </textarea>
                                   <div ng-show="projectForm.other1.$touched || submitted">
                                     <div class="error" ng-show="projectForm.other1.$error.pattern">
                                       Debe contener caracteres alfanúmericos.
@@ -430,11 +430,13 @@
                             <div class="col-md-6">
                               <md-input-container class="md-block">
                                 <label>Otros...</label>
-                                <input
+                                <textarea
                                   name="other2"
+                                  rows="2"
+                                  md-maxlength="128"
                                   maxlength="128"
-                                  ng-model="project.other2"
-                                  ></input>
+                                  ng-model="project.other2">
+                                  </textarea>
                                 <div ng-show="projectForm.other2.$touched || submitted">
                                   <div class="error" ng-show="projectForm.other2.$error.pattern">
                                     Debe contener caracteres alfanúmericos.
