@@ -60,8 +60,11 @@ class ProjectGetSerializer(serializers.ModelSerializer):
     producer = UserSerializer()
     observer = UserSerializer()
 
-    #advance_report = ReportGetSerializer()
-    #ejecution_report = ReportGetSerializer()
+    reports = serializers.SerializerMethodField()
+
+    def get_reports(self, obj):
+        reports = Report.objects.filter(action__id=obj.id)
+        return ReportGetSerializer(reports, many=True).data
 
     class Meta:
         model  = Action
@@ -116,13 +119,12 @@ class ActionGetSerializer(serializers.ModelSerializer):
     producer = UserSerializer()
     observer = UserSerializer()
 
+    project = ProjectGetSerializer()
     reports = serializers.SerializerMethodField()
 
     def get_reports(self, obj):
         reports = Report.objects.filter(action__id=obj.id)
         return ReportGetSerializer(reports, many=True).data
-
-    project = ProjectGetSerializer()
 
     class Meta:
         model  = Action
