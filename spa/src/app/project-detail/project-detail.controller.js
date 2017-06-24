@@ -67,9 +67,8 @@ app.controller('ProjectDetailController', [
 	}
 
 	$scope.getReport = function (){
-		if ($scope.project.ejecution_report_at || $scope.project.advance_report_at)
-			return true;
-		return false;
+		if($scope.project.reports)
+			return $scope.project.reports.length > 0;
   }
 
 	$scope.actionPageChanged = function(status) {
@@ -132,7 +131,9 @@ app.controller('ProjectDetailController', [
   };
 
 
-
+	$scope.actionCopy = function(){
+		$state.go('actionCopy',{action:1})
+	}
 
 
 	////////////////////////////////// reports/////////////////////////
@@ -151,11 +152,11 @@ app.controller('ProjectDetailController', [
 		 templateUrl: '/app/report-detail/report-detail.html',
 		 locals:{
 			 type: type,
-			 report: $scope.project.ejecution_report || $scope.project.advance_report
+			 report: $scope.project.reports[1] || $scope.project.reports[0]
 		 }
 		}
-		angular.extend(modalVariables, {basicModal});
-		$mdDialog.show(modalVariables);
+		;
+		$mdDialog.show(angular.extend(modalVariables, basicModal));
 	}
 
 	$scope.openfinishProjectReport = function(){
@@ -194,7 +195,6 @@ app.controller('ProjectDetailController', [
 			Notification.info("No es posible agregar  otro reporte")
 			return;
 		}
-		console.log(type);
 		var modalVariables = {
 		 controller: 'ReportModalController',
 		 templateUrl: '/app/report-create/add-report.html',

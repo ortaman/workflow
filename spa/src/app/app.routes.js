@@ -27,6 +27,11 @@ app.config(function($stateProvider, $urlRouterProvider,
       templateUrl: "app/project-create/project-create.html",
       controller: "ProjectCreateController"
     })
+    .state('actionCopy', {
+      url: "/actionCopy/:action",
+      templateUrl: "app/action-copy/action-copy.html",
+      controller: "ActionCopyController"
+    })
     .state('projectList', {
       url: "/projectList",
       templateUrl: "app/project-list/project-list.html",
