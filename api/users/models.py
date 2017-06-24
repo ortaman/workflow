@@ -10,29 +10,31 @@ from django.contrib.auth.hashers import make_password
 class BaseUser(AbstractBaseUser, PermissionsMixin):
 
     POSITIONS = (
-        ('Directora Comercial', 'Directora Comercial'),
-        ('Gerente Nacional de Ventas', 'Gerente Nacional de Ventas'),
-        ('Gerente de Línea de Productos', 'Gerente de Línea de Productos'),
-        ('Gerente de Marketing Corporativo', 'Gerente de Marketing Corporativo'),
-        ('Gerente Regional de Ventas', 'Gerente Regional de Ventas'),
-        ('Gerente Distrital', 'Gerente Distrital'),
-        ('Coordinador', 'Coordinador'),
         ('Administrador', 'Administrador'),
-        ('Gerente de línea sobrepeso y obesidad', 'Gerente de línea sobrepeso y obesidad'),
-        ('Gerente de instituciones', 'Gerente de instituciones'),
-        ('Coordinadora de mercadotecnia digital', 'Coordinadora de mercadotecnia digital'),
-        ('Gerente de inteligencia de mercados', 'Gerente de inteligencia de mercados'),
-        ('Gerente de mercadotecnia', 'Gerente de mercadotecnia'),
-        ('Gerente de línea salud femenina', 'Gerente de línea salud femenina'),
-        ('Gerente de línea Gastro', 'Gerente de línea Gastro'),
+        ('Coordinador', 'Coordinador'),
         ('Coordinadora de comunicación comercial/ventas', 'Coordinadora de comunicación comercial/ventas'),
-        ('Gerente de la linea gastro', 'Gerente de la linea gastro'),
         ('Coordinador de marca línea gastro', 'Coordinador de marca línea gastro'),
-        ('Especialista de capacitación fuerza de ventas', 'Coordinador de marca línea gastro'),
-        ('Gerente asociado línea obesidad' , 'Gerente asociado línea obesidad'),
-        ('Gerente de productividad comercial', 'Gerente de productividad comercial'),
+        ('Coordinadora de mercadotecnia digital', 'Coordinadora de mercadotecnia digital'),
         ('Coordinador de marca línea salud femenina', 'Coordinador de marca línea salud femenina'),
         ('Cuenta clave', 'Cuenta clave'),
+
+        ('Directora comercial', 'Directora comercial'),
+        ('Especialista de capacitación fuerza de ventas', 'Especialista de capacitación fuerza de ventas'),
+        
+        ('Gerente de instituciones', 'Gerente de instituciones'),
+        ('Gerente de inteligencia de mercados', 'Gerente de inteligencia de mercados'),
+        ('Gerente de línea de productos', 'Gerente de línea de productos'),
+        ('Gerente de línea gastro', 'Gerente de línea Gastro'),
+        ('Gerente de línea salud femenina', 'Gerente de línea salud femenina'),
+        ('Gerente de línea sobrepeso y obesidad', 'Gerente de línea sobrepeso y obesidad'),
+        ('Gerente de marketing corporativo', 'Gerente de marketing corporativo'),
+        ('Gerente de mercadotecnia', 'Gerente de mercadotecnia'),
+        ('Gerente de productividad comercial', 'Gerente de productividad comercial'),
+
+        ('Gerente asociado línea obesidad' , 'Gerente asociado línea obesidad'),
+        ('Gerente distrital', 'Gerente distrital'),
+        ('Gerente regional de ventas', 'Gerente regional de ventas'),
+        ('Gerente nacional de ventas', 'Gerente nacional de ventas'),
     )
 
     username = models.CharField(max_length=128, unique=True)
