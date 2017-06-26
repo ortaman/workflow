@@ -72,7 +72,7 @@ app.controller('ActionCopyController', [
               project[key] = new moment(value).format("YYYY-MM-DD");
           })
       });
-
+      cleanDataForPost(project);
   		$scope.submmitPromise = Service.create(project).then(
   			function(response) {
           if (type != 'action') {
@@ -95,9 +95,9 @@ app.controller('ActionCopyController', [
     var getProject = function () {
       ActionService.getById($state.params.action).then(
         function (response){
-          $scope.maxExecutionDate = getMaxExecutionDate();
-          $scope.project.parent_action = $scope.projectParent.id;
-          $scope.project.project = $scope.projectParent.parent_action == null ?  $scope.projectParent.id : $scope.projectParent.project.id;
+          $scope.project  = response;
+          console.log($scope.project);
+          //$scope.maxExecutionDate = getMaxExecutionDate();
           Service = ActionService;
         },
         function (error) {
@@ -122,24 +122,22 @@ app.controller('ActionCopyController', [
       return moment($scope.projectParent[phases[$scope.projectParent.phase]]).toDate();
     }
 
-    $scope.$watch('project.accomplish_at', function(item){
-      if (item) {
-        let executionDate = moment(item);
-        let beginDate = moment(angular.copy($scope.project.begin_at));
-        var daysOfDiference = Math.round(executionDate.diff(moment($scope.project.begin_at), 'days'))
-        console.log("diferencia ", daysOfDiference);
-        $scope.project.preparation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.project.negotiation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.project.execution_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.project.evaluation_at = angular.copy(executionDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.project.renegotiation_at =  angular.copy(beginDate).add(Math.round(daysOfDiference * .20), 'd').toDate();
-        $scope.project.report_at = beginDate.add(Math.round(daysOfDiference * .50), 'd').toDate();
-
-      }
-    })
     ////////////////////end dates validations///////////////////////
 
     $scope.isProject = function () {
       return $scope.titles.type == 'project';
+    }
+
+    var cleanDataForPost = function(project){
+      console.log(project);
+      if(typeof(project.project) != Number)
+          project.project = project.project.id;
+      if(typeof(project.client)!= Number)
+          project.client = project.client.id;
+      delete(project.created_at)
+      delete(project.created_by)
+      delete(project.id)
+      delete(project.reports)
+      delete(project.updated_at)
     }
 }]);

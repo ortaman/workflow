@@ -132,7 +132,7 @@ app.controller('ProjectDetailController', [
 
 
 	$scope.actionCopy = function(){
-		$state.go('actionCopy',{action:1})
+		$state.go('actionCopy',{action:$scope.project.id})
 	}
 
 
