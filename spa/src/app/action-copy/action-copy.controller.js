@@ -75,7 +75,7 @@ app.controller('ActionCopyController', [
       cleanDataForPost(project);
   		$scope.submmitPromise = Service.create(project).then(
   			function(response) {
-          if (type != 'action') {
+          if (type == 'action') {
   				    Notification.success('La acción ha sido creado satisfactoriamente');
           }
           else{

@@ -221,6 +221,8 @@
                                   <md-datepicker
                                     name="begin_at"
                                     md-current-view="year"
+                                    md-min-date="project.begin_at"
+                                    md-max-date="minBeginDate"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.begin_at"
                                     required></md-datepicker>

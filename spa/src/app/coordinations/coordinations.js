@@ -5,14 +5,14 @@ app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','A
 
    $scope.titles = {
      'project': {
-       'name1': 'El proyecto',
-       'name2': 'proyecto',
-       'this':' este proyecto',
+       'name1': 'El proyecto ',
+       'name2': 'proyecto ',
+       'this':' este proyecto ',
      },
      'action':{
-       'name1': 'La acción',
+       'name1': 'La acción ',
        'name2': 'acción',
-       'this':' esta acción',
+       'this':' esta acción ',
      }
    }
 
