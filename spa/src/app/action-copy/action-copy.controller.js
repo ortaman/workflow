@@ -44,7 +44,7 @@ app.controller('ActionCopyController', [
     };
 
     $scope.init = function () {
-      getAction()
+      getProject()
       ////TODO cambiar
       UserService.me().then(function(response){
         $scope.project.client = response.id;
@@ -91,24 +91,9 @@ app.controller('ActionCopyController', [
 
     }
 
-    var getAction = function () {
-      if (type == 'action') {
-        ActionService.getById($state.params.action).then(
-          function (response){
-            $scope.project = response;
-            console.log(response);
-            getProject($scope.project.project.id);
-          },
-          function (error) {
-            Notification.error("No existe un proyecto relacionado")
-            console.error(error);
-          }
-        )
-      }
-    }
 
-    var getProject = function (id) {
-      ActionService.getById(id).then(
+    var getProject = function () {
+      ActionService.getById($state.params.action).then(
         function (response){
           $scope.maxExecutionDate = getMaxExecutionDate();
           $scope.project.parent_action = $scope.projectParent.id;

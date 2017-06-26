@@ -104,7 +104,7 @@ class ProjectList(APIView, APIMixin):
                     Q(parent_action__isnull=True),
                     Q(client=query.get('client_id')) | Q(producer=query.get('client_id'))
                 )
-                
+
             data = self.get_pagination(queryset, page, self.paginate_by)
 
         return Response(data)
@@ -133,7 +133,9 @@ class ProjectTimeStadistic(APIView):
         query = request.query_params
 
         user_id = request.user.id
-        queryset = self.model.objects.all()
+        queryset = self.model.objects.filter(
+                parent_action__isnull=True,
+        )
 
         in_time = 0
         delayed = 0
