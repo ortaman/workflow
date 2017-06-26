@@ -262,6 +262,8 @@
                                   md-current-view="year"
                                   md-placeholder="ingrese fecha"
                                   ng-model="project.report_at"
+                                  md-min-date="project.begin_at"
+                                  md-max-date="validRange.report_at.max"
                                   required></md-datepicker>
 
                                   <div ng-show="projectForm.report_at.$touched || submitted">
@@ -280,7 +282,10 @@
                                     name="renegotiation_at"
                                     md-current-view="year"
                                     md-placeholder="ingrese fecha"
-                                    ng-model="project.renegotiation_at"></md-datepicker>
+                                    ng-model="project.renegotiation_at"
+                                    md-min-date="project.begin_at"
+                                    md-max-date="validRange.renegotiation_at.max"
+                                    ></md-datepicker>
 
                                     <div ng-show="projectForm.renegotiation_at.$touched || submitted">
                                       <div class="error" ng-show="projectForm.renegotiation_at.$error.required">
@@ -305,6 +310,8 @@
                                     name="preparation_at"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.preparation_at"
+                                    md-min-date="project.begin_at"
+                                    md-max-date="validRange.preparation_at.max"
                                     required></md-datepicker>
 
                                   <div ng-show="projectForm.preparation_at.$touched || submitted">
@@ -322,6 +329,8 @@
                                     name="negotiation_at"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.negotiation_at"
+                                    md-min-date="project.begin_at"
+                                    md-max-date="validRange.negotiation_at.max"
                                     required ></md-datepicker>
 
                                   <div ng-show="projectForm.negotiation_at.$touched || submitted">
@@ -339,6 +348,8 @@
                                     name="execution_at"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.execution_at"
+                                    md-min-date="project.begin_at"
+                                    md-max-date="validRange.execution_at.max"
                                     required ></md-datepicker>
 
                                   <div ng-show="projectForm.execution_at.$touched || submitted">
@@ -356,6 +367,8 @@
                                     name="evaluation_at"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.evaluation_at"
+                                    md-min-date="project.begin_at"
+                                    md-max-date="validRange.evaluation_at.max"
                                     required></md-datepicker>
                                 </div>
 
@@ -379,7 +392,7 @@
                                     rows="2"
                                     md-maxlength="128"
                                     maxlength="128"
-                                    ng-model="project.financial">  
+                                    ng-model="project.financial">
                                   </textarea>
                                   <div ng-show="projectForm.financial.$touched || submitted">
                                     <div class="error" ng-show="projectForm.financial.$error.pattern">
