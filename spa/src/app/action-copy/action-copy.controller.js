@@ -139,5 +139,7 @@ app.controller('ActionCopyController', [
       delete(project.id)
       delete(project.reports)
       delete(project.updated_at)
+      delete(project.advance_report_at)
+      delete(project.ejecution_report_at)
     }
 }]);
