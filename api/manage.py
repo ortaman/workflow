@@ -4,7 +4,7 @@ import os
 import sys
 
 if __name__ == "__main__":
-    if os.path.exists('_api/keys/production.py'):
+    if os.path.exists('_api/settings/production.py'):
         DJANGO_SETTINGS_MODULE = '_api.settings.production'
     else:
         DJANGO_SETTINGS_MODULE = '_api.settings.development'

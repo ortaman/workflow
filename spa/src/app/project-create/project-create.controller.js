@@ -145,7 +145,7 @@ app.controller('ProjectCreateController', [
         })
         $scope.project.preparation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
         $scope.project.negotiation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.project.execution_at = executionDate.toDate();
+        $scope.project.execution_at = angular.copy(executionDate).add(Math.round(daysOfDiference * 0), 'd').toDate();
         $scope.project.evaluation_at = angular.copy(executionDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
         $scope.project.renegotiation_at =  angular.copy(beginDate).add(Math.round(daysOfDiference * .50), 'd').toDate();
         $scope.project.report_at = beginDate.add(Math.round(daysOfDiference * .50), 'd').toDate();

@@ -1,6 +1,5 @@
-from .base import *
-from _api.keys import development
 
+from .base import *
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -58,7 +57,7 @@ CORS_ORIGIN_WHITELIST = (
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'medix@t4action.com'
-EMAIL_HOST_PASSWORD = 'actionworflow'
+EMAIL_HOST_PASSWORD = 'actionworkflow'
 EMAIL_PORT = 587
 
 # ***** CELERY SETTINGS ***** #
