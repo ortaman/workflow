@@ -97,7 +97,10 @@ app.controller('ProjectCreateController', [
         ActionService.getById($state.params.parentProject).then(
           function (response){
             $scope.projectParent = response;
-            $scope.maxExecutionDate = getMaxExecutionDate();
+            if (!$scope.isProject()){
+              $scope.maxExecutionDate = getMaxExecutionDate();
+              $scope.minBeginDate = getBeginDate();
+            }
             $scope.project.parent_action = $scope.projectParent.id;
             $scope.project.project = $scope.projectParent.parent_action == null ?  $scope.projectParent.id : $scope.projectParent.project.id;
             Service = ActionService;
@@ -113,7 +116,14 @@ app.controller('ProjectCreateController', [
     ////////////////////dates validations///////////////////////
 
     var getMaxExecutionDate = function () {
-      return moment($scope.projectParent[phases[$scope.projectParent.phase]]).toDate();
+      if($scope.isProject())
+        return moment($scope.projectParent[phases[$scope.projectParent.phase]]).toDate();
+      else
+        return moment($scope.projectParent.accomplish_at).toDate();
+
+    }
+    var getBeginDate = function () {
+      return moment($scope.projectParent.accomplish_at).toDate();
     }
 
     $scope.$watch('project.accomplish_at', function(item){
@@ -125,7 +135,6 @@ app.controller('ProjectCreateController', [
         delete ($scope.project.preparation_at);
         delete ($scope.project.negotiation_at);
         delete ($scope.project.execution_at);
-
         delete ($scope.project.evaluation_at);
         delete ($scope.project.renegotiation_at);
         delete ($scope.project.report_at);
@@ -142,7 +151,7 @@ app.controller('ProjectCreateController', [
         $scope.validRange.negotiation_at.max = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
         $scope.validRange.execution_at.max = executionDate.toDate();
         $scope.validRange.evaluation_at.max = angular.copy(executionDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.validRange.renegotiation_at.max =  angular.copy(beginDate).add(Math.round(daysOfDiference * 50), 'd').toDate();
+        $scope.validRange.renegotiation_at.max =  angular.copy(beginDate).add(Math.round(daysOfDiference * .50), 'd').toDate();
         $scope.validRange.report_at.max = beginDate.add(Math.round(daysOfDiference * .50), 'd').toDate();
 
       }
