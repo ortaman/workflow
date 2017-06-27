@@ -78,7 +78,7 @@ class Action(models.Model):
         'self',
         blank=True,
         null=True,
-        related_name='projectt',
+        related_name='project',
         verbose_name='Proyecto relacionado')
 
     parent_action = models.ForeignKey(

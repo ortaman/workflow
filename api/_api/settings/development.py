@@ -57,8 +57,8 @@ CORS_ORIGIN_WHITELIST = (
 # Email configuration
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'workflow.manage@gmail.com'
-EMAIL_HOST_PASSWORD = 'qwe123qwe'
+EMAIL_HOST_USER = 'medix@t4action.com'
+EMAIL_HOST_PASSWORD = 'actionworflow'
 EMAIL_PORT = 587
 
 # ***** CELERY SETTINGS ***** #
