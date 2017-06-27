@@ -132,12 +132,6 @@ app.controller('ProjectCreateController', [
         let beginDate = moment(angular.copy($scope.project.begin_at));
         var daysOfDiference = Math.round(executionDate.diff(moment($scope.project.begin_at), 'days'))
         console.log("diferencia ", daysOfDiference)
-        delete ($scope.project.preparation_at);
-        delete ($scope.project.negotiation_at);
-        delete ($scope.project.execution_at);
-        delete ($scope.project.evaluation_at);
-        delete ($scope.project.renegotiation_at);
-        delete ($scope.project.report_at);
 
         $scope.validRange = {
           preparation_at : {},
@@ -147,12 +141,15 @@ app.controller('ProjectCreateController', [
           renegotiation_at : {},
           report_at : {}
         };
-        $scope.validRange.preparation_at.max = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.validRange.negotiation_at.max = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.validRange.execution_at.max = executionDate.toDate();
-        $scope.validRange.evaluation_at.max = angular.copy(executionDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.validRange.renegotiation_at.max =  angular.copy(beginDate).add(Math.round(daysOfDiference * .50), 'd').toDate();
-        $scope.validRange.report_at.max = beginDate.add(Math.round(daysOfDiference * .50), 'd').toDate();
+        angular.forEach($scope.validRange, function ( value, key) {
+          delete ($scope.project[key]);
+        })
+        $scope.project.preparation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
+        $scope.project.negotiation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
+        $scope.project.execution_at = executionDate.toDate();
+        $scope.project.evaluation_at = angular.copy(executionDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
+        $scope.project.renegotiation_at =  angular.copy(beginDate).add(Math.round(daysOfDiference * .50), 'd').toDate();
+        $scope.project.report_at = beginDate.add(Math.round(daysOfDiference * .50), 'd').toDate();
 
       }
     })
