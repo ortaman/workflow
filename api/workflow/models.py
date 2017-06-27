@@ -94,8 +94,8 @@ class Action(models.Model):
         verbose_name='Creado por')
 
     class Meta:
-        verbose_name = ("Proyecto")
-        verbose_name_plural = ("Proyectos")
+        verbose_name = ("Acción")
+        verbose_name_plural = ("Acciones")
 
     def __str__(self):
         return "%s" % (self.name)
