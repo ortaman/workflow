@@ -27,11 +27,11 @@
 		font-size: 16px; 
 		margin: 4px 0px 20px 0px;
 		padding: 0px;"> 
-		Cliente: {{ project.client.name }} {{ project.client.first_surname }} {{ project.client.first_surname }}
+		Cliente: {{ project.client.name }} {{ project.client.first_surname }} {{ project.client.second_surname }}
 		<br>
-		Realizador: {{ project.producer.name }} {{ project.producer.first_surname }} {{ project.producer.first_surname }}
+		Realizador: {{ project.producer.name }} {{ project.producer.first_surname }} {{ project.producer.second_surname }}
 		<br>
-		Observador: {{ project.observer.name }} {{ project.observer.first_surname }} {{ project.observer.first_surname }}
+		Observador: {{ project.observer.name }} {{ project.observer.first_surname }} {{ project.observer.second_surname }}
 	</p> 
 
 	<h3 style="color:black; font-size: 18px; padding:0px; margin: 0px;"> Acción: </h3>
@@ -75,4 +75,16 @@
     	<br> Evaluación: {{ project.execution_at }} - {{ project.evaluation_at }} 
 	</p>
 
+	<h3 style="color:black; font-size: 18px; padding:0px; margin: 0px;"> Indicadores: </h3>
+    <p style="
+    	color:black;
+		font-size: 16px; 
+		margin: 4px 0px 90px 0px;
+		padding: 0px;">  
+		 Financiero: {{ project.financial }}
+    	<br> Operacional: {{ project.operational }}
+    	<br> Otros 1: {{ project.other1 }}
+    	<br> Otros 2: {{ project.other2 }} 
+	</p>
+	
 </div>

@@ -2,8 +2,6 @@
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
-# from workflow.models import Project, Action, Report
-
 
 def send_project_email(sender, instance, created, **kwargs):
     context = {
@@ -44,7 +42,7 @@ def send_action_email(sender, instance, created, **kwargs):
         status = 'ha sido creada'
 
     else:
-        message = 'El acción "' + instance.name + '" ha sido actualizada.'
+        message = 'La acción "' + instance.name + '" ha sido actualizada.'
         status = 'ha sido actualizada'
 
     context = {

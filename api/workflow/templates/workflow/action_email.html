@@ -27,11 +27,11 @@
 		font-size: 16px; 
 		margin: 4px 0px 20px 0px;
 		padding: 0px;"> 
-		Cliente: {{ action.client.name }} {{ action.client.first_surname }} {{ action.client.first_surname }}
+		Cliente: {{ action.client.name }} {{ action.client.first_surname }} {{ action.client.second_surname }}
 		<br>
-		Realizador: {{ action.producer.name }} {{ action.producer.first_surname }} {{ action.producer.first_surname }}
+		Realizador: {{ action.producer.name }} {{ action.producer.first_surname }} {{ action.producer.second_surname }}
 		<br>
-		Observador: {{ action.observer.name }} {{ action.observer.first_surname }} {{ action.observer.first_surname }}
+		Observador: {{ action.observer.name }} {{ action.observer.first_surname }} {{ action.observer.second_surname }}
 	</p> 
 
 	<h3 style="color:black; font-size: 18px; padding:0px; margin: 0px;"> Acción: </h3>
@@ -61,6 +61,18 @@
 		 Inicio: {{ action.begin_at }}
     	<br> Compromiso: {{ action.accomplish_at }}
     	<br> Reporte de Avance: {{ action.report_at }} 
+	</p>
+
+	<h3 style="color:black; font-size: 18px; padding:0px; margin: 0px;"> Indicadores: </h3>
+    <p style="
+    	color:black;
+		font-size: 16px; 
+		margin: 4px 0px 90px 0px;
+		padding: 0px;">  
+		 Financiero: {{ action.financial }}
+    	<br> Operacional: {{ action.operational }}
+    	<br> Otros 1: {{ action.other1 }}
+    	<br> Otros 2: {{ action.other2 }} 
 	</p>
 
 </div>
