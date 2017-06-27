@@ -217,12 +217,12 @@
 
                             <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
                                 <div flex-gt-xs>
-                                  <h5> Fecha de Inicio </h5>
+                                  <h5> Fecha de Inicio</h5>
                                   <md-datepicker
                                     name="begin_at"
                                     md-current-view="year"
-                                    md-min-date="project.projectParent.begin_at"
-                                    md-max-date="minBeginDate"
+                                    md-min-date="getProjectParentBeginDate"
+                                    md-max-date="maxBeginDate"
                                     md-placeholder="ingrese fecha"
                                     ng-model="project.begin_at"
                                     required></md-datepicker>

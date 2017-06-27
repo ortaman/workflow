@@ -99,7 +99,9 @@ app.controller('ProjectCreateController', [
             $scope.projectParent = response;
             if (!$scope.isProject()){
               $scope.maxExecutionDate = getMaxExecutionDate();
-              $scope.minBeginDate = getBeginDate();
+              $scope.maxBeginDate = getMaxBeginDate();
+              $scope.getProjectParentBeginDate = moment($scope.projectParent.begin_at).toDate()
+
             }
             $scope.project.parent_action = $scope.projectParent.id;
             $scope.project.project = $scope.projectParent.parent_action == null ?  $scope.projectParent.id : $scope.projectParent.project.id;
@@ -114,14 +116,16 @@ app.controller('ProjectCreateController', [
     }
 
     ////////////////////dates validations///////////////////////
-    var getMaxExecutionDate = function () {
-      if($scope.isProject())
-        return moment($scope.projectParent[phases[$scope.projectParent.phase]]).toDate();
-      else
-        return moment($scope.projectParent.accomplish_at).toDate();
 
+    var getMaxExecutionDate = function () {
+      if(!$scope.isProject())
+        return moment($scope.projectParent[phases[$scope.projectParent.phase]]).toDate();
+      return moment($scope.projectParent.accomplish_at).toDate();
     }
-    var getBeginDate = function () {
+
+    var getMaxBeginDate = function () {
+      if(!$scope.isProject())
+        return moment($scope.projectParent[phases[$scope.projectParent.phase]]).toDate();
       return moment($scope.projectParent.accomplish_at).toDate();
     }
 
