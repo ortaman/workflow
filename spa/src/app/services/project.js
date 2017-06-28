@@ -10,7 +10,7 @@ app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) 
       console.log("diferencia ", daysOfDiference)
 
       suggestedDatesObj.preparation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-      suggestedDatesObj.negotiation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
+      suggestedDatesObj.negotiation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .20), 'd').toDate();
       suggestedDatesObj.execution_at = angular.copy(executionDate).add(Math.round(daysOfDiference * 0), 'd').toDate();
       suggestedDatesObj.evaluation_at = angular.copy(executionDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
       suggestedDatesObj.renegotiation_at =  angular.copy(beginDate).add(Math.round(daysOfDiference * .50), 'd').toDate();
@@ -21,16 +21,21 @@ app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) 
 
   var getColor = function (project) {
 
-      if(moment(project.accomplish_at).isBefore(moment())){
-          if (!project.advance_report_at)
-            return 'red'
+  //  advance_report_at
+  //  ejecution_report_at
 
-          if(moment(project.advance_report_at).isAfter(project.accomplish_at))
-            return 'yellow';
+      if(moment(project.accomplish_at).isBefore(moment())){
+          if (!project.advance_report_at || moment(project.advance_report_at).isAfter(moment(project.accomplish_at)))
+            return 'red';
+
+          if (!project.ejecution_report_at || moment(project.ejecution_report_at).isAfter(moment(project.accomplish_at)))
+            return 'red';
       }
 
-      else if(moment(project.report_at).isBefore(moment()) && !project.advance_report_at )
-        return 'yellow';
+      if(moment(project.report_at).isBefore(moment()) && !project.ejecution_report_at){
+          if (!project.advance_report_at || moment(project.advance_report_at).isAfter(moment(project.report_at)))
+            return 'yellow';
+      }
 
     return 'green'
   }
