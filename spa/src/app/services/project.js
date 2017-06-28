@@ -1,6 +1,23 @@
 
+
 app.service("ProjectService", ['$http', 'APIConfig', function($http, APIConfig) {
 
+  this.getSuggestedDates = function (begin_at, accomplish_at) {
+      let suggestedDatesObj = {};
+      let executionDate = moment(accomplish_at);
+      let beginDate = moment(angular.copy(begin_at));
+      var daysOfDiference = Math.round(executionDate.diff(beginDate, 'days'))
+      console.log("diferencia ", daysOfDiference)
+
+      suggestedDatesObj.preparation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
+      suggestedDatesObj.negotiation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
+      suggestedDatesObj.execution_at = angular.copy(executionDate).add(Math.round(daysOfDiference * 0), 'd').toDate();
+      suggestedDatesObj.evaluation_at = angular.copy(executionDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
+      suggestedDatesObj.renegotiation_at =  angular.copy(beginDate).add(Math.round(daysOfDiference * .50), 'd').toDate();
+      suggestedDatesObj.report_at = beginDate.add(Math.round(daysOfDiference * .50), 'd').toDate();
+
+    return suggestedDatesObj;
+  }
 
   var getColor = function (project) {
 

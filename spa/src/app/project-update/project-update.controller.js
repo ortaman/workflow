@@ -55,7 +55,7 @@ app.controller('ProjectUpdateController', [
             Service = ActionService
           $scope.titles = $scope.titles[type];
           $scope.project = response;
-          
+
         },
         function(errorResponse) {
           console.error('errorResponse', errorResponse);
@@ -118,19 +118,10 @@ app.controller('ProjectUpdateController', [
       return moment($scope.projectParent[phases[$scope.projectParent.phase]]).toDate();
     }
 
-    $scope.$watch('project.accomplish_at', function(item){
-      if (item) {
-        let executionDate = moment(item);
-        let beginDate = moment(angular.copy($scope.project.begin_at));
-        var daysOfDiference = Math.round(executionDate.diff(moment($scope.project.begin_at), 'days'))
-        console.log("diferencia ", daysOfDiference);
-        $scope.project.preparation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.project.negotiation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.project.execution_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.project.evaluation_at = angular.copy(executionDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.project.renegotiation_at =  angular.copy(beginDate).add(Math.round(daysOfDiference * .20), 'd').toDate();
-        $scope.project.report_at = beginDate.add(Math.round(daysOfDiference * .50), 'd').toDate();
-
+    $scope.$watch('project.accomplish_at', function(oldVal, newVal){
+      if (oldVal && newVal){
+        let obj = ProjectService.getSuggestedDates($scope.project.begin_at, newVal);
+        console.log(obj);
       }
     })
 
