@@ -118,9 +118,13 @@ app.controller('ProjectCreateController', [
     ////////////////////dates validations///////////////////////
 
     var getMaxExecutionDate = function () {
+      let date;
       if(!$scope.isProject())
-        return moment($scope.projectParent[phases[$scope.projectParent.phase]]).toDate();
-      return moment($scope.projectParent.accomplish_at).toDate();
+        date = $scope.projectParent[phases[$scope.projectParent.phase]];
+      if (date == null){
+        date = $scope.projectParent.accomplish_at;
+      }
+      return moment(date).toDate();
     }
 
     var getMaxBeginDate = function () {
