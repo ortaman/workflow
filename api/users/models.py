@@ -20,7 +20,7 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
 
         ('Directora comercial', 'Directora comercial'),
         ('Especialista de capacitación fuerza de ventas', 'Especialista de capacitación fuerza de ventas'),
-        
+
         ('Gerente de instituciones', 'Gerente de instituciones'),
         ('Gerente de inteligencia de mercados', 'Gerente de inteligencia de mercados'),
         ('Gerente de línea de productos', 'Gerente de línea de productos'),
@@ -35,6 +35,8 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
         ('Gerente distrital', 'Gerente distrital'),
         ('Gerente regional de ventas', 'Gerente regional de ventas'),
         ('Gerente nacional de ventas', 'Gerente nacional de ventas'),
+        ('Gerente cuentas clave', 'Gerente Cuentas Clave'),
+        ('Sub director comercial', 'Sub director Comercial'),
     )
 
     username = models.CharField(max_length=128, unique=True)
