@@ -20,8 +20,6 @@ app.config(function($stateProvider, $urlRouterProvider,
       templateUrl: "app/coordinations/coordinations.html",
       controller: "CoordinationsController"
     })
-
-
     .state('projectCreate', {
       url: "/projectCreate/:parentProject",
       templateUrl: "app/project-create/project-create.html",
@@ -53,14 +51,11 @@ app.config(function($stateProvider, $urlRouterProvider,
       controller: "ProjectUpdateController"
 
     })
-
     .state('actionList', {
       url: "/actionList",
       templateUrl: "app/action-list/action-list.html",
       controller: "ActionListController",
     })
-
-
     .state('calendar', {
       url: "/calendar",
       templateUrl: "app/calendar/calendar.html",
@@ -81,6 +76,16 @@ app.config(function($stateProvider, $urlRouterProvider,
       url: "/userCreate/:id",
       templateUrl: "app/user-create/user-create.html",
       controller: "UserCreateController",
+    })
+    .state('alerts', {
+      url: "/alerts",
+      templateUrl: "app/alerts/alerts.html",
+      controller: "AlertsController",
+    })
+    .state('notifications', {
+      url: "/notifications",
+      templateUrl: "app/notifications/notifications.html",
+      controller: "NotificationsController",
     })
 
   // For any unmatched url, redirect to /state1
