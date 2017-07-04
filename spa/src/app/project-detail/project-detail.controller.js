@@ -230,6 +230,7 @@ app.controller('ProjectDetailController', [
 		 controller: 'CloseProjectModalController',
 		 templateUrl: '/app/project-detail/modals/close-project-modal.html',
 		 locals:{
+			 type: type,
 			 project: $scope.project
 		 }
 	 }

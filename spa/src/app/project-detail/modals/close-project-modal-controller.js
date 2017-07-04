@@ -1,8 +1,22 @@
 
-app.controller('CloseProjectModalController', ['$scope','$mdDialog','project','Notification', 'ActionService',
-  function($scope,$mdDialog, project, Notification, ActionService) {
+app.controller('CloseProjectModalController', ['$scope','$mdDialog','type', 'project','Notification', 'ActionService',
+  function($scope,$mdDialog, type, project, Notification, ActionService) {
 
     var $ctrl = this;
+    $ctrl.titles = {
+      'project': {
+        'type':'project',
+       'name': 'proyecto',
+       'theName': 'El proyecto',
+      },
+      'action':{
+        'type':'action',
+       'name': 'acción',
+       'theName': 'La acción',
+      }
+    }
+
+    $ctrl.titles = $ctrl.titles[type];
     $ctrl.project = project;
     $ctrl.submitted = false;
 
@@ -17,7 +31,11 @@ app.controller('CloseProjectModalController', ['$scope','$mdDialog','project','N
         $scope.submmitPromise = ActionService.patch(project.id, project).then(
           function (response) {
             $mdDialog.hide();
-            Notification.success("El proyecto ha pasado a estatus de cerrado")
+            if(type == 'project')
+              Notification.success("El proyecto ha pasado a estatus de cerrado")
+            else
+              Notification.success("La acción ha pasado a estatus de cerrada")
+
 
           },
           function (errorResponse) {

@@ -1,13 +1,13 @@
 <div class="modal-dialog modal-lg">
 
   <div class="modal-header text-center">
-      <h3 class="modal-title" id="modal-title">Cierre de proyecto</h3>
+      <h3 class="modal-title" id="modal-title">Cierre de {{ vm.titles.name }}</h3>
   </div>
   <form novalidate name="vm.form" ng-submit="vm.closeProject(status)">
     <div class="modal-body" id="modal-body" style="padding:3%">
       <div class="row">
         <div class="col-md-5 ">
-          <label>¿ El proyecto terminó satisfactoriamente ?</label>
+          <label>¿ {{ vm.titles.theName }} terminó satisfactoriamente ?</label>
         </div>
       </div>
       <div class="row">
@@ -29,7 +29,7 @@
     <div class="modal-footer">
         <div class=" text-center" style="padding-top:1%">
           <button type="button" class="btn red" ng-click="vm.cancel()">Cancelar</button>
-          <button type="submit" promise-btn="submmitPromise"  class="btn blue">Cerrar proyecto</button>
+          <button type="submit" promise-btn="submmitPromise"  class="btn blue">Cerrar {{ vm.titles.name }}</button>
           <br><br>
           <div class="error">
             {{ vm.errors }}
