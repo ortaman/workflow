@@ -30,7 +30,7 @@
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
-                            <li ng-if="checkRole(['producer'])">
+                            <li ng-if="checkRole(['producer', 'observer'])">
                                 <a ng-click="actionCreate()">
                                     <i class="icon-fire"></i> Nueva Acción </a>
                             </li>
