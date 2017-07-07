@@ -88,7 +88,7 @@
                                             <td class="fit">
                                                 <img class="user-pic rounded" ng-src="{{ producer.producer.photo}}"> </td>
                                             <td>
-                                                <a href="javascript:;" class="primary-link">
+                                                <a ui-sref="profile({id:producer.producer.id})" class="primary-link">
                                                   {{producer.producer.name  +' '+ producer.producer.first_surname+' '+ producer.producer.second_surname}}
                                                 </a>
                                             </td>

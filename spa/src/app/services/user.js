@@ -49,6 +49,7 @@ app.service('UserService', function($http, APIConfig,$q, StorageService) {
 
     this.get = function (id) {
       var promise = $http.get(APIConfig.url + "users/" + id + "/").then(function(response) {
+        response.data.photo = APIConfig.baseUrl + response.data.photo;
         return response.data;
       });
       return promise;

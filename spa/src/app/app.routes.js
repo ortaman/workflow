@@ -11,7 +11,7 @@ app.config(function($stateProvider, $urlRouterProvider,
       controller: "LoginController"
     })
     .state('profile', {
-      url: "/profile",
+      url: "/profile/:id",
       templateUrl: "app/profile/profile.html",
       controller: "ProfileController"
     })
