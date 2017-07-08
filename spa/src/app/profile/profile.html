@@ -140,7 +140,7 @@
                                                   <td class="fit ">
                                                     <img height="40" width="40" ng-src="{{producer.client.photo}}"/>
                                                   <td>
-                                                      <a href="javascript:; " class="primary-link ">{{producer.client.name  +' '+ producer.client.first_surname+' '+ producer.client.second_surname}}</a>
+                                                      <a ui-sref="profile({id:producer.client.id})" class="primary-link ">{{producer.client.name  +' '+ producer.client.first_surname+' '+ producer.client.second_surname}}</a>
                                                   </td>
                                                   <td>{{ producer.pending}}</td>
                                                   <td>{{ producer.accepted}}</td>
@@ -194,7 +194,7 @@
                                                   <td class="fit ">
                                                     <img height="40" width="40" ng-src="{{producer.producer.photo}}"/>
                                                   <td>
-                                                      <a href="javascript:; " class="primary-link ">{{producer.producer.name  +' '+ producer.producer.first_surname+' '+ producer.producer.second_surname}}</a>
+                                                      <a ui-sref="profile({id:producer.producer.id})" class="primary-link ">{{producer.producer.name  +' '+ producer.producer.first_surname+' '+ producer.producer.second_surname}}</a>
                                                   </td>
                                                   <td>{{ producer.pending}}</td>
                                                   <td>{{ producer.accepted}}</td>
@@ -240,15 +240,10 @@
                                             <div class="mt-container" ng-class="project.color + '-status-opacity'">
                                                 <div class="mt-head-title"> {{project.name}} </div>
                                                 <div class="mt-body-icons">
-                                                    <a href="bitacora.html">
-                                                        <i class=" fa fa-lightbulb-o"></i>
-                                                    </a>
-                                                    <a href="bitacora.html">
-                                                        <i class=" fa fa-hourglass-end"></i>
-                                                    </a>
-                                                    <a href="bitacora.html">
-                                                        <i class=" fa fa-warning"></i>
-                                                    </a>
+                                                  <a ui-sref="projectDetail({ id: project.id })">
+                                                     <md-tooltip md-direction="top"> Detalle del proyecto </md-tooltip>
+                                                      <i class=" fa fa-file-text-o"></i>
+                                                  </a>
                                                 </div>
                                                 <div class="mt-footer-button">
                                                     <button type="button" class="btn btn-circle btn-danger btn-sm">{{project.kind}}</button>

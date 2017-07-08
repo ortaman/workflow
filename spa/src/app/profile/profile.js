@@ -1,7 +1,7 @@
 
 app.controller('ProfileController', ['$scope','ProducerGetListService','UserService','ActionService',
- 'StadisticsService', 'ProjectService',
- function($scope, ProducerGetListService, UserService, ActionService, StadisticsService, ProjectService) {
+ 'StadisticsService', 'ProjectService', '$state',
+ function($scope, ProducerGetListService, UserService, ActionService, StadisticsService, ProjectService,  $state) {
 
   $scope.producersCurrentPage = 1;
   $scope.clientsCurrentPage = 1;
@@ -14,14 +14,25 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 
 
   $scope.init = function(){
-    UserService.me().then(
-      function(response){
-        $scope.user = response;
-        $scope.performancePageChanged($scope.clientsCurrentPage, 'oweme');
-        $scope.performancePageChanged($scope.producersCurrentPage, 'todo');
-        $scope.projectPageChanged();
-      }
-    )
+    if($state.params.id){
+      UserService.get($state.params.id).then(
+        function(response){
+          $scope.user = response;
+          $scope.performancePageChanged($scope.clientsCurrentPage, 'oweme');
+          $scope.performancePageChanged($scope.producersCurrentPage, 'todo');
+          $scope.projectPageChanged();
+        }
+      )
+    }else{
+      UserService.me().then(
+        function(response){
+          $scope.user = response;
+          $scope.performancePageChanged($scope.clientsCurrentPage, 'oweme');
+          $scope.performancePageChanged($scope.producersCurrentPage, 'todo');
+          $scope.projectPageChanged();
+        }
+      )
+    }
   }
 
   $scope.performancePageChanged = function(page, list) {

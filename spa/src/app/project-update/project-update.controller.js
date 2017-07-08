@@ -118,12 +118,7 @@ app.controller('ProjectUpdateController', [
       return moment($scope.projectParent[phases[$scope.projectParent.phase]]).toDate();
     }
 
-    $scope.$watch('project.accomplish_at', function(oldVal, newVal){
-      if (oldVal && newVal){
-        let obj = ProjectService.getSuggestedDates($scope.project.begin_at, newVal);
-        console.log(obj);
-      }
-    })
+
 
     ////////////////////end dates validations///////////////////////
     $scope.isProject = function(){
