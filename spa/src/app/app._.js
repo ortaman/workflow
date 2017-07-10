@@ -10,7 +10,7 @@ var app = angular.module('myApp',
     'ui.calendar',
     'angularPromiseButtons',
     'ui-notification',
-    'angular-timeline'
+    'ngTimeline'
 
     // 'myApp.actionList',
   ]
@@ -29,9 +29,11 @@ app.run(function($http, $rootScope, $location, StorageService, UserService) {
 
 if(window.location.hash === '#_=_') window.location.hash = '#!';
 
-app.config(function (angularPromiseButtonsProvider)
+app.config(function (angularPromiseButtonsProvider, $httpProvider)
 {
   angularPromiseButtonsProvider.extendConfig({
      spinnerTpl: '<i  style="display: none;" class=" btn-spinner fa fa-circle-o-notch fa-spin"></i>',
   });
+
+  $httpProvider.interceptors.push('authHttpResponseInterceptor');
 })

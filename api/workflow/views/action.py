@@ -10,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from workflow.models import Action
 from workflow.serializers import ActionPostSerializer, ActionGetSerializer, ActionListSerializer, ActionPatchSerializer
 from workflow.serializers import ActionClientSerializer, ActionProducerSerializer
+from workflow.permissions import ActionPermisssions
 from common.mixins import APIMixin
 
 
@@ -17,6 +18,7 @@ class ActionDetail(APIView, APIMixin):
     """
     Retrieve, update or delete a action instance.
     """
+    permission_classes = (IsAuthenticated, ActionPermisssions)
 
     # Initial mixin variables
     model = Action
@@ -62,7 +64,7 @@ class ActionList(APIView, APIMixin):
     """
     List all actions, or create a new action.
     """
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, ActionPermisssions)
 
     # Initial mixin variables (model and serializer_list)
     model = Action

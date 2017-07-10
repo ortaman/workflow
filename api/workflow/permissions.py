@@ -14,11 +14,11 @@ class ActionPermisssions(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
 
-        if request.method in SAFE_METHODS:
+        if request.method in permissions.SAFE_METHODS:
             return True
 
-        if request.method is 'POST':
-            
+        if request.method == 'POST':
+
             parent_action = obj.get('parent_action')
 
             if parent_action is None and obj.created_by.id == request.user.id:
@@ -30,10 +30,10 @@ class ActionPermisssions(permissions.BasePermission):
                 if action.parent_action.producer.id == request.user.id:
                     return True
 
-        if request.method is 'PUT':
+        if request.method == 'PUT':
             return obj.client.id == request.user.id
 
-        if request.method is 'PATCH':
+        if request.method == 'PATCH':
             return obj.producer.id == request.user.id
 
         return False

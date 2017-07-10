@@ -16,11 +16,11 @@ class APIMixin(object):
     paginate_by = 10
 
     def get_object(self, pk):
-        """
-        Get object or 404.
-        """
         try:
-            return self.model.objects.get(pk=pk)
+            obj =  self.model.objects.get(pk=pk)
+            self.check_object_permissions(self.request, obj)
+            return obj
+
         except self.model.DoesNotExist:
             raise Http404
 
