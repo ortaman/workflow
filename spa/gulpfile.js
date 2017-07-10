@@ -110,6 +110,7 @@ gulp.task('js-vendor', function () {
     "bower_components/angular-promise-buttons/dist/angular-promise-buttons.min.js",
     "bower_components/angular-ui-notification/dist/angular-ui-notification.min.js",
     "bower_components/angular-timeline/dist/angular-timeline.js",
+    "bower_components/angular-timelinejs3/dist/js/ng-timeline.js"
     ])
     //.pipe(uglify())
     .pipe(concat('vendors.js'))
