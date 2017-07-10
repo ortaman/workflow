@@ -16,7 +16,7 @@ DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'vagrantdb1',
+        'NAME': 'vagrantdb',
         'USER': 'vagrant',
         'PASSWORD': 'vagrant',
         'HOST': 'localhost',
@@ -60,6 +60,3 @@ EMAIL_HOST_USER = 'medix@t4action.com'
 EMAIL_HOST_PASSWORD = 'actionworkflow'
 EMAIL_PORT = 587
 
-# ***** CELERY SETTINGS ***** #
-# CELERY_RESULT_BACKEND = 'django-db'
-# CELERY_RESULT_BACKEND = 'django-cache'
