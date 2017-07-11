@@ -2,9 +2,10 @@
 from django.conf.urls import url
 from django.contrib import admin
 
-from workflow.views.project import ProjectList, ProjectDetail, ProjectTimeStadistic
 from workflow.views.action import ActionList, ActionDetail, ActionStadisctic, ActionTodoStadistics, ActionOweMeStadistics
+from workflow.views.alert import AlertsList
 from workflow.views.report import ReportList
+from workflow.views.project import ProjectList, ProjectDetail, ProjectTimeStadistic
 
 
 urlpatterns = [
@@ -22,4 +23,7 @@ urlpatterns = [
     url(r'^actions/stadistics$', ActionStadisctic.as_view()),
     url(r'^actions/stadistics/todo$', ActionTodoStadistics.as_view()),
     url(r'^actions/stadistics/oweme$', ActionOweMeStadistics.as_view()),
+
+    url(r'^actions/alerts/$', AlertsList.as_view()),
+ 
 ]

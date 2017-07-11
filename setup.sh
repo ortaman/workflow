@@ -39,6 +39,10 @@ sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE vagrantDB TO vagrant;
 echo 'Installing Pillow (images processing library) dependencies'
 sudo apt-get install -y libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
 
+echo 'Installing RabbitMQ'
+sudo apt-get install -y rabbitmq-server
+
+
 echo 'Install pip python3'
 sudo apt-get install -y python3-pip
 
@@ -74,12 +78,29 @@ sudo npm install -g gulp
 # gulp
 # http://localhost:9090/
 
+
 # Open new terminal
 # cd workflow/
 # vagrant ssh
 # cd workflow/api
 # python manage.py runserver 0.0.0.0:8000
 # http://localhost:9000/
+
+
+# Run celery worker and beat load (in one command).
+# cd workflow/api
+# celery -A _api worker --beat --scheduler django --loglevel=info
+
+
+
+# ********   only if is necesary to user many workers separate the workers and the beat.  **********
+# open terminal
+# cd workflow/api
+# celery -A _api worker -l info
+
+# Start the celery beat service using the django scheduler
+# cd workflow/api
+# celery -A _api beat -l info -S django
 
 
 

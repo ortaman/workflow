@@ -38,8 +38,6 @@ class ProjectDetail(APIView, APIMixin):
         obj = self.get_object(pk)
         serializer = self.serializer_put(obj, data=request.data)
 
-        self.put_vatidations(obj, request.user)
-
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -49,8 +47,6 @@ class ProjectDetail(APIView, APIMixin):
     def patch(self, request, pk, format=None):
         obj = self.get_object(pk)
         serializer = self.serializer_patch(obj, data=request.data, partial=True)
-
-        self.patch_vatidations(obj, request.user)
 
         if serializer.is_valid():
             serializer.save()

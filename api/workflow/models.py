@@ -145,3 +145,10 @@ def change_status(sender, instance, created, **kwargs):
             obj.save()
     else:
         pass
+
+
+class Alert(models.Model):
+    action = models.ForeignKey(to=Action, related_name="action_alert", verbose_name="Acción")
+    message = models.CharField(max_length=128, verbose_name="Mensaje")
+
+    created_at = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='Fecha de creación')
