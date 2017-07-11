@@ -17,40 +17,10 @@
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <a ui-sref="projectList"> Tablero de Proyectos </a>
+                        <a ui-sref="projectList"> Notificaciones </a>
                         <i class="fa fa-circle"></i>
                     </li>
-                    <li>
-                        <span> {{ titles.create }} </span>
-                    </li>
-
                 </ul>
-                <div class="page-toolbar">
-                    <div class="btn-group pull-right">
-                        <!--button type="button" class="btn red btn-sm btn-outline dropdown-toggle" data-toggle="dropdown"> Acciones
-                            <i class="fa fa-angle-down"></i>
-                        </button>
-                        <ul class="dropdown-menu pull-right" role="menu">
-                            <li>
-                                <a href="#">
-                                    <i class="icon-fire"></i> Nueva Alerta</a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="icon-pin"></i> Nueva Acción</a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="icon-user"></i> Ubicar a Alguien</a>
-                            </li>
-                            <li class="divider"> </li>
-                            <li>
-                                <a href="#">
-                                    <i class="icon-layers"></i> Ver Proyectos</a>
-                            </li>
-                        </ul-->
-                    </div>
-                </div>
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
@@ -59,31 +29,15 @@
             <!-- END PAGE HEADER-->
             <!-- BEGIN FORM PROJECT-->
             <div class="todo-content">
-                <div class="portlet light">
-                    <!-- PROJECT HEAD -->
-                    <!--div class="portlet-title">
-                        <div class="caption">
-                            <i class="icon-bar-chart font-green-sharp hide"></i>
-                            <span class="caption-helper">Fase del Action Workflow:</span> &nbsp;
-                            <span class="caption-subject font-green-sharp bold uppercase">Preparación</span>
-                        </div>
-                    </div-->
-                    <div class="portel-body">
-                      <timeline>
-                        <timeline-event ng-repeat="event in events" side="">
-                          <timeline-badge class="{{event.badgeClass}}">
-                            <i class="glyphicon {{event.badgeIconClass}}"></i>
-                          </timeline-badge>
-                          <timeline-panel class="{{event.badgeClass}}">
-                            <timeline-heading>
-                              <h4>{{event.title}} {{ event.side}}</h4>
-                            </timeline-heading>
-                            <p>{{event.content}}</p>
-                          </timeline-panel>
-                        </timeline-event>
-                      </timeline>
-                    </div>
+              <div class="portlet light">
+                <div class="col-md-12">
+
+                  <div class="timeline-wrapper">
+                    <timeline control="timeline" height="500px" options="options"></timeline>
+                  </div>
+
                 </div>
+              </div>
             </div>
             <!-- END TASK COMMENT FORM -->
         </div>

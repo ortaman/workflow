@@ -19,6 +19,7 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
         ('Cuenta clave', 'Cuenta clave'),
 
         ('Directora comercial', 'Directora comercial'),
+        ('Director general', 'Director general'),
         ('Especialista de capacitación fuerza de ventas', 'Especialista de capacitación fuerza de ventas'),
 
         ('Gerente de instituciones', 'Gerente de instituciones'),
