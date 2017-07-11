@@ -7,7 +7,7 @@ from django.conf import settings
 from rest_framework import serializers
 
 from users.serializers import UserSerializer
-from workflow.models import Action, Report
+from workflow.models import Action, Report, Alert
 
 
 class Base64ImageField(serializers.ImageField):
@@ -177,3 +177,12 @@ class ActionProducerSerializer(serializers.ModelSerializer):
     class Meta:
         model  = Action
         fields = ('producer',)
+
+
+class AlertSerializer(serializers.ModelSerializer):
+
+    action = ActionListSerializer()
+
+    class Meta:
+        model = Alert
+        fields = ('action', 'message', 'created_at')
