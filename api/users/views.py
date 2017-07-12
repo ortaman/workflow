@@ -14,7 +14,6 @@ from .permissions import UserIsOwnerOrReadOnly
 from .serializers import UserSerializer, UserPostSerializer
 
 
-
 class MyCustomPagination(PageNumberPagination):
     page_size = 8
     page_size_query_param = 'paginate_by'

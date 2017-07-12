@@ -7,6 +7,8 @@ spa/src/assets/app.css
 spa/src/assets/vendors.js
 spa/src/assets/vendors.css
 
+api/.coverage
+
 ### Keys in prodution. ###
 api/kroo/keys/production.py
 
