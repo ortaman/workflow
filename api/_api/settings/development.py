@@ -25,6 +25,13 @@ DATABASES = {
     }
 }
 
+import sys
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'test_database'
+    }
+
 INSTALLED_APPS += [
     'django_extensions',
     'debug_toolbar',
@@ -59,4 +66,3 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'medix@t4action.com'
 EMAIL_HOST_PASSWORD = 'actionworkflow'
 EMAIL_PORT = 587
-
