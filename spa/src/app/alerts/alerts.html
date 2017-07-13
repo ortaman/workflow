@@ -50,245 +50,55 @@
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em" ng-init="init()"> {{ titles.create }} {{ projectParent.name }}</h1>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <!-- BEGIN FORM PROJECT-->
-            <div class="todo-content">
+            <div class="todo-content" ng-init="init()">
                 <div class="portlet light">
                   <div class="col-md-12">
 
                     <div class="mt-timeline-2">
-                                                    <div class="mt-timeline-line border-grey-steel"></div>
-                                                    <ul class="mt-container">
-                                                        <li class="mt-item">
-                                                            <div class="mt-timeline-icon bg-red bg-font-red border-grey-steel">
-                                                                <i class="icon-plus"></i>
-                                                            </div>
-                                                            <div class="mt-timeline-content">
-                                                                <div class="mt-content-container">
-                                                                    <div class="mt-title">
-                                                                        <h3 class="mt-content-title">Nuevo proyecto (Detección de errores)</h3>
-                                                                    </div>
-                                                                    <div class="mt-author">
-                                                                        <div class="mt-avatar">
-                                                                            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4_XRvUoHrrulZEh9z6wF_Pta_oy9CgveqgXTLIeHlQLxe5Ev1'>
-                                                                        </div>
-                                                                        <div class="mt-author-name">
-                                                                            <a href="javascript:;" class="font-blue-madison">Andres Iniesta</a>
-                                                                        </div>
-                                                                        <div class="mt-author-notes font-grey-mint">10 marzo 2016 : 7:45 PM</div>
-                                                                    </div>
-                                                                    <div class="mt-content border-grey-salt">
-                                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui
-                                                                            ut.</p>
-                                                                        <a href="javascript:;" class="btn btn-circle red">Ver proyecto</a>
+                        <div class="mt-timeline-line border-grey-steel"></div>
+                        <ul class="mt-container">
+                            <li class="mt-item" ng-repeat="alert in alerts">
+                                <div class="mt-timeline-icon bg-red bg-font-red border-grey-steel">
+                                    <i class="icon-plus"></i>
+                                </div>
+                                <div class="mt-timeline-content">
+                                    <div class="mt-content-container">
+                                        <div class="mt-title">
+                                            <h3 class="mt-content-title">Nuevo proyecto ({{ alert.action.name}})</h3>
+                                        </div>
+                                        <div class="mt-author">
+                                            <div class="mt-avatar">
+                                                <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4_XRvUoHrrulZEh9z6wF_Pta_oy9CgveqgXTLIeHlQLxe5Ev1'>
+                                            </div>
+                                            <div class="mt-author-name">
+                                                <a href="javascript:;" class="font-blue-madison">{{ alert.action.client.name}}</a>
+                                            </div>
+                                            <div class="mt-author-notes font-grey-mint">{{ alert.created_at | date:'dd-MMM-yyyy hh:mm a '}}</div>
+                                        </div>
+                                        <div class="mt-content border-grey-salt">
+                                            <p>{{ alert.message}}</p>
+                                            <a href="javascript:;" class="btn btn-circle red" ng-click="updateAlert(alert)">Ver proyecto</a>
 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="mt-item">
-                                                            <div class="mt-timeline-icon bg-blue bg-font-blue border-grey-steel">
-                                                                <i class="icon-clock"></i>
-                                                            </div>
-                                                            <div class="mt-timeline-content">
-                                                                <div class="mt-content-container bg-white border-grey-steel">
-                                                                    <div class="mt-title">
-                                                                        <h3 class="mt-content-title">Acciones atrasadas</h3>
-                                                                    </div>
-                                                                    <div class="mt-author">
-                                                                        <div class="mt-avatar">
-                                                                            <img src="../assets/pages/media/users/avatar80_3.jpg">
-                                                                        </div>
-                                                                        <div class="mt-author-name">
-                                                                            <a href="javascript:;" class="font-blue-madison"></a>
-                                                                        </div>
-                                                                        <div class="mt-author-notes font-grey-mint">11 March 2016 : 10:15 AM</div>
-                                                                    </div>
-                                                                    <div class="mt-content border-grey-steel">
-                                                                        <ul>
-                                                                          <li>Accion 1 fecha de término - 10/julio/2017</li>
-                                                                          <li>Accion 2 fecha de término - 10/julio/2017</li>
-                                                                          <li>Accion 3 fecha de término - 10/julio/2017</li>
-                                                                        </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="mt-item">
-                                                            <div class="mt-timeline-icon bg-green-turquoise bg-font-green-turquoise border-grey-steel">
-                                                                <i class="icon-calendar"></i>
-                                                            </div>
-                                                            <div class="mt-timeline-content">
-                                                                <div class="mt-content-container">
-                                                                    <div class="mt-title">
-                                                                        <h3 class="mt-content-title">Pedidos no aceptados</h3>
-                                                                    </div>
-                                                                    <div class="mt-author">
-                                                                        <div class="mt-avatar">
-                                                                            <img src="../assets/pages/media/users/avatar80_2.jpg">
-                                                                        </div>
-                                                                        <div class="mt-author-name">
-                                                                        </div>
-                                                                        <div class="mt-author-notes font-grey-mint">12 March 2016 : 12:20 PM</div>
-                                                                    </div>
-                                                                    <div class="mt-content border-grey-salt">
-                                                                        <p>
-                                                                          <ul>
-                                                                            <li>Proyecto 1</li>
-                                                                            <li>Accion 1</li>
-                                                                          </ul>
-                                                                        </p>
-                                                                        <a href="javascript:;" class="btn btn-circle green-turquoise">Read More</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="mt-item">
-                                                            <div class="mt-timeline-icon bg-purple-medium bg-font-purple-medium border-grey-steel">
-                                                                <i class="icon-heart"></i>
-                                                            </div>
-                                                            <div class="mt-timeline-content">
-                                                                <div class="mt-content-container bg-white border-grey-steel">
-                                                                    <div class="mt-title">
-                                                                        <h3 class="mt-content-title">Event Success</h3>
-                                                                    </div>
-                                                                    <div class="mt-author">
-                                                                        <div class="mt-avatar">
-                                                                            <img src="../assets/pages/media/users/avatar80_1.jpg">
-                                                                        </div>
-                                                                        <div class="mt-author-name">
-                                                                            <a href="javascript:;" class="font-blue-madison">Matt Goldman</a>
-                                                                        </div>
-                                                                        <div class="mt-author-notes font-grey-mint">14 March 2016 : 8:15 PM</div>
-                                                                    </div>
-                                                                    <div class="mt-content border-grey-steel">
-                                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde.</p>
-                                                                        <a href="javascript:;" class="btn btn-circle btn-outline purple-medium">View Summary</a>
-                                                                        <div class="btn-group pull-right">
-                                                                            <button class="btn btn-circle green dropdown-toggle" type="button" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false"> Actions
-                                                                                <i class="fa fa-angle-down"></i>
-                                                                            </button>
-                                                                            <ul class="dropdown-menu pull-right" role="menu">
-                                                                                <li>
-                                                                                    <a href="javascript:;">Action </a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a href="javascript:;">Another action </a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a href="javascript:;">Something else here </a>
-                                                                                </li>
-                                                                                <li class="divider"> </li>
-                                                                                <li>
-                                                                                    <a href="javascript:;">Separated link </a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="mt-item">
-                                                            <div class="mt-timeline-icon bg-blue-steel bg-font-blue-steel border-grey-steel">
-                                                                <i class="icon-call-in"></i>
-                                                            </div>
-                                                            <div class="mt-timeline-content">
-                                                                <div class="mt-content-container">
-                                                                    <div class="mt-title">
-                                                                        <h3 class="mt-content-title">Conference Call</h3>
-                                                                    </div>
-                                                                    <div class="mt-author">
-                                                                        <div class="mt-avatar">
-                                                                            <img src="../assets/pages/media/users/avatar80_1.jpg">
-                                                                        </div>
-                                                                        <div class="mt-author-name">
-                                                                            <a href="javascript:;" class="font-blue-madison">Rory Matthew</a>
-                                                                        </div>
-                                                                        <div class="mt-author-notes font-grey-mint">14 March 2016 : 5:45 PM</div>
-                                                                    </div>
-                                                                    <div class="mt-content border-grey-salt">
-                                                                        <img class="timeline-body-img pull-left" src="../assets/pages/media/blog/5.jpg" alt="">
-                                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui
-                                                                            ut. laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut. </p>
-                                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui
-                                                                            ut. laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut. </p>
-                                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui
-                                                                            ut. laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut. </p>
-                                                                        <a href="javascript:;" class="btn btn-circle red">Read More</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="mt-item">
-                                                            <div class="mt-timeline-icon bg-green-jungle bg-font-green-jungle border-grey-steel">
-                                                                <i class="icon-call-out"></i>
-                                                            </div>
-                                                            <div class="mt-timeline-content">
-                                                                <div class="mt-content-container bg-white border-grey-steel">
-                                                                    <div class="mt-title">
-                                                                        <h3 class="mt-content-title">Conference Decision</h3>
-                                                                    </div>
-                                                                    <div class="mt-author">
-                                                                        <div class="mt-avatar">
-                                                                            <img src="../assets/pages/media/users/avatar80_5.jpg">
-                                                                        </div>
-                                                                        <div class="mt-author-name">
-                                                                            <a href="javascript:;" class="font-blue-madison">Jessica Wolf</a>
-                                                                        </div>
-                                                                        <div class="mt-author-notes font-grey-mint">14 March 2016 : 8:30 PM</div>
-                                                                    </div>
-                                                                    <div class="mt-content border-grey-steel">
-                                                                        <img class="timeline-body-img pull-right" src="../assets/pages/media/blog/6.jpg" alt="">
-                                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui
-                                                                            ut.</p>
-                                                                        <a href="javascript:;" class="btn btn-circle green-sharp">Read More</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="mt-item">
-                                                            <div class="mt-timeline-icon bg-blue-chambray bg-font-blue-chambray border-grey-steel">
-                                                                <i class="icon-bubbles"></i>
-                                                            </div>
-                                                            <div class="mt-timeline-content">
-                                                                <div class="mt-content-container">
-                                                                    <div class="mt-title">
-                                                                        <h3 class="mt-content-title">Conference Post Mortem</h3>
-                                                                    </div>
-                                                                    <div class="mt-author">
-                                                                        <div class="mt-avatar">
-                                                                            <img src="../assets/pages/media/users/avatar80_1.jpg">
-                                                                        </div>
-                                                                        <div class="mt-author-name">
-                                                                            <a href="javascript:;" class="font-blue-madison">Rory Matthew</a>
-                                                                        </div>
-                                                                        <div class="mt-author-notes font-grey-mint">15 March 2016 : 10:45 PM</div>
-                                                                    </div>
-                                                                    <div class="mt-content border-grey-salt">
-                                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui
-                                                                            ut. laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut. </p>
-                                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui
-                                                                            ut. laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut. </p>
-                                                                        <a href="javascript:;" class="btn btn-circle red">Read More</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                        </ul>
+                    </div>
 
 
                     <div class="text-center">
                         <ul uib-pagination boundary-links="true" class="pagination-sm"
                             previous-text="&lsaquo;" next-text="&rsaquo;"
                             first-text="&laquo;" last-text="&raquo;"
-                            items-per-page="data.paginate_by"
-                            total-items="data.count"
-                            ng-model="currentPage"
-                            ng-change="pageChanged()">
+                            items-per-page="alerts.paginated_by"
+                            total-items="alerts.count"
+                            ng-model="currentAlertPage"
+                            ng-change="getAlerts()">
                         </ul>
                     </div>
                   </div>

@@ -10,4 +10,14 @@ app.service("AlertsService", ['$http', 'APIConfig', function($http, APIConfig) {
 	  return promise;
 	};
 
+
+  this.update = function(object) {
+
+    var promise = $http.put(APIConfig.url + "actions/alerts/" + object.id + "/" , object).then(function(response) {
+      return response.data;
+    });
+
+    return promise;
+  };
+
 }]);

@@ -61,11 +61,12 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
     }
   };
 
-  $scope.projectPageChanged = function() {
-
+  $scope.projectPageChanged = function(status) {
+    let defaultStatus = 'Pendiente';
 		var query = {
 			"page": $scope.currentProjectPage,
-      "client_id":$scope.user.id
+      "client_id":$scope.user.id,
+      "status":status || defaultStatus
 		};
 
 		ProjectService.getList(query).then(
