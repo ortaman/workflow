@@ -280,6 +280,17 @@
                                                     </ul>
                                                 </div>
 
+
+                    <div class="text-center">
+                        <ul uib-pagination boundary-links="true" class="pagination-sm"
+                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                            first-text="&laquo;" last-text="&raquo;"
+                            items-per-page="data.paginate_by"
+                            total-items="data.count"
+                            ng-model="currentPage"
+                            ng-change="pageChanged()">
+                        </ul>
+                    </div>
                   </div>
                 </div>
             </div>
