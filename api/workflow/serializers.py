@@ -185,4 +185,4 @@ class AlertSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Alert
-        fields = ('action', 'message', 'created_at')
+        fields = ('action', 'message', 'viewed', 'created_at')
