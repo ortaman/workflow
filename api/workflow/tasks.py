@@ -26,37 +26,43 @@ def alerts():
     save_alerts(
         message = 'La fecha de avance de reporte expira en 2 días.',
         report_at=before_dealine.strftime("%Y-%m-%d"),
-        advance_report_at=None
+        advance_report_at=None,
+        kind='Before'
     )
 
     save_alerts(
         message = 'La fecha de avance de ejecución expira en 2 días.',
         accomplish_at=before_dealine.strftime("%Y-%m-%d"),
-        ejecution_report_at=None
+        ejecution_report_at=None,
+        kind='Before'
     )
 
     save_alerts(
         message = 'La fecha límite de reporte es el día de hoy',
         report_at=deadline.strftime("%Y-%m-%d"),
-        advance_report_at=None
+        advance_report_at=None,
+        kind='Deadline'
     )
 
     save_alerts(
         message = 'La fecha límite de ejecución es el día de hoy.',
         accomplish_at=deadline.strftime("%Y-%m-%d"),
-        ejecution_report_at=None
+        ejecution_report_at=None,
+        kind='Deadline'
     )
 
     save_alerts(
         message = 'La fecha de reporte ha expirado.',
         report_at=after_dealine.strftime("%Y-%m-%d"),
-        advance_report_at=None
+        advance_report_at=None,
+        kind='After'
     )
 
     save_alerts(
         message = 'La fecha de ejecución ha expirado.',
         accomplish_at=after_dealine.strftime("%Y-%m-%d"),
-        ejecution_report_at=None
+        ejecution_report_at=None,
+        kind='After'
     )
 
     return True

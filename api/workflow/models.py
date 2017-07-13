@@ -148,8 +148,16 @@ def change_status(sender, instance, created, **kwargs):
 
 
 class Alert(models.Model):
+
+    KINDS = (
+        ('Before', 'Before'),
+        ('Deadline', 'Deadline'),
+        ('After', 'After'),
+    )
+
     action = models.ForeignKey(to=Action, related_name="action_alert", verbose_name="Acción")
     message = models.CharField(max_length=128, verbose_name="Mensaje")
     viewed = models.BooleanField(default=False, verbose_name="Mensaje Leido")
-    
+    kind = models.CharField(choices=KINDS, max_length=8, verbose_name='Tipos de alerta')
+
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='Fecha de creación')

@@ -179,10 +179,10 @@ class ActionProducerSerializer(serializers.ModelSerializer):
         fields = ('producer',)
 
 
-class AlertSerializer(serializers.ModelSerializer):
+class AlertListSerializer(serializers.ModelSerializer):
 
     action = ActionListSerializer()
 
     class Meta:
         model = Alert
-        fields = ('action', 'message', 'viewed', 'created_at')
+        fields = ('action', 'message', 'viewed', 'kind', 'created_at')
