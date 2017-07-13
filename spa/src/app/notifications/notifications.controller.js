@@ -1,7 +1,23 @@
 
-app.controller('NotificationsController', ['$scope', '$timeout',
- function($scope ,$timeout) {
+app.controller('NotificationsController', ['$scope', '$timeout', 'NotificationsService', 'Notification',
+ function($scope ,$timeout, NotificationsService, Notification) {
 
+   $scope.notifications = [];
+   $scope.init = function () {
+     $scope.getNotifications();
+   }
+
+   $scope.getNotifications = function () {
+     NotificationsService.getList({}).then(
+       function (response) {
+         console.log(response);
+         $scope.notifications = response;
+       },
+       function (error) {
+         Notification("Ha ocurrido un error, intente mas tarde")
+       }
+     )
+   }
           $scope.options = {
             debug: true,
             timenav_position: 'top',
