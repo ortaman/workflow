@@ -1,13 +1,13 @@
 
-from rest_framework.generics import GenericAPIView
+from rest_framework.viewsets import GenericViewSet
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.mixins import ListModelMixin, CreateModelMixin
+from rest_framework.mixins import ListModelMixin, UpdateModelMixin
 
 from workflow.models import Alert
-from workflow.permissions import AlertOrReadOnlyIfIsProducer
-from workflow.serializers import AlertListSerializer
+from workflow.permissions import AlertReadOnlyIfIsProducer
+from workflow.serializers import AlertListSerializer, AlertPartialUpdateSerializer
 
 
 class MyCustomPagination(PageNumberPagination):
@@ -24,15 +24,28 @@ class MyCustomPagination(PageNumberPagination):
         })
 
 
-class AlertsList(ListModelMixin, CreateModelMixin, GenericAPIView):
+class AlertsList(ListModelMixin, UpdateModelMixin, GenericViewSet):
     """
     Retrieve a list of alrts.
     """
     queryset = Alert.objects.all()
+    lookup_field = 'pk'
 
     serializer_class = AlertListSerializer
     pagination_class = MyCustomPagination
-    permission_classes = (IsAuthenticated, AlertOrReadOnlyIfIsProducer)
+    permission_classes = (IsAuthenticated, AlertReadOnlyIfIsProducer)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return AlertListSerializer
+        if self.request.method == 'PATCH':
+            return AlertPartialUpdateSerializer
 
     def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+        return super(AlertsList, self).list(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        return super(AlertsList, self).update(request, *args, **kwargs)
+
+    def partial_update(self, request, *args, **kwargs):
+        return super(AlertsList, self).partial_update(request, *args, **kwargs)

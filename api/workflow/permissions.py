@@ -39,7 +39,7 @@ class ActionPermisssions(permissions.BasePermission):
         return False
 
 
-class AlertOrReadOnlyIfIsProducer(permissions.BasePermission):
+class AlertReadOnlyIfIsProducer(permissions.BasePermission):
     """
     Object-level permission to only allow an object to edit if is owner.
     """
@@ -48,7 +48,7 @@ class AlertOrReadOnlyIfIsProducer(permissions.BasePermission):
 
         # Read permissions are allowed to any request,
         # so we'll always allow GET, HEAD or OPTIONS requests.
-        if request.method in SAFE_METHODS:
+        if request.method in permissions.SAFE_METHODS:
             return True
 
         # obj is retrieved by the :id url parameter.

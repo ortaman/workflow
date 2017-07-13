@@ -185,4 +185,11 @@ class AlertListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Alert
-        fields = ('action', 'message', 'viewed', 'kind', 'created_at')
+        fields = ( 'id', 'action', 'message', 'viewed', 'kind', 'created_at')
+
+
+class AlertPartialUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Alert
+        fields = ('viewed',)
