@@ -41,6 +41,10 @@ class AlertsList(ListModelMixin, UpdateModelMixin, GenericViewSet):
         if self.request.method == 'PATCH':
             return AlertPartialUpdateSerializer
 
+    def get_queryset(self):
+        return self.queryset.filter(action__producer_id=self.request.user.id)
+
+    '''
     def get(self, request, *args, **kwargs):
         return super(AlertsList, self).list(request, *args, **kwargs)
 
@@ -49,3 +53,4 @@ class AlertsList(ListModelMixin, UpdateModelMixin, GenericViewSet):
 
     def partial_update(self, request, *args, **kwargs):
         return super(AlertsList, self).partial_update(request, *args, **kwargs)
+    '''
