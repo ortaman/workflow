@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+from django.core.urlresolvers import reverse
 from django.contrib import admin
+from django.utils.html import format_html
+
 from workflow.models import Action, Report, Alert
 
 
@@ -17,11 +20,22 @@ class ReportInline(admin.TabularInline):
         return obj.created_by.get_full_name()
 
     def report_kind(self, obj):
-    	if obj.progress == '100':
-        	return 'Reporte de ejecución'
-    	return 'Reporte de avance'
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+        url = reverse('admin:%s_%s_change' % (app_label, model_name), args=(obj.id,))
+
+        if obj.progress == '100':
+            return format_html('<a href="{0}"> Reporte de ejecución </a>'.format(url))
+        return format_html('<a href="{0}"> Reporte de avance </a>'.format(url))
 
     report_kind.short_description = 'Tipo de reporte'
+
+    def has_add_permission(self, request):
+        return False
+
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 class ActionInline(admin.TabularInline):
@@ -35,6 +49,19 @@ class ActionInline(admin.TabularInline):
     fields = ('name', 'phase', 'status', 'client', 'producer', 'begin_at')
     readonly_fields = ('name', 'phase', 'status', 'client', 'producer', 'begin_at')
 
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def name(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+        url = reverse('admin:%s_%s_change' % (app_label, model_name), args=(obj.id,))
+
+        return format_html('<a href="{0}"> {1} </a>'.format(url, obj.name))
+
 
 class ActionAdmin(admin.ModelAdmin):
 
@@ -46,22 +73,21 @@ class ActionAdmin(admin.ModelAdmin):
     list_filter = ('phase', 'status', 'created_at',)
 
     inlines = [
-    	ReportInline,
+        ReportInline,
         ActionInline,
     ]
 
     def get_queryset(self, request):
-
         qs = super(ActionAdmin, self).get_queryset(request)
         return qs.filter(parent_action=None)
 
 
 class ReportAdmin(admin.ModelAdmin):
-	pass
+    pass
 
 
 class AlertAdmin(admin.ModelAdmin):
-	pass
+    pass
 
 
 admin.site.register(Action, ActionAdmin)
