@@ -14,31 +14,23 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
 
 
   $scope.init = function(){
-    if($state.params.id){
       UserService.get($state.params.id).then(
         function(response){
+          console.log("con id");
           $scope.user = response;
           $scope.performancePageChanged($scope.clientsCurrentPage, 'oweme');
           $scope.performancePageChanged($scope.producersCurrentPage, 'todo');
           $scope.projectPageChanged();
         }
       )
-    }else{
-      UserService.me().then(
-        function(response){
-          $scope.user = response;
-          $scope.performancePageChanged($scope.clientsCurrentPage, 'oweme');
-          $scope.performancePageChanged($scope.producersCurrentPage, 'todo');
-          $scope.projectPageChanged();
-        }
-      )
-    }
   }
 
   $scope.performancePageChanged = function(page, list) {
     if (list == 'todo') {
-
-      StadisticsService.todo().then(
+      let query = {
+        'user_id': $scope.user.id
+      }
+      StadisticsService.todo(query).then(
         function(response) {
           $scope[list] = response;
         },
@@ -48,8 +40,10 @@ app.controller('ProfileController', ['$scope','ProducerGetListService','UserServ
         }
       );
     }else if(list =='oweme'){
-
-      StadisticsService.oweme().then(
+      let query = {
+        'user_id': $scope.user.id
+      }
+      StadisticsService.oweme(query).then(
         function(response) {
           $scope[list] = response;
         },

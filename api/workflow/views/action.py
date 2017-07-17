@@ -203,9 +203,10 @@ class ActionTodoStadistics(APIView, APIMixin):
 
     def get(self, request, format=None):
         page = request.GET.get('page', None)
+        query = request.query_params
 
-        user_id = request.user.id
-        queryset = self.model.objects.filter(producer_id=request.user.id)
+        user_id = query.get('user_id')
+        queryset = self.model.objects.filter(producer_id=user_id)
 
         queryset = queryset.distinct('client__id')
         paginated_data = self.get_pagination(queryset, page, self.paginate_by)
@@ -236,7 +237,7 @@ class ActionOweMeStadistics(APIView, APIMixin):
     searching by the project or action.
     """
     permission_classes = (IsAuthenticated,)
-
+    
     # Mixing initial variables
     model = Action
     serializer_list = ActionProducerSerializer
@@ -245,9 +246,10 @@ class ActionOweMeStadistics(APIView, APIMixin):
 
     def get(self, request, format=None):
         page = request.GET.get('page', None)
+        query = request.query_params
 
-        user_id = request.user.id
-        queryset = self.model.objects.filter(client_id=request.user.id)
+        user_id = query.get('user_id')
+        queryset = self.model.objects.filter(client_id=user_id)
 
         queryset = queryset.distinct('producer__id')
         paginated_data = self.get_pagination(queryset, page, self.paginate_by)

@@ -21,11 +21,11 @@ urlpatterns = [
     url(r'^reports/$', ReportList.as_view()),
 
     url(r'^actions/stadistics$', ActionStadisctic.as_view()),
-    url(r'^actions/stadistics/todo$', ActionTodoStadistics.as_view()),
-    url(r'^actions/stadistics/oweme$', ActionOweMeStadistics.as_view()),
+    url(r'^actions/stadistics/todo/$', ActionTodoStadistics.as_view()),
+    url(r'^actions/stadistics/oweme/$', ActionOweMeStadistics.as_view()),
 
     url(r'^actions/alerts/$', AlertsList.as_view({'get': 'list'})),
     url(r'^actions/alerts/(?P<pk>[0-9]+)/$', AlertsList.as_view({'patch': 'partial_update'})),
- 
- 
+
+
 ]
