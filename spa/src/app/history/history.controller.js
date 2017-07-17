@@ -1,6 +1,6 @@
 
-app.controller('NotificationsController', ['$scope', '$timeout', 'NotificationsService', 'Notification',
- function($scope ,$timeout, NotificationsService, Notification) {
+app.controller('HistoryController', ['$scope', '$timeout', 'HistoryService', 'Notification',
+ function($scope ,$timeout, HistoryService, Notification) {
 
    $scope.notifications = [];
    $scope.init = function () {
@@ -8,13 +8,13 @@ app.controller('NotificationsController', ['$scope', '$timeout', 'NotificationsS
    }
 
    $scope.getNotifications = function () {
-     NotificationsService.getList({}).then(
+     HistoryService.getList({}).then(
        function (response) {
          console.log(response);
          $scope.notifications = response;
        },
        function (error) {
-         Notification("Ha ocurrido un error, intente mas tarde")
+         Notification.error("Ha ocurrido un error, intente mas tarde")
        }
      )
    }

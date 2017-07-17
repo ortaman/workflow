@@ -105,6 +105,8 @@ app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','A
 
     $mdDialog.show(confirm).then(function() {
       project.status = type
+      project.accepted_at = moment().format("YYYY-MM-DD")
+      
       Notification.info('Espere un momento');
       ActionService.patch(project.id,project).then(
         function (response) {

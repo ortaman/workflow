@@ -82,10 +82,10 @@ app.config(function($stateProvider, $urlRouterProvider,
       templateUrl: "app/alerts/alerts.html",
       controller: "AlertsController",
     })
-    .state('notifications', {
-      url: "/notifications",
-      templateUrl: "app/notifications/notifications.html",
-      controller: "NotificationsController",
+    .state('history', {
+      url: "/history",
+      templateUrl: "app/history/history.html",
+      controller: "HistoryController",
     })
 
   // For any unmatched url, redirect to /state1
