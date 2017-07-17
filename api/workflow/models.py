@@ -29,9 +29,6 @@ class Action(models.Model):
 
         ('Satisfactoria', 'Satisfactoria'),
         ('Insatisfactoria', 'Insatisfactoria'),
-
-        ('Negociando', 'Negociando'),
-        ('No aceptada', 'No aceptada'),
     )
 
     # focus project
@@ -129,6 +126,13 @@ class Report(models.Model):
 
     created_by = models.ForeignKey(User, related_name='report_created_by', verbose_name='Creado por')
 
+    class Meta:
+        verbose_name = ("Reporte")
+        verbose_name_plural = ("Reportes")
+
+    def __str__(self):
+        return "%s" % (self.action.name)
+
 
 @receiver(post_save, sender=Report)
 def change_status(sender, instance, created, **kwargs):
@@ -164,3 +168,10 @@ class Alert(models.Model):
     kind = models.CharField(choices=KINDS, max_length=8, verbose_name='Tipos de alerta')
 
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='Fecha de creación')
+
+    class Meta:
+        verbose_name = ("Alerta")
+        verbose_name_plural = ("Alertas")
+
+    def __str__(self):
+        return "%s" % (self.action.name)

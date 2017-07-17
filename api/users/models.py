@@ -74,9 +74,6 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
         # The user is identified by their email address
         return "%s %s" % (self.user.name, self.first_surname)
 
-    def __str__(self):              # __unicode__ on Python 2
-        return self.email
-
     def save(self, update_password=True, *args, **kwargs):
         # Updates user without make_password.
         if not self.password.startswith("pbkdf2_sha"):
@@ -93,4 +90,4 @@ class User(BaseUser):
         verbose_name_plural = ("Usuarios")
 
     def __str__(self):
-        return "%s" % (self.email)
+        return "%s" % (self.get_full_name())
