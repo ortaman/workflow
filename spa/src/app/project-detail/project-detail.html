@@ -368,9 +368,14 @@
                             </div>
 
                         </div>
-                        <div class="portlet-body " ng-if="timelines.length >= 1">
-                            <time-line time-line="timelines">
-                            </time-line>
+                        <div class="portlet-body " ng-if="historyArray.length >= 1">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <history history="historyArray">
+                              </history>
+                            </div>
+                          </div>
+
                         </div>
                     </div>
                 </div>

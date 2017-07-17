@@ -34,7 +34,6 @@ app.directive('myHeader', ['UserService','AlertsService','Notification',
         }
         AlertsService.getList(query).then(
           function (response) {
-            console.log(response);
             vm.alerts = response;
           },
           function (error) {
