@@ -14,7 +14,7 @@ class ReportInline(admin.TabularInline):
     readonly_fields = ('report_kind', 'created_at', 'progress', 'created_by__name')
 
     def created_by__name(self, obj):
-        return obj.created_by.get_full_name(self)
+        return obj.created_by.get_full_name()
 
     def report_kind(self, obj):
     	if obj.progress == '100':
