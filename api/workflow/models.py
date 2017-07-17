@@ -60,9 +60,6 @@ class Action(models.Model):
     accomplish_at = models.DateField(verbose_name='Fecha de cumplimiento')
     renegotiation_at = models.DateField(null=True, blank=True, verbose_name='Fecha de regenociación')
 
-    advance_report_at = models.DateField(null=True, blank=True, verbose_name='Fecha de creación del reporte de avance')
-    ejecution_report_at = models.DateField(null=True, blank=True, verbose_name='Fecha de creación del reporte de ejecución')
-
     # indicators
     financial = models.CharField(max_length=128, null=True, blank=True, verbose_name='Financieros')
     operational = models.CharField(max_length=128, null=True, blank=True, verbose_name='Operacionales')
@@ -71,8 +68,14 @@ class Action(models.Model):
 
     image = models.ImageField(upload_to='images/', null=True, blank=True, verbose_name='Imagen')
 
-    created_at = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='Fecha de creación')
-    updated_at = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name='Fecha de actualización')
+    # Important dates of the workflow process given for the users
+    created_at = models.DateField(auto_now=False, auto_now_add=True, verbose_name='Creada en la fecha')
+    accepted_at = models.DateField(null=True, blank=True, verbose_name='Aceptada en la fecha')
+    advance_report_at = models.DateField(null=True, blank=True, verbose_name='Creado el reporte de avance en la fecha')
+    ejecution_report_at = models.DateField(null=True, blank=True, verbose_name='Creado el reporte de ejecución en la fecha')
+    qualified_at = models.DateField(null=True, blank=True, verbose_name='Calificada en la fecha')
+
+    updated_at = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name='Fecha de la última actualización')
 
     project = models.ForeignKey(
         'self',

@@ -60,14 +60,14 @@
                     <div class="mt-timeline-2">
                         <div class="mt-timeline-line border-grey-steel"></div>
                         <ul class="mt-container">
-                            <li class="mt-item" ng-repeat="alert in alerts">
-                                <div class="mt-timeline-icon bg-red bg-font-red border-grey-steel">
-                                    <i class="icon-plus"></i>
+                            <li class="mt-item" ng-repeat="alert in alerts.results">
+                                <div class="mt-timeline-icon bg-blue-steel bg-font-blue-steel border-grey-steel">
+                                    <i ng-class="'icon-'+ alert.iconStatus"></i>
                                 </div>
                                 <div class="mt-timeline-content">
                                     <div class="mt-content-container">
                                         <div class="mt-title">
-                                            <h3 class="mt-content-title">Nuevo proyecto ({{ alert.action.name}})</h3>
+                                            <h3 class="mt-content-title" ng-click="updateAlert(alert)">{{ alert.action.name}}</h3>
                                         </div>
                                         <div class="mt-author">
                                             <div class="mt-avatar">
@@ -80,7 +80,7 @@
                                         </div>
                                         <div class="mt-content border-grey-salt">
                                             <p>{{ alert.message}}</p>
-                                            <a href="javascript:;" class="btn btn-circle red" ng-click="updateAlert(alert)">Ver proyecto</a>
+                                            <!--<a href="javascript:;" class="btn btn-circle red" ng-click="updateAlert(alert)">Ver proyecto</a>-->
 
                                         </div>
                                     </div>
@@ -89,7 +89,6 @@
 
                         </ul>
                     </div>
-
 
                     <div class="text-center">
                         <ul uib-pagination boundary-links="true" class="pagination-sm"

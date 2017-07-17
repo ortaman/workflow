@@ -10,10 +10,13 @@ app.controller('AlertsController', ['$scope', 'AlertsService', 'Notification', '
    }
 
    $scope.getAlerts = function () {
-     AlertsService.getList({}).then(
+     let query = {
+       page: $scope.currentAlertPage
+     }
+     AlertsService.getList(query).then(
        function (response) {
          console.log(response);
-         $scope.alerts = response.results;
+         $scope.alerts = response;
        },
        function (error) {
          Notification.error("Ocurrio un  error, intente mas tarde");

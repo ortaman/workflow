@@ -119,6 +119,18 @@ sudo ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin
 
 
 
+# ********   Run celery worker and beat using supervisord  **********
+# sudo supervisorctl reread
+# sudo supervisorctl update
+# sudo supervisorctl start workflow-celery
+# sudo supervisorctl start workflow-celerybeat
+
+# sudo tail -f /home/wfuser/workflow/logs/celery-worker.log
+# sudo tail -f /home/wfuser/workflow/logs/celerybeat.log
+
+
+
+
 #  server
 #  testing uwsgi functionality
 #  uwsgi --http :8080 --home /root/Env/workflow --chdir /root/workflow/api/ -w _api.wsgi
