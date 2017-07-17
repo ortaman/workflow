@@ -91,7 +91,7 @@ class ProjectPatchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model  = Action
-        fields = ('phase', 'status')
+        fields = ('phase', 'status', 'accepted_at', 'qualified_at')
 
     read_only_fields =  ('created_at', 'updated_at','created_by')
 
