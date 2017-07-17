@@ -3,6 +3,27 @@ from django.contrib import admin
 from workflow.models import Action, Report, Alert
 
 
+class ReportInline(admin.TabularInline):
+    model = Report
+
+    extra = 0
+    verbose_name = "Reporte"
+    verbose_name_plural = "Reportes"
+
+    fields = ('report_kind', 'created_at', 'progress', 'created_by__name')
+    readonly_fields = ('report_kind', 'created_at', 'progress', 'created_by__name')
+
+    def created_by__name(self, obj):
+        return obj.created_by.get_full_name(self)
+
+    def report_kind(self, obj):
+    	if obj.progress == '100':
+        	return 'Reporte de ejecución'
+    	return 'Reporte de avance'
+
+    report_kind.short_description = 'Tipo de reporte'
+
+
 class ActionInline(admin.TabularInline):
     model = Action
     fk_name = 'parent_action'
@@ -25,6 +46,7 @@ class ActionAdmin(admin.ModelAdmin):
     list_filter = ('phase', 'status', 'created_at',)
 
     inlines = [
+    	ReportInline,
         ActionInline,
     ]
 
