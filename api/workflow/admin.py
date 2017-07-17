@@ -46,8 +46,8 @@ class ActionInline(admin.TabularInline):
     verbose_name = "Acción relacionada"
     verbose_name_plural = "Acciones relacionadas"
 
-    fields = ('name', 'phase', 'status', 'client', 'producer', 'begin_at')
-    readonly_fields = ('name', 'phase', 'status', 'client', 'producer', 'begin_at')
+    fields = ('link_name', 'phase', 'status', 'client', 'producer', 'begin_at')
+    readonly_fields = ('link_name', 'phase', 'status', 'client', 'producer', 'begin_at')
 
     def has_add_permission(self, request):
         return False
@@ -55,12 +55,14 @@ class ActionInline(admin.TabularInline):
     def has_delete_permission(self, request, obj=None):
         return False
 
-    def name(self, obj):
+    def link_name(self, obj):
         app_label = obj._meta.app_label
         model_name = obj._meta.model_name
         url = reverse('admin:%s_%s_change' % (app_label, model_name), args=(obj.id,))
 
         return format_html('<a href="{0}"> {1} </a>'.format(url, obj.name))
+
+    link_name.short_description = 'Nombre'
 
 
 class ActionAdmin(admin.ModelAdmin):
@@ -79,7 +81,7 @@ class ActionAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(ActionAdmin, self).get_queryset(request)
-        return qs.filter(parent_action=None)
+        return Action.objects.filter()
 
 
 class ReportAdmin(admin.ModelAdmin):

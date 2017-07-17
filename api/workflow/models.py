@@ -33,8 +33,8 @@ class Action(models.Model):
 
     # focus project
     name = models.CharField(max_length=64, verbose_name='Nombre')
-    kind = models.CharField(choices=TYPES, max_length=8, default='estandar', verbose_name='Tipos de proyecto')
-    phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase de proyecto')
+    kind = models.CharField(choices=TYPES, max_length=8, default='estandar', verbose_name='Tipos')
+    phase = models.CharField(choices=PHASES, max_length=11, default='preparacion', verbose_name='Fase')
     status = models.CharField(choices=STATUS, max_length=16, default='Pendiente', verbose_name='Estado')
 
     # action roles
