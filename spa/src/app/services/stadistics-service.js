@@ -19,9 +19,9 @@ app.service("StadisticsService", ['$http', 'APIConfig', function($http, APIConfi
     return result;
   }
 
-	this.todo = function(object = {}) {
+	this.todo = function(object) {
 	  var params = $.param(object);
-	  var promise = $http.get(APIConfig.url + "actions/stadistics/todo" + params).then(
+	  var promise = $http.get(APIConfig.url + "actions/stadistics/todo/?" + params).then(
 			function(response) {
 				response.data.to_do.forEach( function(item){
 
@@ -35,9 +35,9 @@ app.service("StadisticsService", ['$http', 'APIConfig', function($http, APIConfi
 	  return promise;
 	};
 
-	this.oweme = function(object = {}) {
+	this.oweme = function(object) {
 	  var params = $.param(object);
-	  var promise = $http.get(APIConfig.url + "actions/stadistics/oweme" + params).then(
+	  var promise = $http.get(APIConfig.url + "actions/stadistics/oweme/?" + params).then(
 			function(response) {
 				response.data.owe_me.forEach( function(item){
 					item.producer.photo = APIConfig.baseUrl + item.producer.photo;
