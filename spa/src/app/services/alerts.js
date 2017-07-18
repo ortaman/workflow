@@ -52,4 +52,13 @@ app.service("AlertsService", ['$http', 'APIConfig', function($http, APIConfig) {
     return promise;
   };
 
+
+  this.patch = function(id, object) {
+
+      var promise = $http.patch(APIConfig.url + "actions/alerts/" + id + "/" , object).then(function(response) {
+          return response.data;
+      });
+
+      return promise;
+  };
 }]);

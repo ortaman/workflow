@@ -30,7 +30,7 @@ app.controller('AlertsController', ['$scope', 'AlertsService', 'Notification', '
 
    $scope.updateAlert = function (alert) {
      alert.viewed = true;
-     AlertsService.update(alert).then(
+     AlertsService.patch(alert.id, alert).then(
        function (response) {
          console.log(response);
          $state.go('projectDetail', {id:alert.action.id});

@@ -42,7 +42,10 @@ class AlertsList(ListModelMixin, UpdateModelMixin, GenericViewSet):
             return AlertPartialUpdateSerializer
 
     def get_queryset(self):
-        return self.queryset.filter(action__producer_id=self.request.user.id)
+        return self.queryset.filter(
+            action__producer_id=self.request.user.id,
+            viewed = False
+            )
 
     '''
     def get(self, request, *args, **kwargs):
@@ -50,7 +53,7 @@ class AlertsList(ListModelMixin, UpdateModelMixin, GenericViewSet):
 
     def update(self, request, *args, **kwargs):
         return super(AlertsList, self).update(request, *args, **kwargs)
+    '''
 
     def partial_update(self, request, *args, **kwargs):
         return super(AlertsList, self).partial_update(request, *args, **kwargs)
-    '''
