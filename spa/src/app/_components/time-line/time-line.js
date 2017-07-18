@@ -22,12 +22,10 @@ app.directive('history', [
       var vm = this;
 
       vm.options = {
-        debug: true,
-        timenav_position: 'bottom',
+        debug: false,
+        timenav_position: 'top',
         language: 'es'
       };
-
-
 
       var dateFields = {
           'accomplish_at':{
@@ -116,6 +114,8 @@ app.directive('history', [
 
         $timeout(function () {
           vm.timeline.setData(data);
+          vm.timeline.setOptions(vm.options);
+
           vm.timeline.goTo(0);
         }, 200);
 
@@ -127,11 +127,6 @@ app.directive('history', [
           }
         });
 
-        $scope.$watch('vm.options', function(newOptions) {
-          if(vm.timeline) {
-            vm.timeline.setOptions(newOptions);
-          }
-        }, true);
     }
   }
 
