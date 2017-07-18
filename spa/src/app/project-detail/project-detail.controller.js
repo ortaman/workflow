@@ -100,8 +100,8 @@ app.controller('ProjectDetailController', [
 
 		ActionService.getList(query).then(
 			function(response) {
-				$scope.timelines = angular.copy(response);
-				$scope.timelines.push($scope.project)
+				$scope.historyArray = angular.copy(response);
+				$scope.historyArray.push($scope.project)
 
 			},
 			function(errorResponse) {
