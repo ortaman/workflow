@@ -176,7 +176,21 @@
                             </div>
                         </div>
                         <div class="portlet-body row">
-                          <div class="col-md-12">
+                          <div class="col-md-6" uib-tooltip="Observador">
+                            <div class="mt-widget-1">
+                                <div class="mt-img">
+                                    <img class="avatar" ng-src="{{project.observer.photo}}"
+                                         height="77" width="77"/>
+                                </div>
+                                <div class="mt-body">
+                                    <h3 class="mt-username">
+                                        {{ project.observer.name }} {{project.observer.first_surname}} {{ project.observer.second_surname }} (Observador)
+                                    </h3>
+                                    <p class="mt-user-title"> {{ project.observer.position }} </p>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6" uib-tooltip="Reaizador">
                             <div class="mt-widget-1">
                                 <div class="mt-img">
                                     <img class="avatar" ng-src="{{project.producer.photo}}"
@@ -196,11 +210,7 @@
                                 <div class="col-md-4" ng-repeat="user in chunkArray($index) track by $index">
                                     <!--begin: widget 1-1 -->
                                     <div class="mt-widget-1">
-                                        <div class="mt-icon">
-                                            <a href="#">
-                                                <i class="icon-plus"></i>
-                                            </a>
-                                        </div>
+
                                         <div class="mt-img">
                                             <img class="avatar" ng-src="{{user.producer.photo}}"
                                                  height="77" width="77"/>

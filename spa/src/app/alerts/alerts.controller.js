@@ -32,7 +32,6 @@ app.controller('AlertsController', ['$scope', 'AlertsService', 'Notification', '
      alert.viewed = true;
      AlertsService.patch(alert.id, alert).then(
        function (response) {
-         console.log(response);
          $state.go('projectDetail', {id:alert.action.id});
        },
        function(error){
@@ -40,6 +39,5 @@ app.controller('AlertsController', ['$scope', 'AlertsService', 'Notification', '
          Notification.error("Ocurrio un  error, intente mas tarde");
        }
      )
-
    }
 }]);

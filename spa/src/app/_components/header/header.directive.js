@@ -48,6 +48,19 @@ app.directive('myHeader', ['UserService','AlertsService','Notification',
         $state.go('login');
       }
 
+      vm.updateAlert = function (alert) {
+        alert.viewed = true;
+        AlertsService.patch(alert.id, alert).then(
+          function (response) {
+            $state.go('projectDetail', {id:alert.action.id});
+          },
+          function(error){
+            console.error(error);
+            Notification.error("Ocurrio un  error, intente mas tarde");
+          }
+        )
+      }
+
     }
   }
 ]);
