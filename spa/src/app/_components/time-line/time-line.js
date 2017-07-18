@@ -32,7 +32,10 @@ app.directive('timeLine', [
           'evaluation_at' : 'Fecha de Evaluación',
 
           'accepted_at' : 'Proyecto aceptado',
-          'qualified_at' : 'Proyecto calificado',
+          'qualified_at' : 'Proyecto cerrado',
+
+          'advance_report_at':'Reporte de avance creado ',
+          'ejecution_report_at':'Reporte término creado '
 
         };
 
