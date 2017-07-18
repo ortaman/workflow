@@ -31,6 +31,9 @@ app.directive('timeLine', [
           'execution_at' : 'Fecha de Ejecución',
           'evaluation_at' : 'Fecha de Evaluación',
 
+          'accepted_at' : 'Proyecto aceptado',
+          'qualified_at' : 'Proyecto calificado',
+
         };
 
     	var transformActions = function(results){

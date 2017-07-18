@@ -23,7 +23,9 @@ app.controller('CloseProjectModalController', ['$scope','$mdDialog','type', 'pro
     $ctrl.closeProject = function(status){
       $ctrl.submitted = true;
       var project = angular.copy($ctrl.project);
-      project.status = status
+      project.status = status;
+      project.qualified_at = moment().format("YYYY-MM-DD");
+
       if (!status) {
         Notification.success('El formulario no es válido.');
         return;

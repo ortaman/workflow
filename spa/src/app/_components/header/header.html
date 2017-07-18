@@ -25,7 +25,7 @@
                     <!-- DOC: Apply "dropdown-dark" class after "dropdown-extended" to change the dropdown styte -->
                     <!-- DOC: Apply "dropdown-hoverable" class after below "dropdown" and remove data-toggle="dropdown" data-hover="dropdown" data-close-others="true" attributes to enable hover dropdown mode -->
                     <!-- DOC: Remove "dropdown-hoverable" and add data-toggle="dropdown" data-hover="dropdown" data-close-others="true" attributes to the below A element with dropdown-toggle class -->
-                    <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                    <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar" ng-init="vm.getAlerts()">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-bell"></i>
                             <span class="badge badge-default"> 0 </span>
@@ -33,81 +33,19 @@
                         <ul class="dropdown-menu">
                             <li class="external">
                                 <h3>
-                                            <span class="bold">12 notificaciones</span> pendientes</h3>
-                                <a ui-sref="coordinaciones">Ver todo</a>
+                                            <span class="bold">Alertas</span> pendientes</h3>
+                                <a ui-sref="alerts">Ver todo</a>
                             </li>
                             <li>
                                 <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
-                                    <li>
+
+                                    <li ng-repeat="alert in vm.alerts.results">
                                         <a href="javascript:;">
-                                            <span class="time">Ahora</span>
-                                            <span class="details">
-                                                        <span class="label label-sm label-icon label-success">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span> Nuevo Proyecto </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="time">3 mins</span>
-                                            <span class="details">
-                                                        <span class="label label-sm label-icon label-danger">
-                                                            <i class="fa fa-bolt"></i>
-                                                        </span> 10 acciones atrasadas </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="time">10 mins</span>
-                                            <span class="details">
-                                                        <span class="label label-sm label-icon label-warning">
-                                                            <i class="fa fa-bell-o"></i>
-                                                        </span> 5 Pedidos no acptados </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="time">14 hrs</span>
+                                            <span class="time">{{alert.since }} horas</span>
                                             <span class="details">
                                                         <span class="label label-sm label-icon label-info">
                                                             <i class="fa fa-bullhorn"></i>
-                                                        </span> Evaluación Rechazada </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="time">2 dias</span>
-                                            <span class="details">
-                                                        <span class="label label-sm label-icon label-danger">
-                                                            <i class="fa fa-bolt"></i>
-                                                        </span> Juntas no aceptadas </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="time">3 días</span>
-                                            <span class="details">
-                                                        <span class="label label-sm label-icon label-danger">
-                                                            <i class="fa fa-bolt"></i>
-                                                        </span> 1 Proyecto sin Avance </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="time">4 días</span>
-                                            <span class="details">
-                                                        <span class="label label-sm label-icon label-warning">
-                                                            <i class="fa fa-bell-o"></i>
-                                                        </span> 2 Renegociaciones Tiempo </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="time">5 días</span>
-                                            <span class="details">
-                                                        <span class="label label-sm label-icon label-info">
-                                                            <i class="fa fa-bullhorn"></i>
-                                                        </span> 3 Renegociaciones Resultados </span>
+                                                        </span> {{alert.message}} </span>
                                         </a>
                                     </li>
                                 </ul>

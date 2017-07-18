@@ -1,5 +1,5 @@
 
-app.service("NotificationsService", ['$http', 'APIConfig', function($http, APIConfig) {
+app.service("HistoryService", ['$http', 'APIConfig', function($http, APIConfig) {
 
   this.getList = function(object) {
 	  var params = $.param(object);

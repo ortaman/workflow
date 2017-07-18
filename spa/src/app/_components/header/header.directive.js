@@ -1,6 +1,6 @@
 
 
-app.directive('myHeader', ['UserService',
+app.directive('myHeader', ['UserService','AlertsService','Notification',
 
   /** @ngInject */
   function myHeader() {
@@ -18,7 +18,7 @@ app.directive('myHeader', ['UserService',
     return directive;
 
     /** @ngInject */
-    function HeaderController(APIConfig, $state, StorageService, UserService) {
+    function HeaderController(APIConfig, $state, StorageService, UserService, AlertsService, Notification) {
       var vm = this;
       UserService.me().then(function(result){
         vm.user = result
@@ -26,6 +26,21 @@ app.directive('myHeader', ['UserService',
 
       if (!StorageService.get('token')) {
         $state.go('login');
+      }
+
+      vm.getAlerts = function () {
+        let query = {
+          page: 1
+        }
+        AlertsService.getList(query).then(
+          function (response) {
+            console.log(response);
+            vm.alerts = response;
+          },
+          function (error) {
+            Notification.error("Ocurrio un  error, intente mas tarde");
+          }
+        );
       }
 
       vm.logout = function() {

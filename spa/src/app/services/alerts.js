@@ -35,6 +35,9 @@ app.service("AlertsService", ['$http', 'APIConfig', function($http, APIConfig) {
         angular.forEach(response.data.results, function (item) {
           item.iconStatus = getIconStatus(item);
           item.alertText = getAlertText(item);
+          let now = new moment();
+          item.since = now.diff(moment(item.created_at))
+          item.since = Math.trunc(moment.duration(item.since).asHours());
         })
 	     return response.data;
 	  });
