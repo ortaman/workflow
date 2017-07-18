@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse
 from django.contrib import admin
 from django.utils.html import format_html
+
+from rest_framework.authtoken.models import Token
 
 from workflow.models import Action, Report, Alert
 
@@ -79,9 +82,29 @@ class ActionAdmin(admin.ModelAdmin):
         ActionInline,
     ]
 
+    changelist_view = True
+
     def get_queryset(self, request):
         qs = super(ActionAdmin, self).get_queryset(request)
-        return Action.objects.filter()
+
+        if self.changelist_view:
+            return Action.objects.filter(parent_action=None)
+
+        return Action.objects.all()
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        self.changelist_view=False
+
+        return super(ActionAdmin, self).change_view(
+            request, object_id, form_url, extra_context=extra_context,
+        )
+
+    def changelist_view(self, request, extra_context=None, *args, **kwargs):
+        self.changelist_view=True
+
+        return super(ActionAdmin, self).changelist_view(
+            request, extra_context, *args, **kwargs
+        )
 
 
 class ReportAdmin(admin.ModelAdmin):
@@ -95,3 +118,6 @@ class AlertAdmin(admin.ModelAdmin):
 admin.site.register(Action, ActionAdmin)
 admin.site.register(Report, ReportAdmin)
 admin.site.register(Alert, AlertAdmin)
+
+admin.site.unregister(Group)
+admin.site.unregister(Token)
