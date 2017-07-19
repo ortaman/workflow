@@ -100,7 +100,7 @@ app.directive('history', [
         };
 
       let getStringCondition = function (action,date) {
-        let text = '';
+        let text = '<p></p>';
 
         switch (date) {
           case 'accepted_at':
@@ -113,13 +113,13 @@ app.directive('history', [
             let period = 'en tiempo'
             if(moment(action.advance_report_at).isAfter(moment(action.advance_report_at)))
               period = 'fuera de tiempo';
-            text = `Se reportó avance de ${action.reports[0].progress}, ${period}`
+            text = `<p class="${action.color}-status-text" > Se reportó avance de ${action.reports[0].progress}, ${period} </p>`
             break;
           case 'ejecution_report_at':
             let period1 = 'en tiempo'
             if(moment(action.ejecution_report_at).isAfter(moment(action.accomplish_at)))
               period1 = 'fuera de tiempo';
-              text = `El realizador terminó la acción  ${period1} `
+              text = `<p class="${action.color}-status-text" > El realizador terminó la acción  ${period1}  </p>`
             break;
           default:
 
@@ -156,7 +156,7 @@ app.directive('history', [
                   },
                   'text': {
                     'headline': action.name + " ("+ key.name +")",
-                    'text': '<p>'+getStringCondition(action, value)+'</p>'
+                    'text': getStringCondition(action, value)
                   },
 
               }
