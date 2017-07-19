@@ -108,11 +108,37 @@ class ActionAdmin(admin.ModelAdmin):
 
 
 class ReportAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('action', 'progress', 'created_by', 'created_at', 'updated_at')
+    list_filter = ('progress',)
+
+    fieldsets = (
+        ('Información general', {'fields': (
+            'action', 'progress', 'accomplished', 'pending', 
+            'created_by', 'created_at', 'updated_at')}),
+        ('Información adicional', {'fields': ('created_at', 'updated_at')}),
+    )
+
+    readonly_fields = ('created_at', 'updated_at')
+
+    search_fields = ('action__name',)
+    ordering = ('created_at',)
+    filter_horizontal = ()
 
 
 class AlertAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('action', 'kind', 'message', 'viewed', 'created_at')
+    list_filter = ('kind',)
+
+    fieldsets = (
+        ('Información general', {'fields': ('action', 'kind', 'message', 'viewed')}),
+        ('Información adicional', {'fields': ('created_at', )}),
+    )
+
+    readonly_fields = ('created_at',)
+
+    search_fields = ('action__name',)
+    ordering = ('created_at',)
+    filter_horizontal = ()
 
 
 admin.site.register(Action, ActionAdmin)
