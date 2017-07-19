@@ -28,6 +28,7 @@ app.directive('history', [
       };
 
       var dateFields = {
+          //Fechas estáticas
           'accomplish_at':{
             'name':'Fecha de ejecución',
             'image': 'client'
@@ -57,56 +58,109 @@ app.directive('history', [
             'name':'Fecha de Evaluación',
             'image': 'client'
           },
-
+          //Fechas estáticas//
+        }
+        var projectDates = {
           'accepted_at' : {
-            'name':'Proyecto aceptado',
-            'image': 'producer'
+            'name':'Proyecto fue aceptado',
+            'image': 'producer',
           },
           'qualified_at' :{
-            'name': 'Proyecto calificado',
-            'image': 'client'
+            'name': 'Proyecto cerrado',
+            'image': 'client',
           },
 
           'advance_report_at' :{
-            'name': 'Reporte de avance creado',
-            'image': 'producer'
+            'name': 'Avance reportado',
+            'image': 'producer',
           },
           'ejecution_report_at' :{
-            'name': 'Reporte término creado',
-            'image': 'producer'
+            'name': 'Proyecto  ejecutado',
+            'image': 'producer',
           }
-
         };
+        var actionDates = {
+          'accepted_at' : {
+            'name':'Acción fue aceptada',
+            'image': 'producer',
+          },
+          'qualified_at' :{
+            'name': 'Acción cerrada',
+            'image': 'client',
+          },
+
+          'advance_report_at' :{
+            'name': 'Avance reportado',
+            'image': 'producer',
+          },
+          'ejecution_report_at' :{
+            'name': 'Acción  ejecutada',
+            'image': 'producer',
+          }
+        };
+
+      let getStringCondition = function (action,date) {
+        let text = '';
+
+        switch (date) {
+          case 'accepted_at':
+            text = `La acción fue aceptada por el realizador ${action.producer.name} ${action.producer.first_surname} ${action.producer.second_surname} `
+            break;
+          case 'qualified_at':
+            text = `La acción fue cerrada y calificada como ${action.status} `
+            break;
+          case 'advance_report_at':
+            let period = 'en tiempo'
+            if(moment(action.advance_report_at).isAfter(moment(action.advance_report_at)))
+              period = 'fuera de tiempo';
+            text = `Se reportó avance de ${action.reports[0].progress}, ${period}`
+            break;
+          case 'ejecution_report_at':
+            let period1 = 'en tiempo'
+            if(moment(action.ejecution_report_at).isAfter(moment(action.accomplish_at)))
+              period1 = 'fuera de tiempo';
+              text = `El realizador terminó la acción  ${period1} `
+            break;
+          default:
+
+        }
+        return text;
+      }
 
 
       var transformActions = function(results){
 
-        var newArray = [];
-        var data = {
+        let newArray = [];
+        let data = {
           events:[]
         };
-        angular.forEach(results, function (result) {
+
+        angular.forEach(results, function (action) {
+
+          if(action.parent_action)
+            dateFields = angular.extend(dateFields, actionDates);
+          else
+            dateFields = angular.extend(dateFields, projectDates);
+
           angular.forEach(dateFields, function(key, value){
-            if(result[value]){
+            if(action[value]){
                 let event = {
 
                   'media': {
-                    'url': result[key.image]['photo']
+                    'url': action[key.image]['photo']
                   },
                   'start_date': {
-                    'year': moment(result[value]).year(),
-                    'month': moment(result[value]).month(),
-                    'day': moment(result[value]).day()
+                    'year': moment(action[value]).year(),
+                    'month': moment(action[value]).month(),
+                    'day': moment(action[value]).day()
                   },
                   'text': {
-                    'headline': result.name + " ("+ key.name +")",
-                    'text': '<p></p>'
+                    'headline': action.name + " ("+ key.name +")",
+                    'text': '<p>'+getStringCondition(action, value)+'</p>'
                   },
 
               }
               data.events.push(event);
-
-
             }
 
           })
@@ -115,7 +169,6 @@ app.directive('history', [
         $timeout(function () {
           vm.timeline.setData(data);
           vm.timeline.setOptions(vm.options);
-
           vm.timeline.goTo(0);
         }, 200);
 
