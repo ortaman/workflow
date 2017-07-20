@@ -151,9 +151,9 @@ app.directive('history', [
                     'url': action[key.image]['photo']
                   },
                   'start_date': {
-                    'year': moment(action[value]).format('Y')(),
-                    'month': moment(action[value]).format('M')(),
-                    'day': moment(action[value]).format('D')()
+                    'year': moment(action[value]).format('Y'),
+                    'month': moment(action[value]).format('M'),
+                    'day': moment(action[value]).format('D')
                   },
                   'text': {
                     'headline': action.name + " ("+ key.name +")",
@@ -167,27 +167,19 @@ app.directive('history', [
           })
         })
 
-        return data;
+        $timeout(function () {
+          vm.timeline.setData(data);
+          vm.timeline.setOptions(vm.options);
+          vm.timeline.goTo(0);
+        }, 200);
 
       }
 
         var time = $scope.$watch( 'vm.history', function () {
-          vm.data = {};
           if(vm.history ){
-              vm.data = transformActions(vm.history);
+              vm.history = transformActions(vm.history);
           }
-          $timeout(function () {
-            if(vm.timeline ){
-              console.log(vm.data);
-              vm.timeline.setData(vm.data);
-              vm.timeline.setOptions(vm.options);
-              vm.timeline.goTo(0);
-            }
-          }, 500);
         });
-
-
-
 
     }
   }
