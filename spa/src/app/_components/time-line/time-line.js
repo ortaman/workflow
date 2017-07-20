@@ -144,15 +144,16 @@ app.directive('history', [
 
           angular.forEach(dateFields, function(key, value){
             if(action[value]){
+              console.log(value, "fecha",  action);
                 let event = {
 
                   'media': {
                     'url': action[key.image]['photo']
                   },
                   'start_date': {
-                    'year': moment(action[value]).year(),
-                    'month': moment(action[value]).month(),
-                    'day': moment(action[value]).day()
+                    'year': moment(action[value]).format('Y')(),
+                    'month': moment(action[value]).format('M')(),
+                    'day': moment(action[value]).format('D')()
                   },
                   'text': {
                     'headline': action.name + " ("+ key.name +")",
