@@ -167,19 +167,27 @@ app.directive('history', [
           })
         })
 
-        $timeout(function () {
-          vm.timeline.setData(data);
-          vm.timeline.setOptions(vm.options);
-          vm.timeline.goTo(0);
-        }, 200);
+        return data;
 
       }
 
         var time = $scope.$watch( 'vm.history', function () {
+          vm.data = {};
           if(vm.history ){
-              vm.history = transformActions(vm.history);
+              vm.data = transformActions(vm.history);
           }
+          $timeout(function () {
+            if(vm.timeline ){
+              console.log(vm.data);
+              vm.timeline.setData(vm.data);
+              vm.timeline.setOptions(vm.options);
+              vm.timeline.goTo(0);
+            }
+          }, 500);
         });
+
+
+
 
     }
   }
