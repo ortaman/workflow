@@ -1,7 +1,7 @@
 
 app.controller('ProjectUpdateController', [
-  '$scope', '$state', 'ActionService','APIConfig','Notification', 'ProjectService',
-  function($scope, $state, ActionService, APIConfig,Notification, ProjectService) {
+  '$scope', '$state', 'ActionService','APIConfig','Notification', 'ProjectService','$http',
+  function($scope, $state, ActionService, APIConfig,Notification, ProjectService, $http) {
     var type  =  'project';
     var Service = ProjectService
     $scope.titles = {
@@ -49,7 +49,6 @@ app.controller('ProjectUpdateController', [
             })
 
           });
-          response.image = APIConfig.baseUrl + response.image;// TODO: cambiar  imagen
           type  = response.parent_action == null ? 'project':'action'
           if (!$scope.isProject())
             Service = ActionService

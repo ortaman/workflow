@@ -10,7 +10,7 @@ var app = angular.module('myApp',
     'ui.calendar',
     'angularPromiseButtons',
     'ui-notification',
-    'ngTimeline'
+    'ngTimeline',
 
     // 'myApp.actionList',
   ]

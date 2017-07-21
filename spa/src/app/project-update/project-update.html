@@ -437,16 +437,8 @@
 
 
                         <div class="row" ng-if="isProject()">
-                          <div class="col-md-3">
-                            <input name="file" fileread='project.image' type="file" required/>
-                              <div ng-show="projectForm.file.$touched || submitted">
-                                <div class="error" ng-show="projectForm.file.$error.required">
-                                  Campo requerido.
-                                </div>
-                              </div>
-                          </div>
-                          <div class="col-md-4">
-
+                          <div class="col-md-12">
+                            <fileread name="file" fileread='project.image'  required></fileread>
                           </div>
                         </div>
 
