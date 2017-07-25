@@ -175,3 +175,17 @@ class Alert(models.Model):
 
     def __str__(self):
         return "%s" % (self.action.name)
+
+
+class Message(models.Model):
+
+    action = models.ForeignKey(to=Action, related_name='action_comment', verbose_name='Acción')
+    message = models.TextField(max_length=256, verbose_name='Comentario')
+    created_at = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='Fechade creacion')
+
+    class Meta:
+        verbose_name = ("Comentario")
+        verbose_name_plural = ("Comentarios")
+
+    def __str__(self):
+        return "%s" % (self.message)

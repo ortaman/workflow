@@ -7,7 +7,7 @@ from django.conf import settings
 from rest_framework import serializers
 
 from users.serializers import UserSerializer
-from workflow.models import Action, Report, Alert
+from workflow.models import Action, Report, Alert, Message
 
 
 class Base64ImageField(serializers.ImageField):
@@ -193,3 +193,10 @@ class AlertPartialUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Alert
         fields = ('viewed',)
+
+
+class MessageCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Message
+        fields = '__all__'

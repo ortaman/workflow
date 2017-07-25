@@ -2,9 +2,11 @@
 from django.conf.urls import url
 from django.contrib import admin
 
-from workflow.views.action import ActionList, ActionDetail, ActionStadisctic, ActionTodoStadistics, ActionOweMeStadistics
-from workflow.views.alert import AlertsList
+from workflow.views.action import (ActionList, ActionDetail, ActionStadisctic, ActionTodoStadistics, 
+    ActionOweMeStadistics,)   
+from workflow.views.alert import AlertsListViewSet
 from workflow.views.report import ReportList
+from workflow.views.message import CommentsListViewSet
 from workflow.views.project import ProjectList, ProjectDetail, ProjectTimeStadistic
 
 
@@ -24,8 +26,10 @@ urlpatterns = [
     url(r'^actions/stadistics/todo/$', ActionTodoStadistics.as_view()),
     url(r'^actions/stadistics/oweme/$', ActionOweMeStadistics.as_view()),
 
-    url(r'^actions/alerts/$', AlertsList.as_view({'get': 'list'})),
-    url(r'^actions/alerts/(?P<pk>[0-9]+)/$', AlertsList.as_view({'patch': 'partial_update'})),
+    url(r'^actions/alerts/$', AlertsListViewSet.as_view({'get': 'list'})),
+    url(r'^actions/alerts/(?P<pk>[0-9]+)/$', AlertsListViewSet.as_view({'patch': 'partial_update'})),
+
+    url(r'^messages/$', CommentsListViewSet.as_view({'post': 'create', 'get': 'list'})),
 
 
 ]

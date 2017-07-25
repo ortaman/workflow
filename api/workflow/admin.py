@@ -70,9 +70,6 @@ class ActionInline(admin.TabularInline):
 
 class ActionAdmin(admin.ModelAdmin):
 
-    verbose_name = "Proyecto"
-    verbose_name_plural = "Proyecto"
-
     list_per_page = 25
     list_display = ('name', 'phase', 'status', 'client', 'producer', 'begin_at')
     list_filter = ('phase', 'status', 'created_at',)
@@ -108,6 +105,7 @@ class ActionAdmin(admin.ModelAdmin):
 
 
 class ReportAdmin(admin.ModelAdmin):
+
     list_display = ('action', 'progress', 'created_by', 'created_at', 'updated_at')
     list_filter = ('progress',)
 
@@ -126,6 +124,7 @@ class ReportAdmin(admin.ModelAdmin):
 
 
 class AlertAdmin(admin.ModelAdmin):
+
     list_display = ('action', 'kind', 'message', 'viewed', 'created_at')
     list_filter = ('kind',)
 
@@ -147,3 +146,14 @@ admin.site.register(Alert, AlertAdmin)
 
 admin.site.unregister(Group)
 admin.site.unregister(Token)
+
+
+
+# from django_celery_beat.admin import IntervalAdmin
+from django_celery_beat.models import IntervalSchedule
+
+
+if IntervalSchedule in admin.site._registry:
+    admin.site.unregister(IntervalSchedule)
+
+from django_celery_beat.apps import AppConfig, BeatConfig
