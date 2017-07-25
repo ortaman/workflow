@@ -138,6 +138,11 @@ class ActionListSerializer(serializers.ModelSerializer):
 
     project = ActionGetSerializer()
     parent_action = ActionGetSerializer()
+    reports = serializers.SerializerMethodField()
+
+    def get_reports(self, obj):
+        reports = Report.objects.filter(action__id=obj.id)
+        return ReportGetSerializer(reports, many=True).data
 
     class Meta:
         model  = Action
@@ -148,7 +153,7 @@ class ActionListSerializer(serializers.ModelSerializer):
             'begin_at', 'report_at', 'accomplish_at', 'renegotiation_at',
             'image',
             'advance_report_at', 'ejecution_report_at',
-            'project', 'parent_action')
+            'project', 'parent_action', 'reports')
 
 
 class ActionPatchSerializer(serializers.ModelSerializer):

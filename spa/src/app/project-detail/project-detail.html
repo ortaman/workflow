@@ -18,10 +18,6 @@
                     </li>
                     <li>
                         <a ui-sref="projectList"> Tablero de Proyectos </a>
-                        <i class="fa fa-circle"></i>
-                    </li>
-                    <li>
-                        <span> Bitácora  </span>
                     </li>
                 </ul>
                 <div class="page-toolbar">
@@ -171,25 +167,11 @@
                             <div class="caption">
                                 <i class="icon-bubble font-dark hide"></i>
                                 <span class="caption-subject font-hide bold uppercase">
-                                    Realizadores
+                                    Participantes
                                 </span>
                             </div>
                         </div>
                         <div class="portlet-body row">
-                          <div class="col-md-6" uib-tooltip="Observador">
-                            <div class="mt-widget-1">
-                                <div class="mt-img">
-                                    <img class="avatar" ng-src="{{project.observer.photo}}"
-                                         height="77" width="77"/>
-                                </div>
-                                <div class="mt-body">
-                                    <h3 class="mt-username">
-                                        {{ project.observer.name }} {{project.observer.first_surname}} {{ project.observer.second_surname }} (Observador)
-                                    </h3>
-                                    <p class="mt-user-title"> {{ project.observer.position }} </p>
-                                </div>
-                            </div>
-                          </div>
                           <div class="col-md-6" uib-tooltip="Reaizador">
                             <div class="mt-widget-1">
                                 <div class="mt-img">
@@ -201,6 +183,20 @@
                                         {{ project.producer.name }} {{project.producer.first_surname}} {{ project.producer.second_surname }}
                                     </h3>
                                     <p class="mt-user-title"> {{ project.producer.position }} </p>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6" uib-tooltip="Observador">
+                            <div class="mt-widget-1">
+                                <div class="mt-img">
+                                    <img class="avatar" ng-src="{{project.observer.photo}}"
+                                         height="77" width="77"/>
+                                </div>
+                                <div class="mt-body">
+                                    <h3 class="mt-username">
+                                        {{ project.observer.name }} {{project.observer.first_surname}} {{ project.observer.second_surname }} (Observador)
+                                    </h3>
+                                    <p class="mt-user-title"> {{ project.observer.position }} </p>
                                 </div>
                             </div>
                           </div>

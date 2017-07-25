@@ -57,6 +57,7 @@ app.service("ActionService", ['$http', 'APIConfig', function($http, APIConfig) {
       function(response) {
         response.data.client.photo = APIConfig.baseUrl + response.data.client.photo;
         response.data.producer.photo = APIConfig.baseUrl + response.data.producer.photo;
+        response.data.observer.photo = APIConfig.baseUrl + response.data.observer.photo;
         response.data.image = APIConfig.baseUrl + response.data.image;
         if (response.data.project)
           response.data.project.image = APIConfig.baseUrl + response.data.project.image;
@@ -73,18 +74,21 @@ app.service("ActionService", ['$http', 'APIConfig', function($http, APIConfig) {
 	  var params = $.param(object);
 
 	  var promise = $http.get(APIConfig.url + "actions/?" + params).then(function(response) {
-		angular.forEach(response.data.results, function(project){
-			project.image = APIConfig.baseUrl + project.image;
-			project.producer.photo = APIConfig.baseUrl + project.producer.photo;
-			project.client.photo = APIConfig.baseUrl + project.client.photo;
-			project.color = getColor(project);
-		})
-		if(response.data.length){
-			angular.forEach(response.data, function (project) {
-				project.color = getColor(project);
-			})
-		}
-	  return response.data;
+
+  		angular.forEach(response.data.results, function(project){
+  			project.image = APIConfig.baseUrl + project.image;
+  			project.producer.photo = APIConfig.baseUrl + project.producer.photo;
+  			project.client.photo = APIConfig.baseUrl + project.client.photo;
+  			project.color = getColor(project);
+  		})
+  		if(response.data.length){
+  			angular.forEach(response.data, function (project) {
+  				project.color = getColor(project);
+          project.producer.photo = APIConfig.baseUrl + project.producer.photo;
+          project.client.photo = APIConfig.baseUrl + project.client.photo;
+  			})
+  		}
+  	  return response.data;
 	});
 	  return promise;
 	};
