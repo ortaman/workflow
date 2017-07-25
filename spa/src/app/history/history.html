@@ -35,7 +35,7 @@
                       <md-input-container class="md-block" >
                         <label> Proyecto </label>
                         <md-select name="project" ng-model="listForm.project" ng-change="onProjectSelect(listForm.project)" required>
-                          <md-option value="{{project.id}}" ng-repeat="project in projects"> {{project.name}} </md-option>
+                          <md-option value="{{project}}" ng-repeat="project in projects"> {{project.name}} </md-option>
                         </md-select>
                       </md-input-container>
 
@@ -44,9 +44,8 @@
                 <div class="row">
                   <div class="col-md-12">
 
-                    <div class="timeline-wrapper">
-                      <timeline control="timeline" height="500px" options="options"></timeline>
-                    </div>
+                    <history history="historyArray" ng-if="historyArray.length > 0 ">
+                    </history>
 
                   </div>
                 </div>
