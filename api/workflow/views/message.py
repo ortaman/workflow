@@ -11,10 +11,8 @@ from workflow.serializers import MessageCreateSerializer
 class CommentsListViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
 
     """
-    Retrieve a list of alrts.
+    Create a message or retrieve a list of messages.
     """
-    # paginate_by = 20
-    # lookup_field = 'pk'
 
     queryset = Message.objects.all()
 
@@ -26,16 +24,3 @@ class CommentsListViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
         action_id = self.request.query_params.get('action_id')
         return self.queryset.filter(action_id=action_id)
 
-    '''
-    def create(self, request, *args, **kwargs):
-        return super(CommentsListViewSet, self).create(request, *args, **kwargs)
-
-    def get(self, request, *args, **kwargs):
-        return super(CommentsListViewSet, self).list(request, *args, **kwargs)
-
-    def update(self, request, *args, **kwargs):
-        return super(CommentsListViewSet, self).update(request, *args, **kwargs)
-
-    def partial_update(self, request, *args, **kwargs):
-        return super(CommentsListViewSet, self).partial_update(request, *args, **kwargs)
-    '''
