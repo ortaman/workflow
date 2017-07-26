@@ -176,7 +176,7 @@ app.directive('history', [
       }
 
         var time = $scope.$watch( 'vm.history', function () {
-          if(vm.history ){
+          if(vm.history){
               vm.history = transformActions(vm.history);
           }
         });
