@@ -30,21 +30,21 @@
             <!-- BEGIN FORM PROJECT-->
             <div class="todo-content">
               <div class="portlet light">
-                <div class="row">
+                <div class="row" >
                   <div class="col-md-5">
                       <md-input-container class="md-block" >
                         <label> Proyecto </label>
-                        <md-select name="project" ng-model="listForm.project" ng-change="onProjectSelect(listForm.project)" required>
+                        <md-select placeholder="Seleccione un proyecto"name="project" ng-model="listForm.project" ng-change="onProjectSelect(listForm.project)" required>
                           <md-option value="{{project}}" ng-repeat="project in projects"> {{project.name}} </md-option>
                         </md-select>
                       </md-input-container>
 
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-12">
+                <div class="row" >
+                  <div class="col-md-12" >
 
-                    <history history="historyArray" ng-if="historyArray.length > 0 ">
+                    <history history="historyArray" >
                     </history>
 
                   </div>

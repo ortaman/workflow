@@ -144,7 +144,6 @@ app.directive('history', [
 
           angular.forEach(dateFields, function(key, value){
             if(action[value]){
-              console.log(value, "fecha",  action);
                 let event = {
 
                   'media': {
