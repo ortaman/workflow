@@ -33,7 +33,7 @@ class AlertsListViewSet(ListModelMixin, UpdateModelMixin, GenericViewSet):
         return self.queryset.filter(
             action__producer_id=self.request.user.id,
             viewed = False
-            )
+        )
 
     '''
     def create(self, request, *args, **kwargs):
