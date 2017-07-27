@@ -144,7 +144,6 @@ app.directive('history', [
 
           angular.forEach(dateFields, function(key, value){
             if(action[value]){
-              console.log(value, "fecha",  action);
                 let event = {
 
                   'media': {
@@ -175,7 +174,9 @@ app.directive('history', [
 
       }
 
-        var time = $scope.$watch( 'vm.history', function () {
+        var time = $scope.$watchCollection( 'vm.history', function () {
+
+          console.log("kkk");
           if(vm.history){
               vm.history = transformActions(vm.history);
           }
