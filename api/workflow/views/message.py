@@ -23,4 +23,3 @@ class CommentsListViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
     def get_queryset(self):
         action_id = self.request.query_params.get('action_id')
         return self.queryset.filter(action_id=action_id)
-

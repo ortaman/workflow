@@ -1,0 +1,52 @@
+[
+	{
+    "model": "workflow.message",
+    "pk": 1,
+    "fields": {
+	    "action": 1,
+	    "message": "comentario 1",
+	    "created_at": "2011-11-11T00:00:00.000000Z"
+    }
+  },
+
+	{
+    "model": "workflow.message",
+    "pk": 2,
+    "fields": {
+	    "action": 1,
+	    "message": "comentario 2",
+	    "created_at": "2011-11-11T00:00:00.000000Z"
+    }
+  },
+
+	{
+    "model": "workflow.message",
+    "pk": 3,
+    "fields": {
+	    "action": 1,
+	    "message": "comentario 3",
+	    "created_at": "2011-11-11T00:00:00.000000Z"
+    }
+  },
+
+	{
+    "model": "workflow.message",
+    "pk": 4,
+    "fields": {
+	    "action": 1,
+	    "message": "comentario 4",
+	    "created_at": "2011-11-11T00:00:00.000000Z"
+    }
+  },
+
+	{
+    "model": "workflow.message",
+    "pk": 5,
+    "fields": {
+	    "message": "comentario 5",
+	    "action": 1,
+	    "created_at": "2011-11-11T00:00:00.000000Z"
+    }
+  },
+
+]
