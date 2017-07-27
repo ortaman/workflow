@@ -103,6 +103,9 @@ class ProjectList(APIView, APIMixin):
                     Q(client=query.get('client_id')) | Q(producer=query.get('client_id'))
                 )
 
+            else:
+                queryset = queryset.filter(parent_action__isnull=True)
+
             data = self.get_pagination(queryset, page, self.paginate_by)
 
         return Response(data)

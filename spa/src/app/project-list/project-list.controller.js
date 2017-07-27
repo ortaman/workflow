@@ -5,7 +5,6 @@ app.controller('ProjectListController', [
 
 	$scope.currentPage = 1;
 	$scope.listForm = {
-		phase : 'Preparación',
 		level : 'time'
 	}
 
@@ -22,8 +21,10 @@ app.controller('ProjectListController', [
 
 		var query = {
 			"page": $scope.currentPage,
-			"phase":$scope.listForm.phase,
 		};
+
+		if($scope.listForm.phase)
+			query.phase = $scope.listForm.phase;
 
 		ProjectService.getList(query).then(
 			function(response) {
