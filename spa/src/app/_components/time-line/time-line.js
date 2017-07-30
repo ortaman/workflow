@@ -127,7 +127,13 @@ app.directive('history', [
         return text;
       }
 
+      var getHeaderColors = function(timeline){
+        angular.forEach(timeline.config.events, function(event){
+          $("#"+ event.unique_id +"-marker").children().addClass(event.status+ "-status-opacity")
+        })
 
+      }
+      
       var transformActions = function(results){
 
         let newArray = [];
@@ -157,7 +163,9 @@ app.directive('history', [
                   'text': {
                     'headline': action.name + " ("+ key.name +")",
                     'text': getStringCondition(action, value)
-                  },
+                  }, 
+                  'status': action.color
+                  ,
 
               }
               data.events.push(event);
@@ -169,6 +177,7 @@ app.directive('history', [
         $timeout(function () {
           vm.timeline.setData(data);
           vm.timeline.setOptions(vm.options);
+          getHeaderColors(vm.timeline);
           vm.timeline.goTo(0);
         }, 200);
 
@@ -176,7 +185,6 @@ app.directive('history', [
 
         var time = $scope.$watchCollection( 'vm.history', function () {
 
-          console.log("kkk");
           if(vm.history){
               vm.history = transformActions(vm.history);
           }
