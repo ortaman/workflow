@@ -1,0 +1,56 @@
+[
+  {
+      "model": "workflow.action",
+      "pk": 1,
+      "fields": {
+        "name": "Proyecto I",
+        "kind": "Estándar",
+        "phase": "Preparación",
+        "status": "Pendiente",
+        "client": 2,
+        "producer": 3,
+        "observer": 4,
+        "begin_at": "2017-08-01",
+        "accomplish_at": "2017-11-01",
+        "preparation_at": "2017-09-01",
+        "negotiation_at": "2017-10-01",
+        "execution_at": "2017-11-01",
+        "evaluation_at": "2017-12-01",
+        "image": "api/media/images/image1.png",
+        "report_at": "2017-11-15",
+        "renegotiation_at": null,
+        "advance_report_at": null,
+        "ejecution_report_at": null,
+        "created_by": 2,
+        "created_at": "2017-08-01",
+        "updated_at": "2017-08-15T11:00:00.000000Z"
+      }
+  },
+  {
+    "model": "workflow.action",
+    "pk": 2,
+    "fields": {
+      "name": "Proyecto II",
+      "kind": "Estándar",
+      "phase": "Preparación",
+      "status": "Pendiente",
+      "client": 5,
+      "producer": 6,
+      "observer": 7,
+      "begin_at": "2017-08-02",
+      "accomplish_at": "2017-11-02",
+      "preparation_at": "2017-09-02",
+      "negotiation_at": "2017-10-02",
+      "execution_at": "2017-11-02",
+      "evaluation_at": "2017-12-02",
+      "image": "api/media/images/image2.png",
+      "report_at": "2017-11-16",
+      "renegotiation_at": null,
+      "advance_report_at": null,
+      "ejecution_report_at": null,
+      "created_by": 5,
+      "created_at": "2017-08-02",
+      "updated_at": "2017-08-15T11:00:00.000000Z"
+    }
+  }
+]

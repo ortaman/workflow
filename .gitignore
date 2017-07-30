@@ -8,10 +8,9 @@ spa/src/assets/vendors.js
 spa/src/assets/vendors.css
 
 api/.coverage
-
-### Keys in prodution. ###
-api/kroo/keys/production.py
-
+api/Django
+api/celerybeat-schedule
+api/ghostdriver.log
 
 ### Frontend ###
 spa/bower_components/

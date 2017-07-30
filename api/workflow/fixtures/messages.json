@@ -48,5 +48,54 @@
 	    "created_at": "2011-11-11T00:00:00.000000Z"
     }
   },
+  {
+    "model": "workflow.message",
+    "pk": 6,
+    "fields": {
+      "action": 1,
+      "message": "comentario 6",
+      "created_at": "2011-11-11T00:00:00.000000Z"
+    }
+  },
+
+  {
+    "model": "workflow.message",
+    "pk": 7,
+    "fields": {
+      "action": 2,
+      "message": "comentario 7",
+      "created_at": "2011-11-11T00:00:00.000000Z"
+    }
+  },
+
+  {
+    "model": "workflow.message",
+    "pk": 8,
+    "fields": {
+      "action": 2,
+      "message": "comentario 8",
+      "created_at": "2011-11-11T00:00:00.000000Z"
+    }
+  },
+
+  {
+    "model": "workflow.message",
+    "pk": 9,
+    "fields": {
+      "action": 2,
+      "message": "comentario 9",
+      "created_at": "2011-11-11T00:00:00.000000Z"
+    }
+  },
+
+  {
+    "model": "workflow.message",
+    "pk": 10,
+    "fields": {
+      "message": "comentario 10",
+      "action": 2,
+      "created_at": "2011-11-11T00:00:00.000000Z"
+    }
+  }
 
 ]
