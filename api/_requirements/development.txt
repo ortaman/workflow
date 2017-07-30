@@ -5,3 +5,5 @@ django-extensions==1.7.6
 
 coverage==4.4.1
 selenium==3.4.3
+django-rest-swagger==2.1.2
+drfdocs==0.0.11

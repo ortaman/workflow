@@ -36,6 +36,8 @@ INSTALLED_APPS += [
     'django_extensions',
     'debug_toolbar',
     'corsheaders',
+    'rest_framework_swagger',
+    'rest_framework_docs',
 ]
 
 MIDDLEWARE += [

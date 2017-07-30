@@ -125,7 +125,7 @@ class MessageWithAuthAPITest(TestCase):
         self.view = CommentsListViewSet.as_view({'post': 'create', 'get': 'list'})
 
         self.user = User.objects.get(username='user2')
-        self.message = json.dumps({"action": 1,"message": u"crud con autenticación"})
+        self.message = json.dumps({"action": 1,"message": "crud con autenticación"})
 
     def test_post_message(self):
         request = self.factory.post(
@@ -143,6 +143,9 @@ class MessageWithAuthAPITest(TestCase):
         response.render()
         self.assertIn('id', response.content.decode('utf-8'))
         self.assertIn('created_at', response.content.decode('utf-8'))
+
+        self.assertEqual(Message.objects.all().count(), 11)
+        self.assertEqual(Message.objects.get(id=response.data['id']).message, "crud con autenticación")
 
 
     def test_post_message_with_empty_data(self):

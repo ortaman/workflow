@@ -30,3 +30,11 @@ if settings.DEBUG:
     urlpatterns += [
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+from rest_framework_swagger.views import get_swagger_view
+
+urlpatterns += [
+    url(r'^$', get_swagger_view(title='Pastebin API')),
+    url(r'^docs/', include('rest_framework_docs.urls')),
+]
