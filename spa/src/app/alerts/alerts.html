@@ -92,6 +92,7 @@
 
                     <div class="text-center">
                         <ul uib-pagination boundary-links="true" class="pagination-sm"
+                            ng-show="alerts.results.length > 0"
                             previous-text="&lsaquo;" next-text="&rsaquo;"
                             first-text="&laquo;" last-text="&raquo;"
                             items-per-page="alerts.paginated_by"
@@ -99,6 +100,9 @@
                             ng-model="currentAlertPage"
                             ng-change="getAlerts()">
                         </ul>
+                        <h2 ng-show="alerts.results.length == 0">
+                            No hay alertas pendientes                             
+                        </h2>
                     </div>
                   </div>
                 </div>
