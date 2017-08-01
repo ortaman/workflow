@@ -15,10 +15,10 @@ class MessageWithoutAuthAPITest(TestCase):
         self.factory = APIRequestFactory()
         self.view = CommentsListViewSet.as_view({'post': 'create', 'get': 'list'})
 
-        self.message = json.dumps({"action": 1,"message_json": "crud sin autenticación"})
+        self.message = json.dumps({"action": 1,"message": "crud sin autenticación"})
         self.expected = 'Las credenciales de autenticación no se proveyeron.'
 
-    def test_post_message(self):
+    def test_post(self):
         request = self.factory.post(
             path='/api/messages/', data=self.message, content_type='application/json'
         )
@@ -27,21 +27,21 @@ class MessageWithoutAuthAPITest(TestCase):
         self.assertEqual(response.status_code, 401)
         self.assertEqual(response.data.get('detail'), self.expected)
 
-    def test_put_message(self):
+    def test_put(self):
         request = self.factory.put(path='/api/messages/1/', data=self.message, content_type='application/json')
         response = self.view(request)
 
         self.assertEqual(response.status_code, 401)
         self.assertEqual(response.data.get('detail'), self.expected)
 
-    def test_patch_message_without_authentication(self):
+    def test_patch(self):
         request = self.factory.patch(path='/api/messages/1/', data=self.message, content_type='application/json')
         response = self.view(request)
 
         self.assertEqual(response.status_code, 401)
         self.assertEqual(response.data.get('detail'), self.expected)
 
-    def test_get_message_without_authentication(self):
+    def test_get(self):
         request = self.factory.get(path='/api/messages/')
         response = self.view(request)
 
