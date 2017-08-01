@@ -3,7 +3,8 @@ app.controller('HistoryController', ['$scope', '$timeout', 'ActionService', 'Not
  function($scope ,$timeout, ActionService, Notification, ProjectService) {
 
    $scope.notifications = [];
-   $scope.listForm = {},
+   $scope.listForm = {};
+    $scope.project = {};   
    $scope.init = function () {
      $scope.getProjects();
    }
@@ -22,6 +23,7 @@ app.controller('HistoryController', ['$scope', '$timeout', 'ActionService', 'Not
 
    $scope.onProjectSelect =  function (project) {
      project = JSON.parse(project);
+     $scope.project = project;
      $scope.getNotifications(project);
    }
 
