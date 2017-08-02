@@ -29,6 +29,14 @@
     }
   },
   {
+    "model": "authtoken.token",
+    "pk": "8933f3c18e73ee3f93cf3b87af100808d5711deb",
+    "fields": {
+      "user": 1,
+      "created": "2017-07-29T01:00:00.000000Z"
+    }
+  },
+  {
     "model": "users.baseuser",
     "pk": 2,
     "fields": {
@@ -55,6 +63,14 @@
     "fields": {
        "groups": [],
        "user_permissions": []
+    }
+  },
+  {
+    "model": "authtoken.token",
+    "pk": "8933f3c18e73ee3f93cf3b87af100808d5712deb",
+    "fields": {
+      "user": 2,
+      "created": "2017-07-29T02:00:00.000000Z"
     }
   },
   {
@@ -87,6 +103,14 @@
     }
   },
   {
+    "model": "authtoken.token",
+    "pk": "8933f3c18e73ee3f93cf3b87af100808d5713deb",
+    "fields": {
+      "user": 3,
+      "created": "2017-07-29T03:00:00.000000Z"
+    }
+  },
+  {
     "model": "users.baseuser",
     "pk": 4,
     "fields": {
@@ -113,6 +137,14 @@
     "fields": {
        "groups": [],
        "user_permissions": []
+    }
+  },
+  {
+    "model": "authtoken.token",
+    "pk": "8933f3c18e73ee3f93cf3b87af100808d5714deb",
+    "fields": {
+      "user": 4,
+      "created": "2017-07-29T04:00:00.000000Z"
     }
   },
   {
@@ -145,6 +177,14 @@
     }
   },
   {
+    "model": "authtoken.token",
+    "pk": "8933f3c18e73ee3f93cf3b87af100808d5715deb",
+    "fields": {
+      "user": 5,
+      "created": "2017-07-29T05:00:00.000000Z"
+    }
+  },
+  {
     "model": "users.baseuser",
     "pk": 6,
     "fields": {
@@ -171,6 +211,14 @@
     "fields": {
        "groups": [],
        "user_permissions": []
+    }
+  },
+  {
+    "model": "authtoken.token",
+    "pk": "8933f3c18e73ee3f93cf3b87af100808d5716deb",
+    "fields": {
+      "user": 6,
+      "created": "2017-07-29T06:00:00.000000Z"
     }
   },
   {
@@ -203,6 +251,14 @@
     }
   },
   {
+    "model": "authtoken.token",
+    "pk": "8933f3c18e73ee3f93cf3b87af100808d5717deb",
+    "fields": {
+      "user": 7,
+      "created": "2017-07-29T07:00:00.000000Z"
+    }
+  },
+  {
     "model": "users.baseuser",
     "pk": 8,
     "fields": {
@@ -229,6 +285,14 @@
     "fields": {
        "groups": [],
        "user_permissions": []
+    }
+  },
+  {
+    "model": "authtoken.token",
+    "pk": "8933f3c18e73ee3f93cf3b87af100808d5718deb",
+    "fields": {
+      "user": 8,
+      "created": "2017-07-29T08:00:00.000000Z"
     }
   },
   {
@@ -261,6 +325,14 @@
     }
   },
   {
+    "model": "authtoken.token",
+    "pk": "8933f3c18e73ee3f93cf3b87af100808d5719deb",
+    "fields": {
+      "user": 9,
+      "created": "2017-07-29T09:00:00.000000Z"
+    }
+  },
+  {
     "model": "users.baseuser",
     "pk":10,
     "fields": {
@@ -287,6 +359,14 @@
     "fields": {
        "groups": [],
        "user_permissions": []
+    }
+  },
+  {
+    "model": "authtoken.token",
+    "pk": "8933f3c18e73ee3f93cf3b87af100808d5720deb",
+    "fields": {
+      "user": 10,
+      "created": "2017-07-29T10:00:00.000000Z"
     }
   }
 ]

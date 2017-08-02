@@ -57,8 +57,10 @@ class AlertWitAuthAPITest(TestCase):
     def setUp(self):
         self.client = APIClient()
 
-        self.user = User.objects.get(username='user3')
-        self.client.force_authenticate(user=self.user)
+        # self.user = User.objects.get(username='user3')
+        # self.client.force_authenticate(user=self.user)
+        token = Token.objects.get(user__username='user3')
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         self.alert = json.dumps({"action": 1,"alert": "crud con autenticación"})
 
