@@ -172,8 +172,10 @@
                             </div>
                         </div>
                         <div class="portlet-body row">
-                          <div class="col-md-6" uib-tooltip="Reaizador">
+                          <div class="col-md-6" >
                             <div class="mt-widget-1">
+                                     <h5 class=" role-title">Realizador principal </h5>
+                                
                                 <div class="mt-img">
                                     <img class="avatar" ng-src="{{project.producer.photo}}"
                                          height="77" width="77"/>
@@ -186,20 +188,26 @@
                                 </div>
                             </div>
                           </div>
-                          <div class="col-md-6" uib-tooltip="Observador">
+                          <div class="col-md-6" >
                             <div class="mt-widget-1">
+                                     <h5 class="text-center  role-title">Observador </h5>
                                 <div class="mt-img">
                                     <img class="avatar" ng-src="{{project.observer.photo}}"
                                          height="77" width="77"/>
                                 </div>
                                 <div class="mt-body">
                                     <h3 class="mt-username">
-                                        {{ project.observer.name }} {{project.observer.first_surname}} {{ project.observer.second_surname }} (Observador)
+                                        {{ project.observer.name }} {{project.observer.first_surname}} {{ project.observer.second_surname }}
                                     </h3>
                                     <p class="mt-user-title"> {{ project.observer.position }} </p>
                                 </div>
                             </div>
                           </div>
+                        </div>
+                        <div class="portlet-title">
+                             <span class="caption-subject font-hide bold uppercase">
+                                    Realizadores secundarios
+                                </span>
                         </div>
                         <div class="portlet-body row" ng-repeat="number in [0, 1] track by $index">
 
@@ -377,7 +385,7 @@
                         <div class="portlet-body " ng-if="historyArray.length >= 1">
                           <div class="row">
                             <div class="col-md-12">
-                              <history history="historyArray">
+                              <history history="historyArray" main-action="project.id">
                               </history>
                             </div>
                           </div>

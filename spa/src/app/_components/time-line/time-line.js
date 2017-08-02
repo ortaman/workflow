@@ -8,7 +8,8 @@ app.directive('history', [
       restrict: 'E',
       templateUrl: 'app/_components/time-line/time-line.html',
       scope: {
-          history: '='
+          history: '=',
+          mainAction: '='
       },
       controller: TimeLineController,
       controllerAs: 'vm',
@@ -129,7 +130,17 @@ app.directive('history', [
 
       var getHeaderColors = function(timeline){
         angular.forEach(timeline.config.events, function(event){
-          $("#"+ event.unique_id +"-marker").children().addClass(event.status+ "-status-opacity")
+          if(event.action.id == vm.mainAction){
+            angular.forEach(actionDates, function(key, value){
+              if(value != event.dateType){
+                $("#"+ event.unique_id +"-marker").children().addClass( "t4-timeline-primary")
+              }else{
+                $("#"+ event.unique_id +"-marker").children().addClass( "t4-timeline-secondary")
+              }
+            })
+          }else{
+                $("#"+ event.unique_id +"-marker").children().addClass( "t4-timeline-third")            
+          }
         })
 
       }
@@ -161,11 +172,12 @@ app.directive('history', [
                     'day': moment(action[value]).format('D')
                   },
                   'text': {
-                    'headline': action.name + " ("+ key.name +")",
+                    'headline': "<span class='hidee'>" + action.name + "</span>" + "<br class='hidee'><span>"+ key.name+ "</span>",
                     'text': getStringCondition(action, value)
                   }, 
-                  'status': action.color
-                  ,
+                  'action': action,
+                  'dateType': value
+                  
 
               }
               data.events.push(event);
