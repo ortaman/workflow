@@ -42,8 +42,8 @@ class Action(models.Model):
     producer = models.ForeignKey(User, related_name='producer_project', verbose_name='Realizador')
     observer = models.ForeignKey(User, related_name='agent_project', verbose_name='Observador')
 
-    toDo = models.TextField(max_length=1024, verbose_name='¿Qué y como se realizará?')
-    satisfactions = models.TextField(max_length=1024, verbose_name='Condiciones de satisfacción')
+    toDo = models.TextField(max_length=1600, verbose_name='¿Qué y como se realizará?')
+    satisfactions = models.TextField(max_length=1600, verbose_name='Condiciones de satisfacción')
 
     # workflow dates
     preparation_at = models.DateField(null=True, blank=True, verbose_name='Fecha de preparación')
