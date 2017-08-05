@@ -13,7 +13,7 @@ from workflow.serializers import AlertListSerializer, AlertPartialUpdateSerializ
 
 class AlertsListViewSet(ListModelMixin, UpdateModelMixin, GenericViewSet):
     """
-    Retrieve a list of alrts.
+    Retrieve a list of alerts.
     """
     lookup_field = 'pk'
 
