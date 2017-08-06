@@ -6,12 +6,12 @@ app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','A
    $scope.titles = {
      'project': {
        'name1': 'El proyecto ',
-       'name2': 'proyecto ',
+       'name2': 'proyectos aceptados',
        'this':' este proyecto ',
      },
      'action':{
        'name1': 'La acción ',
-       'name2': 'acción',
+       'name2': 'acciónes aceptadas',
        'this':' esta acción ',
      }
    }
@@ -111,11 +111,10 @@ app.controller('CoordinationsController', ['$scope','UserService','$mdDialog','A
       ActionService.patch(project.id,project).then(
         function (response) {
           if (type == "Aceptada"){
-            Notification.success($scope.titles['name1']+ 'ha pasado a '+ $scope.titles['name2']+ ' aceptados');
+            Notification.success($scope.titles['name1']+ 'ha pasado a '+ $scope.titles['name2']);
             $state.go("projectDetail", {id: project.id})
           }
-          else if (type == "Ejecutada")
-            Notification.success($scope.titles['name1']+ ' ha pasado a '+ $scope.titles['name2']+ ' terminados');
+          
           $scope.getProjectsByProducer($scope.projectProducerStatus);
         },
         function (errors) {

@@ -176,6 +176,7 @@
                                   placeholder="Describe las acciones a realizar."
                                   rows="10"
                                   maxlength="1600"
+                                  md-maxlength="1600"
                                   ng-model="project.toDo"
                                   required></textarea>
 
@@ -194,11 +195,11 @@
                                 <textarea
                                   name="satisfaction"
                                   placeholder="Describe las condiciones de satisfacción"
-
                                   rows="10"
                                   maxlength="1600"
-                                  ng-model="project.satisfactions"                                   required></textarea>
-
+                                  md-maxlength="1600"                                  
+                                  ng-model="project.satisfactions"
+                                  required></textarea>
                                 <div ng-show="projectForm.satisfaction.$touched || submitted">
                                     <div class="error" ng-show="projectForm.satisfaction.$error.required">
                                       Campo requerido.
