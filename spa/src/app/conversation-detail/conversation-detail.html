@@ -24,117 +24,91 @@
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em" ng-init="init()"> {{ titles.create }} {{ projectParent.name }}</h1>
+            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em" ng-init="init()"> Proyecto 1 </h1>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <!-- BEGIN FORM PROJECT-->
             <div class="todo-content">
               <div class="portlet light">
                <div class="col-md-12">
-                     <!--                <div class="timeline">
+                    <div class="timeline">
+                        
+                        <div class="timeline-item" ng-repeat="n in [42] track by $index">
+                            <div class="timeline-badge">
+                                <img class="timeline-badge-userpic img-circle" src="//1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mm"> </div>
+                            <div class="timeline-body">
+                                <div class="timeline-body-arrow"> </div>
+                                <div class="timeline-body-head">
+                                    <div class="timeline-body-head-caption">
+                                        <a href="javascript:;" class="timeline-body-title font-blue-madison">Vanessa Bond</a>
+                                        <span class="timeline-body-time font-grey-cascade">Posted new post at 5:10 PM</span>
+                                    </div>
+                                    <div class="timeline-body-head-actions"> </div>
+                                </div>
+                                <div class="timeline-body-content">
+                                    <span class="font-grey-cascade">
+                                        <p>
+                                                Caulie dandelion maize lentil collard greens radish arugula sweet pepper water spinach kombu courgette lettuce. Celery coriander bitterleaf epazote radicchio shallot winter purslane collard
+                                            greens spring onion squash lentil. Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi. coriander bitterleaf epazote radicchio shallot winter purslane collard. </p>
+                                        <p>
                                         
-                                        <div class="timeline-item" ng-repeat="n in [42, 42, 43, 43] track by $index">
-                                            <div class="timeline-badge">
-                                                <img class="timeline-badge-userpic img-circle" src="//1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mm"> </div>
-                                            <div class="timeline-body">
-                                                <div class="timeline-body-arrow"> </div>
-                                                <div class="timeline-body-head">
-                                                    <div class="timeline-body-head-caption">
-                                                        <a href="javascript:;" class="timeline-body-title font-blue-madison">Vanessa Bond</a>
-                                                        <span class="timeline-body-time font-grey-cascade">Posted new post at 5:10 PM</span>
-                                                    </div>
-                                                    <div class="timeline-body-head-actions"> </div>
-                                                </div>
-                                                <div class="timeline-body-content">
-                                                    <span class="font-grey-cascade">
-                                                        <p>
-                                                             Caulie dandelion maize lentil collard greens radish arugula sweet pepper water spinach kombu courgette lettuce. Celery coriander bitterleaf epazote radicchio shallot winter purslane collard
-                                                            greens spring onion squash lentil. Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi. coriander bitterleaf epazote radicchio shallot winter purslane collard. </p>
-                                                        <p>
-                                                        
-                                                        </span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item" ng-repeat="n in [42] track by $index">
+                            <div class="timeline-badge">
+                                <img class="timeline-badge-userpic img-circle" src="//1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mm"> </div>
+                            <div class="timeline-body">
+                                <div class="timeline-body-arrow"> </div>
+                                <div class="timeline-body-head">
+                                    <div class="timeline-body-head-caption">
+                                        <a href="javascript:;" class="timeline-body-title font-blue-madison">james Bond</a>
+                                        <span class="timeline-body-time font-grey-cascade">Posted new post at 5:10 PM</span>
+                                    </div>
+                                    <div class="timeline-body-head-actions"> </div>
+                                </div>
+                                <div class="timeline-body-content">
+                                    <span class="font-grey-cascade">
+                                        <p>
+                                                Caulie dandelion maize lentil collard greens radish arugula sweet pepper water spinach kombu courgette lettuce. Celery coriander bitterleaf epazote radicchio shallot winter purslane collard
+                                            greens spring onion squash lentil. Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi. coriander bitterleaf epazote radicchio shallot winter purslane collard. </p>
+                                        <p>
                                         
-                                       
-                                    </div> -->
-                                    <table class="table table-striped table-advance table-hover">
-    <thead>
-        <tr>
-            <th colspan="3">
-                <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                    <input type="checkbox" class="mail-group-checkbox">
-                    <span></span>
-                </label>
-                <div class="btn-group input-actions">
-                    <a class="btn btn-sm blue btn-outline dropdown-toggle sbold" href="javascript:;" data-toggle="dropdown"> Actions
-                        <i class="fa fa-angle-down"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="javascript:;">
-                                <i class="fa fa-pencil"></i> Mark as Read </a>
-                        </li>
-                        <li>
-                            <a href="javascript:;">
-                                <i class="fa fa-ban"></i> Spam </a>
-                        </li>
-                        <li class="divider"> </li>
-                        <li>
-                            <a href="javascript:;">
-                                <i class="fa fa-trash-o"></i> Delete </a>
-                        </li>
-                    </ul>
-                </div>
-            </th>
-            <th class="pagination-control" colspan="3">
-                <span class="pagination-info"> 1-30 of 789 </span>
-                <a class="btn btn-sm blue btn-outline">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                <a class="btn btn-sm blue btn-outline">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr class="unread" data-messageid="1">
-            <td class="inbox-small-cells">
-                <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                    <input type="checkbox" class="mail-checkbox" value="1">
-                    <span></span>
-                </label>
-            </td>
-            <td class="inbox-small-cells">
-                <i class="fa fa-star"></i>
-            </td>
-            <td class="view-message hidden-xs"> Petronas IT </td>
-            <td class="view-message "> New server for datacenter needed </td>
-            <td class="view-message inbox-small-cells">
-                <i class="fa fa-paperclip"></i>
-            </td>
-            <td class="view-message text-right"> 16:30 PM </td>
-        </tr>
-        <tr class="unread" data-messageid="2">
-            <td class="inbox-small-cells">
-                <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                    <input type="checkbox" class="mail-checkbox" value="1">
-                    <span></span>
-                </label>
-            </td>
-            <td class="inbox-small-cells">
-                <i class="fa fa-star"></i>
-            </td>
-            <td class="view-message hidden-xs"> Daniel Wong </td>
-            <td class="view-message"> Please help us on customization of new secure server </td>
-            <td class="view-message inbox-small-cells"> </td>
-            <td class="view-message text-right"> March 15 </td>
-        </tr>
-        
-    </tbody>
-</table>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-md-10">
+                                                    <md-input-container class="md-block" >
+                             <label>{{ titles.nameOf }}</label>
+                             <input
+                               name="projectName"
+                               maxlength="64"
+                               ng-model="project.name"
+                               placeholder="Describe las acciones a realizar."
+
+                               ></input>
+
+                             <div ng-show="projectForm.projectName.$touched || submitted">
+                               <div class="error" ng-show="projectForm.projectName.$error.required">
+                                 Campo requerido.
+                               </div>
+                               <div class="error" ng-show="projectForm.projectName.$error.pattern">
+                                 Debe contener caracteres alfanúmericos.
+                               </div>
+                             </div>
+                            </md-input-container>
+                            
+                        </div>
+                        <div class="col-md-2">
+                                         <button class="btn green">
+                                <div class="inbox-form-group mail-to">
+                                <i class="fa fa-check"></i>Send</button>
+                        </div>
+                    </div>                                
                 </div>
 
               </div>

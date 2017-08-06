@@ -93,7 +93,7 @@ app.config(function($stateProvider, $urlRouterProvider,
       controller: "ConversationsController",
     })
     .state('conversationDetail', {
-      url: "/conversationDetail",
+      url: "/conversationDetail/:id",
       templateUrl: "app/conversation-detail/conversation-detail.html",
       controller: "ConversationDetailController",
     })
