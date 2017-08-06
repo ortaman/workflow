@@ -31,7 +31,7 @@ app.service("AlertsService", ['$http', 'APIConfig', function($http, APIConfig) {
 
   this.getList = function(object) {
 	  var params = $.param(object);
-	  var promise = $http.get(APIConfig.url + "actions/alerts/?" + params).then(function(response) {
+	  var promise = $http.get(APIConfig.url + "alerts/?" + params).then(function(response) {
         angular.forEach(response.data.results, function (item) {
           item.iconStatus = getIconStatus(item);
           item.alertText = getAlertText(item);
@@ -46,7 +46,7 @@ app.service("AlertsService", ['$http', 'APIConfig', function($http, APIConfig) {
 
 
   this.update = function(object) {
-    var promise = $http.put(APIConfig.url + "actions/alerts/" + object.id + "/" , object).then(function(response) {
+    var promise = $http.put(APIConfig.url + "alerts/" + object.id + "/" , object).then(function(response) {
       return response.data;
     });
     return promise;
@@ -55,7 +55,7 @@ app.service("AlertsService", ['$http', 'APIConfig', function($http, APIConfig) {
 
   this.patch = function(id, object) {
 
-      var promise = $http.patch(APIConfig.url + "actions/alerts/" + id + "/" , object).then(function(response) {
+      var promise = $http.patch(APIConfig.url + "alerts/" + id + "/" , object).then(function(response) {
           return response.data;
       });
 
