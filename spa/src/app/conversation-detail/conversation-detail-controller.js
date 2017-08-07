@@ -1,8 +1,16 @@
 
 app.controller('ConversationDetailController', ['$scope', '$timeout', 'ActionService', 'Notification', 'ProjectService',
- '$state',
- function($scope ,$timeout, ActionService, Notification, ProjectService, $state) {
+ '$state', 'MessagesService', 
+ function($scope ,$timeout, ActionService, Notification, ProjectService, $state, MessagesService) {
 
-  console.log("jjjj", $state)
+  $scope.init = function(){
+    $scope.getMessages();
+  }
+
+  $scope.getMessages = function(){
+    MessagesService.getList({}).then(function(response){
+      console.log("respnse", response)
+    })
+  }
 
 }]);

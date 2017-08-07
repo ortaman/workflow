@@ -80,33 +80,31 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row message-box">
                         <div class=" col-md-10">
-                                                    <md-input-container class="md-block" >
+                            <md-input-container class="md-block" >
                              <label>{{ titles.nameOf }}</label>
                              <input
-                               name="projectName"
-                               maxlength="64"
-                               ng-model="project.name"
-                               placeholder="Describe las acciones a realizar."
+                               name="message"
+                               maxlength="1000"
+                               ng-model="message"
+                               placeholder="Escribe un mensaje"
 
                                ></input>
 
-                             <div ng-show="projectForm.projectName.$touched || submitted">
-                               <div class="error" ng-show="projectForm.projectName.$error.required">
+                             <div ng-show="message.$touched || submitted">
+                               <div class="error" ng-show="message.$error.required">
                                  Campo requerido.
-                               </div>
-                               <div class="error" ng-show="projectForm.projectName.$error.pattern">
-                                 Debe contener caracteres alfanúmericos.
                                </div>
                              </div>
                             </md-input-container>
                             
                         </div>
                         <div class="col-md-2">
-                                         <button class="btn green">
+                            <button class="btn green" style="margin: 18px 0;
+">
                                 <div class="inbox-form-group mail-to">
-                                <i class="fa fa-check"></i>Send</button>
+                                <i class="fa fa-check"></i>Enviar</button>
                         </div>
                     </div>                                
                 </div>
