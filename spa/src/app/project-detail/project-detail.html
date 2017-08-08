@@ -66,6 +66,10 @@
                                 <a >
                                     <i class="icon-layers"></i> Cerrar {{ titles.name}}</a>
                             </li>
+                            <li ng-if="checkRole(['producer', 'observer', 'client'])">
+                                <a ui-sref="conversationDetail({id: project.id})">
+                                    <i class="icon-envelope-open"></i> Ver convesación </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

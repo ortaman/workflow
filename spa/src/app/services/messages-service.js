@@ -8,7 +8,12 @@ app.service("MessagesService", ['$http', 'APIConfig', function($http, APIConfig)
 	  return promise;
 	};
 
+  this.create = function(object) {
+    var promise = $http.post(APIConfig.url + "messages/", object).then(function(response) {
+      return response.data;
+    });
 
-
+    return promise;
+  };
 
 }]);
