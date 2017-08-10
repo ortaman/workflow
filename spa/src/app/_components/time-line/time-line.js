@@ -21,46 +21,13 @@ app.directive('history', [
     /** @ngInject */
     function TimeLineController(APIConfig , $scope, $timeout) {
       var vm = this;
-
+      let dateFields = {};
       vm.options = {
         debug: false,
         timenav_position: 'top',
         language: 'es'
       };
 
-      var dateFields = {
-          //Fechas estáticas
-          'accomplish_at':{
-            'name':'Fecha de ejecución',
-            'image': 'client'
-          },
-          'report_at':{
-            'image': 'client',
-            'name':'Fecha de reporte',
-          },
-          'begin_at':{
-            'name': 'Fecha de inicio',
-            'image': 'client'
-          },
-
-          'preparation_at' : {
-            'name':'Fecha de Preparación',
-            'image': 'client'
-          },
-          'negotiation_at' :{
-            'name':'Fecha de Negociación',
-            'image': 'client'
-          },
-          'execution_at' : {
-            'name':'Fecha de Ejecución',
-            'image': 'client'
-          },
-          'evaluation_at' : {
-            'name':'Fecha de Evaluación',
-            'image': 'client'
-          },
-          //Fechas estáticas//
-        }
         var projectDates = {
           'accepted_at' : {
             'name':'Proyecto fue aceptado',
@@ -127,24 +94,14 @@ app.directive('history', [
         }
         return text;
       }
-
+      
       var getHeaderColors = function(timeline){
         angular.forEach(timeline.config.events, function(event){
-          if(event.action.id == vm.mainAction){
-            angular.forEach(actionDates, function(key, value){
-              if(value != event.dateType){
-                $("#"+ event.unique_id +"-marker").children().addClass( "t4-timeline-primary")
-              }else{
-                $("#"+ event.unique_id +"-marker").children().addClass( "t4-timeline-secondary")
-              }
-            })
-          }else{
-                $("#"+ event.unique_id +"-marker").children().addClass( "t4-timeline-third")            
-          }
+          $("#"+ event.unique_id +"-marker").children().addClass( "t4-timeline-primary");
         })
 
       }
-      
+
       var transformActions = function(results){
 
         let newArray = [];
@@ -155,9 +112,9 @@ app.directive('history', [
         angular.forEach(results, function (action) {
 
           if(action.parent_action)
-            dateFields = angular.extend(dateFields, actionDates);
+            dateFields = actionDates;
           else
-            dateFields = angular.extend(dateFields, projectDates);
+            dateFields = projectDates;
 
           angular.forEach(dateFields, function(key, value){
             if(action[value]){
@@ -175,8 +132,7 @@ app.directive('history', [
                     'headline': "<span class='hidee'>" + action.name + "</span>" + "<br class='hidee'><span>"+ key.name+ "</span>",
                     'text': getStringCondition(action, value)
                   }, 
-                  'action': action,
-                  'dateType': value
+                  'action': action
                   
 
               }
@@ -187,16 +143,17 @@ app.directive('history', [
         })
 
         $timeout(function () {
-          vm.timeline.setData(data);
-          vm.timeline.setOptions(vm.options);
-          getHeaderColors(vm.timeline);
-          vm.timeline.goTo(0);
+          if(data.events.length > 0 ){
+            vm.timeline.setData(data);
+            vm.timeline.setOptions(vm.options);
+            getHeaderColors(vm.timeline);            
+            vm.timeline.goTo(0);
+          }
         }, 200);
 
       }
 
         var time = $scope.$watchCollection( 'vm.history', function () {
-
           if(vm.history){
               vm.history = transformActions(vm.history);
           }
