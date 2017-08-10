@@ -100,7 +100,7 @@ app.controller('ProjectDetailController', [
 
 		ActionService.getList(query).then(
 			function(response) {
-				$scope.historyArray = angular.copy(response);
+				$scope.historyArray = [];
 				$scope.historyArray.push($scope.project)
 
 			},
