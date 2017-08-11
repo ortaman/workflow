@@ -29,6 +29,10 @@ app.directive('history', [
       };
 
         var projectDates = {
+          'created_at' : {
+            'name':'Proyecto fue creado',
+            'image': 'client',
+          },
           'accepted_at' : {
             'name':'Proyecto fue aceptado',
             'image': 'producer',
@@ -48,6 +52,10 @@ app.directive('history', [
           }
         };
         var actionDates = {
+          'created_at' : {
+            'name':'Acción fue creada',
+            'image': 'client',
+          },
           'accepted_at' : {
             'name':'Acción fue aceptada',
             'image': 'producer',
