@@ -1,8 +1,9 @@
 
 app.controller('ProjectDetailController', [
 	'$scope', '$state', 'ActionService', 'APIConfig', 'ProducerGetListService', '$uibModal','$mdDialog',
-	 'UserService', 'Notification',
-	function($scope, $state, ActionService, APIConfig, ProducerGetListService, $uibModal,$mdDialog ,UserService, Notification) {
+	 'UserService', 'Notification', 'MessagesService',
+	function($scope, $state, ActionService, APIConfig, ProducerGetListService, $uibModal,$mdDialog ,
+		UserService, Notification, MessagesService) {
 
    $scope.titles = {
      'project': {
@@ -42,10 +43,20 @@ app.controller('ProjectDetailController', [
 				console.error("error",error);
 			})
 			getProject();
+			$scope.getMessages();
 
 	}
 
 	//Service call
+	$scope.getMessages = function(){
+		MessagesService.getList(
+		{
+			action_id:  $state.params.id
+		}).then(function(response){
+			$scope.messages = response;
+		})
+	}
+
 	var getProject = function() {
 		ActionService.getById($state.params.id).then(
 			function(response) {

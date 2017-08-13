@@ -20,7 +20,7 @@ app.controller('ConversationDetailController', ['$scope', '$timeout', 'ActionSer
   var getProject = function() {
 		ActionService.getById($state.params.id).then(
 			function(response) {
-				$scope.project = response;
+				$scope.action = response;
 			},
 			function(errorResponse) {
 				Notification.error("Ocurrio  un error al recuperar  información")

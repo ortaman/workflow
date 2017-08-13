@@ -17,80 +17,22 @@
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <a ui-sref="projectList"> Historial </a>
-                        <i class="fa fa-circle"></i>
+                        <a ui-sref="projectList"> Conversación sobre {{ action.name}} </a>
                     </li>
                 </ul>
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title text-center" style="margin: 1.5em 0em 0em 0em" ng-init="init()"> {{ project.name}}</h1>
+            <h1 class="page-title text-center"  ng-init="init()"> {{ action.name}}</h1>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <!-- BEGIN FORM PROJECT-->
             <div class="todo-content">
               <div class="portlet light">
-               <!-- <div class="col-md-12">
-                    <div class="timeline">
-                        
-                        <div class="timeline-item" ng-repeat="n in messages.results">
-                            <div class="timeline-badge">
-                                <img class="timeline-badge-userpic img-circle" src="//1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mm"> </div>
-                            <div class="timeline-body">
-                                <div class="timeline-body-arrow"> </div>
-                                <div class="timeline-body-head">
-                                    <div class="timeline-body-head-caption">
-                                        <a href="javascript:;" class="timeline-body-title font-blue-madison">james Bond</a>
-                                        <span class="timeline-body-time font-grey-cascade">Enviado {{ n.created_at | date: 'dd-MMM-yyyy, hh:mm a'}}</span>
-                                    </div>
-                                    <div class="timeline-body-head-actions"> </div>
-                                </div>
-                                <div class="timeline-body-content">
-                                    <span class="font-grey-cascade">
-                                        <p> {{n.message }}<p>
-                                        
-                                        </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row message-box">
-                        <form  name="messageForm" ng-submit="submitMessage(message)">
-                            <div class=" col-md-10">
-                                <md-input-container class="md-block" >
-                                <label>{{ titles.nameOf }}</label>
-                                <input
-                                    name="message"
-                                    maxlength="1000"
-                                    ng-model="message"
-                                    placeholder="Escribe un mensaje"
-                                    required
-
-                                ></input>
-
-                                <div ng-show="message.$touched || submitted">
-                                <div class="error" ng-show="message.$error.required">
-                                    Campo requerido.
-                                </div>
-                                </div>
-                                </md-input-container>
-                                
-                            </div>
-                            <div class="col-md-2">
-                                <button ng-disabled="messageForm.$invalid"  class="btn green" type="submit" style="margin: 18px 0;">
-                                    <div class="inbox-form-group mail-to">
-                                    <i class="fa fa-check"></i>Enviar</button>
-                            </div>
-                        </form>
-                    </div>                                
-                </div> -->
                 <div class="row">
                     <div class="portlet light ">
                         <div class="portlet-title">
-                            <div class="caption">
-                                <i class="icon-bubble font-hide hide"></i>
-                                <span class="caption-subject font-hide bold uppercase">Chats</span>
-                            </div>
+                           
                         </div>
                         <div class="portlet-body" id="chats">
                             <div class="slimScrollDiv">
