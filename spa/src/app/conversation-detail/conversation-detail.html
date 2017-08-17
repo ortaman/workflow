@@ -31,21 +31,18 @@
               <div class="portlet light">
                 <div class="row">
                     <div class="portlet light ">
-                        <div class="portlet-title">
-                           
-                        </div>
                         <div class="portlet-body" id="chats">
                             <div class="slimScrollDiv">
                                 <div class="scroller">
                                     <ul class="chats">
 
-                                        <li class="out" ng-repeat="n in messages.results ">
-                                            <img class="avatar" alt="" src="//1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mm">
+                                        <li ng-class="{'out': n.sender != user , 'in': n.sender == user}" ng-repeat="n in messages.results ">
+                                            <img class="avatar" ng-src="{{ n.sender.photo }}">
                                             <div class="message">
                                                 <span class="arrow"> </span>
-                                                <a href="javascript:;" class="name"> Usuario </a>
+                                                <a href="javascript:;" class="name"> {{ n.sender.username }} </a>
                                                 <span class="datetime">enviado  {{ n.created_at | date: 'dd-MMM-yyyy, hh:mm a'}} </span>
-                                                <span class="body">{{ n.message}}</span>
+                                                <span class="body">{{ n.message}} </span>
                                             </div>
                                         </li>
                                         

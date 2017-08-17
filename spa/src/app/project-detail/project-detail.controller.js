@@ -43,7 +43,7 @@ app.controller('ProjectDetailController', [
 				console.error("error",error);
 			})
 			getProject();
-			$scope.getMessages();
+			//$scope.getMessages();
 
 	}
 

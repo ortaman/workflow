@@ -207,6 +207,8 @@ class AlertPartialUpdateSerializer(serializers.ModelSerializer):
 
 class MessageCreateSerializer(serializers.ModelSerializer):
 
+    sender = UserSerializer()
+    
     class Meta:
         model = Message
         fields = '__all__'
