@@ -89,7 +89,7 @@ class ProjectListSerializer(serializers.ModelSerializer):
             'preparation_at', 'negotiation_at', 'execution_at', 'evaluation_at',
             'begin_at', 'report_at', 'accomplish_at', 'renegotiation_at',
             'image', 'reports',
-            'advance_report_at', 'ejecution_report_at')
+            'accepted_at','qualified_at', 'advance_report_at', 'ejecution_report_at')
 
 
 class ProjectPatchSerializer(serializers.ModelSerializer):
