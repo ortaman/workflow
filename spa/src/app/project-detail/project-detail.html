@@ -26,6 +26,10 @@
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
+                            <li ng-if="checkRole(['producer', 'observer', 'client'])">
+                                <a ui-sref="conversationDetail({id: project.id})">
+                                    <i class="icon-envelope-open"></i> Ver convesación </a>
+                            </li>
                             <li ng-if="checkRole(['producer', 'observer'])">
                                 <a ng-click="actionCreate()">
                                     <i class="icon-fire"></i> Nueva Acción </a>
@@ -66,6 +70,7 @@
                                 <a >
                                     <i class="icon-layers"></i> Cerrar {{ titles.name}}</a>
                             </li>
+
                         </ul>
                     </div>
                 </div>
@@ -399,3 +404,57 @@
     </div>
 </div>
 <!-- END CONTENT -->
+
+<!-- 
+<div class="portlet box blue col-md-5 fixed-panel">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-envelope-open"></i>Mensajes </div>
+        <div class="tools">
+            <a  class="expand" > </a>
+        </div>
+    </div>
+    <div class="portlet-body collapse">
+        <div class="slimScrollDiv">
+                                <div class="scroller">
+                                    <ul class="chats">
+
+                                        <li class="out" ng-repeat="n in messages.results ">
+                                            <img class="avatar" alt="" src="//1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mm">
+                                            <div class="message">
+                                                <span class="arrow"> </span>
+                                                <a href="javascript:;" class="name"> Usuario </a>
+                                                <span class="datetime">enviado  {{ n.created_at | date: 'dd-MMM-yyyy, hh:mm a'}} </span>
+                                                <span class="body">{{ n.message}}</span>
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                         
+                            </div>
+                            <form class="chat-form" name="messageForm" ng-submit="submitMessage(message)">
+                                <div class="input-cont">
+                                    <input 
+                                        class="form-control" 
+                                        type="text"  
+                                        name="message"
+                                        maxlength="1000"
+                                        ng-model="message"
+                                        placeholder="Escribe un mensaje"
+                                        required
+                                        > 
+                                    </div>
+                                <div class="btn-cont">
+                                    <span class="arrow"> </span>
+                                    <button  ng-disabled="messageForm.$invalid" class="btn blue icn-only">
+                                        <i class="fa fa-check icon-white"></i>
+                                    </button>
+                                </div>
+                            </form>
+    </div>
+</div> -->
+ 
+
+
+

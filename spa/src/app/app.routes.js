@@ -87,7 +87,16 @@ app.config(function($stateProvider, $urlRouterProvider,
       templateUrl: "app/history/history.html",
       controller: "HistoryController",
     })
-
+    .state('conversations', {
+      url: "/conversations",
+      templateUrl: "app/conversations/conversations.html",
+      controller: "ConversationsController",
+    })
+    .state('conversationDetail', {
+      url: "/conversationDetail/:id",
+      templateUrl: "app/conversation-detail/conversation-detail.html",
+      controller: "ConversationDetailController",
+    })
   // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise("/coordinations");
 

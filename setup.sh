@@ -13,13 +13,13 @@ echo 'Resynchronizing package indexes'
 sudo apt-get -y update
 
 echo 'Installing Git version control system'
-sudo apt-get install -y git 
+sudo apt-get install -y git
 
 echo 'Installing python development packages'
 sudo apt-get install -y python-setuptools python-dev libpq-dev
 
 echo 'Installing PostgreSQL database (PostgreSQL 9.3.15)'
-sudo apt-get install -y postgresql postgresql-contrib 
+sudo apt-get install -y postgresql postgresql-contrib
 
 
 echo 'Creating vagrant database'
@@ -47,7 +47,7 @@ echo 'Install pip python3'
 sudo apt-get install -y python3-pip
 
 echo 'Installing project dependencies (requirements file)'
-sudo pip3 install -r $BACKEND_PROJECT_DIRECTORY/_requirements/development.txt 
+sudo pip3 install -r $BACKEND_PROJECT_DIRECTORY/_requirements/development.txt
 
 echo 'Running project migration files'
 python3 $BACKEND_PROJECT_DIRECTORY/manage.py migrate

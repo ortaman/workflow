@@ -1,0 +1,82 @@
+<my-header> </my-header>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <!-- BEGIN SIDEBAR -->
+    <my-navbar> </my-navbar>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+            <!-- BEGIN PAGE BAR -->
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a ui-sref="coordinations"> Inicio </a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <a ui-sref="projectList"> Conversación sobre {{ action.name}} </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE BAR -->
+            <!-- BEGIN PAGE TITLE-->
+            <h1 class="page-title text-center"  ng-init="init()"> {{ action.name}}</h1>
+            <!-- END PAGE TITLE-->
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN FORM PROJECT-->
+            <div class="todo-content">
+              <div class="portlet light">
+                <div class="row">
+                    <div class="portlet light ">
+                        <div class="portlet-body" id="chats">
+                            <div class="slimScrollDiv">
+                                <div class="scroller">
+                                    <ul class="chats">
+
+                                        <li ng-class="{'out': n.sender != user , 'in': n.sender == user}" ng-repeat="n in messages.results ">
+                                            <img class="avatar" ng-src="{{ n.sender.photo }}">
+                                            <div class="message">
+                                                <span class="arrow"> </span>
+                                                <a href="javascript:;" class="name"> {{ n.sender.username }} </a>
+                                                <span class="datetime">enviado  {{ n.created_at | date: 'dd-MMM-yyyy, hh:mm a'}} </span>
+                                                <span class="body">{{ n.message}} </span>
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                         
+                            </div>
+                            <form class="chat-form" name="messageForm" ng-submit="submitMessage(message)">
+                                <div class="input-cont">
+                                    <input 
+                                        class="form-control" 
+                                        type="text"  
+                                        name="message"
+                                        maxlength="1000"
+                                        ng-model="message"
+                                        placeholder="Escribe un mensaje"
+                                        required
+                                        > 
+                                    </div>
+                                <div class="btn-cont">
+                                    <span class="arrow"> </span>
+                                    <button  ng-disabled="messageForm.$invalid" class="btn blue icn-only">
+                                        <i class="fa fa-check icon-white"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <!-- END TASK COMMENT FORM -->
+        </div>
+        <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->
+</div>

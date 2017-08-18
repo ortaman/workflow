@@ -36,7 +36,7 @@ app.controller('HistoryController', ['$scope', '$timeout', 'ActionService', 'Not
 
    		ActionService.getList(query).then(
    			function(response) {
-   				$scope.historyArray = angular.copy(response);
+   				$scope.historyArray = [];
    				$scope.historyArray.push(project)
    			},
    			function(errorResponse) {
