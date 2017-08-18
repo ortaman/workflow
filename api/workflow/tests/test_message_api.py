@@ -59,7 +59,7 @@ class MessageWithAuthAPIAndNullDbTest(TestCase):
         self.view = CommentsListViewSet.as_view({'post': 'create', 'get': 'list'})
 
         self.user = User.objects.get(username='user2')
-        self.message = json.dumps({"action": 1, "message": "crud con autenticación"})
+        self.message = json.dumps({"action": 1, "message": "crud con autenticación", "created_by": 2})
 
     def test_post_message(self):
         request = self.factory.post(
@@ -125,7 +125,7 @@ class MessageWithAuthAPITest(TestCase):
         self.view = CommentsListViewSet.as_view({'post': 'create', 'get': 'list'})
 
         self.user = User.objects.get(username='user2')
-        self.message = json.dumps({"action": 1,"message": "crud con autenticación"})
+        self.message = json.dumps({"action": 1,"message": "crud con autenticación", "created_by": 2})
 
     def test_post_message(self):
         request = self.factory.post(
@@ -157,10 +157,17 @@ class MessageWithAuthAPITest(TestCase):
         response = self.view(request)
 
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.data, {'action': ['Este campo es requerido.'], 'message': ['Este campo es requerido.']})
+        self.assertEqual(
+            response.data,
+            {
+                'action': ['Este campo es requerido.'],
+                'message': ['Este campo es requerido.'],
+                'created_by': ['Este campo es requerido.']
+            }
+        )
 
     def test_post_message_with_invalid_action_id(self):
-        self.message = json.dumps({"action": 1234,"message": "crud con autenticación"})
+        self.message = json.dumps({"action": 1234,"message": "crud con autenticación", "created_by": 2})
 
         request = self.factory.post(
             path='/api/messages/', data=self.message, content_type='application/json'

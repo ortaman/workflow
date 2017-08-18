@@ -210,3 +210,12 @@ class MessageCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = '__all__'
+
+
+class MessageListSerializer(serializers.ModelSerializer):
+
+    created_by = UserSerializer()
+
+    class Meta:
+        model = Message
+        fields = '__all__'

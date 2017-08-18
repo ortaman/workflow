@@ -237,7 +237,7 @@ class ActionOweMeStadistics(APIView, APIMixin):
     searching by the project or action.
     """
     permission_classes = (IsAuthenticated,)
-    
+
     # Mixing initial variables
     model = Action
     serializer_list = ActionProducerSerializer

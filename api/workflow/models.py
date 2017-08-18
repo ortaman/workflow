@@ -181,7 +181,9 @@ class Message(models.Model):
 
     action = models.ForeignKey(to=Action, related_name='action_comment', verbose_name='Acción')
     message = models.TextField(max_length=256, verbose_name='Comentario')
-    created_at = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='Fechade creacion')
+
+    created_by = models.ForeignKey(to=User, related_name='message_created_by', verbose_name='Creado por')
+    created_at = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='Fecha de creacion')
 
     class Meta:
         verbose_name = ("Comentario")

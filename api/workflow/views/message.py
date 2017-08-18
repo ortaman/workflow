@@ -5,7 +5,7 @@ from rest_framework.mixins import CreateModelMixin, ListModelMixin
 
 from common.paginations import MyCustomPagination
 from workflow.models import Message
-from workflow.serializers import MessageCreateSerializer
+from workflow.serializers import MessageCreateSerializer, MessageListSerializer
 
 
 class CommentsListViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
@@ -16,9 +16,14 @@ class CommentsListViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
 
     queryset = Message.objects.all()
 
-    serializer_class = MessageCreateSerializer
     pagination_class = MyCustomPagination
     permission_classes = (IsAuthenticated,)
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return MessageCreateSerializer
+        if self.request.method == 'GET':
+            return MessageListSerializer
 
     def get_queryset(self):
         action_id = self.request.query_params.get('action_id')
