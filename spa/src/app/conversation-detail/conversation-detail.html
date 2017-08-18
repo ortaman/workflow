@@ -36,11 +36,11 @@
                                 <div class="scroller">
                                     <ul class="chats">
 
-                                        <li ng-class="{'out': n.sender != user , 'in': n.sender == user}" ng-repeat="n in messages.results ">
-                                            <img class="avatar" ng-src="{{ n.sender.photo }}">
+                                        <li ng-class="{'out': n.created_by.id != user , 'in': n.created_by.id == user}" ng-repeat="n in messages ">
+                                            <img class="avatar" ng-src="{{ n.created_by.photo }}">
                                             <div class="message">
                                                 <span class="arrow"> </span>
-                                                <a href="javascript:;" class="name"> {{ n.sender.username }} </a>
+                                                <a href="javascript:;" class="name"> {{ n.created_by.username }} </a>
                                                 <span class="datetime">enviado  {{ n.created_at | date: 'dd-MMM-yyyy, hh:mm a'}} </span>
                                                 <span class="body">{{ n.message}} </span>
                                             </div>
@@ -50,6 +50,16 @@
                                 </div>
                          
                             </div>
+                  <!--           <div class="text-center">
+                                <ul uib-pagination boundary-links="true" class="pagination-sm"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    first-text="&laquo;" last-text="&raquo;"
+                                    items-per-page="messages.paginated_by"
+                                    total-items="messages.count"
+                                    ng-model="currentPage"
+                                    ng-change="getMessages()">
+                                </ul>
+                            </div> -->
                             <form class="chat-form" name="messageForm" ng-submit="submitMessage(message)">
                                 <div class="input-cont">
                                     <input 

@@ -3,10 +3,9 @@ app.service("MessagesService", ['$http', 'APIConfig', function($http, APIConfig)
   this.getList = function(object) {
 	  var params = $.param(object);
 	  var promise = $http.get(APIConfig.url + "messages/?" + params).then(function(response) {
-      angular.forEach( response.data.results, function(element) {
-          element.sender.photo = APIConfig.baseUrl + element.sender.photo;
-      });
-
+    angular.forEach( response.data, function(element) {
+        element.created_by.photo = APIConfig.baseUrl + element.created_by.photo;
+    });
 	     return response.data;
 	  });
 	  return promise;

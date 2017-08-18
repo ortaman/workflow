@@ -1,9 +1,10 @@
 
 app.controller('ConversationDetailController', ['$scope', '$timeout', 'ActionService', 'Notification', 'ProjectService',
- '$state', 'MessagesService', 'UserService',
- function($scope ,$timeout, ActionService, Notification, ProjectService, $state, MessagesService, UserService) {
+ '$state', 'MessagesService', 'UserService', 'APIConfig',
+ function($scope ,$timeout, ActionService, Notification, ProjectService, $state, MessagesService, UserService,APIConfig) {
 
-  $scope.user = {}
+  $scope.user = {};
+  $scope.currentPage = 1;
   $scope.init = function(){
     UserService.me().then(function(response){
         $scope.user = response.id
@@ -19,7 +20,8 @@ app.controller('ConversationDetailController', ['$scope', '$timeout', 'ActionSer
   $scope.getMessages = function(){
     MessagesService.getList(
       {
-        action_id:  $state.params.id
+        action_id:  $state.params.id,
+        page: $scope.currentPage
       }).then(function(response){
         $scope.messages = response;
     })
@@ -44,7 +46,8 @@ app.controller('ConversationDetailController', ['$scope', '$timeout', 'ActionSer
       }
     ).then(function(newMessage){
       $scope.message = '';
-      $scope.messages.results.push(newMessage);
+      newMessage.created_by.photo = APIConfig.baseUrl + newMessage.created_by.photo;
+      $scope.messages.push(newMessage);
     })
   }
 

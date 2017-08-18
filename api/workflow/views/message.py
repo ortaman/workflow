@@ -17,7 +17,7 @@ class CommentsListViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
 
     queryset = Message.objects.all()
 
-    pagination_class = MyCustomPagination
+    pagination_class = None
     permission_classes = (IsAuthenticated,)
 
     def get_serializer_class(self):
