@@ -30,7 +30,7 @@ $ vagrant ssh
 $ cd workflow/
 $ vagrant ssh
 $ cd workflow/api
-$ python3 manage.py runserver 0.0.0.0:8000 
+$ python3 manage.py runserver 0.0.0.0:8000
 ```
 
 * Go to the link:
@@ -56,5 +56,5 @@ http://localhost:9090/
 
 * TO PRODUCTION
 Add the file 'production.py' in the 'workflow/api/_workflow/keys' directory
-Change the api url and the angular application debug to false 
+Change the api url and the angular application debug to false
 add the files in the .gitignore file.
