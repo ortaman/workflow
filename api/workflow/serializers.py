@@ -156,9 +156,9 @@ class ActionListSerializer(serializers.ModelSerializer):
             'client', 'producer',
             'preparation_at', 'negotiation_at', 'execution_at', 'evaluation_at',
             'begin_at', 'report_at', 'accomplish_at', 'renegotiation_at',
-            'image',
-            'advance_report_at', 'ejecution_report_at',
-            'project', 'parent_action', 'reports')
+            'image', 'project', 'parent_action', 'reports',
+            'accepted_at','qualified_at', 'advance_report_at', 'ejecution_report_at', 'created_at')
+            
 
 
 class ActionPatchSerializer(serializers.ModelSerializer):
