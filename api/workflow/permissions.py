@@ -34,7 +34,7 @@ class ActionPermisssions(permissions.BasePermission):
             return obj.client.id == request.user.id
 
         if request.method == 'PATCH':
-            return obj.producer.id == request.user.id
+            return (obj.producer.id == request.user.id or obj.status == 'Ejecutada')
 
         return False
 
