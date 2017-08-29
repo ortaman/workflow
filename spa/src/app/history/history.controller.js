@@ -36,8 +36,8 @@ app.controller('HistoryController', ['$scope', '$timeout', 'ActionService', 'Not
 
    		ActionService.getList(query).then(
    			function(response) {
-   				$scope.historyArray = [];
-   				$scope.historyArray.push(project)
+   				$scope.historyArray = response;
+          $scope.historyArray.push(project);
    			},
    			function(errorResponse) {
           Notification.error("Error al recuperar resultados, intente más tarde")

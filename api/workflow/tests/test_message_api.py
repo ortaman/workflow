@@ -139,6 +139,8 @@ class MessageWithAuthAPITest(TestCase):
         self.assertEqual(response.data['id'], 11)
         self.assertEqual(response.data['action'], 1)
         self.assertEqual(response.data['message'], 'crud con autenticación')
+        self.assertEqual(response.data['created_by']['id'], 2)
+        self.assertEqual(response.data['created_by']['username'], 'user2')
 
         response.render()
         self.assertIn('id', response.content.decode('utf-8'))
@@ -188,8 +190,29 @@ class MessageWithAuthAPITest(TestCase):
         self.assertEqual(response.data['page'], 1)
         self.assertIsInstance(response.data['results'], list)
         self.assertIsInstance(response.data['results'][0], dict)
+
         self.assertEqual(response.data['count'], Message.objects.filter(action_id=1).count())
         self.assertEqual(response.data['paginated_by'], 10)
+
+        self.assertEqual(
+            json.dumps(response.data['results'][0]).replace(' ', ''),
+            '''{"id": 1,
+                "created_by": {
+                    "id": 2,
+                    "username": "user2",
+                    "email": "user2@email.com",
+                    "name": "Terry2",
+                    "first_surname": "Boward2",
+                    "second_surname": "Garcia2",
+                    "position": "Coordinador",
+                    "photo": "api/media/api/media/photos/perfil-2.png",
+                    "cel_phone": "2222222222"'
+                }, '
+                "message": "comentario 1",
+                "created_at": "2011-11-11T00:00:00Z",
+                "action": 1
+            }'''.replace('\n', '').replace(' ', '').replace("\'", '')
+        )
 
         response.render()
         self.assertIn('id', response.content.decode('utf-8'))
