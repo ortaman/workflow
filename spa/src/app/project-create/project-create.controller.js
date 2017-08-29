@@ -1,16 +1,16 @@
 
 app.controller('ProjectCreateController', [
-  '$scope', '$state', 'ActionService', 'ProjectService', 'UserService','Notification',
-  function($scope, $state, ActionService, ProjectService , UserService, Notification) {
+  '$scope', '$state', 'ActionService', 'ProjectService', 'UserService', 'Notification',
+  function ($scope, $state, ActionService, ProjectService, UserService, Notification) {
     $scope.titles = {
       'project': {
-        'type':'project',
+        'type': 'project',
         'create': 'Crear Proyecto',
         'nameOf': 'Nombre del proyecto',
         'rolesOf': 'Roles del Proyecto'
       },
-      'action':{
-        'type':'action',
+      'action': {
+        'type': 'action',
         'create': 'Agregar acción a:',
         'nameOf': 'Nombre de la acción',
         'rolesOf': 'Roles de la acción'
@@ -18,15 +18,15 @@ app.controller('ProjectCreateController', [
     }
 
     var transformFields = [
-        'preparation_at',
-        'negotiation_at',
-        'execution_at',
-        'evaluation_at',
+      'preparation_at',
+      'negotiation_at',
+      'execution_at',
+      'evaluation_at',
 
-        'accomplish_at',
-        'renegotiation_at',
-        'report_at',
-        'begin_at',
+      'accomplish_at',
+      'renegotiation_at',
+      'report_at',
+      'begin_at',
     ];
 
     var phases = {
@@ -37,7 +37,7 @@ app.controller('ProjectCreateController', [
     }
 
     var Service = ProjectService;
-    var type  = $state.params.parentProject ? 'action' : 'project' // TODO: por definir
+    var type = $state.params.parentProject ? 'action' : 'project' // TODO: por definir
     $scope.titles = $scope.titles[type];
     $scope.submitted = false; // TODO: cambiar  con  bandera de form
     $scope.project = {
@@ -46,17 +46,10 @@ app.controller('ProjectCreateController', [
 
     $scope.init = function () {
       getProject()
-      ////TODO cambiar
-      UserService.me().then(function(response){
-        $scope.project.client = response.id;
-        $scope.client = response.name + " "+ response.first_surname + " " + response.second_surname;
-      }, function(error){
-        console.error("error",error);
-      })
-      //////////////////
+
     }
 
-    $scope.submitForm = function() {
+    $scope.submitForm = function () {
       $scope.submitted = true;
 
       if ($scope.projectForm.$invalid) {
@@ -66,45 +59,46 @@ app.controller('ProjectCreateController', [
 
       var project = angular.copy($scope.project);
 
-      angular.forEach(project, function(value, key) {
-          transformFields.forEach(function(item) {
+      angular.forEach(project, function (value, key) {
+        transformFields.forEach(function (item) {
 
-          if(key == item)
-              project[key] = new moment(value).format("YYYY-MM-DD");
-          })
+          if (key == item)
+            project[key] = new moment(value).format("YYYY-MM-DD");
+        })
       });
 
-  		$scope.submmitPromise = Service.create(project).then(
-  			function(response) {
+      $scope.submmitPromise = Service.create(project).then(
+        function (response) {
           if (type != 'action') {
-  				    Notification.success('La acción ha sido creado satisfactoriamente');
+            Notification.success('La acción ha sido creado satisfactoriamente');
           }
-          else{
+          else {
             Notification.success('El proyecto ha sido creado satisfactoriamente');
           }
-  				$state.go('coordinations');
-  			},
-  			function(errorResponse) {
+          $state.go('coordinations');
+        },
+        function (errorResponse) {
           console.log('errorResponse', errorResponse);
 
-  	  	}
-  		);
+        }
+      );
 
     }
 
     var getProject = function () {
       if (type == 'action') {
         ActionService.getById($state.params.parentProject).then(
-          function (response){
+          function (response) {
             $scope.projectParent = response;
-            if (!$scope.isProject()){
+            if (!$scope.isProject()) {
               $scope.maxExecutionDate = getMaxExecutionDate();
               $scope.maxBeginDate = getMaxBeginDate();
               $scope.getProjectParentBeginDate = moment($scope.projectParent.begin_at).toDate()
-
+              $scope.project.client = $scope.projectParent.producer.id;
+              $scope.client = $scope.projectParent.producer.name + " " + $scope.projectParent.producer.first_surname + " " + $scope.projectParent.producer.second_surname;
             }
             $scope.project.parent_action = $scope.projectParent.id;
-            $scope.project.project = $scope.projectParent.parent_action == null ?  $scope.projectParent.id : $scope.projectParent.project.id;
+            $scope.project.project = $scope.projectParent.parent_action == null ? $scope.projectParent.id : $scope.projectParent.project.id;
             Service = ActionService;
           },
           function (error) {
@@ -112,6 +106,13 @@ app.controller('ProjectCreateController', [
             console.error(error);
           }
         )
+      } else {
+        UserService.me().then(function (response) {
+          $scope.project.client = response.id;
+          $scope.client = response.name + " " + response.first_surname + " " + response.second_surname;
+        }, function (error) {
+          console.error("error", error);
+        })
       }
     }
 
@@ -119,21 +120,21 @@ app.controller('ProjectCreateController', [
 
     var getMaxExecutionDate = function () {
       let date;
-      if(!$scope.isProject())
+      if (!$scope.isProject())
         date = $scope.projectParent[phases[$scope.projectParent.phase]];
-      if (date == null){
+      if (date == null) {
         date = $scope.projectParent.accomplish_at;
       }
       return moment(date).toDate();
     }
 
     var getMaxBeginDate = function () {
-      if(!$scope.isProject())
+      if (!$scope.isProject())
         return moment($scope.projectParent[phases[$scope.projectParent.phase]]).toDate();
       return moment($scope.projectParent.accomplish_at).toDate();
     }
 
-    $scope.$watch('project.accomplish_at', function(item){
+    $scope.$watch('project.accomplish_at', function (item) {
       if (item) {
         let executionDate = moment(item);
         let beginDate = moment(angular.copy($scope.project.begin_at));
@@ -141,21 +142,21 @@ app.controller('ProjectCreateController', [
         console.log("diferencia ", daysOfDiference)
 
         $scope.validRange = {
-          preparation_at : {},
-          negotiation_at : {},
-          execution_at : {},
-          evaluation_at : {},
-          renegotiation_at : {},
-          report_at : {}
+          preparation_at: {},
+          negotiation_at: {},
+          execution_at: {},
+          evaluation_at: {},
+          renegotiation_at: {},
+          report_at: {}
         };
-        angular.forEach($scope.validRange, function ( value, key) {
+        angular.forEach($scope.validRange, function (value, key) {
           delete ($scope.project[key]);
         })
         $scope.project.preparation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
         $scope.project.negotiation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .20), 'd').toDate();
         $scope.project.execution_at = angular.copy(executionDate).add(Math.round(daysOfDiference * 0), 'd').toDate();
         $scope.project.evaluation_at = angular.copy(executionDate).add(Math.round(daysOfDiference * .10), 'd').toDate();
-        $scope.project.renegotiation_at =  angular.copy(beginDate).add(Math.round(daysOfDiference * .50), 'd').toDate();
+        $scope.project.renegotiation_at = angular.copy(beginDate).add(Math.round(daysOfDiference * .50), 'd').toDate();
         $scope.project.report_at = beginDate.add(Math.round(daysOfDiference * .50), 'd').toDate();
 
       }
@@ -165,4 +166,4 @@ app.controller('ProjectCreateController', [
     $scope.isProject = function () {
       return $scope.titles.type == 'project';
     }
-}]);
+  }]);

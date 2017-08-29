@@ -1,16 +1,16 @@
 
 app.controller('ActionCopyController', [
-  '$scope', '$state', 'ActionService', 'ProjectService', 'UserService','Notification',
-  function($scope, $state, ActionService, ProjectService , UserService, Notification) {
+  '$scope', '$state', 'ActionService', 'ProjectService', 'UserService', 'Notification',
+  function ($scope, $state, ActionService, ProjectService, UserService, Notification) {
     $scope.titles = {
       'project': {
-        'type':'project',
+        'type': 'project',
         'create': 'Crear Proyecto',
         'nameOf': 'Nombre del proyecto',
         'rolesOf': 'Roles del Proyecto'
       },
-      'action':{
-        'type':'action',
+      'action': {
+        'type': 'action',
         'create': 'Agregar acción a:',
         'nameOf': 'Nombre de la acción',
         'rolesOf': 'Roles de la acción'
@@ -18,15 +18,15 @@ app.controller('ActionCopyController', [
     }
 
     var transformFields = [
-        'preparation_at',
-        'negotiation_at',
-        'execution_at',
-        'evaluation_at',
+      'preparation_at',
+      'negotiation_at',
+      'execution_at',
+      'evaluation_at',
 
-        'accomplish_at',
-        'renegotiation_at',
-        'report_at',
-        'begin_at',
+      'accomplish_at',
+      'renegotiation_at',
+      'report_at',
+      'begin_at',
     ];
 
     var phases = {
@@ -37,7 +37,7 @@ app.controller('ActionCopyController', [
     }
 
     var Service = ProjectService;
-    var type  = $state.params.action ? 'action' : 'project' // TODO: por definir
+    var type = $state.params.action ? 'action' : 'project' // TODO: por definir
     $scope.titles = $scope.titles[type];
     $scope.submitted = false; // TODO: cambiar  con  bandera de form
     $scope.project = {
@@ -45,17 +45,9 @@ app.controller('ActionCopyController', [
 
     $scope.init = function () {
       getProject()
-      ////TODO cambiar
-      UserService.me().then(function(response){
-        $scope.project.client = response.id;
-        $scope.client = response.name + " "+ response.first_surname + " " + response.second_surname;
-      }, function(error){
-        console.error("error",error);
-      })
-      //////////////////
     }
 
-    $scope.submitForm = function() {
+    $scope.submitForm = function () {
       $scope.submitted = true;
 
       if ($scope.projectForm.$invalid) {
@@ -65,40 +57,40 @@ app.controller('ActionCopyController', [
 
       var project = angular.copy($scope.project);
 
-      angular.forEach(project, function(value, key) {
-          transformFields.forEach(function(item) {
+      angular.forEach(project, function (value, key) {
+        transformFields.forEach(function (item) {
 
-          if(key == item)
-              project[key] = new moment(value).format("YYYY-MM-DD");
-          })
+          if (key == item)
+            project[key] = new moment(value).format("YYYY-MM-DD");
+        })
       });
       cleanDataForPost(project);
-  		$scope.submmitPromise = Service.create(project).then(
-  			function(response) {
+      $scope.submmitPromise = Service.create(project).then(
+        function (response) {
           if (type == 'action') {
-  				    Notification.success('La acción ha sido creada satisfactoriamente');
+            Notification.success('La acción ha sido creada satisfactoriamente');
           }
-          else{
+          else {
             Notification.success('El proyecto ha sido creado satisfactoriamente');
           }
-  				$state.go('coordinations');
-  			},
-  			function(errorResponse) {
+          $state.go('coordinations');
+        },
+        function (errorResponse) {
           console.log('errorResponse', errorResponse);
 
-  	  	}
-  		);
+        }
+      );
 
     }
 
 
     var getProject = function () {
       ActionService.getById($state.params.action).then(
-        function (response){
-          $scope.project  = response;
-          console.log($scope.project);
-          //$scope.maxExecutionDate = getMaxExecutionDate();
+        function (response) {
+          $scope.project = response;
           Service = ActionService;
+          $scope.client = response.client.name + " " + response.client.first_surname + " " + response.client.second_surname;
+          $scope.project.client = response.client.id;
         },
         function (error) {
           Notification.error("No existe un proyecto relacionado")
@@ -128,18 +120,16 @@ app.controller('ActionCopyController', [
       return $scope.titles.type == 'project';
     }
 
-    var cleanDataForPost = function(project){
+    var cleanDataForPost = function (project) {
       console.log(project);
-      if(typeof(project.project) != Number)
-          project.project = project.project.id;
-      if(typeof(project.client)!= Number)
-          project.client = project.client.id;
-      delete(project.created_at)
-      delete(project.created_by)
-      delete(project.id)
-      delete(project.reports)
-      delete(project.updated_at)
-      delete(project.advance_report_at)
-      delete(project.ejecution_report_at)
+      if (typeof (project.project) != Number)
+        project.project = project.project.id;
+      delete (project.created_at)
+      delete (project.created_by)
+      delete (project.id)
+      delete (project.reports)
+      delete (project.updated_at)
+      delete (project.advance_report_at)
+      delete (project.ejecution_report_at)
     }
-}]);
+  }]);
