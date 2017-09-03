@@ -1,5 +1,6 @@
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import Http404
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -22,7 +23,7 @@ class APIMixin(object):
             return obj
 
         except self.model.DoesNotExist:
-            raise Http404
+            raise Http404("No founded.")
 
 
     def get_pagination(self, objects, page, paginate_by):

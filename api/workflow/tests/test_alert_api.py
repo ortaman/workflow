@@ -93,7 +93,11 @@ class AlertWitAuthAPITest(TestCase):
         self.assertEqual(response.data, {'detail': 'Método "PUT" no permitido.'})
 
     def test_patch(self):
-        response = self.client.patch(path='http://localhost:9000/api/alerts/1/', data=json.dumps({"viewed":True}), content_type='application/json')
+        response = self.client.patch(
+            path='http://localhost:9000/api/alerts/1/',
+            data=json.dumps({"viewed":True}),
+            content_type='application/json'
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, {'viewed': True})
