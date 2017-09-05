@@ -17,9 +17,11 @@ def save_alerts(message, **kwargs):
 
 
 @shared_task
-def alerts():
+def alerts(deadline=None):
 
-    deadline = datetime.today()
+    if not deadline:
+        deadline = datetime.today()
+
     before_dealine = deadline - timedelta(days=2)
     after_dealine = deadline + timedelta(days=1)
 

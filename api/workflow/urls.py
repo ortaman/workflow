@@ -4,7 +4,7 @@ from django.contrib import admin
 
 from workflow.views.action import (ActionList, ActionDetail, ActionStadisctic, ActionTodoStadistics,
     ActionOweMeStadistics,)
-from workflow.views.alert import AlertsListViewSet
+from workflow.views.alert import AlertsListViewSet, AlertTaskView
 from workflow.views.report import ReportList
 from workflow.views.message import CommentsListViewSet
 from workflow.views.project import ProjectList, ProjectDetail, ProjectTimeStadistic
@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^actions/stadistics/todo/$', ActionTodoStadistics.as_view()),
     url(r'^actions/stadistics/oweme/$', ActionOweMeStadistics.as_view()),
 
+    url(r'^alerts_task/$', AlertTaskView.as_view()),
     url(r'^alerts/$', AlertsListViewSet.as_view({'get': 'list'})),
     url(r'^alerts/(?P<pk>[0-9]+)/$', AlertsListViewSet.as_view({'patch': 'partial_update'})),
 
