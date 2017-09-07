@@ -8,8 +8,7 @@ from django.test import TestCase
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
 
-from users.models import User
-from workflow.models import Action, Alert
+from workflow.models import Action
 
 
 class ProjectWithoutAuthAPITest(TestCase):
@@ -32,7 +31,7 @@ class ProjectWithoutAuthAPITest(TestCase):
         self.assertEqual(response.status_code, 401)
         self.assertEqual(response.content.decode(), self.expected)
 
-    def test_get(self):
+    def test_get_by_id(self):
         response = self.client.get(path='http://localhost:9000/api/projects/1/')
 
         self.assertEqual(response.status_code, 401)
@@ -123,39 +122,40 @@ class MessageWithAuthAPIAndNullDbTest(TestCase):
 
         image_url = Action.objects.get(name='Proyecto X').image.name
 
-
         self.assertEqual(
-            response.data, {
-            'name': 'Proyecto X',
-            'kind': 'Estándar',
-            'phase': 'Preparación',
+            response.data,
+            {
+                'name': 'Proyecto X',
+                'kind': 'Estándar',
+                'phase': 'Preparación',
 
-            'client': 2,
-            'producer': 3,
-            'observer': 4,
+                'client': 2,
+                'producer': 3,
+                'observer': 4,
 
-            'toDo': 'Por hacer X',
-            'satisfactions': 'Satisfacciones X',
+                'toDo': 'Por hacer X',
+                'satisfactions': 'Satisfacciones X',
 
-            'preparation_at': '2017-02-03',
-            'negotiation_at': None,
-            'execution_at': '2017-04-03',
-            'evaluation_at': '2017-05-03',
+                'preparation_at': '2017-02-03',
+                'negotiation_at': None,
+                'execution_at': '2017-04-03',
+                'evaluation_at': '2017-05-03',
 
-            'begin_at': '2017-01-03',
-            'report_at': '2017-04-25',
-            'accomplish_at': '2017-04-03',
-            'renegotiation_at': None,
+                'begin_at': '2017-01-03',
+                'report_at': '2017-04-25',
+                'accomplish_at': '2017-04-03',
+                'renegotiation_at': None,
 
-            'advance_report_at': None,
-            'ejecution_report_at': None,
+                'advance_report_at': None,
+                'ejecution_report_at': None,
 
-            'financial': 'financial X',
-            'operational': 'operational X', 'phase': 'Preparación',
-            'other1': 'other X-I',
-            'other2': 'other X-II',
+                'financial': 'financial X',
+                'operational': 'operational X', 'phase': 'Preparación',
+                'other1': 'other X-I',
+                'other2': 'other X-II',
 
-            'image': "api/media/" + image_url }
+                'image': "api/media/" + image_url
+            }
         )
 
         # response.render()

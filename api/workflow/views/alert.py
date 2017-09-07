@@ -2,7 +2,6 @@
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin, UpdateModelMixin
@@ -36,7 +35,7 @@ class AlertsListViewSet(ListModelMixin, UpdateModelMixin, GenericViewSet):
     def get_queryset(self):
         return self.queryset.filter(
             action__producer_id=self.request.user.id,
-            viewed = False
+            viewed=False
         )
 
     '''
@@ -52,6 +51,7 @@ class AlertsListViewSet(ListModelMixin, UpdateModelMixin, GenericViewSet):
     def partial_update(self, request, *args, **kwargs):
         return super(AlertsListViewSet, self).partial_update(request, *args, **kwargs)
     '''
+
 
 class AlertTaskView(APIView):
     """

@@ -2,8 +2,6 @@
 from datetime import datetime
 
 from django.db.models import Q
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import Http404
 
 from rest_framework import status
 from rest_framework.views import APIView
@@ -11,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Action
-from workflow.serializers import ProjectPostSerializer, ProjectGetSerializer, ProjectListSerializer, ProjectPatchSerializer
+from workflow.serializers import (ProjectPostSerializer, ProjectGetSerializer, ProjectListSerializer, ProjectPatchSerializer)
 from common.mixins import APIMixin
 
 
@@ -110,7 +108,6 @@ class ProjectList(APIView, APIMixin):
 
         return Response(data)
 
-
     def post(self, request, format=None):
         serializer = self.serializer_post(data=request.data)
 
@@ -131,9 +128,7 @@ class ProjectTimeStadistic(APIView):
     model = Action
 
     def get(self, request, format=None):
-        query = request.query_params
 
-        user_id = request.user.id
         queryset = self.model.objects.filter(
                 parent_action__isnull=True,
         )

@@ -1,9 +1,7 @@
 
 from django.conf.urls import url
-from django.contrib import admin
 
-from workflow.views.action import (ActionList, ActionDetail, ActionStadisctic, ActionTodoStadistics,
-    ActionOweMeStadistics,)
+from workflow.views.action import (ActionList, ActionDetail, ActionStadisctic, ActionTodoStadistics, ActionOweMeStadistics,)
 from workflow.views.alert import AlertsListViewSet, AlertTaskView
 from workflow.views.report import ReportList
 from workflow.views.message import CommentsListViewSet
