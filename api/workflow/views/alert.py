@@ -63,7 +63,7 @@ class AlertTaskView(APIView):
         post_date = request.query_params.get('post_date', '')
         post_date = parse_date(post_date)
 
-        alerts(deadline=post_date)
+        alerts(post_date=post_date)
         data = {'status': 'Alerts worker triggered successfully for date %s' % post_date}
 
         return Response(data=data, status=status.HTTP_200_OK)
