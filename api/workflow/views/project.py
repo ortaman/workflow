@@ -86,6 +86,8 @@ class ProjectList(APIView, APIMixin):
                 parent_action__isnull=True,
             )
 
+            data = self.serializer_list(queryset, many=True).data
+
         else:
             # Retrieve projects filter by phase used on project board.
             if 'phase' in query.keys():
@@ -104,7 +106,7 @@ class ProjectList(APIView, APIMixin):
             else:
                 queryset = queryset.filter(parent_action__isnull=True)
 
-        data = self.get_pagination(queryset, page, self.paginate_by)
+            data = self.get_pagination(queryset, page, self.paginate_by)
 
         return Response(data)
 
