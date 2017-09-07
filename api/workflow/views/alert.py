@@ -12,7 +12,7 @@ from django.utils.dateparse import parse_date
 from workflow.models import Alert
 from workflow.permissions import AlertReadOnlyIfIsProducer
 from workflow.serializers import AlertListSerializer, AlertPartialUpdateSerializer
-from workflow.tasks import alerts
+from workflow.tasks import alerts_task
 
 
 class AlertsListViewSet(ListModelMixin, UpdateModelMixin, GenericViewSet):
@@ -63,7 +63,7 @@ class AlertTaskView(APIView):
         post_date = request.query_params.get('post_date', '')
         post_date = parse_date(post_date)
 
-        alerts(post_date=post_date)
+        alerts_task(post_date=post_date)
         data = {'status': 'Alerts worker triggered successfully for date %s' % post_date}
 
         return Response(data=data, status=status.HTTP_200_OK)

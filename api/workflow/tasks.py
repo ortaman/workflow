@@ -17,7 +17,7 @@ def save_alerts(kind, message, **kwargs):
 
 
 @shared_task
-def alerts(post_date=None):
+def alerts_task(post_date=None):
 
     if not post_date:
         post_date = datetime.today()

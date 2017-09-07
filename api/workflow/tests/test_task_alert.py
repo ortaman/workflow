@@ -8,7 +8,6 @@ from rest_framework.test import APIClient
 
 from workflow.models import Action, Alert
 from workflow.views.alert import AlertsListViewSet, AlertTaskView
-from workflow.tasks import alerts
 
 
 class AlertsTaskTest(TestCase):
