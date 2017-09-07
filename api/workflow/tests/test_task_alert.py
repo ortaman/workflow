@@ -13,9 +13,13 @@ from workflow.tasks import alerts
 
 class AlertsTaskTest(TestCase):
     '''
-        Deadlines for project with id = 1
+        Deadlines for Proyect I
         "report_at": "2017-03-15",
         "accomplish_at": "2017-04-01",
+
+        Deadlines for Proyect II
+        "report_at": "2017-03-16",
+        "accomplish_at": "2017-04-02",
     '''
 
     fixtures = [
@@ -144,14 +148,27 @@ class AlertsTaskTest(TestCase):
             'status': 'Alerts worker triggered successfully for date 2017-03-16' }
         )
 
-        alert = Alert.objects.all().first()
+        # Proyecto I expiration
+        alert = Alert.objects.filter(action__name="Proyecto I").first()
+
+        self.assertEqual(
+            model_to_dict(alert), {
+            'id': 2,
+            'action': 1,
+            'kind': 'After',
+            'message': '"Proyecto I": La fecha del reporte de avance ha expirado.',
+            'viewed': False}
+        )
+
+        # Proyecto II deadline
+        alert = Alert.objects.filter(action__name="Proyecto II").first()
 
         self.assertEqual(
             model_to_dict(alert), {
             'id': 1,
-            'action': 1,
-            'kind': 'After',
-            'message': '"Proyecto I": La fecha del reporte de avance ha expirado.',
+            'action': 2,
+            'kind': 'Deadline',
+            'message': '"Proyecto II": La fecha límite del reporte de avance es el día de hoy.',
             'viewed': False}
         )
 
@@ -165,6 +182,7 @@ class AlertsTaskTest(TestCase):
             'status': 'Alerts worker triggered successfully for date 2017-04-02' }
         )
 
+        # Proyecto I expiration
         alert = Alert.objects.filter(action__name="Proyecto I").first()
 
         self.assertEqual(
@@ -176,6 +194,7 @@ class AlertsTaskTest(TestCase):
             'viewed': False}
         )
 
+        # Proyecto II deadline
         alert = Alert.objects.filter(action__name="Proyecto II").first()
 
         self.assertEqual(
