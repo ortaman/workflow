@@ -34,7 +34,7 @@ class AlertsTaskTest(TestCase):
 
     def test_alet_report_two_days_before_of_the_report_at_date(self):
 
-        response = self.client.get(path='/api/alerts_task/?post_date=2017-03-13')
+        response = self.client.get(path='/api/tasks/alerts/?post_date=2017-03-13')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
@@ -55,7 +55,7 @@ class AlertsTaskTest(TestCase):
 
     def test_alet_report_two_days_before_of_the_accomplish_at_date(self):
 
-        response = self.client.get(path='/api/alerts_task/?post_date=2017-03-30')
+        response = self.client.get(path='/api/tasks/alerts/?post_date=2017-03-30')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
@@ -76,7 +76,7 @@ class AlertsTaskTest(TestCase):
 
     def test_alert_deadline_report_at(self):
 
-        response = self.client.get(path='/api/alerts_task/?post_date=2017-03-15')
+        response = self.client.get(path='/api/tasks/alerts/?post_date=2017-03-15')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
@@ -97,7 +97,7 @@ class AlertsTaskTest(TestCase):
 
     def test_alert_deadline_accomplish_at(self):
 
-        response = self.client.get(path='/api/alerts_task/?post_date=2017-04-01')
+        response = self.client.get(path='/api/tasks/alerts/?post_date=2017-04-01')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
@@ -118,7 +118,7 @@ class AlertsTaskTest(TestCase):
 
     def test_alert_deadline_accomplish_at(self):
 
-        response = self.client.get(path='/api/alerts_task/?post_date=2017-04-01')
+        response = self.client.get(path='/api/tasks/alerts/?post_date=2017-04-01')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
@@ -139,7 +139,7 @@ class AlertsTaskTest(TestCase):
 
     def test_alert_expiration_report_at(self):
 
-        response = self.client.get(path='/api/alerts_task/?post_date=2017-03-16')
+        response = self.client.get(path='/api/tasks/alerts/?post_date=2017-03-16')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
@@ -173,7 +173,7 @@ class AlertsTaskTest(TestCase):
 
     def test_alert_expiration_accomplish_at(self):
 
-        response = self.client.get(path='/api/alerts_task/?post_date=2017-04-02')
+        response = self.client.get(path='/api/tasks/alerts/?post_date=2017-04-02')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(

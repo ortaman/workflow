@@ -26,9 +26,10 @@ urlpatterns = [
     url(r'^actions/stadistics/todo/$', ActionTodoStadistics.as_view()),
     url(r'^actions/stadistics/oweme/$', ActionOweMeStadistics.as_view()),
 
-    url(r'^alerts_task/$', AlertTaskView.as_view()),
     url(r'^alerts/$', AlertsListViewSet.as_view({'get': 'list'})),
     url(r'^alerts/(?P<pk>[0-9]+)/$', AlertsListViewSet.as_view({'patch': 'partial_update'})),
+
+    url(r'^tasks/alerts/$', AlertTaskView.as_view()),
 
     url(r'^messages/$', CommentsListViewSet.as_view({'post': 'create', 'get': 'list'})),
 
