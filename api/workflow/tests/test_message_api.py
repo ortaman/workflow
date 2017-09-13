@@ -113,6 +113,15 @@ class MessageWithAuthAPIAndNullDbTest(TestCase):
         self.assertEqual(response.status_code, 405)
         self.assertEqual(response.data, {'detail': 'Método "PATCH" no permitido.'})
 
+    def test_delete_messages(self):
+        request = self.factory.delete(path='/api/messages/1/')
+
+        force_authenticate(request, user=self.user)
+        response = self.view(request)
+
+        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.data, {'detail': 'Método "DELETE" no permitido.'})
+
 
 class MessageWithAuthAPITest(TestCase):
 

@@ -129,31 +129,6 @@ class AlertsTaskTest(TestCase):
             }
         )
 
-    def test_alert_deadline_accomplish_at(self):
-
-        response = self.client.get(path='/api/tasks/alerts/?post_date=2017-04-01')
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.data,
-            {
-                'status': 'Alerts worker triggered successfully for date 2017-04-01'
-            }
-        )
-
-        alert = Alert.objects.all().first()
-
-        self.assertEqual(
-            model_to_dict(alert),
-            {
-                'id': 1,
-                'action': 1,
-                'kind': 'Deadline',
-                'message': '"Proyecto I": La fecha límite del reporte de ejecución es el día de hoy.',
-                'viewed': False
-            }
-        )
-
     def test_alert_expiration_report_at(self):
 
         response = self.client.get(path='/api/tasks/alerts/?post_date=2017-03-16')

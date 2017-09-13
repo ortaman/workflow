@@ -47,6 +47,12 @@ class AlertWithoutAuthAPITest(TestCase):
         self.assertEqual(response.status_code, 401)
         self.assertEqual(response.content.decode(), self.expected)
 
+    def test_delete(self):
+        response = self.client.delete(path='http://localhost:9000/api/alerts/1/', json='{"viewed":"True"}')
+
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.content.decode(), self.expected)
+
 
 class AlertWitAuthAPITest(TestCase):
 

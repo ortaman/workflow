@@ -49,6 +49,12 @@ class ProjectWithoutAuthAPITest(TestCase):
         self.assertEqual(response.status_code, 401)
         self.assertEqual(response.content.decode(), self.expected)
 
+    def test_delete(self):
+        response = self.client.delete(path='http://localhost:9000/api/projects/1/', json='{"viewed":"True"}')
+
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.content.decode(), self.expected)
+
 
 class MessageWithAuthAPIAndNullDbTest(TestCase):
 
@@ -161,26 +167,52 @@ class MessageWithAuthAPIAndNullDbTest(TestCase):
         # response.render()
         # self.assertIn('created_at', response.content.decode('utf-8'))
 
-    def test_projects_list(self):
+    def test_get_all_projects_no_paginated(self):
+        # url without query param page
         response = self.client.get(path='/api/projects/')
 
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, [])
         self.assertEqual(response.data, {'page': None, 'results': [], 'count': 'Total', 'paginate_by': None})
 
-    def test_projects_get_by_id(self):
+    def test_get_projects_with_filter_by_phase(self):
+        response = self.client.get(path='/api/projects/?phase=Preparación&page=1')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, {'page': '1', 'results': [], 'count': 0, 'paginate_by': 6})
+
+    def test_get_projects_with_filter_by_client_id(self):
+        response = self.client.get(path='/api/projects/?client_id=1&page=1')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, {'page': '1', 'results': [], 'count': 0, 'paginate_by': 6})
+
+    def test_get_all_projects_paginated(self):
+        response = self.client.get(path='/api/projects/?page=1&page=1')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, {'page': '1', 'results': [], 'count': 0, 'paginate_by': 6})
+
+    def test_get_project_by_id(self):
         response = self.client.get(path='/api/projects/1/')
 
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.data, {'detail': 'No encontrado.'})
 
-    def test_put_messages(self):
+    def test_put_project(self):
         response = self.client.get(path='/api/projects/1/')
 
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.data, {'detail': 'No encontrado.'})
 
-    def test_project_patch(self):
+    def test_patch_project(self):
         response = self.client.get(path='/api/projects/1/')
 
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.data, {'detail': 'No encontrado.'})
+
+    def test_delete_project(self):
+        response = self.client.delete(path='/api/projects/')
+
+        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.data, {'detail': 'Método "DELETE" no permitido.'})
