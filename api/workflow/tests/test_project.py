@@ -165,7 +165,7 @@ class MessageWithAuthAPIAndNullDbTest(TestCase):
         response = self.client.get(path='/api/projects/')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data, {'page': None, 'results': [], 'count': Total, 'paginate_by': None})
+        self.assertEqual(response.data, {'page': None, 'results': [], 'count': 'Total', 'paginate_by': None})
 
     def test_projects_get_by_id(self):
         response = self.client.get(path='/api/projects/1/')
