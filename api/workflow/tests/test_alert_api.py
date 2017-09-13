@@ -14,7 +14,7 @@ class AlertWithoutAuthAPITest(TestCase):
     def setUp(self):
         self.client = APIClient()
 
-        self.alert = json.dumps({"action": 1,"alert": "crud sin autenticación"})
+        self.alert = json.dumps({"action": 1, "alert": "crud sin autenticación"})
         self.expected = '{"detail":"Las credenciales de autenticación no se proveyeron."}'
 
     def test_post(self):
@@ -29,7 +29,7 @@ class AlertWithoutAuthAPITest(TestCase):
         self.assertEqual(response.status_code, 401)
         self.assertEqual(response.content.decode(), self.expected)
 
-    def test_get(self):
+    def test_get_by_id(self):
         response = self.client.get(path='http://localhost:9000/api/alerts/1/')
 
         self.assertEqual(response.status_code, 401)
@@ -57,12 +57,12 @@ class AlertWitAuthAPITest(TestCase):
     def setUp(self):
         self.client = APIClient()
 
-        # self.user = User.objects.get(username='user3')
+        self.user = User.objects.get(username='user3')
         # self.client.force_authenticate(user=self.user)
         token = Token.objects.get(user__username='user3')
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
-        self.alert = json.dumps({"action": 1,"alert": "crud con autenticación"})
+        self.alert = json.dumps({"action": 1, "alert": "crud con autenticación"})
 
     def test_post(self):
         response = self.client.post(path='http://localhost:9000/api/alerts/')
@@ -80,7 +80,7 @@ class AlertWitAuthAPITest(TestCase):
         self.assertEqual(response.data['count'], Alert.objects.filter(action__producer_id=self.user.id).count())
         self.assertEqual(response.data['paginated_by'], 10)
 
-    def test_get(self):
+    def test_get_by_id(self):
         response = self.client.get(path='http://localhost:9000/api/alerts/1/')
 
         self.assertEqual(response.status_code, 405)
@@ -95,7 +95,7 @@ class AlertWitAuthAPITest(TestCase):
     def test_patch(self):
         response = self.client.patch(
             path='http://localhost:9000/api/alerts/1/',
-            data=json.dumps({"viewed":True}),
+            data=json.dumps({"viewed": True}),
             content_type='application/json'
         )
 

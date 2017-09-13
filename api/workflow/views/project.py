@@ -9,7 +9,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from workflow.models import Action
-from workflow.serializers import (ProjectPostSerializer, ProjectGetSerializer, ProjectListSerializer, ProjectPatchSerializer)
+from workflow.serializers import (ProjectPostSerializer, ProjectGetSerializer,
+                                  ProjectListSerializer, ProjectPatchSerializer)
 from common.mixins import APIMixin
 
 

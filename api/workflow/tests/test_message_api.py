@@ -15,7 +15,7 @@ class MessageWithoutAuthAPITest(TestCase):
         self.factory = APIRequestFactory()
         self.view = CommentsListViewSet.as_view({'post': 'create', 'get': 'list'})
 
-        self.message = json.dumps({"action": 1,"message": "crud sin autenticación"})
+        self.message = json.dumps({"action": 1, "message": "crud sin autenticación"})
         self.expected = 'Las credenciales de autenticación no se proveyeron.'
 
     def test_post(self):
@@ -125,7 +125,7 @@ class MessageWithAuthAPITest(TestCase):
         self.view = CommentsListViewSet.as_view({'post': 'create', 'get': 'list'})
 
         self.user = User.objects.get(username='user2')
-        self.message = json.dumps({"action": 1,"message": "crud con autenticación"})
+        self.message = json.dumps({"action": 1, "message": "crud con autenticación"})
 
     def test_post_message(self):
         request = self.factory.post(
@@ -149,7 +149,6 @@ class MessageWithAuthAPITest(TestCase):
         self.assertEqual(Message.objects.all().count(), 11)
         self.assertEqual(Message.objects.get(id=response.data['id']).message, "crud con autenticación")
 
-
     def test_post_message_with_empty_data(self):
         request = self.factory.post(
             path='/api/messages/', data={}, content_type='application/json'
@@ -168,7 +167,7 @@ class MessageWithAuthAPITest(TestCase):
         )
 
     def test_post_message_with_invalid_action_id(self):
-        self.message = json.dumps({"action": 1234,"message": "crud con autenticación"})
+        self.message = json.dumps({"action": 1234, "message": "crud con autenticación"})
 
         request = self.factory.post(
             path='/api/messages/', data=self.message, content_type='application/json'
