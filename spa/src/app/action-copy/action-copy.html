@@ -74,9 +74,7 @@
                         <h4 class="form-section"> Datos Generales </h4>
                         <!--row-->
                         <div class="row">
-
-
-                          <div ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
+                          <div class="col-md-6">
                             <md-input-container class="md-block" >
                              <label>{{ titles.nameOf }}</label>
                              <input
@@ -93,29 +91,7 @@
                             </md-input-container>
                           </div>
 
-
-                          <div  ng-if = "isProject()" ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
-                            <md-input-container class="md-block" >
-                              <label> Tipo </label>
-                              <md-select
-                                name="kind"
-                                ng-init="project.kind='Estándar'"
-                                ng-model="project.kind"
-                                required>
-                                <md-option value="Estándar"> Estándar </md-option>
-                                <md-option value="Piloto"> Piloto </md-option>
-                                <md-option value="Jardín"> Jardín </md-option>
-                              </md-select>
-
-                              <div ng-show="projectForm.kind.$touched || submitted">
-                                 <div class="error" style="margin-top: 0em" ng-show="projectForm.kind.$error.required">
-                                   Campo requerido.
-                                 </div>
-                               </div>
-                            </md-input-container>
-                          </div>
-
-                          <div  ng-class="{'col-md-4':isProject(), 'col-md-6':!isProject()}">
+                          <div  class="col-md-6">
                             <md-input-container class="md-block" >
                               <label> Fase </label>
                               <md-select
@@ -213,7 +189,7 @@
                         <!--row-->
                         <div class="row">
 
-                            <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
+                            <div class="col-md-4">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Inicio </h5>
                                   <md-datepicker
@@ -232,29 +208,28 @@
                                 </div>
                             </div>
 
-                            <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
+                            <div class="col-md-4">
                                 <div flex-gt-xs>
-                                  <h5> Fecha de Cumplimiento </h5>
+                                  <h5> Fecha de Cumplimiento</h5>
                                   <md-datepicker
                                     name="accomplish_at"
                                     md-current-view="year"
                                     md-placeholder="ingrese fecha"
-                                    md-min-date="project.begin_at"
-                                    md-max-date="maxExecutionDate"
+                                    md-min-date="datesValidations.accomplish_at.min"
+                                    md-max-date="datesValidations.accomplish_at.max"                                    
                                     ng-model="project.accomplish_at"
-                                    ng-change="beginOrAtOrAccomplishDateChanged(project.begin_at, project.accomplish_at)"
 
                                     required></md-datepicker>
 
                                     <div ng-show="projectForm.accomplish_at.$touched || submitted">
-                                      <div class="error" ng-show="projectForm.accomplish_at.$error.required">
+                                      <div class="error" ng-show="projectForm.saccomplish_at.$error.required">
                                         Campo requerido.
                                       </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}">
+                            <div class="col-md-4">
                                 <div flex-gt-xs>
                                   <h5> Fecha de Reporte de Avance </h5>
                                   <md-datepicker
@@ -273,105 +248,8 @@
                                 </div>
                             </div>
 
-                            <div ng-class="{'col-md-3':isProject(), 'col-md-4':!isProject()}"  ng-if = "isProject()">
-                                <div flex-gt-xs>
-                                  <h5> Fecha de Renegociación </h5>
-                                  <md-datepicker
-                                    name="renegotiation_at"
-                                    md-current-view="year"
-                                    md-placeholder="ingrese fecha"
-                                    disabled
-                                    ng-model="project.renegotiation_at"></md-datepicker>
-
-                                    <div ng-show="projectForm.renegotiation_at.$touched || submitted">
-                                      <div class="error" ng-show="projectForm.renegotiation_at.$error.required">
-                                        Campo requerido.
-                                      </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                         <!--end row-->
-
-                        <br><br>
-                        <h4 ng-if = "isProject()" class="form-section"> Fechas límites de las fases Action Workflow </h4>
-                        <!--row-->
-                        <div  ng-if = "isProject()" class="row">
-
-                            <div class="col-md-3">
-                                <div flex-gt-xs>
-                                  <h5>Fase de Preparación</h5>
-                                  <md-datepicker
-                                    name="preparation_at"
-                                    md-placeholder="ingrese fecha"
-                                    ng-model="project.preparation_at"
-                                    disabled
-                                    required></md-datepicker>
-
-                                  <div ng-show="projectForm.preparation_at.$touched || submitted">
-                                    <div class="error" ng-show="projectForm.preparation_at.$error.required">
-                                      Campo requerido.
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div flex-gt-xs>
-                                  <h5>Fase de negociación</h5>
-                                  <md-datepicker
-                                    name="negotiation_at"
-                                    md-placeholder="ingrese fecha"
-                                    ng-model="project.negotiation_at"
-                                    disabled required ></md-datepicker>
-
-                                  <div ng-show="projectForm.negotiation_at.$touched || submitted">
-                                    <div class="error" ng-show="projectForm.negotiation_at.$error.required">
-                                      Campo requerido.
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div flex-gt-xs>
-                                  <h5>Fase de ejecución</h5>
-                                  <md-datepicker
-                                    name="execution_at"
-                                    md-placeholder="ingrese fecha"
-                                    ng-model="project.execution_at"
-                                    disabled
-                                    required ></md-datepicker>
-
-                                  <div ng-show="projectForm.execution_at.$touched || submitted">
-                                    <div class="error" ng-show="projectForm.execution_at.$error.required">
-                                      Campo requerido.
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div flex-gt-xs>
-                                  <h5>Fase de evaluación</h5>
-                                  <md-datepicker
-                                    name="evaluation_at"
-                                    md-placeholder="ingrese fecha"
-                                    ng-model="project.evaluation_at"
-                                    disabled
-                                    required></md-datepicker>
-                                </div>
-
-                                <div ng-show="projectForm.evaluation_at.$touched || submitted">
-                                  <div class="error" ng-show="projectForm.evaluation_at.$error.required">
-                                    Campo requerido.
-                                  </div>
-                                </div>
-                            </div>
-
-                        </div>
-
                         <br><br>
                         <h4 class="form-section">Indicadores</h4>
                         <div class="row">
@@ -426,14 +304,6 @@
                             </div>
                         </div>
 
-                        <div class="row" ng-if = "isProject()">
-                          <div class="col-md-3">
-                            <input fileread='project.image' accept="image/*" type="file"/>
-                          </div>
-                          <div class="col-md-4">
-                            <img ng-if="project.image"   ng-src="{{project.image}}" alt="" width="100%" height="250px"/>
-                          </div>
-                        </div>
                         <br>
                         <div class="row">
                           <div class="col-md-2 col-md-offset-5 text-center">
