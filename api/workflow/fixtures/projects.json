@@ -51,7 +51,7 @@
       "fields": {
         "name": "Proyecto II",
         "kind": "Estándar",
-        "phase": "Preparación",
+        "phase": "Ejecución",
         "status": "Pendiente",
 
         "client": 5,
