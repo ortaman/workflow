@@ -35,19 +35,23 @@ class AlertsTaskTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            response.data, {
-            'status': 'Alerts worker triggered successfully for date 2017-03-13' }
+            response.data,
+            {
+                'status': 'Alerts worker triggered successfully for date 2017-03-13'
+            }
         )
 
         alert = Alert.objects.all().first()
 
         self.assertEqual(
-            model_to_dict(alert), {
-            'id': 1,
-            'action': 1,
-            'kind': 'Before',
-            'message': '"Proyecto I": La fecha del reporte de avance expira en 2 días.',
-            'viewed': False }
+            model_to_dict(alert),
+            {
+                'id': 1,
+                'action': 1,
+                'kind': 'Before',
+                'message': '"Proyecto I": La fecha del reporte de avance expira en 2 días.',
+                'viewed': False
+            }
         )
 
     def test_alet_report_two_days_before_of_the_accomplish_at_date(self):
@@ -56,8 +60,10 @@ class AlertsTaskTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            response.data, {
-            'status': 'Alerts worker triggered successfully for date 2017-03-30' }
+            response.data,
+            {
+                'status': 'Alerts worker triggered successfully for date 2017-03-30'
+            }
         )
 
         alert = Alert.objects.all().first()
@@ -94,31 +100,6 @@ class AlertsTaskTest(TestCase):
                 'action': 1,
                 'kind': 'Deadline',
                 'message': '"Proyecto I": La fecha límite del reporte de avance es el día de hoy.',
-                'viewed': False
-            }
-        )
-
-    def test_alert_deadline_accomplish_at(self):
-
-        response = self.client.get(path='/api/tasks/alerts/?post_date=2017-04-01')
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.data,
-            {
-                'status': 'Alerts worker triggered successfully for date 2017-04-01'
-            }
-        )
-
-        alert = Alert.objects.all().first()
-
-        self.assertEqual(
-            model_to_dict(alert),
-            {
-                'id': 1,
-                'action': 1,
-                'kind': 'Deadline',
-                'message': '"Proyecto I": La fecha límite del reporte de ejecución es el día de hoy.',
                 'viewed': False
             }
         )

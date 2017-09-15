@@ -12,10 +12,10 @@ from workflow.models import Action, Report, Alert, Message
 
 class Base64ImageField(serializers.ImageField):
     def to_internal_value(self, data):
-        if isinstance(data, str) and data.startswith('data:'): # You can change "data:" to "data/image:"
+        if isinstance(data, str) and data.startswith('data:'):  # You can change "data:" to "data/image:"
             format, imgstr = data.split(';base64,')
-            ext  = format.split('/')[-1]
-            id   = uuid.uuid4()
+            ext = format.split('/')[-1]
+            id = uuid.uuid4()
             data = ContentFile(base64.b64decode(imgstr), name=id.urn[9:])
 
         return super(Base64ImageField, self).to_internal_value(data)
@@ -24,14 +24,14 @@ class Base64ImageField(serializers.ImageField):
 class ReportPostSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model  = Report
+        model = Report
         fields = '__all__'
 
 
 class ReportGetSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model  = Report
+        model = Report
         fields = '__all__'
 
 
@@ -40,7 +40,7 @@ class ProjectPostSerializer(serializers.ModelSerializer):
     image = Base64ImageField(max_length=None, use_url=True)
 
     class Meta:
-        model  = Action
+        model = Action
         fields = (
             'name', 'kind', 'phase',
             'client', 'producer', 'observer',
@@ -51,7 +51,7 @@ class ProjectPostSerializer(serializers.ModelSerializer):
             'financial', 'operational', 'other1', 'other2',
             'image')
 
-    read_only_fields =  ('status', 'created_at', 'updated_at','created_by')
+    read_only_fields = ('status', 'created_at', 'updated_at', 'created_by')
 
 
 class ProjectGetSerializer(serializers.ModelSerializer):
@@ -67,7 +67,7 @@ class ProjectGetSerializer(serializers.ModelSerializer):
         return ReportGetSerializer(reports, many=True).data
 
     class Meta:
-        model  = Action
+        model = Action
         fields = '__all__'
 
 
@@ -82,30 +82,30 @@ class ProjectListSerializer(serializers.ModelSerializer):
         return ReportGetSerializer(reports, many=True).data
 
     class Meta:
-        model  = Action
+        model = Action
         fields = (
             'id', 'name', 'kind', 'phase', 'status',
             'client', 'producer',
             'preparation_at', 'negotiation_at', 'execution_at', 'evaluation_at',
             'begin_at', 'report_at', 'accomplish_at', 'renegotiation_at',
             'image', 'reports',
-            'accepted_at','qualified_at', 'advance_report_at', 'ejecution_report_at', 'created_at')
+            'accepted_at', 'qualified_at', 'advance_report_at', 'ejecution_report_at', 'created_at')
 
 
 class ProjectPatchSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model  = Action
+        model = Action
         fields = ('phase', 'status', 'accepted_at', 'qualified_at')
 
-    read_only_fields =  ('created_at', 'updated_at','created_by')
+    read_only_fields = ('created_at', 'updated_at', 'created_by')
 
 
 # CRUD action serializers
 class ActionPostSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model  = Action
+        model = Action
         fields = (
             'name', 'phase',
             'client', 'producer', 'observer',
@@ -115,7 +115,7 @@ class ActionPostSerializer(serializers.ModelSerializer):
             'financial', 'operational', 'other1', 'other2',
             'project', 'parent_action')
 
-    read_only_fields =  ('status', 'created_at', 'updated_at','created_by')
+    read_only_fields = ('status', 'created_at', 'updated_at', 'created_by')
 
 
 class ActionGetSerializer(serializers.ModelSerializer):
@@ -132,7 +132,7 @@ class ActionGetSerializer(serializers.ModelSerializer):
         return ReportGetSerializer(reports, many=True).data
 
     class Meta:
-        model  = Action
+        model = Action
         fields = '__all__'
 
 
@@ -150,7 +150,7 @@ class ActionListSerializer(serializers.ModelSerializer):
         return ReportGetSerializer(reports, many=True).data
 
     class Meta:
-        model  = Action
+        model = Action
         fields = (
             'id', 'name', 'kind', 'phase', 'status',
             'client', 'producer',
@@ -160,16 +160,16 @@ class ActionListSerializer(serializers.ModelSerializer):
             'image',
             'advance_report_at', 'ejecution_report_at',
             'project', 'parent_action', 'reports',
-            'accepted_at','qualified_at', 'advance_report_at', 'ejecution_report_at', 'created_at')
+            'accepted_at', 'qualified_at', 'advance_report_at', 'ejecution_report_at', 'created_at')
 
 
 class ActionPatchSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model  = Action
+        model = Action
         fields = ('phase', 'status', 'accepted_at', 'qualified_at')
 
-    read_only_fields =  ('created_at', 'updated_at','created_by')
+    read_only_fields = ('created_at', 'updated_at', 'created_by')
 
 
 # Other action serializers
@@ -178,7 +178,7 @@ class ActionClientSerializer(serializers.ModelSerializer):
     client = UserSerializer()
 
     class Meta:
-        model  = Action
+        model = Action
         fields = ('client',)
 
 
@@ -187,7 +187,7 @@ class ActionProducerSerializer(serializers.ModelSerializer):
     producer = UserSerializer()
 
     class Meta:
-        model  = Action
+        model = Action
         fields = ('producer',)
 
 
@@ -197,7 +197,7 @@ class AlertListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Alert
-        fields = ( 'id', 'action', 'message', 'viewed', 'kind', 'created_at')
+        fields = ('id', 'action', 'message', 'viewed', 'kind', 'created_at')
 
 
 class AlertPartialUpdateSerializer(serializers.ModelSerializer):
