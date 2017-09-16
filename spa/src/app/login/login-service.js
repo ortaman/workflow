@@ -20,7 +20,7 @@ app.service('AuthService', function($http, $q,  APIConfig) {
 
 });
 
-app.factory('authHttpResponseInterceptor',['$injector',function($injector){
+app.factory('authHttpResponseInterceptor',['$q','$injector',function($q, $injector){
 	return {
 		response: function(response){
 			if (response.status === 403) {
@@ -32,7 +32,6 @@ app.factory('authHttpResponseInterceptor',['$injector',function($injector){
 			if (rejection.status === 403) {
         let msjNotification = $injector.get('Notification');
         msjNotification.error("No tiene permisos para realizar esta acción")
-
 			}
 			return $q.reject(rejection);
 		}

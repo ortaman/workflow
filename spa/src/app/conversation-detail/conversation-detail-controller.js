@@ -47,7 +47,7 @@ app.controller('ConversationDetailController', ['$scope', '$timeout', 'ActionSer
     ).then(function(newMessage){
       $scope.message = '';
       newMessage.created_by.photo = APIConfig.baseUrl + newMessage.created_by.photo;
-      $scope.messages.push(newMessage);
+      $scope.messages.results.push(newMessage);
     })
   }
 

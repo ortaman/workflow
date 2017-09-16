@@ -36,7 +36,7 @@
                                 <div class="scroller">
                                     <ul class="chats">
 
-                                        <li ng-class="{'out': n.created_by.id != user , 'in': n.created_by.id == user}" ng-repeat="n in messages ">
+                                        <li ng-class="{'in': n.created_by.id != user , 'out': n.created_by.id == user}" ng-repeat="n in messages.results ">
                                             <img class="avatar" ng-src="{{ n.created_by.photo }}">
                                             <div class="message">
                                                 <span class="arrow"> </span>
