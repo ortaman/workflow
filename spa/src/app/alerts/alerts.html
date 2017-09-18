@@ -55,56 +55,51 @@
             <!-- BEGIN FORM PROJECT-->
             <div class="todo-content" ng-init="init()">
                 <div class="portlet light">
-                  <div class="col-md-12">
+                    <div class="col-md-12">
 
-                    <div class="mt-timeline-2">
-                        <div class="mt-timeline-line border-grey-steel"></div>
-                        <ul class="mt-container">
-                            <li class="mt-item" ng-repeat="alert in alerts.results">
-                                <div class="mt-timeline-icon bg-blue-steel bg-font-blue-steel border-grey-steel">
-                                    <i ng-class="'icon-'+ alert.iconStatus"></i>
-                                </div>
-                                <div class="mt-timeline-content">
-                                    <div class="mt-content-container">
-                                        <div class="mt-title">
-                                            <h3 class="mt-content-title" ng-click="updateAlert(alert)">{{ alert.action.name}}</h3>
-                                        </div>
-                                        <div class="mt-author">
-                                            <div class="mt-avatar">
-                                                <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4_XRvUoHrrulZEh9z6wF_Pta_oy9CgveqgXTLIeHlQLxe5Ev1'>
+                        <div class="mt-timeline-2">
+                            <div class="mt-timeline-line border-grey-steel"></div>
+                            <ul class="mt-container">
+                                <li class="mt-item" ng-repeat="alert in alerts.results">
+                                    <div class="mt-timeline-icon bg-blue-steel bg-font-blue-steel border-grey-steel">
+                                        <i ng-class="'icon-'+ alert.iconStatus"></i>
+                                    </div>
+                                    <div class="mt-timeline-content">
+                                        <div class="mt-content-container">
+                                            <div class="mt-title">
+                                                <h3 class="mt-content-title" ng-click="updateAlert(alert)">{{ alert.action.name}}</h3>
                                             </div>
-                                            <div class="mt-author-name">
-                                                <a href="javascript:;" class="font-blue-madison">{{ alert.action.client.name}}</a>
+                                            <div class="mt-author">
+                                                <div class="mt-avatar">
+                                                    <img ng-src="{{alert.action.client.photo}}">
+                                                </div>
+                                                <div class="mt-author-name">
+                                                    <a href="javascript:;" class="font-blue-madison">{{ alert.action.client.name}}</a>
+                                                </div>
+                                                <div class="mt-author-notes font-grey-mint">{{ alert.created_at | date:'dd-MMM-yyyy hh:mm a '}}</div>
                                             </div>
-                                            <div class="mt-author-notes font-grey-mint">{{ alert.created_at | date:'dd-MMM-yyyy hh:mm a '}}</div>
-                                        </div>
-                                        <div class="mt-content border-grey-salt">
-                                            <p>{{ alert.message}}</p>
-                                            <!--<a href="javascript:;" class="btn btn-circle red" ng-click="updateAlert(alert)">Ver proyecto</a>-->
+                                            <div class="mt-content border-grey-salt">
+                                                <p>{{ alert.message}}</p>
+                                                <!--<a href="javascript:;" class="btn btn-circle red" ng-click="updateAlert(alert)">Ver proyecto</a>-->
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
 
-                        </ul>
-                    </div>
+                            </ul>
+                        </div>
 
-                    <div class="text-center">
-                        <ul uib-pagination boundary-links="true" class="pagination-sm"
-                            ng-show="alerts.results.length > 0"
-                            previous-text="&lsaquo;" next-text="&rsaquo;"
-                            first-text="&laquo;" last-text="&raquo;"
-                            items-per-page="alerts.paginated_by"
-                            total-items="alerts.count"
-                            ng-model="currentAlertPage"
-                            ng-change="getAlerts()">
-                        </ul>
-                        <h2 ng-show="alerts.results.length == 0">
-                            No hay alertas pendientes                             
-                        </h2>
+                        <div class="text-center">
+                            <ul uib-pagination boundary-links="true" class="pagination-sm" ng-show="alerts.results.length > 0" previous-text="&lsaquo;"
+                                next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="alerts.paginated_by"
+                                total-items="alerts.count" ng-model="currentAlertPage" ng-change="getAlerts()">
+                            </ul>
+                            <h2 ng-show="alerts.results.length == 0">
+                                No hay alertas pendientes
+                            </h2>
+                        </div>
                     </div>
-                  </div>
                 </div>
             </div>
             <!-- END TASK COMMENT FORM -->

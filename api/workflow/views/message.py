@@ -28,7 +28,7 @@ class CommentsListViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
 
     def get_queryset(self):
         action_id = self.request.query_params.get('action_id')
-        return self.queryset.filter(action_id=action_id)
+        return self.queryset.filter(action_id=action_id).order_by('-created_at')
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)

@@ -23,66 +23,47 @@
             </div>
             <!-- END PAGE BAR -->
             <!-- BEGIN PAGE TITLE-->
-            <h1 class="page-title text-center"  ng-init="init()"> {{ action.name}}</h1>
+            <h1 class="page-title text-center" ng-init="init()"> {{ action.name}}</h1>
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <!-- BEGIN FORM PROJECT-->
             <div class="todo-content">
-              <div class="portlet light">
-                <div class="row">
-                    <div class="portlet light ">
-                        <div class="portlet-body" id="chats">
-                            <div class="slimScrollDiv">
-                                <div class="scroller">
-                                    <ul class="chats">
-
-                                        <li ng-class="{'in': n.created_by.id != user , 'out': n.created_by.id == user}" ng-repeat="n in messages.results ">
-                                            <img class="avatar" ng-src="{{ n.created_by.photo }}">
-                                            <div class="message">
-                                                <span class="arrow"> </span>
-                                                <a href="javascript:;" class="name"> {{ n.created_by.username }} </a>
-                                                <span class="datetime">enviado  {{ n.created_at | date: 'dd-MMM-yyyy, hh:mm a'}} </span>
-                                                <span class="body">{{ n.message}} </span>
-                                            </div>
-                                        </li>
-                                        
-                                    </ul>
+                <div class="portlet light">
+                    <div class="portlet-body" id="chats">
+                        <div class="slimScrollDiv" id="scrollChat" scrollable="scrollChat" style="position: relative; overflow-y: scroll;  height: 400px;">
+                            <div class="scroller">
+                               
+                                <div class="tab-pane active"  ng-show="scrollChat == 'top'" panel-loader="projectsProducerPromise">
                                 </div>
-                         
-                            </div>
-                  <!--           <div class="text-center">
-                                <ul uib-pagination boundary-links="true" class="pagination-sm"
-                                    previous-text="&lsaquo;" next-text="&rsaquo;"
-                                    first-text="&laquo;" last-text="&raquo;"
-                                    items-per-page="messages.paginated_by"
-                                    total-items="messages.count"
-                                    ng-model="currentPage"
-                                    ng-change="getMessages()">
+                                <ul class="chats">
+                                    <li ng-class="{'in': n.created_by.id != user , 'out': n.created_by.id == user}" ng-repeat="n in messages.results | orderBy:'created_at'">
+                                        <img class="avatar" ng-src="{{ n.created_by.photo }}">
+                                        <div class="message">
+                                            <span class="arrow"> </span>
+                                            <a href="javascript:;" class="name"> {{ n.created_by.username }} </a>
+                                            <span class="datetime">enviado  {{ n.created_at | date: 'dd-MMM-yyyy, hh:mm a'}} </span>
+                                            <span class="body">{{ n.message}} </span>
+                                        </div>
+                                    </li>
+
                                 </ul>
-                            </div> -->
-                            <form class="chat-form" name="messageForm" ng-submit="submitMessage(message)">
-                                <div class="input-cont">
-                                    <input 
-                                        class="form-control" 
-                                        type="text"  
-                                        name="message"
-                                        maxlength="1000"
-                                        ng-model="message"
-                                        placeholder="Escribe un mensaje"
-                                        required
-                                        > 
-                                    </div>
-                                <div class="btn-cont">
-                                    <span class="arrow"> </span>
-                                    <button  ng-disabled="messageForm.$invalid" class="btn blue icn-only">
+                            </div>
+
+                        </div>
+                        <form class="chat-form" name="messageForm" ng-submit="submitMessage(message)" novalidate>
+                            <div class="input-cont">
+                                <input class="form-control" type="text" name="message" maxlength="1000" ng-model="message" placeholder="Escribe un mensaje"
+                                    required>
+                            </div>
+                            <div class="btn-cont">
+                                <span class="arrow"> </span>
+                                <button ng-disabled="messageForm.$invalid" class="btn blue icn-only">
                                         <i class="fa fa-check icon-white"></i>
                                     </button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-              </div>
             </div>
             <!-- END TASK COMMENT FORM -->
         </div>
