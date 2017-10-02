@@ -1,5 +1,14 @@
-describe('Users jjjjj', function() {
-  it('has a dummy spec to test 2 + 2', function() {
-    expect(2+2).toEqual(4);
-  });
+describe('HomeCtrl', function () {
+  beforeEach(module('myApp'));
+
+  it('initialises scope',
+    inject(function ($controller, $rootScope) {
+      var scope = $rootScope.$new();
+      var ctrl = $controller('LoginController', {
+        $scope: scope
+      });
+      console.log(scope)
+      expect(scope.hello).toBe("kkkk")
+    }));
+
 });

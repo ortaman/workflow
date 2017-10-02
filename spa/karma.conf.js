@@ -15,8 +15,12 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'src/assets/metronics/global/plugins/jquery.min.js',
+      
+      'src/assets/vendors.js',
+      'node_modules/angular-mocks/angular-mocks.js',
       'src/test/**/*.js',
-      'src/test/*.js'
+      '../api/_static/spa/assets/app.js',
       
     ],
 
